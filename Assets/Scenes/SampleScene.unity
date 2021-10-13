@@ -392,7 +392,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 10000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -428,7 +428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 125318654458031028, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
       propertyPath: far clip plane
-      value: 10000
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 738646681744756154, guid: 573ac53c334415945bf239de2c2f0511, type: 3}
       propertyPath: m_Name
@@ -558,7 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb3d36f15aa507848941dbbc8fd637fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  landscape_material: {fileID: 2100000, guid: 80c783de8f9d2de49aa80661a4466819, type: 2}
+  landscape_material: {fileID: 2100000, guid: 1de2135cb8236314f8cc4a1ba2de2b45, type: 2}
   ViewDistance: 4
   CellsPerChunk: 20
   SectionWidth: 2000
