@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 201745902897298958}
   - component: {fileID: 4111639336797499497}
   - component: {fileID: 8965927392801475107}
+  - component: {fileID: 6821788332938812406}
   m_Layer: 0
   m_Name: PlaneBase
   m_TagString: Plane
@@ -48,7 +49,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8965927392801475107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,5 +60,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d61052c26c75bd4282389a2677b99f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drag_coeff: 0.00005
+--- !u!114 &6821788332938812406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433604662094528242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782d7fceb345ffd4893749882d0faf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

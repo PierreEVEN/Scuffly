@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private float zoomInput = 50;
     Vector2 lookVector = new Vector2();
     GameObject controledPlane = null;
+    PlaneInputInterface planeInput = null;
 
     static bool Focused
     {
@@ -36,20 +37,25 @@ public class PlayerController : MonoBehaviour
         if (plane)
         {
             controledPlane = plane;
+            planeInput = controledPlane.GetComponent<PlaneInputInterface>();
         }
         else
         {
             controledPlane = null;
+            planeInput = null;
             gameObject.transform.parent = null;
         }
     }
 
     void Update()
     {
-        if (!controledPlane)
+        if (!controledPlane || !planeInput)
             return;
 
-        SetThrustInput(thrustInput);
+        planeInput.SetThrustInput(thrustInput);
+        planeInput.setPitchInput(upInput);
+        planeInput.setYawInput(rightInput);
+        planeInput.setRollInput(rollInput);
 
         // Compute camera location
         Quaternion horiz = Quaternion.AngleAxis(lookVector.x, Vector3.up);
@@ -58,20 +64,10 @@ public class PlayerController : MonoBehaviour
         gameObject.transform.position = controledPlane.transform.position + gameObject.transform.forward * -zoomInput;
     }
 
-    public void OnThrust(InputValue input) => thrustInput += input.Get<float>() * 0.05f;
-    public void OnUp(InputValue input) => upInput = input.Get<float>() * 0.05f;
-    public void OnRight(InputValue input) => rightInput = input.Get<float>() * 0.05f;
-    public void OnRoll(InputValue input) => rollInput = input.Get<float>() * 0.05f;
+    public void OnThrust(InputValue input) => thrustInput = Mathf.Clamp(thrustInput + input.Get<float>() * 0.2f, -1, 1);
+    public void OnUp(InputValue input) => upInput = Mathf.Clamp(upInput + input.Get<float>() * 1, -1, 1);
+    public void OnRight(InputValue input) => rightInput = Mathf.Clamp(rightInput + input.Get<float>() * 1, -1, 1);
+    public void OnRoll(InputValue input) => rollInput = Mathf.Clamp(rollInput + input.Get<float>() * 1, -1, 1);
     public void OnLook(InputValue input) => lookVector += input.Get<Vector2>();
     public void OnZoom(InputValue input) => zoomInput = Mathf.Clamp(zoomInput + input.Get<float>(), ZoomBounds.x, ZoomBounds.y);
-
-    void SetThrustInput(float value)
-    {
-        if (!controledPlane) return;
-        foreach (var thruster in controledPlane.GetComponentsInChildren<Thruster>())
-        {
-            thruster.set_thrust_input(value);
-        }
-    }
-
 }

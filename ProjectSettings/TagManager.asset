@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Plane
+  - Pitch
+  - Yaw
+  - Roll
   layers:
   - Default
   - TransparentFX

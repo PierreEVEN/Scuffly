@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlanePhysic : MonoBehaviour
+public class PlanePhysicModel : MonoBehaviour
 {
     private struct PhysicArea
     {
         public Vector3 normal;
         public float area;
         public Vector3 center;
+        public GameObject component;
     }
 
     public float drag_coeff = 0.0001f;
@@ -22,6 +23,13 @@ public class PlanePhysic : MonoBehaviour
     {
         targetBody = gameObject.GetComponent<Rigidbody>();
         targetBody.AddForce(new Vector3(-1000, 0, 0));
+        CollectData();
+    }
+
+
+    void CollectData()
+    {
+        Areas.Clear();
 
         foreach (MeshCollider collider in gameObject.GetComponentsInChildren<MeshCollider>())
         {
@@ -29,11 +37,13 @@ public class PlanePhysic : MonoBehaviour
 
             for (int i = 0; i < triangles.Length / 3; ++i)
             {
-                Areas.Add(ComputePhysicArea(
+                var newArea = ComputePhysicArea(
                     gameObject.transform.InverseTransformPoint(collider.gameObject.transform.TransformPoint(collider.sharedMesh.vertices[triangles[i * 3]])),
                     gameObject.transform.InverseTransformPoint(collider.gameObject.transform.TransformPoint(collider.sharedMesh.vertices[triangles[i * 3 + 1]])),
                     gameObject.transform.InverseTransformPoint(collider.gameObject.transform.TransformPoint(collider.sharedMesh.vertices[triangles[i * 3 + 2]]))
-                    )); ;
+                    );
+                newArea.component = collider.gameObject;
+                Areas.Add(newArea);
             }
         }
     }
@@ -74,15 +84,12 @@ public class PlanePhysic : MonoBehaviour
             Vector3 dragApplyPos = gameObject.transform.TransformPoint(area.center);
             Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag);
 
-            targetBody.AddForceAtPosition(dragApplyVector * Time.deltaTime *drag_coeff, dragApplyPos);
+            targetBody.AddForceAtPosition(dragApplyVector * Time.deltaTime * drag_coeff, dragApplyPos);
 
             Debug.DrawLine(dragApplyPos, dragApplyPos + dragApplyVector * 0.0002f, Color.red);
         }
 
         Debug.DrawLine(gameObject.transform.position, gameObject.transform.position + total_drag, Color.blue);
-
-        //targetBody.AddForce(total_drag * Time.deltaTime);
-
 
         /*
         foreach (var area in Areas) // Draw drag areas
