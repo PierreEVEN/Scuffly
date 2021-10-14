@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Camera))]
 public class PlayerMovement : MonoBehaviour
@@ -30,11 +31,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Input
-        if (Focused)
-            UpdateInput();
-        else if (Input.GetMouseButtonDown(0))
-            Focused = true;
 
         // Physics
         velocity = Vector3.Lerp(velocity, Vector3.zero, dampingCoefficient * Time.deltaTime);
@@ -47,17 +43,14 @@ public class PlayerMovement : MonoBehaviour
         velocity += GetAccelerationVector() * Time.deltaTime;
 
         // Rotation
-        Vector2 mouseDelta = lookSensitivity * new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"));
+        Vector2 mouseDelta = lookSensitivity * new Vector2(/*Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y")*/);
         Quaternion rotation = transform.rotation;
         Quaternion horiz = Quaternion.AngleAxis(mouseDelta.x, Vector3.up);
         Quaternion vert = Quaternion.AngleAxis(mouseDelta.y, Vector3.right);
         transform.rotation = horiz * rotation * vert;
 
-        // Leave cursor lock
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Focused = false;
+        Focused = false;
     }
-
 
     Vector3 GetAccelerationVector()
     {
@@ -65,10 +58,10 @@ public class PlayerMovement : MonoBehaviour
 
         void AddMovement(KeyCode key, Vector3 dir)
         {
-            if (Input.GetKey(key))
+            //if (Input.GetKey(key))
                 moveInput += dir;
         }
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        float scroll = 0.0f;// Input.GetAxisRaw("Mouse ScrollWheel");
 
         if (scroll > 0.1)
             speed *= 1.5f;

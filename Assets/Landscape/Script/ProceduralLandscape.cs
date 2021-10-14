@@ -15,7 +15,7 @@ public class ProceduralLandscape : MonoBehaviour
         public ProceduralLandscapeSection section;
     }
 
-    Camera scene_camera;
+    GameObject scene_camera;
     List<SectionReference> Sections = new List<SectionReference>();
 
     public int ViewDistance = 4;
@@ -29,7 +29,7 @@ public class ProceduralLandscape : MonoBehaviour
 
     public void Start()
     {
-        scene_camera = Camera.main;
+        scene_camera = GameObject.FindWithTag("MainCamera");
         height_generator = new HeightGenerator();
         //Update();
     }
@@ -44,7 +44,7 @@ public class ProceduralLandscape : MonoBehaviour
     {
         if (scene_camera == null)
         {
-            scene_camera = Camera.main;
+            scene_camera = GameObject.FindWithTag("MainCamera");
             Debug.LogError("failed to get current camera");
             return new Vector3();
         }
