@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
         gameObject.transform.position = controledPlane.transform.position + gameObject.transform.forward * -zoomInput;
     }
 
-    public void OnThrust(InputValue input) => thrustInput = Mathf.Clamp(thrustInput + input.Get<float>() * 0.2f, -1, 1);
+    public void OnThrust(InputValue input) => thrustInput = Mathf.Clamp(thrustInput + input.Get<float>() * 1.0f, -1, 1);
     public void OnUp(InputValue input) => upInput = Mathf.Clamp(upInput + input.Get<float>() * 1, -1, 1);
     public void OnRight(InputValue input) => rightInput = Mathf.Clamp(rightInput + input.Get<float>() * 1, -1, 1);
     public void OnRoll(InputValue input) => rollInput = Mathf.Clamp(rollInput + input.Get<float>() * 1, -1, 1);

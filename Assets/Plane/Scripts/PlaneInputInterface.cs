@@ -6,7 +6,13 @@ public class PlaneInputInterface : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameObject.GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0, 0);
+    }
+
+    void OnGUI()
+    {
+        GUILayout.Space(50);
+        GUILayout.TextArea("Velocity : " + gameObject.GetComponent<Rigidbody>().velocity.magnitude + " m/s  |  " + gameObject.GetComponent<Rigidbody>().velocity.magnitude * 3.6 + " km/h  |  " + gameObject.GetComponent<Rigidbody>().velocity.magnitude * 1.94384519992989f + " noeuds");
     }
 
     // Update is called once per frame
