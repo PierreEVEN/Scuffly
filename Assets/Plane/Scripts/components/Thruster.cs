@@ -4,56 +4,79 @@ using UnityEngine;
 
 public class Thruster : MonoBehaviour
 {
-    // PMANE PHYSIC BODY
-    Rigidbody targetBody;
+    Rigidbody PhysicBody;
+    private APU PlaneAPU;
 
     // ENGINE
-    public float maxThrust = 200000.0f; // max thrust power of the engine
-    public float thrustAcceleration = 200f; // what is the acceleration rate of the engine
-    public float engineInputLatency = 100.0f; // What is the latency of the engine's input
+    public float MaxThrustPower = 3000000.0f; // max thrust power of the engine
+    public float EngineAcceleration = 0.1f; // what is the acceleration rate of the engine
+    public float StartupEngineAcceleration = 0.004f; // what is the acceleration rate of the engine
+    private float FinalEngineInput = 0.0f; // Real thrust power of the engine
 
-    private float engineLatentInput = 0.0f; // The simulated input of the engine including latency
-    private float enginePilotInput = 0.0f; // The engine input value given by the pilot
-    private float currentThrust = 0.0f; // Real thrust power of the engine
+    // INPUT
+    private bool IsEngineEnabled = false;
+    private float EngineInput = 0.0f; // The engine input value given by the pilot (0 - 1)
+
+    // PHYSIC
     private Vector3 thrustVector = new Vector3(); // Real thrust vector of the engine (currentThrust * vectorial thrust)
 
     void OnGUI()
     {
-        GUILayout.TextArea("Thrust input : " + enginePilotInput);
+        GUILayout.TextArea("Thrust input : " + EngineInput + " / engine status : " + FinalEngineInput);
         GUILayout.TextArea("Thrust force : " + thrustVector.magnitude);
     }
 
     void Start()
     {
-        targetBody = gameObject.GetComponentInParent<Rigidbody>();
-        if (!targetBody)
+        PhysicBody = gameObject.GetComponentInParent<Rigidbody>();
+        if (!PhysicBody)
             Debug.LogError("Thruster is not attached to an object containing a physic body");
 
+        PlaneAPU = gameObject.GetComponentInParent<APU>();
+        if (!PlaneAPU)
+            Debug.LogError("thruster need APU to start");
+    }
+
+
+    public void StartEngine()
+    {
+        IsEngineEnabled = true;
+    }
+
+    public bool IsEnabled()
+    {
+        return IsEngineEnabled;
+    }
+
+    public void StopEngine()
+    {
+        IsEngineEnabled = false;
     }
 
     void Update()
     {
-        if (!targetBody)
+        if (!PhysicBody)
             return;
-        UpdateThrustVector();
 
-        targetBody.AddForceAtPosition(thrustVector, gameObject.transform.position);
+        if (IsEngineEnabled && EngineInput < 0.1f && !PlaneAPU.IsReady())
+            StopEngine();
+
+        float EngineDesiredInput = IsEngineEnabled ? EngineInput : 0.0f;
+
+        if (FinalEngineInput < EngineDesiredInput)
+            FinalEngineInput += Mathf.Min(EngineDesiredInput - FinalEngineInput, Time.deltaTime * (FinalEngineInput < 0.1f ? StartupEngineAcceleration : EngineAcceleration));
+        else
+            FinalEngineInput -= Mathf.Min(FinalEngineInput - EngineDesiredInput, Time.deltaTime * (FinalEngineInput < 0.1f ? StartupEngineAcceleration : EngineAcceleration));
+
+        // Compute thrust vector
+        thrustVector = gameObject.transform.forward.normalized * FinalEngineInput * MaxThrustPower;
+
+        PhysicBody.AddForceAtPosition(thrustVector * Time.deltaTime, gameObject.transform.position);
         Debug.DrawLine(gameObject.transform.position, gameObject.transform.position + thrustVector * -0.006f, Color.cyan);
     }
 
-
-    private void UpdateThrustVector()
-    {
-        // Compute thrust power (The input latency of the engine is simulated with a linear interpolation between the real input and the current engine input)
-        engineLatentInput = Mathf.Lerp(engineLatentInput, Mathf.Clamp(enginePilotInput, 0, 1), engineInputLatency * Time.deltaTime);
-        currentThrust = Mathf.Lerp(currentThrust, engineLatentInput * maxThrust, thrustAcceleration * Time.deltaTime);
-
-        // Compute thrust vector
-        thrustVector = gameObject.transform.forward.normalized;
-        thrustVector *= currentThrust;
-    }
     public void set_thrust_input(float thrust_value)
     {
-        enginePilotInput = Mathf.Clamp(thrust_value, 0, 1);
+        EngineInput = Mathf.Clamp(thrust_value, 0, 1);
     }
 }

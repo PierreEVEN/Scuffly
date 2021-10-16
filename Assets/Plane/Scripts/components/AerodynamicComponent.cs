@@ -66,8 +66,8 @@ public class AerodynamicComponent : MonoBehaviour
         surface.localNormal = Vector3.Cross(AB, AC).normalized;
 
         // Switch to world space to get correct surface area
-        AB = gameObject.transform.TransformPoint(AB);
-        AC = gameObject.transform.TransformPoint(AC);
+        //AB = rigidBody.gameObject.transform.InverseTransformPoint(gameObject.transform.TransformPoint(AB));
+        //AC = rigidBody.gameObject.transform.InverseTransformPoint(gameObject.transform.TransformPoint(AC));
 
         float nAB = AB.magnitude;
         float nAC = AC.magnitude;
@@ -101,12 +101,12 @@ public class AerodynamicComponent : MonoBehaviour
             Vector3 local_drag = surface.localNormal * areaDrag * -1;
 
 
-            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * drag_coeff * 100f;
+            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * drag_coeff * 2000000f;
 
             totalForce += dragApplyVector;
             rigidBody.AddForceAtPosition(dragApplyVector * Time.deltaTime, worldCenter);
 
-            Debug.DrawLine(worldCenter, worldCenter + dragApplyVector * 0.00001f, Color.red);
+            Debug.DrawLine(worldCenter, worldCenter + dragApplyVector * 0.0001f, Color.red);
         }
 
         var center = gameObject.transform.position;
@@ -116,7 +116,7 @@ public class AerodynamicComponent : MonoBehaviour
         {
             var worldCenter = gameObject.transform.TransformPoint(surface.localCenter);
             var direction = gameObject.transform.TransformDirection(surface.localNormal);
-            Debug.DrawLine(worldCenter, worldCenter + direction * surface.worldArea * .0001f, Color.green);
+            Debug.DrawLine(worldCenter, worldCenter + direction * surface.worldArea * .1f, Color.green);
         }
     }
 }

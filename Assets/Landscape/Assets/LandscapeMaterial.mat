@@ -237,6 +237,7 @@ Material:
     - _EnableHeightBlend: 0
     - _EnableInstancedPerPixelNormal: 1
     - _EnergyConservingSpecularColor: 1
+    - _GlobalTextureScale: -0.05
     - _Glossiness: 0.526
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5

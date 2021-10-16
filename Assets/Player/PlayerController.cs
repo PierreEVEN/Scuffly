@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("controlled plane is null");
     }
 
+
     void AttachTo(GameObject plane)
     {
         if (plane)
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
         if (!controledPlane || !planeInput)
             return;
 
-        thrustValue = Mathf.Clamp(thrustValue + thrustInput * Time.deltaTime, -1, 1);
+        thrustValue = Mathf.Clamp(thrustValue + thrustInput * Time.deltaTime * 10, -1, 1);
         upValue = Mathf.Clamp(upValue + upInput * Time.deltaTime, -1, 1);
         rightValue = Mathf.Clamp(rightValue + rightInput * Time.deltaTime, -1, 1);
         rollValue = Mathf.Lerp(rollValue, rollInput, Time.deltaTime * 2);
@@ -91,4 +92,16 @@ public class PlayerController : MonoBehaviour
     public void OnRoll(InputValue input) => rollInput = Mathf.Clamp(input.Get<float>(), -1, 1);
     public void OnLook(InputValue input) => lookVector += input.Get<Vector2>();
     public void OnZoom(InputValue input) => zoomInput = Mathf.Clamp(zoomInput + input.Get<float>(), ZoomBounds.x, ZoomBounds.y);
+
+    public void OnSwitchAPU()
+    {
+        planeInput.switchApu();
+    }
+    public void onSwitchBattery()
+    {
+    }
+    public void OnSwitchEngine()
+    {
+        planeInput.switchEngine();
+    }
 }

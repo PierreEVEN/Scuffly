@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6530678602358489589}
   - component: {fileID: 5794075892129359685}
   - component: {fileID: 2265818938794528844}
+  - component: {fileID: 3784762111678680883}
   m_Layer: 0
   m_Name: BasePlayer
   m_TagString: MainCamera
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df4768f6d1338bb488c40df095107de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ZoomBounds: {x: 5, y: 200}
 --- !u!114 &6530678602358489589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,3 +246,11 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!81 &3784762111678680883
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7951881003195090326}
+  m_Enabled: 1

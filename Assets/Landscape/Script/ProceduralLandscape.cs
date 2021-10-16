@@ -8,6 +8,11 @@ public class ProceduralLandscape : MonoBehaviour
 
     public Material landscape_material;
 
+    // TREES
+    public Mesh tree_mesh;
+    public Material tree_material;
+    public int per_section_tree_density = 50;
+
     struct SectionReference
     {
         public int posx;

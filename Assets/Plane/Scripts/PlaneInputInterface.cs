@@ -25,7 +25,6 @@ public class PlaneInputInterface : MonoBehaviour
     void Update()
     {
         gameObject.GetComponent<Rigidbody>().centerOfMass = MassCenter;
-
     }
 
     public void SetThrustInput(float value)
@@ -54,5 +53,22 @@ public class PlaneInputInterface : MonoBehaviour
         foreach (var part in gameObject.GetComponentsInChildren<MobilePart>())
             if (part.tag == "Roll")
                 part.setInput(value);
+    }
+
+    public void switchApu()
+    {
+        foreach (var part in gameObject.GetComponentsInChildren<APU>())
+            if (part.IsReady())
+                part.StopApu();
+            else
+                part.StartApu();
+    }
+    public void switchEngine()
+    {
+        foreach (var part in gameObject.GetComponentsInChildren<Thruster>())
+            if (part.IsEnabled())
+                part.StopEngine();
+            else
+                part.StartEngine();
     }
 }

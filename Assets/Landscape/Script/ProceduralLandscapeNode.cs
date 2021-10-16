@@ -14,6 +14,8 @@ public class ProceduralLandscapeNode
     private float Scale;
     private ProceduralLandscape Landscape;
 
+    Bounds TreeBounds;
+    ComputeBuffer TreeBuffer;
 
     public ProceduralLandscapeNode(ProceduralLandscape inLandscape, int inNodeLevel, Vector3 inPosition, float inScale)
     {
@@ -23,6 +25,11 @@ public class ProceduralLandscapeNode
         Landscape = inLandscape;
 
         createMesh();
+        CreateTreeMatrices();
+    }
+    ~ProceduralLandscapeNode()
+    {
+        TreeBuffer.Release();
     }
 
     public void update()
@@ -37,7 +44,36 @@ public class ProceduralLandscapeNode
 
         foreach (var child in ChildNodes)
             child.update();
+
+        Graphics.DrawMeshInstancedIndirect(Landscape.tree_mesh, 0, Landscape.tree_material, TreeBounds, TreeBuffer);
     }
+
+    private void CreateTreeMatrices()
+    {
+        Matrix4x4[] TreeMatrices = new Matrix4x4[Landscape.per_section_tree_density * Landscape.per_section_tree_density];
+        TreeBuffer = new ComputeBuffer(TreeMatrices.Length, sizeof(float) * 16, ComputeBufferType.IndirectArguments);
+        TreeBounds = new Bounds(Position, new Vector3(Scale * 2, Scale * 2, Scale * 2));
+
+        for (int x = 0; x < Landscape.per_section_tree_density; ++x)
+        {
+            for (int z = 0; z < Landscape.per_section_tree_density; ++z)
+            {
+                float posX = Position.x + (x / (float)Landscape.per_section_tree_density - 0.5f) * Scale;
+                float posZ = Position.z + (z / (float)Landscape.per_section_tree_density - 0.5f) * Scale;
+
+                float altitude = Landscape.GetAltitudeAtLocation(posX, posZ);
+
+                Matrix4x4 matrix = Matrix4x4.Translate(Position + new Vector3(posX, altitude, posZ));
+                matrix *= Matrix4x4.Scale(new Vector3(2000, 2000, 2000));
+                TreeMatrices[x + z * Landscape.per_section_tree_density] = matrix;
+
+            }
+        }
+
+        TreeBuffer.SetData(TreeMatrices);
+        Landscape.tree_material.SetBuffer("positionBuffer", TreeBuffer);
+    }
+
 
     private void subdivide()
     {
@@ -231,6 +267,8 @@ public class ProceduralLandscapeNode
         mesh.triangles = i_indices;
 
         meshFilter.mesh = mesh;
+        if (NodeLevel == Landscape.maxLevel)
+            container.AddComponent<MeshCollider>();
     }
 
     public void destroy()
