@@ -8,7 +8,7 @@ public class Thruster : MonoBehaviour
     Rigidbody targetBody;
 
     // ENGINE
-    public float maxThrust = 20000.0f; // max thrust power of the engine
+    public float maxThrust = 200000.0f; // max thrust power of the engine
     public float thrustAcceleration = 200f; // what is the acceleration rate of the engine
     public float engineInputLatency = 100.0f; // What is the latency of the engine's input
 
@@ -49,8 +49,8 @@ public class Thruster : MonoBehaviour
         currentThrust = Mathf.Lerp(currentThrust, engineLatentInput * maxThrust, thrustAcceleration * Time.deltaTime);
 
         // Compute thrust vector
-        thrustVector = gameObject.transform.right.normalized;
-        thrustVector *= currentThrust * -1;
+        thrustVector = gameObject.transform.forward.normalized;
+        thrustVector *= currentThrust;
     }
     public void set_thrust_input(float thrust_value)
     {

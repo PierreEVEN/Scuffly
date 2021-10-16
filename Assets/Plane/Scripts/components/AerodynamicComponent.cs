@@ -85,14 +85,12 @@ public class AerodynamicComponent : MonoBehaviour
 
         return surface;
     }
-    private void OnDrawGizmos()
-    {
-        if (rigidBody)        Gizmos.DrawSphere(rigidBody.gameObject.transform.TransformPoint(rigidBody.centerOfMass), 5);
-    }
 
     // Update is called once per frame
     void Update()
     {
+        Vector3 totalForce = new Vector3();
+
         foreach (var surface in Surfaces)
         {
             Vector3 worldCenter = gameObject.transform.TransformPoint(surface.localCenter);
@@ -102,20 +100,23 @@ public class AerodynamicComponent : MonoBehaviour
             float areaDrag = Mathf.Max(0.0f, Vector3.Dot(gameObject.transform.TransformDirection(surface.localNormal), worldPointVelocity * worldPointVelocity.magnitude)) * surface.worldArea;
             Vector3 local_drag = surface.localNormal * areaDrag * -1;
 
-            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * drag_coeff * 20000f;
 
+            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * drag_coeff * 100f;
+
+            totalForce += dragApplyVector;
             rigidBody.AddForceAtPosition(dragApplyVector * Time.deltaTime, worldCenter);
 
-            Debug.DrawLine(worldCenter, worldCenter + dragApplyVector * 0.0001f, Color.red);
+            Debug.DrawLine(worldCenter, worldCenter + dragApplyVector * 0.00001f, Color.red);
         }
 
-        /*
+        var center = gameObject.transform.position;
+        Debug.DrawLine(center, center + totalForce * 0.000001f, Color.green);
+       
         foreach (var surface in Surfaces) // Draw drag areas
         {
-            var center = gameObject.transform.TransformPoint(surface.center);
-            var direction = gameObject.transform.TransformDirection(surface.normal);
-            Debug.DrawLine(center, center + direction * surface.area * 5000.0f, Color.green);
+            var worldCenter = gameObject.transform.TransformPoint(surface.localCenter);
+            var direction = gameObject.transform.TransformDirection(surface.localNormal);
+            Debug.DrawLine(worldCenter, worldCenter + direction * surface.worldArea * .0001f, Color.green);
         }
-        */
     }
 }

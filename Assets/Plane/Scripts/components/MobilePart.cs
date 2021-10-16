@@ -19,7 +19,6 @@ public class MobilePart : MonoBehaviour
         intMinRotation.eulerAngles = minRotation;
         intMaxRotation.eulerAngles = maxRotation;
         setInput(0);
-
     }
 
     public void setInput(float inputValue)
@@ -31,11 +30,10 @@ public class MobilePart : MonoBehaviour
         if (inputValue > 0.0f)
             finalRotation = Quaternion.Lerp(intNeutralRotation, intMaxRotation, inputValue);
         else
-            finalRotation = Quaternion.Lerp(intNeutralRotation, intMinRotation, inputValue);
+            finalRotation = Quaternion.Lerp(intNeutralRotation, intMinRotation, -inputValue);
 
         gameObject.transform.rotation = gameObject.transform.parent.rotation * finalRotation;
     }
-
 
     // Update is called once per frame
     void Update()

@@ -77,7 +77,7 @@
                     "id": "f1dcfddf-9b35-4146-aac1-e6ea7ff92ad2",
                     "path": "<Keyboard>/s",
                     "interactions": "",
-                    "processors": "Scale(factor=-1)",
+                    "processors": "",
                     "groups": "",
                     "action": "Up",
                     "isComposite": false,

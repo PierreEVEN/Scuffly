@@ -6,7 +6,6 @@ public class PlaneInputInterface : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.GetComponent<Rigidbody>().centerOfMass = new Vector3(0, 0, 0);
     }
 
     void OnGUI()
@@ -15,10 +14,18 @@ public class PlaneInputInterface : MonoBehaviour
         GUILayout.TextArea("Velocity : " + gameObject.GetComponent<Rigidbody>().velocity.magnitude + " m/s  |  " + gameObject.GetComponent<Rigidbody>().velocity.magnitude * 3.6 + " km/h  |  " + gameObject.GetComponent<Rigidbody>().velocity.magnitude * 1.94384519992989f + " noeuds");
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(gameObject.GetComponent<Rigidbody>().gameObject.transform.TransformPoint(gameObject.GetComponent<Rigidbody>().centerOfMass), 0.5f);
+    }
+
+    public Vector3 MassCenter = new Vector3(0, 0, 0);
+
     // Update is called once per frame
     void Update()
     {
-        
+        gameObject.GetComponent<Rigidbody>().centerOfMass = MassCenter;
+
     }
 
     public void SetThrustInput(float value)
@@ -33,7 +40,7 @@ public class PlaneInputInterface : MonoBehaviour
     {
         foreach (var part in gameObject.GetComponentsInChildren<MobilePart>())
             if (part.tag == "Pitch")
-                part.setInput(value);
+                part.setInput(value * -1);
     }
 
     public void setYawInput(float value)
