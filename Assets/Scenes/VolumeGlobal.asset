@@ -226,7 +226,7 @@ MonoBehaviour:
     m_Value: 1121.09
   enableVolumetricFog:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   albedo:
     m_OverrideState: 1
     m_Value: {r: 0.9764151, g: 1, b: 0.99584675, a: 1}

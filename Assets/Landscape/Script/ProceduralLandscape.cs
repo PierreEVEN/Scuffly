@@ -42,7 +42,7 @@ public class ProceduralLandscape : MonoBehaviour
 
     public float GetAltitudeAtLocation(float x, float z)
     {
-        return height_generator.GetAltitudeAtLocation(x * 0.1f, z * 0.1f);
+        return height_generator.GetAltitudeAtLocation(x * 0.04f, z * 0.04f);
     }
 
     public Vector3 GetCameraPosition()

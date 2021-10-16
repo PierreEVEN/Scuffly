@@ -166,7 +166,7 @@ MonoBehaviour:
     m_Value: {x: 0, y: 0}
   lowestCloudAltitude:
     m_OverrideState: 1
-    m_Value: 898.5
+    m_Value: 1598.5
   cloudThickness:
     m_OverrideState: 0
     m_Value: 8000

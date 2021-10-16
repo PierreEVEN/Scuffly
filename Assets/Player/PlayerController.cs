@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     PlaneInputInterface planeInput = null;
 
 
+    private bool Indoor = false;
+
     void OnGUI()
     {
     }
@@ -82,26 +84,20 @@ public class PlayerController : MonoBehaviour
         // Compute camera location
         Quaternion horiz = Quaternion.AngleAxis(lookVector.x, Vector3.up);
         Quaternion vert = Quaternion.AngleAxis(lookVector.y, Vector3.right);
-        gameObject.transform.rotation = horiz * vert;
-        gameObject.transform.position = controledPlane.transform.position + gameObject.transform.forward * -zoomInput;
+        gameObject.transform.rotation = Indoor ? controledPlane.transform.rotation * horiz * vert : horiz * vert;
+        gameObject.transform.position = controledPlane.transform.position + gameObject.transform.forward * (Indoor ? 0 : -zoomInput) + controledPlane.transform.forward * 3.3f + controledPlane.transform.up * 1f;
     }
 
     public void OnThrust(InputValue input) => thrustInput = Mathf.Clamp(input.Get<float>(), -1, 1);
     public void OnUp(InputValue input) => upInput = Mathf.Clamp(input.Get<float>(), -1, 1);
     public void OnRight(InputValue input) => rightInput = Mathf.Clamp(input.Get<float>(), -1, 1);
     public void OnRoll(InputValue input) => rollInput = Mathf.Clamp(input.Get<float>(), -1, 1);
-    public void OnLook(InputValue input) => lookVector += input.Get<Vector2>();
+    public void OnLook(InputValue input) => lookVector = new Vector2(input.Get<Vector2>().x + lookVector.x, Mathf.Clamp(input.Get<Vector2>().y + lookVector.y, -90, 90));
     public void OnZoom(InputValue input) => zoomInput = Mathf.Clamp(zoomInput + input.Get<float>(), ZoomBounds.x, ZoomBounds.y);
 
-    public void OnSwitchAPU()
-    {
-        planeInput.switchApu();
-    }
-    public void onSwitchBattery()
-    {
-    }
-    public void OnSwitchEngine()
-    {
-        planeInput.switchEngine();
-    }
+    public void OnSwitchAPU() => planeInput.switchApu();
+
+    public void onSwitchBattery() { }
+    public void OnSwitchEngine() => planeInput.switchEngine();
+    public void OnSwitchView() => Indoor = !Indoor;
 }
