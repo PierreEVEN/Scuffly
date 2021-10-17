@@ -3,8 +3,16 @@ using UnityEngine;
 
 public class HeightGenerator
 {
-    public HeightGenerator()
+    private HeightGenerator()
     {
+    }
+
+    private static HeightGenerator GlobalInstance;
+    public static HeightGenerator Get()
+    {
+        if (GlobalInstance == null)
+            GlobalInstance = new HeightGenerator();
+        return GlobalInstance;
     }
 
     public float GetAltitudeAtLocation(float posX, float posY)

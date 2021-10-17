@@ -196,7 +196,7 @@ MonoBehaviour:
     m_Value: 0
   cloudPreset:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 1
   cumulusMap:
     m_OverrideState: 0
     m_Value: {fileID: 0}
@@ -429,15 +429,15 @@ MonoBehaviour:
     m_Value: 1
   ghostingReduction:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   shadows:
     m_OverrideState: 1
     m_Value: 1
   shadowResolution:
-    m_OverrideState: 0
-    m_Value: 256
+    m_OverrideState: 1
+    m_Value: 128
   shadowPlaneHeightOffset:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   shadowDistance:
     m_OverrideState: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
     m_Value: 0
   type:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   sphericalMode:
     m_OverrideState: 1
     m_Value: 1
@@ -539,7 +539,7 @@ MonoBehaviour:
     m_Value: 55261.973
   aerosolDensity:
     m_OverrideState: 0
-    m_Value: 0.01192826
+    m_Value: 0
   aerosolTint:
     m_OverrideState: 0
     m_Value: {r: 0.9, g: 0.9, b: 0.9, a: 1}
@@ -550,7 +550,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   numberOfBounces:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 8
   groundTint:
     m_OverrideState: 0

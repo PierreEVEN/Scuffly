@@ -63,12 +63,4 @@ public class PlaneInputInterface : MonoBehaviour
             else
                 part.StartApu();
     }
-    public void switchEngine()
-    {
-        foreach (var part in gameObject.GetComponentsInChildren<Thruster>())
-            if (part.IsEnabled())
-                part.StopEngine();
-            else
-                part.StartEngine();
-    }
 }

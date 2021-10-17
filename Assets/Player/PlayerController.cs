@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     private float rightValue = 0;
     private float rollValue = 0;
 
+    private bool enableEngine = false;
+    private bool ExtractGear = false;
+    private float GearExtract = 1.0f;
+
 
     private float zoomInput = 50;
     Vector2 lookVector = new Vector2();
@@ -67,7 +71,7 @@ public class PlayerController : MonoBehaviour
         if (!controledPlane || !planeInput)
             return;
 
-        thrustValue = Mathf.Clamp(thrustValue + thrustInput * Time.deltaTime * 10, -1, 1);
+        thrustValue = Mathf.Clamp(thrustValue + thrustInput * Time.deltaTime * 10, 0, 1);
         upValue = Mathf.Clamp(upValue + upInput * Time.deltaTime, -1, 1);
         rightValue = Mathf.Clamp(rightValue + rightInput * Time.deltaTime, -1, 1);
         rollValue = Mathf.Lerp(rollValue, rollInput, Time.deltaTime * 2);
@@ -76,7 +80,7 @@ public class PlayerController : MonoBehaviour
         rightValue = Mathf.Lerp(rightValue, rightInput, Time.deltaTime * 2);
         */
 
-        planeInput.SetThrustInput(thrustValue);
+        planeInput.SetThrustInput(enableEngine ? thrustValue * 0.9f + 0.1f : 0);
         planeInput.setPitchInput(upValue);
         planeInput.setYawInput(rightValue);
         planeInput.setRollInput(rollValue);
@@ -94,10 +98,9 @@ public class PlayerController : MonoBehaviour
     public void OnRoll(InputValue input) => rollInput = Mathf.Clamp(input.Get<float>(), -1, 1);
     public void OnLook(InputValue input) => lookVector = new Vector2(input.Get<Vector2>().x + lookVector.x, Mathf.Clamp(input.Get<Vector2>().y + lookVector.y, -90, 90));
     public void OnZoom(InputValue input) => zoomInput = Mathf.Clamp(zoomInput + input.Get<float>(), ZoomBounds.x, ZoomBounds.y);
-
     public void OnSwitchAPU() => planeInput.switchApu();
-
     public void onSwitchBattery() { }
-    public void OnSwitchEngine() => planeInput.switchEngine();
+    public void OnSwitchEngine() => enableEngine = !enableEngine;
+    public void OnSwitchGear() => ExtractGear = !ExtractGear;
     public void OnSwitchView() => Indoor = !Indoor;
 }

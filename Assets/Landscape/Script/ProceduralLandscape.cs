@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 
+[ExecuteInEditMode]
 public class ProceduralLandscape : MonoBehaviour
 {
 
@@ -15,60 +17,58 @@ public class ProceduralLandscape : MonoBehaviour
 
     struct SectionReference
     {
-        public int posx;
+        public int posX;
         public int posZ;
         public ProceduralLandscapeSection section;
     }
 
-    GameObject scene_camera;
+    Vector3 cameraLocation = new Vector3();
     List<SectionReference> Sections = new List<SectionReference>();
 
     public int ViewDistance = 4;
-    public int CellsPerChunk = 20;
-    public float SectionWidth = 20000;
+    public int CellsPerChunk = 50;
+    public float SectionWidth = 15000;
     public float noiseScale = 1000;
-    public float maxLevel = 8;
+    public float maxLevel = 4;
     public float quadtreeExponent = 500;
     public bool freeze = false;
-    private HeightGenerator height_generator;
+
+    GameObject PlayerCamera;
 
     public void Start()
     {
-        scene_camera = GameObject.FindWithTag("MainCamera");
-        height_generator = new HeightGenerator();
-        //Update();
+        UpdateCameraLocation();
+        PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        ClearSections();
     }
-
 
     public float GetAltitudeAtLocation(float x, float z)
     {
-        return height_generator.GetAltitudeAtLocation(x * 0.04f, z * 0.04f);
+        return HeightGenerator.Get().GetAltitudeAtLocation(x * 0.04f, z * 0.04f);
     }
 
     public Vector3 GetCameraPosition()
     {
-        if (scene_camera == null)
-        {
-            scene_camera = GameObject.FindWithTag("MainCamera");
-            Debug.LogError("failed to get current camera");
-            return new Vector3();
-        }
-        return scene_camera.transform.position;
+        return cameraLocation;
     }
 
     public void Update()
     {
         if (freeze) return;
+
+        UpdateCameraLocation();
+
         int cameraX = (int)Math.Truncate(GetCameraPosition().x / SectionWidth);
         int cameraZ = (int)Math.Truncate(GetCameraPosition().z / SectionWidth);
         for (int i = Sections.Count - 1; i >= 0; --i)
         {
             if (
-                Sections[i].posx < cameraX - ViewDistance ||
-                Sections[i].posx > cameraX + ViewDistance ||
+                Sections[i].posX < cameraX - ViewDistance ||
+                Sections[i].posX > cameraX + ViewDistance ||
                 Sections[i].posZ < cameraZ - ViewDistance ||
                 Sections[i].posZ > cameraZ + ViewDistance
             )
+
             {
                 Sections[i].section.destroy();
                 Sections.RemoveAt(i);
@@ -89,12 +89,33 @@ public class ProceduralLandscape : MonoBehaviour
         }
     }
 
+    private void UpdateCameraLocation()
+    {
+        if (Application.isPlaying)
+        {
+            if (!PlayerCamera)
+                PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            if (PlayerCamera)
+            {
+                cameraLocation = PlayerCamera.transform.position;
+            }
+        }
+        else
+        {
+            var Cameras = SceneView.GetAllSceneCameras();
+            foreach (var cam in Cameras)
+            {
+                cameraLocation = cam.transform.position;
+            }
+        }
+    }
+
     public void tryLoadSection(int posX, int posZ)
     {
         bool exists = false;
         foreach (var section in Sections)
         {
-            if (section.posx == posX && section.posZ == posZ)
+            if (section.posX == posX && section.posZ == posZ)
             {
                 exists = true;
             }
@@ -102,20 +123,25 @@ public class ProceduralLandscape : MonoBehaviour
         if (!exists)
         {
             SectionReference new_section = new SectionReference();
-            new_section.posx = posX;
+            new_section.posX = posX;
             new_section.posZ = posZ;
             new_section.section = new ProceduralLandscapeSection(this, new Vector3(posX * SectionWidth, 0, posZ * SectionWidth), SectionWidth);
             Sections.Add(new_section);
         }
     }
 
-    public void rebuildLandscape()
+    private void ClearSections()
     {
         foreach (var section in Sections)
         {
             section.section.destroy();
         }
-
-        Sections = null;
+        Sections.Clear();
     }
+
+    public void OnDisable()
+    {
+        ClearSections();
+    }
+
 }

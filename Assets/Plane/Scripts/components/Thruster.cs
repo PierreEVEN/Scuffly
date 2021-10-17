@@ -14,7 +14,6 @@ public class Thruster : MonoBehaviour
     private float FinalEngineInput = 0.0f; // Real thrust power of the engine
 
     // INPUT
-    private bool IsEngineEnabled = false;
     private float EngineInput = 0.0f; // The engine input value given by the pilot (0 - 1)
 
     // PHYSIC
@@ -37,31 +36,14 @@ public class Thruster : MonoBehaviour
             Debug.LogError("thruster need APU to start");
     }
 
-
-    public void StartEngine()
-    {
-        IsEngineEnabled = true;
-    }
-
-    public bool IsEnabled()
-    {
-        return IsEngineEnabled;
-    }
-
-    public void StopEngine()
-    {
-        IsEngineEnabled = false;
-    }
-
     void Update()
     {
         if (!PhysicBody)
             return;
 
-        if (IsEngineEnabled && EngineInput < 0.1f && !PlaneAPU.IsReady())
-            StopEngine();
+        bool enoughPower = FinalEngineInput > 0.1f || PlaneAPU.IsReady();
 
-        float EngineDesiredInput = IsEngineEnabled ? EngineInput : 0.0f;
+        float EngineDesiredInput = enoughPower ? EngineInput : 0.0f;
 
         if (FinalEngineInput < EngineDesiredInput)
             FinalEngineInput += Mathf.Min(EngineDesiredInput - FinalEngineInput, Time.deltaTime * (FinalEngineInput < 0.1f ? StartupEngineAcceleration : EngineAcceleration));

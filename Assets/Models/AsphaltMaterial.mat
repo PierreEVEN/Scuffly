@@ -125,6 +125,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TextureRecomposer_556e69409bfe42f4ba49846a182c1649_Texture_1496059439:
+        m_Texture: {fileID: 2800000, guid: 9f491d934f135ab47866615729203e17, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureRecomposer_a4ecd052ca384c08b035ad7d786582da_Texture_1496059439:
+        m_Texture: {fileID: 2800000, guid: cbd8de97fff79db40849be542941b221, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureRecomposer_bff65cf415e5499f9d8305b8c4c978e3_Texture_1496059439:
+        m_Texture: {fileID: 2800000, guid: 396760adf7fb3da458cc8b1de7698eb8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ThicknessMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}

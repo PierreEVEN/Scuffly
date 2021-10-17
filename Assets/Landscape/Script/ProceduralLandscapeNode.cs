@@ -27,10 +27,6 @@ public class ProceduralLandscapeNode
         createMesh();
         CreateTreeMatrices();
     }
-    ~ProceduralLandscapeNode()
-    {
-        TreeBuffer.Release();
-    }
 
     public void update()
     {
@@ -207,7 +203,16 @@ public class ProceduralLandscapeNode
             }
         }
 
-        // @TODO COMPUTE NORMAL
+        Mesh mesh = new Mesh();
+
+        mesh.vertices = v_position;
+        mesh.colors = v_colors;
+        mesh.normals = v_normals;
+        mesh.uv = v_uvs;
+
+        mesh.triangles = i_indices;
+
+        mesh.RecalculateNormals();
 
         // North seams
         for (int i = 0; i < VerticesPerChunk; ++i)
@@ -241,42 +246,36 @@ public class ProceduralLandscapeNode
             v_position[i].y -= CellSize;
         }
 
-        container = new GameObject("Cool GameObject made from Code");
+        container = new GameObject("ProceduralLandscapeNode");
+        container.hideFlags = HideFlags.DontSave;
+        container.transform.parent = Landscape.transform;
 
         meshRenderer = container.AddComponent<MeshRenderer>();
-
-        if (meshRenderer == null)
-        {
-            Debug.LogError("failed to create mesh renderer");
-        }
         meshRenderer.material = Landscape.landscape_material;
-
         meshFilter = container.AddComponent<MeshFilter>();
-
-        if (meshFilter == null)
-        {
-            Debug.LogError("failed to create mesh filter");
-        }
-        Mesh mesh = new Mesh();
-
-        mesh.vertices = v_position;
-        mesh.colors = v_colors;
-        mesh.normals = v_normals;
-        mesh.uv = v_uvs;
-
-        mesh.triangles = i_indices;
 
         meshFilter.mesh = mesh;
         if (NodeLevel == Landscape.maxLevel)
             container.AddComponent<MeshCollider>();
     }
 
+    private bool IsDestroyed = false;
     public void destroy()
     {
+        if (IsDestroyed)
+        {
+            Debug.LogError("Landscape node has already been destroyed");
+            return;
+        }
+
+        IsDestroyed = true;
         unSubdivide();
-        hideGeometry();
+        if (TreeBuffer != null) TreeBuffer.Dispose();
+        TreeBuffer = null;
         meshFilter = null;
         meshRenderer = null;
+        UnityEngine.Object.DestroyImmediate(container);
+        container = null;
     }
 
     private int computeDesiredLODLevel()
