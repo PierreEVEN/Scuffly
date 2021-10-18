@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2938.5332, g: 1962.2441, b: 1654.7812, a: 1}
+  m_IndirectSpecularColor: {r: 2949.7188, g: 2029.0977, b: 1846.2402, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -773,6 +773,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2593169332261448255, guid: 7f00ee438bd1060458a1e16030e9a4b5, type: 3}
+      propertyPath: Reset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2593169332261448255, guid: 7f00ee438bd1060458a1e16030e9a4b5, type: 3}
+      propertyPath: freeze
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2593169332261448255, guid: 7f00ee438bd1060458a1e16030e9a4b5, type: 3}
+      propertyPath: GrassFX
+      value: 
+      objectReference: {fileID: 8926484042661614526, guid: b4afa680d045ef74a8c78526051afd93, type: 3}
+    - target: {fileID: 2593169332261448255, guid: 7f00ee438bd1060458a1e16030e9a4b5, type: 3}
+      propertyPath: ViewDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2593169332261448255, guid: 7f00ee438bd1060458a1e16030e9a4b5, type: 3}
+      propertyPath: tree_material
+      value: 
+      objectReference: {fileID: 4874126678125670354, guid: 568284ce48cb908409820ed51c01b82a, type: 3}
+    - target: {fileID: 2593169332261448255, guid: 7f00ee438bd1060458a1e16030e9a4b5, type: 3}
+      propertyPath: FreezeGeneration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5717572849369266715, guid: 7f00ee438bd1060458a1e16030e9a4b5, type: 3}
       propertyPath: m_Name
       value: ProceduralLandscape

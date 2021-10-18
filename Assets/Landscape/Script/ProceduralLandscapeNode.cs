@@ -1,124 +1,95 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
+/**
+ *  @Author : Pierre EVEN
+ */
+
 public class ProceduralLandscapeNode
 {
-
-    private MeshRenderer meshRenderer;
-    private MeshFilter meshFilter;
-    private GameObject container;
-
-    private List<ProceduralLandscapeNode> ChildNodes = new List<ProceduralLandscapeNode>();
-    private int NodeLevel;
-    private Vector3 Position;
-    private float Scale;
-    private ProceduralLandscape Landscape;
-
-    Bounds TreeBounds;
-    ComputeBuffer TreeBuffer;
+    private MeshRenderer meshRenderer; // node mesh
+    private GameObject gameObject; // Owner of node's components
+    private List<ProceduralLandscapeNode> children = new List<ProceduralLandscapeNode>();
+    private int subdivisionLevel; // Current subdivision level (+1 per subdivision)
+    private Vector3 worldPosition;
+    private float worldScale;
+    private ProceduralLandscape owningLandscape; // Parent
 
     public ProceduralLandscapeNode(ProceduralLandscape inLandscape, int inNodeLevel, Vector3 inPosition, float inScale)
     {
-        NodeLevel = inNodeLevel;
-        Position = inPosition;
-        Scale = inScale;
-        Landscape = inLandscape;
+        subdivisionLevel = inNodeLevel;
+        worldPosition = inPosition;
+        worldScale = inScale;
+        owningLandscape = inLandscape;
+        gameObject = new GameObject("ProceduralLandscapeNode");
+        gameObject.hideFlags = HideFlags.DontSave;
+        gameObject.transform.parent = owningLandscape.transform;
 
+        // Start mesh generation operation (@TODO make generation async)
         createMesh();
-        CreateTreeMatrices();
     }
 
-    public void update()
+    // Called from Landscape
+    public void CustomUpdate()
     {
         /*
         Either we wants to subdivide this node if he is to close, either we wants to display its mesh section
          */
-        if (computeDesiredLODLevel() > NodeLevel)
+        if (computeDesiredLODLevel() > subdivisionLevel)
             subdivide();
         else
             unSubdivide();
 
-        foreach (var child in ChildNodes)
-            child.update();
-
-        Graphics.DrawMeshInstancedIndirect(Landscape.tree_mesh, 0, Landscape.tree_material, TreeBounds, TreeBuffer);
+        foreach (var child in children)
+            child.CustomUpdate();
     }
 
-    private void CreateTreeMatrices()
-    {
-        Matrix4x4[] TreeMatrices = new Matrix4x4[Landscape.per_section_tree_density * Landscape.per_section_tree_density];
-        TreeBuffer = new ComputeBuffer(TreeMatrices.Length, sizeof(float) * 16, ComputeBufferType.IndirectArguments);
-        TreeBounds = new Bounds(Position, new Vector3(Scale * 2, Scale * 2, Scale * 2));
-
-        for (int x = 0; x < Landscape.per_section_tree_density; ++x)
-        {
-            for (int z = 0; z < Landscape.per_section_tree_density; ++z)
-            {
-                float posX = Position.x + (x / (float)Landscape.per_section_tree_density - 0.5f) * Scale;
-                float posZ = Position.z + (z / (float)Landscape.per_section_tree_density - 0.5f) * Scale;
-
-                float altitude = Landscape.GetAltitudeAtLocation(posX, posZ);
-
-                Matrix4x4 matrix = Matrix4x4.Translate(Position + new Vector3(posX, altitude, posZ));
-                matrix *= Matrix4x4.Scale(new Vector3(2000, 2000, 2000));
-                TreeMatrices[x + z * Landscape.per_section_tree_density] = matrix;
-
-            }
-        }
-
-        TreeBuffer.SetData(TreeMatrices);
-        Landscape.tree_material.SetBuffer("positionBuffer", TreeBuffer);
-    }
-
-
+    // Subdivide this node into 4 nodes 2 times smaller
     private void subdivide()
     {
 
-        if (ChildNodes.Count == 0)
+        if (children.Count == 0)
         {
 
-            ChildNodes.Add(new ProceduralLandscapeNode(
-                Landscape,
-                NodeLevel + 1,
-                new Vector3(Position.x - Scale / 4, Position.y, Position.z - Scale / 4),
-                Scale / 2)
+            children.Add(new ProceduralLandscapeNode(
+                owningLandscape,
+                subdivisionLevel + 1,
+                new Vector3(worldPosition.x - worldScale / 4, worldPosition.y, worldPosition.z - worldScale / 4),
+                worldScale / 2)
             );
-            ChildNodes.Add(new ProceduralLandscapeNode(
-                Landscape,
-                NodeLevel + 1,
-                new Vector3(Position.x + Scale / 4, Position.y, Position.z - Scale / 4),
-                this.Scale / 2)
+            children.Add(new ProceduralLandscapeNode(
+                owningLandscape,
+                subdivisionLevel + 1,
+                new Vector3(worldPosition.x + worldScale / 4, worldPosition.y, worldPosition.z - worldScale / 4),
+                this.worldScale / 2)
             );
-            ChildNodes.Add(new ProceduralLandscapeNode(
-                Landscape,
-                NodeLevel + 1,
-                new Vector3(Position.x + Scale / 4, Position.y, Position.z + Scale / 4),
-                Scale / 2)
+            children.Add(new ProceduralLandscapeNode(
+                owningLandscape,
+                subdivisionLevel + 1,
+                new Vector3(worldPosition.x + worldScale / 4, worldPosition.y, worldPosition.z + worldScale / 4),
+                worldScale / 2)
             );
-            ChildNodes.Add(new ProceduralLandscapeNode(
-                Landscape,
-                NodeLevel + 1,
-                new Vector3(Position.x - Scale / 4, Position.y, Position.z + Scale / 4),
-                Scale / 2)
+            children.Add(new ProceduralLandscapeNode(
+                owningLandscape,
+                subdivisionLevel + 1,
+                new Vector3(worldPosition.x - worldScale / 4, worldPosition.y, worldPosition.z + worldScale / 4),
+                worldScale / 2)
             );
         }
 
         bool childBuilt = true;
-        foreach (var child in ChildNodes)
+        foreach (var child in children)
         {
-            if (child.meshFilter == null)
+            if (child.meshRenderer == null)
             {
                 childBuilt = false;
                 return;
             }
         }
+        // Wait children are built to hide geometry (avoid holes if children are not fully generated)
         if (childBuilt)
-        {
             hideGeometry();
-        }
-        else
-        {
-        }
     }
 
     private void unSubdivide()
@@ -128,27 +99,26 @@ public class ProceduralLandscapeNode
         /*
         Destroy child if not destroyed
          */
-        if (ChildNodes.Count == 0) return;
-        foreach (var child in ChildNodes)
+        if (children.Count == 0) return;
+        foreach (var child in children)
             child.destroy();
-        ChildNodes.Clear();
+        children.Clear();
     }
 
     private void hideGeometry()
     {
-        meshRenderer.enabled = false;
+        if (meshRenderer)
+            meshRenderer.enabled = false;
     }
     private void showGeometry()
     {
-        meshRenderer.enabled = true;
+        if (meshRenderer)
+            meshRenderer.enabled = true;
     }
 
     void createMesh()
     {
-        int Density = Landscape.CellsPerChunk;
-        float PosX = Position.x;
-        float PosZ = Position.z;
-        float Size = Scale;
+        int Density = owningLandscape.CellsPerChunk;
 
         int VerticeCount = (Density + 3) * (Density + 3) * 3;
         int IndiceCount = (Density + 2) * (Density + 2) * 6;
@@ -160,13 +130,13 @@ public class ProceduralLandscapeNode
 
         int[] i_indices = new int[IndiceCount];
 
-        float CellSize = Size / Density;
+        float CellSize = worldScale / Density;
 
         int VerticesPerChunk = Density + 3;
         int FacesPerChunk = Density + 2;
 
-        float OffsetX = PosX - Size / 2;
-        float OffsetZ = PosZ - Size / 2;
+        float OffsetX = worldPosition.x - worldScale / 2;
+        float OffsetZ = worldPosition.z - worldScale / 2;
 
         /* Generate vertices */
         for (int x = 0; x < VerticesPerChunk; ++x)
@@ -178,7 +148,7 @@ public class ProceduralLandscapeNode
 
                 int VertexIndex = (x + y * VerticesPerChunk);
 
-                v_position[VertexIndex] = new Vector3(l_PosX, Landscape.GetAltitudeAtLocation(l_PosX, l_posZ), l_posZ);
+                v_position[VertexIndex] = new Vector3(l_PosX, owningLandscape.GetAltitudeAtLocation(l_PosX, l_posZ), l_posZ);
                 v_normals[VertexIndex] = new Vector3(0, 1, 0);
                 v_colors[VertexIndex] = new Color32(0, 255, 0, 255);
                 v_uvs[VertexIndex] = new Vector2(l_PosX / 100, l_posZ / 100);
@@ -203,16 +173,14 @@ public class ProceduralLandscapeNode
             }
         }
 
+        // Create mesh object
         Mesh mesh = new Mesh();
-
         mesh.vertices = v_position;
         mesh.colors = v_colors;
         mesh.normals = v_normals;
         mesh.uv = v_uvs;
-
         mesh.triangles = i_indices;
-
-        mesh.RecalculateNormals();
+        mesh.RecalculateNormals(); // We recompute normal before moving seams down
 
         // North seams
         for (int i = 0; i < VerticesPerChunk; ++i)
@@ -246,44 +214,38 @@ public class ProceduralLandscapeNode
             v_position[i].y -= CellSize;
         }
 
-        container = new GameObject("ProceduralLandscapeNode");
-        container.hideFlags = HideFlags.DontSave;
-        container.transform.parent = Landscape.transform;
-
-        meshRenderer = container.AddComponent<MeshRenderer>();
-        meshRenderer.material = Landscape.landscape_material;
-        meshFilter = container.AddComponent<MeshFilter>();
-
+        // Set mesh
+        meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        meshRenderer.material = owningLandscape.landscape_material;
+        meshRenderer.bounds = new Bounds(worldPosition, new Vector3(worldScale, worldScale, worldScale));
+        MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
-        if (NodeLevel == Landscape.maxLevel)
-            container.AddComponent<MeshCollider>();
+
+        // Enable collision on max level nodes
+        if (subdivisionLevel == owningLandscape.maxLevel)
+            gameObject.AddComponent<MeshCollider>();
+
+        // Particle system for grass // @TODO improve system
+        VisualEffect vfx = gameObject.AddComponent<VisualEffect>();
+        vfx.visualEffectAsset = owningLandscape.GrassFX;
+        vfx.SetMesh("NewMesh", mesh);
+        vfx.SetVector3("BoundCenter", meshRenderer.bounds.center);
+        vfx.SetVector3("BoundExtent", meshRenderer.bounds.size);
     }
 
-    private bool IsDestroyed = false;
     public void destroy()
     {
-        if (IsDestroyed)
-        {
-            Debug.LogError("Landscape node has already been destroyed");
-            return;
-        }
-
-        IsDestroyed = true;
         unSubdivide();
-        if (TreeBuffer != null) TreeBuffer.Dispose();
-        TreeBuffer = null;
-        meshFilter = null;
-        meshRenderer = null;
-        UnityEngine.Object.DestroyImmediate(container);
-        container = null;
+        UnityEngine.Object.DestroyImmediate(gameObject);
+        gameObject = null;
     }
 
     private int computeDesiredLODLevel()
     {
         // Height correction
-        Vector3 cameraGroundLocation = Landscape.GetCameraPosition();
-        cameraGroundLocation.y -= Landscape.GetAltitudeAtLocation(Landscape.GetCameraPosition().x, Landscape.GetCameraPosition().z);
-        float Level = Landscape.maxLevel - Math.Min(Landscape.maxLevel, (Vector3.Distance(cameraGroundLocation, Position) - Scale) / Landscape.quadtreeExponent);
+        Vector3 cameraGroundLocation = owningLandscape.GetCameraPosition();
+        cameraGroundLocation.y -= owningLandscape.GetAltitudeAtLocation(owningLandscape.GetCameraPosition().x, owningLandscape.GetCameraPosition().z);
+        float Level = owningLandscape.maxLevel - Math.Min(owningLandscape.maxLevel, (Vector3.Distance(cameraGroundLocation, worldPosition) - worldScale) / owningLandscape.quadtreeExponent);
         return (int)Math.Truncate(Level);
     }
 }

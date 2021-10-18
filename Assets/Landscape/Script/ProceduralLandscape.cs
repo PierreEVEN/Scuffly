@@ -2,44 +2,100 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.VFX;
+/**
+ *  @Author : Pierre EVEN
+ */
 
-
+/**
+ * Procedural landscape class.
+ * A procedural landscape contains multiple sections. Each section is subdivided into a quadtree of ProceduralLandscapeNode 
+ */
 [ExecuteInEditMode]
 public class ProceduralLandscape : MonoBehaviour
 {
-
-    public Material landscape_material;
-
-    // TREES
-    public Mesh tree_mesh;
-    public Material tree_material;
-    public int per_section_tree_density = 50;
-
-    struct SectionReference
+    struct LandscapeSection
     {
         public int posX;
         public int posZ;
-        public ProceduralLandscapeSection section;
+        public ProceduralLandscapeNode root_node;
     }
 
-    Vector3 cameraLocation = new Vector3();
-    List<SectionReference> Sections = new List<SectionReference>();
+    /**
+     * Parameters
+     */
 
-    public int ViewDistance = 4;
-    public int CellsPerChunk = 50;
+    [Header("Scale")]
     public float SectionWidth = 15000;
-    public float noiseScale = 1000;
+
+    [Header("LOD")]
     public float maxLevel = 4;
     public float quadtreeExponent = 500;
-    public bool freeze = false;
 
-    GameObject PlayerCamera;
+    [Header("Rendering")]
+    public int ViewDistance = 4;
+    public int CellsPerChunk = 50;
+    public Material landscape_material;
+
+    [Header("Developper features")]
+    public bool FreezeGeneration = false;
+    public bool Reset = false;
+
+    [Header("Temp")]
+    public VisualEffectAsset GrassFX;
+
+    /**
+     * Data
+     */
+
+    private GameObject IngamePlayerCamera;
+    private Vector3 CameraCurrentLocation = new Vector3();
+    private List<LandscapeSection> GeneratedSections = new List<LandscapeSection>();
 
     public void Start()
     {
+        IngamePlayerCamera = GameObject.FindGameObjectWithTag("MainCamera");
         UpdateCameraLocation();
-        PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        ClearSections();
+        ResetLandscape();
+    }
+
+    public void Update()
+    {
+        if (Reset) ResetLandscape();
+        if (FreezeGeneration) return;
+
+        UpdateCameraLocation();
+
+        // Remove out of range section
+        int cameraX = (int)Math.Truncate(GetCameraPosition().x / SectionWidth);
+        int cameraZ = (int)Math.Truncate(GetCameraPosition().z / SectionWidth);
+        for (int i = GeneratedSections.Count - 1; i >= 0; --i)
+        {
+            if (
+                GeneratedSections[i].posX < cameraX - ViewDistance ||
+                GeneratedSections[i].posX > cameraX + ViewDistance ||
+                GeneratedSections[i].posZ < cameraZ - ViewDistance ||
+                GeneratedSections[i].posZ > cameraZ + ViewDistance
+            )
+            {
+                GeneratedSections[i].root_node.destroy();
+                GeneratedSections.RemoveAt(i);
+            }
+        }
+
+        // Try load missing in range sections
+        for (int x = cameraX - ViewDistance; x <= cameraX + ViewDistance; ++x)
+            for (int y = cameraZ - ViewDistance; y <= cameraZ + ViewDistance; ++y)
+                tryLoadSection(x, y);
+
+        // Refresh all sections
+        foreach (var section in GeneratedSections)
+            section.root_node.CustomUpdate();
+    }
+    public void OnDisable()
+    {
+        // Called on hot reload or when playing / returning back to editor ...
+        ResetLandscape();
     }
 
     public float GetAltitudeAtLocation(float x, float z)
@@ -49,99 +105,53 @@ public class ProceduralLandscape : MonoBehaviour
 
     public Vector3 GetCameraPosition()
     {
-        return cameraLocation;
-    }
-
-    public void Update()
-    {
-        if (freeze) return;
-
-        UpdateCameraLocation();
-
-        int cameraX = (int)Math.Truncate(GetCameraPosition().x / SectionWidth);
-        int cameraZ = (int)Math.Truncate(GetCameraPosition().z / SectionWidth);
-        for (int i = Sections.Count - 1; i >= 0; --i)
-        {
-            if (
-                Sections[i].posX < cameraX - ViewDistance ||
-                Sections[i].posX > cameraX + ViewDistance ||
-                Sections[i].posZ < cameraZ - ViewDistance ||
-                Sections[i].posZ > cameraZ + ViewDistance
-            )
-
-            {
-                Sections[i].section.destroy();
-                Sections.RemoveAt(i);
-            }
-        }
-
-        for (int x = cameraX - ViewDistance; x <= cameraX + ViewDistance; ++x)
-        {
-            for (int y = cameraZ - ViewDistance; y <= cameraZ + ViewDistance; ++y)
-            {
-                tryLoadSection(x, y);
-            }
-        }
-
-        foreach (var section in Sections)
-        {
-            section.section.update();
-        }
+        return CameraCurrentLocation;
     }
 
     private void UpdateCameraLocation()
     {
         if (Application.isPlaying)
         {
-            if (!PlayerCamera)
-                PlayerCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            if (PlayerCamera)
-            {
-                cameraLocation = PlayerCamera.transform.position;
-            }
+            // Try get player camera
+            if (!IngamePlayerCamera)
+                IngamePlayerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            if (IngamePlayerCamera)
+                CameraCurrentLocation = IngamePlayerCamera.transform.position;
         }
         else
         {
+            // Else get editor camera location
             var Cameras = SceneView.GetAllSceneCameras();
             foreach (var cam in Cameras)
-            {
-                cameraLocation = cam.transform.position;
-            }
+                CameraCurrentLocation = cam.transform.position;
         }
     }
 
-    public void tryLoadSection(int posX, int posZ)
+    private void tryLoadSection(int posX, int posZ)
     {
+        // Find landscape section at x,z location. If it doesn't exist, add a new one
         bool exists = false;
-        foreach (var section in Sections)
-        {
+        foreach (var section in GeneratedSections)
             if (section.posX == posX && section.posZ == posZ)
-            {
                 exists = true;
-            }
-        }
         if (!exists)
         {
-            SectionReference new_section = new SectionReference();
-            new_section.posX = posX;
-            new_section.posZ = posZ;
-            new_section.section = new ProceduralLandscapeSection(this, new Vector3(posX * SectionWidth, 0, posZ * SectionWidth), SectionWidth);
-            Sections.Add(new_section);
+            GeneratedSections.Add(new LandscapeSection
+            {
+                posX = posX,
+                posZ = posZ,
+                root_node = new ProceduralLandscapeNode(this, 1, new Vector3(posX * SectionWidth, 0, posZ * SectionWidth), SectionWidth),
+            });
         }
     }
 
-    private void ClearSections()
+    private void ResetLandscape()
     {
-        foreach (var section in Sections)
+        Reset = false;
+        foreach (var section in GeneratedSections)
         {
-            section.section.destroy();
+            section.root_node.destroy();
         }
-        Sections.Clear();
+        GeneratedSections.Clear();
     }
-
-    public void OnDisable()
-    {
-        ClearSections();
-    }
-
 }

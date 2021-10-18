@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/**
+ *  @Author : Pierre EVEN
+ */
 
 public class Thruster : MonoBehaviour
 {

@@ -1,24 +1,48 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/**
+ *  @Author : Pierre EVEN
+ */
 
+
+/**
+ * Aerodynamic component class
+ * Simulate aerodynamic forces on owning gameObject.
+ * REQUIREMENTS : this component requires a rigidbody in parent hierarchy, and a MeshCollider on the current object.
+ * The mesh assigned to the MeshCollider component should be marked as "read/write".
+ * 
+ * The physic is fully dynamic : updating this part transform will impact the behavior of the physic object.
+ * 
+ * The maths are quite simple
+ * 1) precompute each surface of the mesh (area / position / normal)
+ * 2) each frame : compute the velocity squared applied on each surface dot the surface normal, times the area of the surface
+ * 3) apply resulting force on the parent obejct rigidBody
+ * (not accurate at all, but the result is not so bad for a dumb approximation)
+ */
+[RequireComponent(typeof(MeshCollider))]
 public class AerodynamicComponent : MonoBehaviour
 {
     private struct PhysicSurface
     {
-        public Vector3 localNormal;
-        public Vector3 localCenter;
-        public float worldArea;
+        public Vector3 localNormal; // object space surface normal
+        public Vector3 localCenter; // object space surface center
+        public float worldArea; // World space surface area
     }
 
-    public float drag_coeff = 0.0001f;
+    [Header("Developper settings")]
+    public bool drawSurfaceInfluence = false;
+    public bool drawTotalForce = false;
+    public bool drawPerSurfaceForce = false;
 
-    Rigidbody rigidBody;
-    MeshCollider meshCollider;
+    // Physic object
+    private Rigidbody rigidBody;
 
-    List<PhysicSurface> Surfaces = new List<PhysicSurface>();
+    // Collider containing mesh data
+    private MeshCollider meshCollider;
 
-    // Start is called before the first frame update
+    // All the surface are precomputed and stored into this surface list.
+    private List<PhysicSurface> Surfaces = new List<PhysicSurface>();
+
     void Start()
     {
         rigidBody = gameObject.GetComponentInParent<Rigidbody>();
@@ -30,29 +54,27 @@ public class AerodynamicComponent : MonoBehaviour
         if (!rigidBody)
             Debug.LogError("Aerodynamic Component requires a rigidbody component in parents game objects" + gameObject.name);
 
-        UpdateData();
+        RecomputeData();
     }
 
-    private void UpdateData()
+    private void RecomputeData()
     {
         Surfaces.Clear();
 
-        if (!meshCollider)
-            return;
-
-        var triangles = meshCollider.sharedMesh.GetTriangles(0);
-
-        for (int i = 0; i < triangles.Length / 3; ++i)
-        {
-            Vector3 v1 = meshCollider.sharedMesh.vertices[triangles[i * 3]];
-            Vector3 v2 = meshCollider.sharedMesh.vertices[triangles[i * 3 + 1]];
-            Vector3 v3 = meshCollider.sharedMesh.vertices[triangles[i * 3 + 2]];
-
-            Surfaces.Add(ComputePhysicArea(v1, v2, v3));
+        for (int sectionID = 0; sectionID < meshCollider.sharedMesh.subMeshCount; sectionID++) {
+            int[] triangles = meshCollider.sharedMesh.GetTriangles(sectionID);
+            for (int i = 0; i < triangles.Length / 3; ++i)
+            {
+                Vector3 v1 = meshCollider.sharedMesh.vertices[triangles[i * 3]];
+                Vector3 v2 = meshCollider.sharedMesh.vertices[triangles[i * 3 + 1]];
+                Vector3 v3 = meshCollider.sharedMesh.vertices[triangles[i * 3 + 2]];
+                Surfaces.Add(ComputePhysicSurface(v1, v2, v3));
+            }
         }
     }
 
-    private PhysicSurface ComputePhysicArea(Vector3 vertice1, Vector3 vertice2, Vector3 vertice3)
+    // A surface is caracterized by 3 triangles. This function will compute the area, the center, and the normal of the shape of the given triangle.
+    private PhysicSurface ComputePhysicSurface(Vector3 vertice1, Vector3 vertice2, Vector3 vertice3)
     {
         PhysicSurface surface = new PhysicSurface();
 
@@ -65,28 +87,17 @@ public class AerodynamicComponent : MonoBehaviour
         // Compute local surface normal
         surface.localNormal = Vector3.Cross(AB, AC).normalized;
 
-        // Switch to world space to get correct surface area
-        //AB = rigidBody.gameObject.transform.InverseTransformPoint(gameObject.transform.TransformPoint(AB));
-        //AC = rigidBody.gameObject.transform.InverseTransformPoint(gameObject.transform.TransformPoint(AC));
-
         float nAB = AB.magnitude;
         float nAC = AC.magnitude;
 
+        //@TODO area will not be correct if object scale is not (1, 1, 1)
         float dot = Vector3.Dot(AB, AC);
         float dot2 = dot * dot;
         surface.worldArea = Mathf.Sqrt(nAB * nAB * nAC * nAC - dot2) / 2.0f;
 
-
-        if (float.IsNaN(surface.worldArea))
-        {
-            Debug.LogError("3");
-            surface.worldArea = 0;
-        }
-
         return surface;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 totalForce = new Vector3();
@@ -96,27 +107,31 @@ public class AerodynamicComponent : MonoBehaviour
             Vector3 worldCenter = gameObject.transform.TransformPoint(surface.localCenter);
             Vector3 worldPointVelocity = rigidBody.GetPointVelocity(worldCenter);
             
-            // @IDEA : don't set 0 but an approximation of lift instead
+            // @TODO : don't set 0 in the first argument of max(), but an approximation of lift instead (allow negative force)
             float areaDrag = Mathf.Max(0.0f, Vector3.Dot(gameObject.transform.TransformDirection(surface.localNormal), worldPointVelocity * worldPointVelocity.magnitude)) * surface.worldArea;
             Vector3 local_drag = surface.localNormal * areaDrag * -1;
 
+            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * 200; //@TODO replace hardcoded friction with custom value
 
-            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * drag_coeff * 2000000f;
+            if (drawTotalForce)
+                totalForce += dragApplyVector;
 
-            totalForce += dragApplyVector;
             rigidBody.AddForceAtPosition(dragApplyVector * Time.deltaTime, worldCenter);
 
-            Debug.DrawLine(worldCenter, worldCenter + dragApplyVector * 0.0001f, Color.red);
+            if (drawPerSurfaceForce) Debug.DrawLine(worldCenter, worldCenter + dragApplyVector * 0.0001f, Color.red);
         }
 
-        var center = gameObject.transform.position;
-        Debug.DrawLine(center, center + totalForce * 0.000001f, Color.green);
-       
-        foreach (var surface in Surfaces) // Draw drag areas
+        if (drawTotalForce)
+            Debug.DrawLine(gameObject.transform.position, gameObject.transform.position + totalForce * 0.000001f, Color.green);
+
+        if (drawSurfaceInfluence)
         {
-            var worldCenter = gameObject.transform.TransformPoint(surface.localCenter);
-            var direction = gameObject.transform.TransformDirection(surface.localNormal);
-            Debug.DrawLine(worldCenter, worldCenter + direction * surface.worldArea * .1f, Color.green);
+            foreach (var surface in Surfaces) // Draw drag areas
+            {
+                var worldCenter = gameObject.transform.TransformPoint(surface.localCenter);
+                var direction = gameObject.transform.TransformDirection(surface.localNormal);
+                Debug.DrawLine(worldCenter, worldCenter + direction * surface.worldArea * .1f, Color.green);
+            }
         }
     }
 }

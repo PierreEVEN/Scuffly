@@ -1,5 +1,8 @@
 
 using UnityEngine;
+/**
+ *  @Author : Pierre EVEN
+ */
 
 public class PlaneInputInterface : MonoBehaviour
 {

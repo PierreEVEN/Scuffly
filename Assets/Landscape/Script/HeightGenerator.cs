@@ -1,5 +1,8 @@
 ﻿using System;
 using UnityEngine;
+/**
+ *  @Author : Pierre EVEN
+ */
 
 public class HeightGenerator
 {

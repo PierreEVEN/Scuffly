@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+/**
+ *  @Author : Pierre EVEN
+ */
 
 public class PlayerController : MonoBehaviour
 {
-
     public Vector2 ZoomBounds = new Vector2(5, 200);
 
     private float thrustInput = 0;
@@ -18,7 +20,6 @@ public class PlayerController : MonoBehaviour
 
     private bool enableEngine = false;
     private bool ExtractGear = false;
-    private float GearExtract = 1.0f;
 
 
     private float zoomInput = 50;

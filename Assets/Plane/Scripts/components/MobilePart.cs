@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/**
+ *  @Author : Pierre EVEN
+ */
 public class MobilePart : MonoBehaviour
 {
     public Vector3 neutralRotation = new Vector3(0, 0, 0);
