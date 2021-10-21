@@ -40,6 +40,7 @@ public class ProceduralLandscape : MonoBehaviour
     [Header("Developper features")]
     public bool FreezeGeneration = false;
     public bool Reset = false;
+    public bool showBounds = false;
 
     [Header("Temp")]
     public VisualEffectAsset GrassFX;
@@ -96,6 +97,14 @@ public class ProceduralLandscape : MonoBehaviour
         foreach (var section in GeneratedSections)
             section.root_node.CustomUpdate();
     }
+
+    private void OnDrawGizmos()
+    {
+        if (showBounds)
+            foreach (var section in GeneratedSections)
+                section.root_node.DrawGuizmo();
+    }
+
     public void OnDisable()
     {
         // Called on hot reload or when playing / returning back to editor ...
@@ -104,7 +113,7 @@ public class ProceduralLandscape : MonoBehaviour
 
     public float GetAltitudeAtLocation(float x, float z)
     {
-        return HeightGenerator.Get().GetAltitudeAtLocation(x * 0.04f, z * 0.04f);
+        return HeightGenerator.Singleton.GetAltitudeAtLocation(x, z);
     }
 
     public Vector3 GetCameraPosition()

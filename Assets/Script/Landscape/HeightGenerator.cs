@@ -1,43 +1,99 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
+using UnityEngine.Events;
 /**
  *  @Author : Pierre EVEN
  */
 
 public class HeightGenerator
 {
-    private HeightGenerator()
+    public static bool RectIntersect(Rect a, Rect b)
     {
+        return b.xMax > a.xMin &&
+                a.xMax > b.xMin &&
+                b.yMax > a.yMin &&
+                a.yMax > b.yMin;
     }
+
+    public List<LandscapeModifier> modifiers = new List<LandscapeModifier>();
+    public OnUpdateSectionEvent OnUpdateRegion = new OnUpdateSectionEvent();
+
+
+    public class OnUpdateSectionEvent : UnityEvent<Rect> { }
+
+    public void MoveModifier(LandscapeModifier modifier, Rect oldBounds, Rect newbounds)
+    {
+        if (!modifiers.Contains(modifier))
+            modifiers.Add(modifier);
+
+        float minX = Mathf.Min(oldBounds.xMin, newbounds.xMin);
+        float minY = Mathf.Min(oldBounds.yMin, newbounds.yMin);
+        float maxX = Mathf.Max(oldBounds.xMax, newbounds.xMax);
+        float maxY = Mathf.Max(oldBounds.yMax, newbounds.yMax);
+        Rect updateBound = Rect.MinMaxRect(minX, minY, maxX, maxY);
+        updateBound.size *= 2;
+        OnUpdateRegion.Invoke(updateBound);
+    }
+
+    public void RemoveModifier(LandscapeModifier modifier)
+    {
+        modifiers.Remove(modifier);
+    }
+
+    private HeightGenerator() {}
 
     private static HeightGenerator GlobalInstance;
-    public static HeightGenerator Get()
+    public static HeightGenerator Singleton
     {
-        if (GlobalInstance == null)
-            GlobalInstance = new HeightGenerator();
-        return GlobalInstance;
+        get
+        {
+            if (GlobalInstance == null)
+                GlobalInstance = new HeightGenerator();
+            return GlobalInstance;
+        }
     }
 
-    public float GetAltitudeAtLocation(float posX, float posY)
+
+    public float GetAltitudeAtLocation(float posX, float posZ)
     {
+        // handle modifiers
+        float altitudeOverride = 0;
+        float incidence = 0;
+        int maxPriority = 0;
+        foreach (var modifier in modifiers)
+        {
+            if (modifier.priority >= maxPriority)
+            {
+                if (modifier.worldBounds.Contains(new Vector2(posX, posZ)))
+                {
+                    maxPriority = modifier.priority;
+                    incidence = modifier.GetIncidenceAtLocation(posX, posZ);
+                    altitudeOverride = modifier.GetAltitudeAtLocation(posX, posZ);
+                }
+            }
+        }
+        if (incidence == 1)
+            return altitudeOverride;
 
-        posX += 100000;
-        posY += 10000;
+        posX *= 0.04f;
+        posZ *= 0.04f;
 
-        float mountainLevel = getMountainLevel(posX, posY);
+        float mountainLevel = getMountainLevel(posX, posZ);
 
         float alt = mountainLevel * 800;
 
         float scale = 0.01f;
-        float mountainNoise = (float)Math.Pow(Mathf.PerlinNoise(posX * scale, posY * scale), 2) * 3000;
+        float mountainNoise = (float)Math.Pow(Mathf.PerlinNoise(posX * scale, posZ * scale), 2) * 3000;
 
         alt += mountainLevel * mountainNoise;
 
-        alt += getHillsLevel(posX, posY, mountainLevel) * 200;
+        alt += getHillsLevel(posX, posZ, mountainLevel) * 200;
 
-        alt = addBeaches(posX, posY, alt);
+        alt = addBeaches(posX, posZ, alt);
 
-        return alt;
+        return Mathf.Lerp(alt, altitudeOverride, incidence);
     }
 
     float getMountainLevel(float posX, float posY)
