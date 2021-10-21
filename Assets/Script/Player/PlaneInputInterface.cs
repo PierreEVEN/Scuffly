@@ -21,7 +21,6 @@ public class PlaneInputInterface : MonoBehaviour
     private float rollInput = 0;
 
     private bool enableEngine = false;
-    private bool ExtentGear = false;
     void Start()
     {
         playerManager = gameObject.GetComponent<PlayerManager>();
@@ -88,7 +87,8 @@ public class PlaneInputInterface : MonoBehaviour
     }
     public void OnSwitchGear()
     {
-        ExtentGear = !ExtentGear;
+        foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<PlaneWheelController>())
+            part.Switch();
     }
     public void onSwitchBattery() { }
 

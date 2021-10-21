@@ -11,7 +11,7 @@ public class Gamemode : NetworkBehaviour
     {
         get
         {
-            if (!_singleton) _singleton = new Gamemode();
+            if (!_singleton) _singleton = NetworkManager.Singleton.gameObject.AddComponent<Gamemode>();
             return _singleton;
         }
     }

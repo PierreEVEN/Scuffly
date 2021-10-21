@@ -11,6 +11,7 @@ public class LandscapeModifier : MonoBehaviour
     Vector3 lastScale;
 
     public int priority;
+    private int lastPriority;
 
     [HideInInspector]
     public Rect worldBounds;
@@ -46,7 +47,7 @@ public class LandscapeModifier : MonoBehaviour
         OnHotReload.RemoveListener(UpdateBounds);
     }
 
-    void UpdateBounds()
+    public void UpdateBounds()
     {
         Rect newBounds = computeBounds();
         if (worldBounds == null) worldBounds = newBounds;
@@ -57,21 +58,26 @@ public class LandscapeModifier : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (lastPosition.x != gameObject.transform.position.x || lastPosition.y != gameObject.transform.position.y || lastPosition.z != gameObject.transform.position.z)
+        if (lastPosition != gameObject.transform.position)
         {
             lastPosition = gameObject.transform.position;
             UpdateBounds();
         }
 
-        if (lastRotation.x != gameObject.transform.rotation.x || lastRotation.y != gameObject.transform.rotation.y || lastRotation.z != gameObject.transform.rotation.z || lastRotation.w != gameObject.transform.rotation.w)
+        if (lastRotation != gameObject.transform.rotation)
         {
             lastRotation = gameObject.transform.rotation;
             UpdateBounds();
         }
 
-        if (lastScale.x != gameObject.transform.localScale.x || lastScale.y != gameObject.transform.localScale.y || lastScale.z != gameObject.transform.localScale.z)
+        if (lastScale != gameObject.transform.localScale)
         {
             lastScale = gameObject.transform.localScale;
+            UpdateBounds();
+        }
+        if (priority != lastPriority)
+        {
+            lastPriority = priority;
             UpdateBounds();
         }
     }

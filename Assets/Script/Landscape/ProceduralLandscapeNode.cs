@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
@@ -67,7 +68,6 @@ public struct SectionGenerationJob : IJob
                 i_indices[IndiceIndex + 4] = (x + (y + 1) * VerticesPerChunk);
             }
         }
-
     }
 
     public void FinalizeData()
@@ -101,7 +101,7 @@ public struct SectionGenerationJob : IJob
         for (int i = VerticesPerChunk - 1; i < maxEast && !shouldAbort; i += VerticesPerChunk)
         {
             // Align Y to zero
-            v_position[i] = v_position[i]+ new Vector3(-CellSize, -CellSize, 0);
+            v_position[i] = v_position[i] + new Vector3(-CellSize, -CellSize, 0);
         }
     }
 
@@ -135,6 +135,8 @@ public class ProceduralLandscapeNode
     private SectionGenerationJob generationJob;
     private JobHandle generationJobHandle;
 
+    bool shouldDisplay = false;
+
     public ProceduralLandscapeNode(ProceduralLandscape inLandscape, int inNodeLevel, Vector3 inPosition, float inScale)
     {
         subdivisionLevel = inNodeLevel;
@@ -150,9 +152,10 @@ public class ProceduralLandscapeNode
         requestMeshUpdate();
     }
 
+    // Event called when region is updated and need mesh update
     private void UpdateRegion(Rect region)
     {
-        if (HeightGenerator.RectIntersect(region, new Rect(new Vector2(worldPosition.x - worldScale / 2, worldPosition.y - worldScale / 2), new Vector2(worldScale, worldScale))))
+        if (HeightGenerator.RectIntersect(region, new Rect(new Vector2(worldPosition.x - worldScale / 2, worldPosition.z - worldScale / 2), new Vector2(worldScale, worldScale))))
             requestMeshUpdate();
     }
 
@@ -160,13 +163,20 @@ public class ProceduralLandscapeNode
     public void CustomUpdate()
     {
         /*
-        Either we wants to subdivide this node if he is to close, either we wants to display its mesh section
+        Either we wants to subdivide this node if he is to close to the camera, either we wants to display its mesh section
          */
-        if (computeDesiredLODLevel() > subdivisionLevel)
-            subdivide();
+        if (ComputeDesiredLODLevel() > subdivisionLevel)
+            SubdivideCurrentNode();
         else
-            unsubdivide();
+            ShowCurrentNode();
 
+        if (shouldDisplay && !meshRenderer)
+            TryBuildMesh();
+
+        if (meshRenderer)
+            meshRenderer.enabled = shouldDisplay || !IsSubstageGenerationReady();
+
+        // Propagate update through children
         foreach (var child in children)
             child.CustomUpdate();
     }
@@ -180,9 +190,9 @@ public class ProceduralLandscapeNode
     }
 
     // Subdivide this node into 4 nodes 2 times smaller
-    private void subdivide()
+    private void SubdivideCurrentNode()
     {
-        // Test if already subdivided
+        // Test if already subdivided, or start subdivision
         if (children.Count == 0)
         {
             children.Add(new ProceduralLandscapeNode(
@@ -211,25 +221,12 @@ public class ProceduralLandscapeNode
             );
         }
 
-        // Ensure children are built to hide geometry (avoid holes if children are not fully generated)
-        bool childBuilt = true;
-        foreach (var child in children)
-        {
-            if (child.meshRenderer == null)
-            {
-                childBuilt = false;
-                return;
-            }
-        }
-        if (childBuilt)
-            hideGeometry();
-        else
-            showGeometry();
+        shouldDisplay = false;
     }
 
-    private void unsubdivide()
+    private void ShowCurrentNode()
     {
-        showGeometry();
+        shouldDisplay = true;
 
         /*
         Destroy child if not destroyed
@@ -240,71 +237,84 @@ public class ProceduralLandscapeNode
         children.Clear();
     }
 
-    private void hideGeometry()
+    public bool IsDisplayed()
     {
-        EndGenerationJob();
-
-        if (meshRenderer)
-            meshRenderer.enabled = false;
+        return meshRenderer && meshRenderer.enabled;
     }
 
-    private void showGeometry()
+    public bool IsSubstageGenerationReady()
     {
+        if (shouldDisplay)
+            return meshRenderer;
+
+        foreach(var child in children)
+        {
+            if (!child.IsSubstageGenerationReady())
+                return false;
+        }
+        return true;
+    }
+
+
+    private void TryBuildMesh()
+    {
+        if (IsDisplayed())
+            return;
         if (meshRenderer)
         {
             meshRenderer.enabled = true;
+            return;
         }
-        else if (generationJobHandle.IsCompleted)
+
+        if (!generationJobHandle.IsCompleted) 
+            return;
+
+        generationJobHandle.Complete();
+
+        if (!generationJob.v_position.IsCreated)
+            return;
+
+        Mesh resultingMesh = new Mesh();
+        resultingMesh.vertices = generationJob.v_position.ToArray();
+        resultingMesh.colors = generationJob.v_colors.ToArray();
+        resultingMesh.normals = generationJob.v_normals.ToArray();
+        resultingMesh.uv = generationJob.v_uvs.ToArray();
+        resultingMesh.triangles = generationJob.i_indices.ToArray();
+        resultingMesh.RecalculateNormals(); // We recompute normal before moving seams down
+        generationJob.FinalizeData();
+        resultingMesh.vertices = generationJob.v_position.ToArray();
+
+        meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        meshRenderer.material = owningLandscape.landscape_material;
+        meshRenderer.bounds = new Bounds(worldPosition, new Vector3(worldScale, 5000000, worldScale));
+
+        if (owningLandscape.GrassFX)
         {
-            generationJobHandle.Complete();
-
-            if (!generationJob.v_position.IsCreated)
-                return;
-
-            Mesh resultingMesh = new Mesh();
-            resultingMesh.vertices = generationJob.v_position.ToArray();
-            resultingMesh.colors = generationJob.v_colors.ToArray();
-            resultingMesh.normals = generationJob.v_normals.ToArray();
-            resultingMesh.uv = generationJob.v_uvs.ToArray();
-            resultingMesh.triangles = generationJob.i_indices.ToArray();
-            resultingMesh.RecalculateNormals(); // We recompute normal before moving seams down
-            generationJob.FinalizeData();
-            resultingMesh.vertices = generationJob.v_position.ToArray();
-
-            // If there is no existing mesh, wait generation completion to rebuild all
-
-            meshRenderer = gameObject.AddComponent<MeshRenderer>();
-            meshRenderer.material = owningLandscape.landscape_material;
-            meshRenderer.bounds = new Bounds(worldPosition, new Vector3(worldScale, 5000000, worldScale));
-
-            if (owningLandscape.GrassFX)
-            {
-                vfx = gameObject.AddComponent<VisualEffect>();
-                vfx.visualEffectAsset = owningLandscape.GrassFX;
-                vfx.SetVector3("BoundCenter", meshRenderer.bounds.center);
-                vfx.SetVector3("BoundExtent", meshRenderer.bounds.size);
-            }
-
-            if (subdivisionLevel == owningLandscape.maxLevel && Application.isPlaying)
-                collisions = gameObject.AddComponent<MeshCollider>();
-
-            // Set mesh
-            if (!meshFilter)
-                meshFilter = gameObject.AddComponent<MeshFilter>();
-            meshFilter.mesh = resultingMesh;
-
-            // Enable collision on max level nodes
-            if (collisions)
-                collisions.sharedMesh = resultingMesh;
-
-            // Particle system for grass // @TODO improve with a cleaner system
-            if (owningLandscape.GrassFX)
-            {
-                vfx.SetMesh("NewMesh", resultingMesh);
-                vfx.Reinit();
-            }
-            EndGenerationJob();
+            vfx = gameObject.AddComponent<VisualEffect>();
+            vfx.visualEffectAsset = owningLandscape.GrassFX;
+            vfx.SetVector3("BoundCenter", meshRenderer.bounds.center);
+            vfx.SetVector3("BoundExtent", meshRenderer.bounds.size);
         }
+
+        if (subdivisionLevel == owningLandscape.maxLevel && Application.isPlaying)
+            collisions = gameObject.AddComponent<MeshCollider>();
+
+        // Set mesh
+        if (!meshFilter)
+            meshFilter = gameObject.AddComponent<MeshFilter>();
+        meshFilter.mesh = resultingMesh;
+
+        // Enable collision on max level nodes
+        if (collisions)
+            collisions.sharedMesh = resultingMesh;
+
+        // Particle system for grass // @TODO improve with a cleaner system
+        if (owningLandscape.GrassFX)
+        {
+            vfx.SetMesh("NewMesh", resultingMesh);
+            vfx.Reinit();
+        }
+        EndGenerationJob();
     }
 
     void EndGenerationJob()
@@ -318,10 +328,14 @@ public class ProceduralLandscapeNode
     {
         // Cancel existing task and wait task completion
         EndGenerationJob();
-        GameObject.DestroyImmediate(meshRenderer);
-        GameObject.DestroyImmediate(meshFilter);
-        GameObject.DestroyImmediate(collisions);
-        GameObject.DestroyImmediate(vfx);
+        if (meshRenderer)
+            GameObject.DestroyImmediate(meshRenderer);
+        if (meshFilter)
+            GameObject.DestroyImmediate(meshFilter);
+        if (collisions)
+            GameObject.DestroyImmediate(collisions);
+        if (vfx)
+            GameObject.DestroyImmediate(vfx);
 
         // Create and start a new task
         generationJob = new SectionGenerationJob();
@@ -343,13 +357,13 @@ public class ProceduralLandscapeNode
     {
         EndGenerationJob();
 
-        unsubdivide();
+        ShowCurrentNode();
         UnityEngine.Object.DestroyImmediate(gameObject);
         gameObject = null;
         HeightGenerator.Singleton.OnUpdateRegion.RemoveListener(UpdateRegion);
     }
 
-    private int computeDesiredLODLevel()
+    private int ComputeDesiredLODLevel()
     {
         // Height correction
         Vector3 cameraGroundLocation = owningLandscape.GetCameraPosition();

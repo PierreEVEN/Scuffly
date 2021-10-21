@@ -103,6 +103,14 @@ public class ProceduralLandscape : MonoBehaviour
         if (showBounds)
             foreach (var section in GeneratedSections)
                 section.root_node.DrawGuizmo();
+
+        if (Application.isEditor && !FreezeGeneration)
+        {
+            // Refresh all sections
+            foreach (var section in GeneratedSections)
+                section.root_node.CustomUpdate();
+            UpdateCameraLocation();
+        }
     }
 
     public void OnDisable()

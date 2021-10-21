@@ -96,22 +96,22 @@ public class HeightGenerator
         return Mathf.Lerp(alt, altitudeOverride, incidence);
     }
 
-    float getMountainLevel(float posX, float posY)
+    float getMountainLevel(float posX, float posZ)
     {
         float scale = 0.001f;
-        float level = 1.5f - Mathf.PerlinNoise(posX * scale, posY * scale) * 1.5f;
+        float level = 1.5f - Mathf.PerlinNoise(posX * scale, posZ * scale) * 1.5f;
         level -= 0.5f;
 
         return level;
     }
 
-    float getHillsLevel(float posX, float posY, float mountainLevel)
+    float getHillsLevel(float posX, float posZ, float mountainLevel)
     {
         float scale = 0.01f;
-        return Mathf.PerlinNoise(posX * scale, posY * scale) * (1 - (float)Math.Pow(Math.Abs(mountainLevel), 1));
+        return Mathf.PerlinNoise(posX * scale, posZ * scale) * (1 - (float)Math.Pow(Math.Abs(mountainLevel), 1));
     }
 
-    float addBeaches(float posX, float posY, float currentAltitude)
+    float addBeaches(float posX, float posZ, float currentAltitude)
     {
         return currentAltitude;
     }
