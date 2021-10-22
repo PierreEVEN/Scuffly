@@ -8,7 +8,7 @@ public class PlaneWheelController : MonoBehaviour
 {
     WheelCollider WheelPhysic;
     float WheelRotation = 0;
-    public int BoneToAttach = 0;
+    private Transform wheelAxisBone;
     Animation gearAnim;
     bool Deployed = true;
 
@@ -20,14 +20,27 @@ public class PlaneWheelController : MonoBehaviour
 
         gearAnim = GetComponentInParent<Animation>();
         var skeletalMesh = GetComponentInParent<SkinnedMeshRenderer>();
-        gameObject.transform.parent = skeletalMesh.bones[BoneToAttach];
+
+
+        foreach (var bone in skeletalMesh.bones)
+        {
+            if (bone.name.Contains("_end") && bone.parent.name.ToLower().Contains("axis"))
+            {
+                wheelAxisBone = bone;
+            }
+        }
+
+        if (wheelAxisBone)
+            gameObject.transform.parent = wheelAxisBone;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!wheelAxisBone)
+            return;
         WheelRotation = (WheelRotation + WheelPhysic.rpm * 6 * Time.deltaTime) % 360.0f;
-        gameObject.transform.rotation = gameObject.transform.parent.rotation * Quaternion.Euler(WheelRotation, -90, 0);
+        gameObject.transform.rotation = transform.parent.rotation * Quaternion.FromToRotation(wheelAxisBone.position, wheelAxisBone.parent.position) * Quaternion.Euler(0, 0, WheelPhysic.steerAngle) * Quaternion.Euler(0, -WheelRotation, 90);
     }
 
     public void Switch()

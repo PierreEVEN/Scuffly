@@ -75,6 +75,9 @@ public class HeightGenerator
         if (incidence == 1)
             return altitudeOverride;
 
+        posX += 38020;
+        posZ += 7367;
+
         posX *= 0.04f;
         posZ *= 0.04f;
 

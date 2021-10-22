@@ -13,6 +13,8 @@ public class MobilePart : MonoBehaviour
     private Quaternion intNeutralRotation = Quaternion.identity;
     private Quaternion intMinRotation = Quaternion.identity;
     private Quaternion intMaxRotation = Quaternion.identity;
+    private float desiredInput = 0;
+    private float inputValue = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -23,11 +25,17 @@ public class MobilePart : MonoBehaviour
         setInput(0);
     }
 
-    public void setInput(float inputValue)
+    public void setInput(float input)
     {
-        Quaternion finalRotation;
+        desiredInput = Mathf.Clamp(input, -1, 1);
+    }
 
-        inputValue = Mathf.Clamp(inputValue, -1, 1);
+    // Update is called once per frame
+    void Update()
+    {
+
+        inputValue += Mathf.Clamp(desiredInput - inputValue, -Time.deltaTime * 4, Time.deltaTime * 4);
+        Quaternion finalRotation;
 
         if (inputValue > 0.0f)
             finalRotation = Quaternion.Lerp(intNeutralRotation, intMaxRotation, inputValue);
@@ -35,11 +43,5 @@ public class MobilePart : MonoBehaviour
             finalRotation = Quaternion.Lerp(intNeutralRotation, intMinRotation, -inputValue);
 
         gameObject.transform.rotation = gameObject.transform.parent.rotation * finalRotation;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

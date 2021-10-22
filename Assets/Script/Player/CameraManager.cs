@@ -13,10 +13,14 @@ using UnityEngine.InputSystem;
 public class CameraManager : MonoBehaviour
 {
     public Vector2 ZoomBounds = new Vector2(5, 200);
+    public Vector2 FovBounds = new Vector2(30, 120);
     public bool Indoor = false;
 
     private float zoomInput = 50;
+    private float fov = 60;
     private Vector2 lookVector = new Vector2();
+    private Vector2 indoorLookVector = new Vector2();
+    private Camera controlledCamera;
 
     private PlayerManager playerManager;
 
@@ -26,6 +30,7 @@ public class CameraManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         playerManager = gameObject.GetComponent<PlayerManager>();
+        controlledCamera = gameObject.GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -33,10 +38,11 @@ public class CameraManager : MonoBehaviour
     {
         if (playerManager.viewPlane.Value)
         {
-            Quaternion horiz = Quaternion.AngleAxis(lookVector.x, Vector3.up);
-            Quaternion vert = Quaternion.AngleAxis(lookVector.y, Vector3.right);
+            Quaternion horiz = Quaternion.AngleAxis(Indoor ? indoorLookVector.x : lookVector.x, Vector3.up);
+            Quaternion vert = Quaternion.AngleAxis(Indoor ? indoorLookVector.y : lookVector.y, Vector3.right);
             gameObject.transform.rotation = Indoor ? playerManager.viewPlane.Value.transform.rotation * horiz * vert : horiz * vert;
             gameObject.transform.position = playerManager.viewPlane.Value.transform.position + gameObject.transform.forward * (Indoor ? 0 : -zoomInput) + playerManager.viewPlane.Value.transform.forward * 3.3f + playerManager.viewPlane.Value.transform.up * 1f;
+            controlledCamera.fieldOfView = Indoor ? fov : 60;
         }
         else
         {
@@ -45,7 +51,19 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public void OnLook(InputValue input) => lookVector = new Vector2(input.Get<Vector2>().x + lookVector.x, Mathf.Clamp(input.Get<Vector2>().y + lookVector.y, -90, 90));
-    public void OnZoom(InputValue input) => zoomInput = Mathf.Clamp(zoomInput + input.Get<float>(), ZoomBounds.x, ZoomBounds.y);
+    public void OnLook(InputValue input)
+    {
+        if (Indoor)
+            indoorLookVector = new Vector2(input.Get<Vector2>().x + indoorLookVector.x, Mathf.Clamp(input.Get<Vector2>().y + indoorLookVector.y, -90, 90));
+        else
+            lookVector = new Vector2(input.Get<Vector2>().x + lookVector.x, Mathf.Clamp(input.Get<Vector2>().y + lookVector.y, -90, 90));
+    }
+    public void OnZoom(InputValue input)
+    {
+        if (Indoor)
+            fov = Mathf.Clamp(fov + input.Get<float>(), FovBounds.x, FovBounds.y);
+        else
+            zoomInput = Mathf.Clamp(zoomInput + input.Get<float>(), ZoomBounds.x, ZoomBounds.y);
+    }
     public void OnSwitchView() => Indoor = !Indoor;
 }

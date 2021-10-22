@@ -29,7 +29,7 @@ public class PlaneInputInterface : MonoBehaviour
 
     void OnGUI()
     {
-        if (!playerManager.controlledPlane.Value) 
+        if (!playerManager.controlledPlane.Value)
             return;
         GUILayout.Space(50);
         GUILayout.TextArea("Velocity : " + playerManager.controlledPlane.Value.GetComponent<Rigidbody>().velocity.magnitude + " m/s  |  " + playerManager.controlledPlane.Value.GetComponent<Rigidbody>().velocity.magnitude * 3.6 + " km/h  |  " + playerManager.controlledPlane.Value.GetComponent<Rigidbody>().velocity.magnitude * 1.94384519992989f + " noeuds");
@@ -39,10 +39,10 @@ public class PlaneInputInterface : MonoBehaviour
 
     void Update()
     {
-        thrustValue = Mathf.Clamp(thrustValue + thrustInput * Time.deltaTime * 10, 0, 1);
-        upValue = Mathf.Clamp(upValue + upInput * Time.deltaTime, -1, 1);
-        rightValue = Mathf.Clamp(rightValue + rightInput * Time.deltaTime, -1, 1);
-        rollValue = Mathf.Lerp(rollValue, rollInput, Time.deltaTime * 2);
+        thrustValue = Mathf.Clamp(thrustInput, 0, 1);
+        upValue = Mathf.Clamp(upInput, -1, 1);
+        rightValue = Mathf.Clamp(rightInput, -1, 1);
+        rollValue = Mathf.Clamp(rollInput, -1, 1);
 
         if (!playerManager.controlledPlane.Value)
             return;
@@ -55,6 +55,24 @@ public class PlaneInputInterface : MonoBehaviour
 
     }
 
+    public void OnThrustAxis(InputValue input)
+    {
+        thrustInput = input.Get<float>() * 0.5f + 0.5f;
+    }
+
+    public void OnYawAxis(InputValue input)
+    {
+        rightInput = input.Get<float>();
+    }
+
+    public void OnRollAxis(InputValue input)
+    {
+        rollInput = input.Get<float>();
+    }
+    public void OnPitchAxis(InputValue input)
+    {
+        upInput = input.Get<float>();
+    }
     public void OnThrust(InputValue input)
     {
         thrustInput = Mathf.Clamp(input.Get<float>(), -1, 1);
@@ -103,6 +121,11 @@ public class PlaneInputInterface : MonoBehaviour
     }
     public void onSwitchBattery() { }
 
+    public void OnSetBrake(InputValue input)
+    {
+        foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<WheelCollider>())
+                part.brakeTorque = Mathf.Clamp(input.Get<float>(), 0, 1) * 3000;
+    }
 
     public void SetThrustInput(float value)
     {
@@ -114,6 +137,8 @@ public class PlaneInputInterface : MonoBehaviour
         {
             thruster.set_thrust_input(value);
         }
+        foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<WheelCollider>())
+            part.motorTorque = 0.01f;
     }
 
     public void setPitchInput(float value)
@@ -122,6 +147,7 @@ public class PlaneInputInterface : MonoBehaviour
 
         if (!playerManager.controlledPlane.Value)
             return;
+
         foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<MobilePart>())
             if (part.tag == "Pitch")
                 part.setInput(value * -1);
@@ -133,13 +159,17 @@ public class PlaneInputInterface : MonoBehaviour
 
         if (!playerManager.controlledPlane.Value)
             return;
+        foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<WheelCollider>())
+            if (part.tag == "Yaw")
+                part.steerAngle = Mathf.Pow(value, 3) * 65;
+
         foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<MobilePart>())
             if (part.tag == "Yaw")
                 part.setInput(value);
     }
     public void setRollInput(float value)
     {
-        value = Mathf.Clamp(value, -1 , 1);
+        value = Mathf.Clamp(value, -1, 1);
 
         if (!playerManager.controlledPlane.Value)
             return;

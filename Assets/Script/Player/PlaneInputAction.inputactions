@@ -103,6 +103,51 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ThrustAxis",
+                    "type": "Value",
+                    "id": "b0d3fb7b-b4b4-4352-9b75-7015ce20f12a",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RollAxis",
+                    "type": "Value",
+                    "id": "81f3e092-6ac3-4b3f-bfc2-f50031266ece",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PitchAxis",
+                    "type": "Value",
+                    "id": "86117199-6968-4549-8678-c67dd5967d66",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "YawAxis",
+                    "type": "Value",
+                    "id": "de05e9c5-eac9-40b0-823d-67072892693f",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SetBrake",
+                    "type": "Value",
+                    "id": "680ed416-8c46-44f6-bf8a-c763e3004855",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -265,7 +310,7 @@
                     "id": "766b0f80-74dc-4993-84b5-6bd7e25956e4",
                     "path": "<Mouse>/scroll/y",
                     "interactions": "",
-                    "processors": "Scale(factor=-0.1)",
+                    "processors": "Scale(factor=-0.02)",
                     "groups": "",
                     "action": "Zoom",
                     "isComposite": false,
@@ -356,6 +401,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchGear",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a13b6b6e-1e49-4f8f-ba39-06a81cac5336",
+                    "path": "<HID::FeiYing Model GOLD WARRIOR SIM -  XTR5.5+G2+FMS Controller>/stick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrustAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9f6364ba-ccff-46f5-b55f-8eed8ec6ab82",
+                    "path": "<HID::FeiYing Model GOLD WARRIOR SIM -  XTR5.5+G2+FMS Controller>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RollAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d62f6c1-38f0-4d92-9af9-8bda51c68b6b",
+                    "path": "<HID::FeiYing Model GOLD WARRIOR SIM -  XTR5.5+G2+FMS Controller>/slider",
+                    "interactions": "",
+                    "processors": "Invert",
+                    "groups": "",
+                    "action": "PitchAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "795a8bce-bc63-4bde-bf9d-90ac22eb25b3",
+                    "path": "<HID::FeiYing Model GOLD WARRIOR SIM -  XTR5.5+G2+FMS Controller>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "YawAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac8d78d4-a6df-4019-abd3-a517b69ef356",
+                    "path": "<HID::FeiYing Model GOLD WARRIOR SIM -  XTR5.5+G2+FMS Controller>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SetBrake",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

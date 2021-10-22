@@ -4,8 +4,8 @@ ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
-      74: -1415554528396368918
-    second: FrontWheelArmature|FrontWheelArmatureAction
+      74: 4446027958028607791
+    second: FrontWheelArmature|FrontGearRetract
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -92,7 +92,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: FrontLandingGear.001
+    rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
