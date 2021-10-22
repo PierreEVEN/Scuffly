@@ -9,9 +9,8 @@ public class PlaneWheelController : MonoBehaviour
     WheelCollider WheelPhysic;
     float WheelRotation = 0;
     public int BoneToAttach = 0;
-    Animation animator;
+    Animation gearAnim;
     bool Deployed = true;
-    public AnimationClip animation;
 
     // Start is called before the first frame update
     void Start()
@@ -19,11 +18,9 @@ public class PlaneWheelController : MonoBehaviour
         WheelPhysic = gameObject.GetComponent<WheelCollider>();
         WheelPhysic.brakeTorque = 0.0f;
 
-        animator = GetComponentInParent<Animation>();
-
+        gearAnim = GetComponentInParent<Animation>();
         var skeletalMesh = GetComponentInParent<SkinnedMeshRenderer>();
         gameObject.transform.parent = skeletalMesh.bones[BoneToAttach];
-        animator.AddClip(animation, "extract");
     }
 
     // Update is called once per frame
@@ -35,17 +32,20 @@ public class PlaneWheelController : MonoBehaviour
 
     public void Switch()
     {
-        if (!animator) return;
+        if (!gearAnim) return;
         if (Deployed)
         {
-            animator.Play();
+            gearAnim[gearAnim.clip.name].speed = 1;
+            gearAnim[gearAnim.clip.name].time = Mathf.Max(gearAnim[gearAnim.clip.name].time, 0);
+            gearAnim.Play(gearAnim.clip.name);
             Deployed = false;
         }
         else
         {
-            animator.Rewind();
-            animator.Play();
-            animator.Stop();
+            gearAnim[gearAnim.clip.name].speed = -1;
+            if (gearAnim[gearAnim.clip.name].time < 0.01)
+            gearAnim[gearAnim.clip.name].time = gearAnim.clip.length - Time.deltaTime;
+            gearAnim.Play(gearAnim.clip.name);
             Deployed = true;
         }
     }
