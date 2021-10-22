@@ -21,6 +21,7 @@ public class PlaneInputInterface : MonoBehaviour
     private float rollInput = 0;
 
     private bool enableEngine = false;
+    private bool apuEnabled = false;
     void Start()
     {
         playerManager = gameObject.GetComponent<PlayerManager>();
@@ -72,19 +73,29 @@ public class PlaneInputInterface : MonoBehaviour
     }
     public void OnSwitchAPU()
     {
-        if (!playerManager.controlledPlane.Value)
-            return;
+        SetApuEnabled(!apuEnabled);
+    }
+
+    public void SetApuEnabled(bool enable)
+    {
         foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<APU>())
-            if (part.IsReady())
-                part.StopApu();
-            else
+            if (enable)
                 part.StartApu();
+            else
+                part.StopApu();
+        apuEnabled = !enable;
     }
 
     public void OnSwitchEngine()
     {
-        enableEngine = !enableEngine;
+        SetEngineEnabled(!enableEngine);
     }
+
+    public void SetEngineEnabled(bool enabled)
+    {
+        enableEngine = enabled;
+    }
+
     public void OnSwitchGear()
     {
         foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<PlaneWheelController>())
@@ -93,8 +104,10 @@ public class PlaneInputInterface : MonoBehaviour
     public void onSwitchBattery() { }
 
 
-    private void SetThrustInput(float value)
+    public void SetThrustInput(float value)
     {
+        value = Mathf.Clamp(value, 0, 1);
+
         if (!playerManager.controlledPlane.Value)
             return;
         foreach (var thruster in playerManager.controlledPlane.Value.GetComponentsInChildren<Thruster>())
@@ -103,8 +116,10 @@ public class PlaneInputInterface : MonoBehaviour
         }
     }
 
-    private void setPitchInput(float value)
+    public void setPitchInput(float value)
     {
+        value = Mathf.Clamp(value, -1, 1);
+
         if (!playerManager.controlledPlane.Value)
             return;
         foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<MobilePart>())
@@ -114,14 +129,18 @@ public class PlaneInputInterface : MonoBehaviour
 
     private void setYawInput(float value)
     {
+        value = Mathf.Clamp(value, -1, 1);
+
         if (!playerManager.controlledPlane.Value)
             return;
         foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<MobilePart>())
             if (part.tag == "Yaw")
                 part.setInput(value);
     }
-    private void setRollInput(float value)
+    public void setRollInput(float value)
     {
+        value = Mathf.Clamp(value, -1 , 1);
+
         if (!playerManager.controlledPlane.Value)
             return;
         foreach (var part in playerManager.controlledPlane.Value.GetComponentsInChildren<MobilePart>())

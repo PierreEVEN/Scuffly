@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 using UnityEngine.Events;
 /**
@@ -19,7 +18,6 @@ public class HeightGenerator
 
     public List<LandscapeModifier> modifiers = new List<LandscapeModifier>();
     public OnUpdateSectionEvent OnUpdateRegion = new OnUpdateSectionEvent();
-
 
     public class OnUpdateSectionEvent : UnityEvent<Rect> { }
 

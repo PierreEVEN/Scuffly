@@ -45,9 +45,16 @@ public struct SectionGenerationJob : IJob
                 int VertexIndex = (x + y * VerticesPerChunk);
 
                 v_position[VertexIndex] = new Vector3(l_PosX, HeightGenerator.Singleton.GetAltitudeAtLocation(l_PosX, l_posZ), l_posZ);
-                v_normals[VertexIndex] = new Vector3(0, 1, 0);
                 v_colors[VertexIndex] = new Color32(0, 255, 0, 255);
                 v_uvs[VertexIndex] = new Vector2(l_PosX / 100, l_posZ / 100);
+
+                Vector3 normal;
+                if (x == 0 || x == VerticesPerChunk - 1 || y == 0 || y == VerticesPerChunk - 1)
+                    normal = new Vector3(0, 1, 0);
+                else
+                    normal = Vector3.Cross(v_position[(x - 1 + y * VerticesPerChunk)] - v_position[(x + y * VerticesPerChunk)], v_position[(x + y * VerticesPerChunk)] - v_position[(x + (y - 1) * VerticesPerChunk)]).normalized;
+
+                v_normals[VertexIndex] = normal;
             }
         }
 
@@ -68,13 +75,8 @@ public struct SectionGenerationJob : IJob
                 i_indices[IndiceIndex + 4] = (x + (y + 1) * VerticesPerChunk);
             }
         }
-    }
 
-    public void FinalizeData()
-    {
-        // Create mesh object
-        int VerticesPerChunk = meshDensity + 3;
-        float CellSize = nodeWorldScale / meshDensity;
+        // Move the seams down to avoid holes in landscape
 
         // North seams
         for (int i = 0; i < VerticesPerChunk && !shouldAbort; ++i)
@@ -280,9 +282,6 @@ public class ProceduralLandscapeNode
         resultingMesh.normals = generationJob.v_normals.ToArray();
         resultingMesh.uv = generationJob.v_uvs.ToArray();
         resultingMesh.triangles = generationJob.i_indices.ToArray();
-        resultingMesh.RecalculateNormals(); // We recompute normal before moving seams down
-        generationJob.FinalizeData();
-        resultingMesh.vertices = generationJob.v_position.ToArray();
 
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
         meshRenderer.material = owningLandscape.landscape_material;

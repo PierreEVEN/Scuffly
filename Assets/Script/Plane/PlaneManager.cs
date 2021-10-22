@@ -1,12 +1,10 @@
 using MLAPI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(NetworkBehaviour))]
 public class PlaneManager : MonoBehaviour
 {
-    public Vector3 massCenter = new Vector3();
+    public Vector3 massCenter = new Vector3(0, 0, 0);
     // Start is called before the first frame update
     void Start()
     {
@@ -17,5 +15,20 @@ public class PlaneManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public float GetAttitude()
+    {
+        return Mathf.Asin(transform.forward.y) / Mathf.PI * 90;
+    }
+
+    public float GetRoll()
+    {
+        return Mathf.Asin(transform.right.y) / Mathf.PI * 90;
+    }
+    
+    public float GetHeading()
+    {
+        return transform.rotation.eulerAngles.y;
     }
 }
