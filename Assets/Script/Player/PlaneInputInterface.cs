@@ -27,12 +27,17 @@ public class PlaneInputInterface : MonoBehaviour
         playerManager = gameObject.GetComponent<PlayerManager>();
     }
 
+    float LastVelocity = 0;
+    float Acceleration = 0;
+
     void OnGUI()
     {
         if (!playerManager.controlledPlane.Value)
             return;
         GUILayout.Space(50);
-        GUILayout.TextArea("Velocity : " + playerManager.controlledPlane.Value.GetComponent<Rigidbody>().velocity.magnitude + " m/s  |  " + playerManager.controlledPlane.Value.GetComponent<Rigidbody>().velocity.magnitude * 3.6 + " km/h  |  " + playerManager.controlledPlane.Value.GetComponent<Rigidbody>().velocity.magnitude * 1.94384519992989f + " noeuds");
+        GUILayout.TextArea("Velocity : " + LastVelocity + " m/s  |  " + LastVelocity * 3.6 + " km/h  |  " + LastVelocity * 1.94384519992989f + " noeuds");
+        GUILayout.TextArea("Force : " + Acceleration + " m/s  |  " + Acceleration / 9.81 + " g");
+        GUILayout.TextArea("Test : " + LastVelocity);
     }
 
     public Vector3 MassCenter = new Vector3(0, 0, 0);
@@ -53,6 +58,9 @@ public class PlaneInputInterface : MonoBehaviour
         setYawInput(rightValue);
         setRollInput(rollValue);
 
+        float currentVelocity = playerManager.controlledPlane.Value.GetComponent<Rigidbody>().velocity.magnitude;
+        Acceleration = Mathf.Lerp(Acceleration, ((Mathf.Abs(currentVelocity - LastVelocity)) / Time.deltaTime) + 9.81f, Time.deltaTime * 2);
+        LastVelocity = currentVelocity;
     }
 
     public void OnThrustAxis(InputValue input)
