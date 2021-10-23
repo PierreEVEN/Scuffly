@@ -61,7 +61,8 @@ public class APU : MonoBehaviour
         if (IsEnabled) return;
 
         CurrentStartupPercent = 0.0f;
-        ApuStartAudioSource.Play();
+        if (ApuStartAudioSource)
+            ApuStartAudioSource.Play();
         IsEnabled = true;
     }
 
@@ -79,6 +80,7 @@ public class APU : MonoBehaviour
 
     void Update()
     {
+
         ApuIdleAudioSource.volume = Mathf.Clamp(CurrentStartupPercent * 0.5f - 0.1f, 0, 1);
         if (CurrentStartupPercent < 0.01f && ApuIdleAudioSource.enabled)
             ApuIdleAudioSource.enabled = false;

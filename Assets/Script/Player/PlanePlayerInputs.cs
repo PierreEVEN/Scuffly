@@ -25,7 +25,9 @@ public class PlanePlayerInputs : MonoBehaviour
         GUILayout.Space(250);
         GUILayout.TextArea("Velocity : " + LastVelocity + " m/s  |  " + LastVelocity * 3.6 + " km/h  |  " + LastVelocity * 1.94384519992989f + " noeuds");
         GUILayout.TextArea("Force : " + Acceleration + " m/s  |  " + Acceleration / 9.81 + " g");
-        GUILayout.TextArea("Test : " + LastVelocity);
+        GUILayout.TextArea("Attitude : " + playerManager.controlledPlane.GetAttitude());
+        GUILayout.TextArea("Roll : " + playerManager.controlledPlane.GetRoll());
+        GUILayout.TextArea("Heading : " + playerManager.controlledPlane.GetHeading());
     }
 
     public Vector3 MassCenter = new Vector3(0, 0, 0);
@@ -154,4 +156,12 @@ public class PlanePlayerInputs : MonoBehaviour
             return;
         playerManager.controlledPlane.Brakes = input.isPressed;
     }
+
+    public void OnShoot()
+    {
+        if (!playerManager.controlledPlane)
+            return;
+        playerManager.controlledPlane.Shoot();
+    }
+
 }

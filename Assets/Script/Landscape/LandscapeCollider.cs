@@ -13,9 +13,18 @@ public class LandscapeCollider : MonoBehaviour
 
     void Start()
     {
-        collisionPrefab = new GameObject(gameObject.name + "_landscape_collision");
-        collisionPrefab.hideFlags = HideFlags.DontSave;
-        generatedCollider = collisionPrefab.AddComponent<MeshCollider>();
+        CreateMesh();
+    }
+
+    void CreateMesh()
+    {
+        if (!collisionPrefab)
+        {
+            collisionPrefab = new GameObject(gameObject.name + "_landscape_collision");
+            collisionPrefab.hideFlags = HideFlags.DontSave;
+        }
+        if (!generatedCollider)
+            generatedCollider = collisionPrefab.AddComponent<MeshCollider>();
     }
 
     // Update is called once per frame
@@ -56,6 +65,8 @@ public class LandscapeCollider : MonoBehaviour
 
         new_mesh.vertices = vertices;
         new_mesh.triangles = triangles;
+        if (!generatedCollider)
+            CreateMesh();
         generatedCollider.sharedMesh = new_mesh;
     }
 }

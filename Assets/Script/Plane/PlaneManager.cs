@@ -7,6 +7,12 @@ public class PlaneManager : MonoBehaviour
     public Vector3 massCenter = new Vector3(0, 0, 0);
     Rigidbody planePhysic;
 
+    public bool initialThrottleNotch = false;
+    public bool initialApuSwitch = false;
+    public bool initialRetractGear = false;
+    public bool initialBrakes = false;
+    public float initialSpeed = 0;
+
     private bool throttleNotch = false;
     private bool apuSwitch = false;
     private bool retractGear = false;
@@ -55,7 +61,13 @@ public class PlaneManager : MonoBehaviour
     void Start()
     {
         planePhysic = gameObject.GetComponent<Rigidbody>();
+        planePhysic.velocity = transform.forward * initialSpeed;
+
         planePhysic.centerOfMass = massCenter;
+        ThrottleNotch = initialThrottleNotch;
+        ApuSwitch = initialApuSwitch;
+        RetractGear = initialRetractGear;
+        Brakes = initialBrakes;
     }
 
     // Update is called once per frame
@@ -111,6 +123,18 @@ public class PlaneManager : MonoBehaviour
                 part.setInput(input);
     }
 
+    public void Shoot()
+    {
+        foreach (var part in GetComponentsInChildren<WeaponPod>())
+        {
+            if (part.spawnedWeapon)
+            {
+                part.Shoot();
+                return;
+            }
+        }
+    }
+
     /**
      * Helpers
      */
@@ -127,12 +151,12 @@ public class PlaneManager : MonoBehaviour
 
     public float GetAttitude()
     {
-        return Mathf.Asin(transform.forward.y) / Mathf.PI * 90;
+        return Mathf.Asin(transform.forward.y) / Mathf.PI * 180;
     }
 
     public float GetRoll()
     {
-        return Mathf.Asin(transform.right.y) / Mathf.PI * 90;
+        return (Mathf.Atan2(transform.right.y, transform.right.x) / Mathf.PI * 180 + 360) % 360 - 180;
     }
 
     public float GetHeading()

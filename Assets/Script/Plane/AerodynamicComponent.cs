@@ -102,6 +102,9 @@ public class AerodynamicComponent : MonoBehaviour
     {
         Vector3 totalForce = new Vector3();
 
+        if (Surfaces.Count == 0)
+            RecomputeData();
+
         foreach (var surface in Surfaces)
         {
             Vector3 worldCenter = gameObject.transform.TransformPoint(surface.localCenter);

@@ -1,0 +1,79 @@
+digraph G {
+node0 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float2 ((5.00, 5.00))
+flipBookSize
+flipBookSize
+Count_a"]
+node1 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float2 ((0.00, 0.00))
+Delay_a
+Delay_a"]
+node2 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float2 ((200.00, 200.00))
+Count_a"]
+node3 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float3 ((0.00, 0.00, 0.00))
+Velocity_a
+bounds_center
+boundsPadding
+bounds_center
+boundsPadding"]
+node4 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float3 ((1.00, 1.00, 1.00))
+bounds_size
+bounds_size"]
+node5 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float (0)
+TexIndex_a"]
+node6 [shape="box" color="cyan" style="filled" label="VFXExpressionCombine Float3
+Color_b
+Color_d"]
+node7 [shape="box" label="VFXExpressionExtractComponent Float"]
+node8 [shape="box" label="VFXValue`1 Float4 ((0.00, 0.00, 0.00, 0.00))"]
+node9 [shape="box" label="VFXExpressionExtractComponent Float"]
+node10 [shape="box" label="VFXExpressionExtractComponent Float"]
+node11 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float (0,8)
+Lifetime_c"]
+node12 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float (12)
+FrameRate_a"]
+node13 [shape="box" color="cyan" style="filled" label="VFXBuiltInExpression Float (DeltaTime)
+deltaTime_a
+deltaTime_b
+deltaTime_a
+deltaTime_b
+deltaTime_c
+deltaTime_d"]
+node14 [shape="box" color="cyan" style="filled" label="VFXExpressionBakeCurve Float4
+Alpha_a"]
+node15 [shape="box" color="lightslategray" style="filled" label="VFXValue`1 Curve (UnityEngine.AnimationCurve)"]
+node16 [shape="box" color="cyan" style="filled" label="VFXExpressionBakeCurve Float4
+Size_b"]
+node17 [shape="box" color="lightslategray" style="filled" label="VFXValue`1 Curve (UnityEngine.AnimationCurve)"]
+node18 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float2 ((0.20, 0.20))
+invFlipBookSize
+invFlipBookSize"]
+node19 [shape="box" color="cyan" style="filled" label="VFXTexture2DValue Texture2D (44132)
+mainTexture"]
+node20 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float (5)
+MinSpeed_b
+Lifetime_c
+FrameRate_a"]
+node21 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float (20)
+MaxSpeed_b"]
+node22 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float (1)
+DirectionBlend_b"]
+node23 [shape="box" color="steelblue" style="filled" label="VFXValue`1 Float3 ((0.00, -9.81, 0.00))
+Force_b"]
+node24 [shape="box" color="cyan" style="filled" label="VFXExpressionBakeCurve Float4
+Alpha_a"]
+node25 [shape="box" color="lightslategray" style="filled" label="VFXValue`1 Curve (UnityEngine.AnimationCurve)"]
+node26 [shape="box" color="cyan" style="filled" label="VFXExpressionBakeCurve Float4
+Size_b"]
+node27 [shape="box" color="lightslategray" style="filled" label="VFXValue`1 Curve (UnityEngine.AnimationCurve)"]
+node28 [shape="box" color="cyan" style="filled" label="VFXTexture2DValue Texture2D (44132)
+mainTexture"]
+node7 -> node6 [headlabel="0"]
+node9 -> node6 [headlabel="1"]
+node10 -> node6 [headlabel="2"]
+node8 -> node7 
+node8 -> node9 
+node8 -> node10 
+node15 -> node14 
+node17 -> node16 
+node25 -> node24 
+node27 -> node26 
+}

@@ -147,7 +147,7 @@ public class ProceduralLandscapeNode
         gameObject = new GameObject("ProceduralLandscapeNode");
         gameObject.hideFlags = HideFlags.DontSave;
         gameObject.transform.parent = owningLandscape.transform;
-
+        
         // Start mesh generation operation
         HeightGenerator.Singleton.OnUpdateRegion.AddListener(UpdateRegion);
         requestMeshUpdate();
