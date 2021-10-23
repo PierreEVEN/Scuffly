@@ -127,7 +127,6 @@ public class ProceduralLandscapeNode
     private MeshRenderer meshRenderer; // node mesh
     private MeshFilter meshFilter;
     private VisualEffect vfx;
-    private MeshCollider collisions;
     private GameObject gameObject; // Owner of node's components
     private List<ProceduralLandscapeNode> children = new List<ProceduralLandscapeNode>();
     private int subdivisionLevel; // Current subdivision level (+1 per subdivision)
@@ -295,17 +294,10 @@ public class ProceduralLandscapeNode
             vfx.SetVector3("BoundExtent", meshRenderer.bounds.size);
         }
 
-        if (subdivisionLevel == owningLandscape.maxLevel && Application.isPlaying)
-            collisions = gameObject.AddComponent<MeshCollider>();
-
         // Set mesh
         if (!meshFilter)
             meshFilter = gameObject.AddComponent<MeshFilter>();
         meshFilter.mesh = resultingMesh;
-
-        // Enable collision on max level nodes
-        if (collisions)
-            collisions.sharedMesh = resultingMesh;
 
         // Particle system for grass // @TODO improve with a cleaner system
         if (owningLandscape.GrassFX)
@@ -331,8 +323,6 @@ public class ProceduralLandscapeNode
             GameObject.DestroyImmediate(meshRenderer);
         if (meshFilter)
             GameObject.DestroyImmediate(meshFilter);
-        if (collisions)
-            GameObject.DestroyImmediate(collisions);
         if (vfx)
             GameObject.DestroyImmediate(vfx);
 

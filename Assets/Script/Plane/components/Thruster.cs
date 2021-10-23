@@ -24,6 +24,7 @@ public class Thruster : MonoBehaviour
 
     void OnGUI()
     {
+        GUILayout.Space(100);
         GUILayout.TextArea("Thrust input : " + EngineInput + " / engine status : " + FinalEngineInput);
         GUILayout.TextArea("Thrust force : " + thrustVector.magnitude);
     }
@@ -44,7 +45,7 @@ public class Thruster : MonoBehaviour
         if (!PhysicBody)
             return;
 
-        bool enoughPower = FinalEngineInput > 0.09f || PlaneAPU.IsReady();
+        bool enoughPower = FinalEngineInput > 0.01f || PlaneAPU.IsReady();
 
         float EngineDesiredInput = enoughPower ? EngineInput : 0.0f;
 

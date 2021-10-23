@@ -2,16 +2,15 @@ using UnityEngine;
 
 public class PlaneAIController : MonoBehaviour
 {
-    PlaneInputInterface controlledPlane;
-
-    Vector3 targetLocation;
+    PlaneManager controlledPlane;
 
     // Start is called before the first frame update
     void Start()
     {
-        controlledPlane = GetComponent<PlaneInputInterface>();
-        controlledPlane.SetApuEnabled(true);
-        controlledPlane.SetEngineEnabled(true);
+        controlledPlane = GetComponent<PlaneManager>();
+        controlledPlane.ApuSwitch = true;
+        controlledPlane.ThrottleNotch = true;
+        controlledPlane.Brakes = false;
         controlledPlane.SetThrustInput(1.0f);
     }
 

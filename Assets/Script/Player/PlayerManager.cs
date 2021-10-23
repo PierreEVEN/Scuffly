@@ -7,7 +7,7 @@ public class PlayerManager : NetworkBehaviour
     public GameObject DefaultPlane;
 
     [HideInInspector]
-    public NetworkVariable<GameObject> controlledPlane = new NetworkVariable<GameObject>();
+    public PlaneManager controlledPlane;
     [HideInInspector]
     public NetworkVariable<GameObject> viewPlane = new NetworkVariable<GameObject>();
 
@@ -30,7 +30,7 @@ public class PlayerManager : NetworkBehaviour
         if (!NetworkManager.Singleton.IsHost)
             return;
 
-        controlledPlane.Value = plane;
+        controlledPlane = plane.GetComponent<PlaneManager>();
         viewPlane.Value = plane;
         Debug.Log("posses server");
     }

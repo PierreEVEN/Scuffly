@@ -17,6 +17,7 @@ public class PlaneWheelController : MonoBehaviour
     {
         WheelPhysic = gameObject.GetComponent<WheelCollider>();
         WheelPhysic.brakeTorque = 0.0f;
+        WheelPhysic.motorTorque = 0.01f;
 
         gearAnim = GetComponentInParent<Animation>();
         var skeletalMesh = GetComponentInParent<SkinnedMeshRenderer>();
@@ -43,9 +44,9 @@ public class PlaneWheelController : MonoBehaviour
         gameObject.transform.rotation = transform.parent.rotation * Quaternion.FromToRotation(wheelAxisBone.position, wheelAxisBone.parent.position) * Quaternion.Euler(0, 0, WheelPhysic.steerAngle) * Quaternion.Euler(0, -WheelRotation, 90);
     }
 
-    public void Switch()
+    public void Retract(bool retract)
     {
-        if (!gearAnim) return;
+        if (!gearAnim || retract != Deployed) return;
         if (Deployed)
         {
             gearAnim[gearAnim.clip.name].speed = 1;

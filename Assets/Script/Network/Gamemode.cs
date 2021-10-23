@@ -16,7 +16,6 @@ public class Gamemode : NetworkBehaviour
         }
     }
 
-
     public GameObject SpawnPlane(GameObject spawner, GameObject planeClass)
     {
         if (!NetworkManager.Singleton.IsHost)
