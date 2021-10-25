@@ -145,7 +145,7 @@ public class ProceduralLandscapeNode
         worldScale = inScale;
         owningLandscape = inLandscape;
         gameObject = new GameObject("ProceduralLandscapeNode");
-        gameObject.hideFlags = HideFlags.DontSave;
+        gameObject.hideFlags = HideFlags.DontSave | HideFlags.HideInHierarchy;
         gameObject.transform.parent = owningLandscape.transform;
         
         // Start mesh generation operation

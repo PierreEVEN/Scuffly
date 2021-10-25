@@ -1,0 +1,274 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ba7a43222473d4292f91ae936fe2cc, type: 3}
+  m_Name: pine1b_Impostor
+  m_EditorClassIdentifier: 
+  Material: {fileID: 4992251971409798517}
+  Mesh: {fileID: 97203141304513492}
+  Version: 9707
+  ImpostorType: 2
+  LockedSizes: 1
+  SelectedSize: 2048
+  TexSize: {x: 2048, y: 2048}
+  DecoupleAxisFrames: 0
+  HorizontalFrames: 6
+  VerticalFrames: 6
+  PixelPadding: 32
+  MaxVertices: 8
+  Tolerance: 0.15
+  NormalScale: 0.01
+  ShapePoints:
+  - {x: 0.13886657, y: 0.44436777}
+  - {x: 0.13955283, y: 0.86459446}
+  - {x: 0.33716166, y: 1}
+  - {x: 0.6325944, y: 1}
+  - {x: 0.8597532, y: 0.921575}
+  - {x: 0.8610351, y: 0.40609002}
+  - {x: 0.54625976, y: 0}
+  - {x: 0.43929183, y: 0}
+  Preset: {fileID: 11400000, guid: 47b6b3dcefe0eaf4997acf89caf8c75e, type: 2}
+  OverrideOutput: []
+--- !u!43 &97203141304513492
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: pine1b_Impostor
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 18
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 8
+    localAABB:
+      m_Center: {x: -0.0011572838, y: -0.75136757, z: 0}
+      m_Extent: {x: 8.500948, y: 11.77142, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 070005000300030001000700070006000500050004000300030002000100010000000700
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 8
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 256
+    _typelessdata: a00808c191f10e3f000000000000000000000000000080bf0a330e3eea3d0e3f73c607c1fb5b15c1000000000000000000000000000080bff0e60e3ec0a70a3ef65a75c0565d48c1000000000000000000000000000080bf74a0ac3e0000000018c94740565d48c1000000000000000000000000000080bfb5f1213f0000000087830741b3d22ac1000000000000000000000000000080bfc9185c3f489da03d25ff074137d2ba3f000000000000000000000000000080bfcc6c5c3f7c0a183f2c678b3f22523041000000000000000000000000000080bfaed70b3f0000803f6cf1b6bf22523041000000000000000000000000ffff7fbfdceae03e0000803f
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0.21842813, y: 10.797011, z: 0.020019054}
+    m_Extent: {x: 8.733898, y: 10.797011, z: 9.018517}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
+--- !u!21 &4992251971409798517
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: pine1b_Impostor
+  m_Shader: {fileID: 4800000, guid: 56236dc63ad9b7949b63a27f0ad180b3, type: 3}
+  m_ShaderKeywords: EFFECT_HUE_VARIATION _HEMI_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: 72ba61c646a5ee24899c3522720534ee, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emission:
+        m_Texture: {fileID: 2800000, guid: 5a3840cefe6d05e45932f4687a68c7ee, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Features:
+        m_Texture: {fileID: 2800000, guid: 417472728ecc8da4faa0240c041f8357, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normals:
+        m_Texture: {fileID: 2800000, guid: 323595a682c60044cb55c2d6c5876156, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Specular:
+        m_Texture: {fileID: 2800000, guid: 4a13f368933e85e4b871c071cbd2655f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - AI_CLIP_NEIGHBOURS_FRAMES: 0
+    - _AI_AlphaToCoverage: 0
+    - _AI_ShadowBias: 0.171
+    - _AI_ShadowBiasTestTada: 0.25
+    - _AI_ShadowView: 1
+    - _ClipMask: 0.375
+    - _DepthSize: 23.678675
+    - _EnergyConservingSpecularColor: 1
+    - _Frames: 6
+    - _FramesX: 6
+    - _FramesY: 6
+    - _Hemi: 1
+    - _Hue: 1
+    - _ImpostorSize: 23.54284
+    - _Parallax: 0.467
+    - _StencilDepthMask: 8
+    - _StencilDepthRef: 8
+    - _StencilForwardMask: 6
+    - _StencilForwardRef: 0
+    - _StencilGBufferMask: 14
+    - _StencilGBufferRef: 10
+    - _StencilMotionMask: 40
+    - _StencilMotionRef: 40
+    - _TextureBias: -1
+    - _Use_Parallax: 0
+    m_Colors:
+    - _AI_SizeOffset: {r: 23.54284, g: 23.678675, b: 0, a: -0.005319149}
+    - _HueVariation: {r: 0.91003484, g: 0.9150943, b: 0.2978373, a: 0}
+    - _Offset: {r: 0.21842813, g: 10.797011, b: 0.020019054, a: 0.031914894}
+  m_BuildTextureStacks: []
