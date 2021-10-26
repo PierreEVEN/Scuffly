@@ -25,15 +25,17 @@ public class ProceduralLandscape : MonoBehaviour
      * Parameters
      */
 
-    [Header("Scale")]
+    [Header("Scale"), Range(1000, 100000)]
     public float SectionWidth = 15000;
 
-    [Header("LOD")]
-    public float maxLevel = 4;
+    [Header("LOD"), Range(1, 10)]
+    public int maxLevel = 4;
+    [Header("LOD"), Range(50, 5000)]
     public float quadtreeExponent = 500;
 
-    [Header("Rendering")]
+    [Header("Rendering"), Range(0, 20)]
     public int ViewDistance = 4;
+    [Header("Rendering"), Range(2, 500)]
     public int CellsPerChunk = 50;
     public Material landscape_material;
 
@@ -41,9 +43,6 @@ public class ProceduralLandscape : MonoBehaviour
     public bool FreezeGeneration = false;
     public bool Reset = false;
     public bool showBounds = false;
-
-    [Header("Temp")]
-    public VisualEffectAsset GrassFX;
 
     /**
      * Data

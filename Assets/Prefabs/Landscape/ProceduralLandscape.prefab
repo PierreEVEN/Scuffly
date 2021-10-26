@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7350174056216792058}
   - component: {fileID: 2593169332261448255}
+  - component: {fileID: 6656586973470491221}
   m_Layer: 0
   m_Name: ProceduralLandscape
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 6d952abfb4efbb942aaf86f1d0810952, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -52,4 +53,23 @@ MonoBehaviour:
   landscape_material: {fileID: 2100000, guid: 1de2135cb8236314f8cc4a1ba2de2b45, type: 2}
   FreezeGeneration: 0
   Reset: 0
-  GrassFX: {fileID: 8926484042661614526, guid: b4afa680d045ef74a8c78526051afd93, type: 3}
+  showBounds: 0
+--- !u!114 &6656586973470491221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5717572849369266715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90788d5ddd51134fbb23362ce62ade1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foliageAssets: []
+  LodLevels:
+  - 0
+  Radius: 2
+  SectionWidth: 2000
+  DrawDebugBounds: 0
+  CameraPosition: {x: 0, y: 0, z: 0}

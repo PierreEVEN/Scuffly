@@ -9,13 +9,14 @@ using UnityEngine.VFX;
  *  @Author : Pierre EVEN
  */
 
-public struct SectionGenerationJob : IJob
+struct SectionGenerationJob : IJob
 {
     public int meshDensity;
     public float nodeWorldScale;
     public Vector3 nodeWorldPosition;
     public bool shouldAbort;
 
+    public NativeArray<float> bounds;
     public NativeArray<int> i_indices;
     public NativeArray<Vector3> v_position;
     public NativeArray<Vector3> v_normals;
@@ -33,7 +34,8 @@ public struct SectionGenerationJob : IJob
 
         float OffsetX = nodeWorldPosition.x - nodeWorldScale / 2;
         float OffsetZ = nodeWorldPosition.z - nodeWorldScale / 2;
-
+        bounds[0] = 0;
+        bounds[1] = 0;
         /* Generate vertices */
         for (int x = 0; x < VerticesPerChunk && !shouldAbort; ++x)
         {
@@ -41,10 +43,14 @@ public struct SectionGenerationJob : IJob
             {
                 float l_PosX = (x - 1) * CellSize + OffsetX;
                 float l_posZ = (y - 1) * CellSize + OffsetZ;
+                float l_posY = HeightGenerator.Singleton.GetAltitudeAtLocation(l_PosX, l_posZ);
+
+                if ((x == 0 && y == 0) || (l_posY < bounds[0])) bounds[0] = l_posY;
+                if (((x == 0 && y == 0) || l_posY > bounds[1]) && l_posY > 0) bounds[1] = l_posY;
 
                 int VertexIndex = (x + y * VerticesPerChunk);
 
-                v_position[VertexIndex] = new Vector3(l_PosX, HeightGenerator.Singleton.GetAltitudeAtLocation(l_PosX, l_posZ), l_posZ);
+                v_position[VertexIndex] = new Vector3(l_PosX, l_posY, l_posZ);
                 v_colors[VertexIndex] = new Color32(0, 255, 0, 255);
                 v_uvs[VertexIndex] = new Vector2(l_PosX / 100, l_posZ / 100);
 
@@ -109,6 +115,8 @@ public struct SectionGenerationJob : IJob
 
     public void DisposeData()
     {
+        if (bounds.IsCreated)
+            bounds.Dispose();
         if (i_indices.IsCreated)
             i_indices.Dispose();
         if (v_position.IsCreated)
@@ -126,7 +134,6 @@ public class ProceduralLandscapeNode
 {
     private MeshRenderer meshRenderer; // node mesh
     private MeshFilter meshFilter;
-    private VisualEffect vfx;
     private GameObject gameObject; // Owner of node's components
     private List<ProceduralLandscapeNode> children = new List<ProceduralLandscapeNode>();
     private int subdivisionLevel; // Current subdivision level (+1 per subdivision)
@@ -135,6 +142,7 @@ public class ProceduralLandscapeNode
     private ProceduralLandscape owningLandscape; // Parent
     private SectionGenerationJob generationJob;
     private JobHandle generationJobHandle;
+    private Bounds bounds;
 
     bool shouldDisplay = false;
 
@@ -184,8 +192,11 @@ public class ProceduralLandscapeNode
 
     public void DrawGuizmo()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(worldPosition, new Vector3(worldScale, 100, worldScale));
+        if (bounds != null && shouldDisplay)
+        {
+            Gizmos.color = new Color((subdivisionLevel * 579 + 89) % 255 / 255.0f, (subdivisionLevel * 289 + 789) % 255 / 255.0f, (subdivisionLevel * 1587 + 89) % 255 / 255.0f, 0.5f);
+            Gizmos.DrawCube(bounds.center, bounds.size + new Vector3(0, 5, 0));
+        }
         foreach (var child in children)
             child.DrawGuizmo();
     }
@@ -272,9 +283,6 @@ public class ProceduralLandscapeNode
 
         generationJobHandle.Complete();
 
-        if (!generationJob.v_position.IsCreated)
-            return;
-
         Mesh resultingMesh = new Mesh();
         resultingMesh.vertices = generationJob.v_position.ToArray();
         resultingMesh.colors = generationJob.v_colors.ToArray();
@@ -282,29 +290,17 @@ public class ProceduralLandscapeNode
         resultingMesh.uv = generationJob.v_uvs.ToArray();
         resultingMesh.triangles = generationJob.i_indices.ToArray();
 
+        bounds = new Bounds(new Vector3(worldPosition.x, (generationJob.bounds[0] + generationJob.bounds[1]) / 2, worldPosition.z), new Vector3(worldScale, generationJob.bounds[1] - generationJob.bounds[0], worldScale));
+
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
         meshRenderer.material = owningLandscape.landscape_material;
-        meshRenderer.bounds = new Bounds(worldPosition, new Vector3(worldScale, 5000000, worldScale));
-
-        if (owningLandscape.GrassFX)
-        {
-            vfx = gameObject.AddComponent<VisualEffect>();
-            vfx.visualEffectAsset = owningLandscape.GrassFX;
-            vfx.SetVector3("BoundCenter", meshRenderer.bounds.center);
-            vfx.SetVector3("BoundExtent", meshRenderer.bounds.size);
-        }
+        meshRenderer.bounds = bounds;
 
         // Set mesh
         if (!meshFilter)
             meshFilter = gameObject.AddComponent<MeshFilter>();
         meshFilter.mesh = resultingMesh;
 
-        // Particle system for grass // @TODO improve with a cleaner system
-        if (owningLandscape.GrassFX)
-        {
-            vfx.SetMesh("NewMesh", resultingMesh);
-            vfx.Reinit();
-        }
         EndGenerationJob();
     }
 
@@ -323,8 +319,6 @@ public class ProceduralLandscapeNode
             GameObject.DestroyImmediate(meshRenderer);
         if (meshFilter)
             GameObject.DestroyImmediate(meshFilter);
-        if (vfx)
-            GameObject.DestroyImmediate(vfx);
 
         // Create and start a new task
         generationJob = new SectionGenerationJob();
@@ -332,6 +326,7 @@ public class ProceduralLandscapeNode
         generationJob.nodeWorldPosition = worldPosition;
         generationJob.nodeWorldScale = worldScale;
         generationJob.shouldAbort = false;
+        generationJob.bounds = new NativeArray<float>(2, Allocator.Persistent);
         int VerticeCount = (owningLandscape.CellsPerChunk + 3) * (owningLandscape.CellsPerChunk + 3) * 3;
         int IndiceCount = (owningLandscape.CellsPerChunk + 2) * (owningLandscape.CellsPerChunk + 2) * 6;
         generationJob.i_indices = new NativeArray<int>(IndiceCount, Allocator.Persistent);
@@ -348,7 +343,6 @@ public class ProceduralLandscapeNode
 
         ShowCurrentNode();
         UnityEngine.Object.DestroyImmediate(gameObject);
-        gameObject = null;
         HeightGenerator.Singleton.OnUpdateRegion.RemoveListener(UpdateRegion);
     }
 

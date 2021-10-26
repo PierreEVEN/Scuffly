@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/TestScene.unity
+    path: Assets/Scenes/ImpostorGenerationScene.unity
     guid: 905bb26a34aa00f439f38ef2bc9a6900
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
