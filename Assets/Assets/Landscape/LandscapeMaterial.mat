@@ -457,7 +457,9 @@ Material:
     - _EmissiveColorLDR: {r: 0, g: 0, b: 0, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _MudColor: {r: 0.73536503, g: 0.936, b: 0.584064, a: 1}
     - _MudColorScale: {r: 0.7, g: 1.2, b: 0.7, a: 0}
+    - _RockColor: {r: 0.70598966, g: 0.8962264, b: 0.73103774, a: 0}
     - _RockColorScale: {r: 1.5, g: 1.5, b: 0.8, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}

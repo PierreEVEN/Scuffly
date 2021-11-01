@@ -6,6 +6,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor HDRP"
 	Properties
 	{
 		[NoScaleOffset] _Albedo("Albedo & Alpha", 2D) = "white" {}
+		_AlbedoCorretion("Albedo Corretion", Color) = (1,1,1,1)
 		[NoScaleOffset]_Normals("Normals & Depth", 2D) = "white" {}
 		[NoScaleOffset]_Specular("Specular & Smoothness", 2D) = "black" {}
 		[NoScaleOffset]_Emission("Emission & Occlusion", 2D) = "black" {}
@@ -180,6 +181,8 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor HDRP"
 					UNITY_VERTEX_INPUT_INSTANCE_ID
 				};
 
+				half4 _AlbedoCorretion;
+
 				struct VertexOutput
 				{
 					float4 clipPos		: SV_Position;
@@ -317,6 +320,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor HDRP"
 					float3 worldPos = 0;
 
 					OctaImpostorFragment(o, clipPos, worldPos, IN.uvsFrame1, IN.uvsFrame2, IN.uvsFrame3, IN.octaFrame, IN.viewPos);
+					o.Albedo *= _AlbedoCorretion;
 					IN.clipPos.zw = clipPos.zw;
 					clipPos = IN.clipPos;
 

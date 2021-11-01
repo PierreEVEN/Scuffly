@@ -34,7 +34,7 @@ public class MobilePart : MonoBehaviour
     void Update()
     {
 
-        inputValue += Mathf.Clamp(desiredInput - inputValue, -Time.deltaTime * 4, Time.deltaTime * 4);
+        inputValue += Mathf.Clamp(desiredInput - inputValue, -Time.deltaTime * 2, Time.deltaTime * 2);
         Quaternion finalRotation;
 
         if (inputValue > 0.0f)

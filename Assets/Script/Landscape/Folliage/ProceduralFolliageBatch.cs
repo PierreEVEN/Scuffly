@@ -36,7 +36,9 @@ struct FoliageNodeGenerationJob : IJob
                 yBounds[1] = y;
 
             yBoundInit = true;
-            instanceTransform[generatedElements[0]] = Matrix4x4.TRS(new Vector3(x, y, z), Quaternion.identity, new Vector3(1, 1, 1));
+
+            float scale = 1.0f;// rand.NextFloat(0.5f, 2.0f);
+            instanceTransform[generatedElements[0]] = Matrix4x4.TRS(new Vector3(x, y, z), Quaternion.identity, new Vector3(scale, scale, scale));
             generatedElements[0]++;
         }
     }

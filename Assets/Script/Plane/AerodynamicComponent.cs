@@ -109,12 +109,14 @@ public class AerodynamicComponent : MonoBehaviour
         {
             Vector3 worldCenter = gameObject.transform.TransformPoint(surface.localCenter);
             Vector3 worldPointVelocity = rigidBody.GetPointVelocity(worldCenter);
-            
-            // @TODO : don't set 0 in the first argument of max(), but an approximation of lift instead (allow negative force)
-            float areaDrag = Mathf.Max(0.0f, Vector3.Dot(gameObject.transform.TransformDirection(surface.localNormal), worldPointVelocity * worldPointVelocity.magnitude)) * surface.worldArea;
-            Vector3 local_drag = surface.localNormal * areaDrag * -1;
 
-            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * 200; //@TODO replace hardcoded friction with custom value
+            float ro = worldCenter.y <= 0 ? 100.0f : 1.2f;
+
+            // @TODO : don't set 0 in the first argument of max(), but an approximation of lift instead (allow negative force)
+            float areaDrag = Mathf.Max(0.0f, Vector3.Dot(gameObject.transform.TransformDirection(surface.localNormal), worldPointVelocity.normalized)) * surface.worldArea;
+            Vector3 local_drag = (surface.localNormal * -1) * areaDrag * worldPointVelocity.magnitude * worldPointVelocity.magnitude * ro;
+
+            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * 60; //@TODO replace hardcoded friction with custom value
 
             if (drawTotalForce)
                 totalForce += dragApplyVector;

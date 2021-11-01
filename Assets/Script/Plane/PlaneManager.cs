@@ -56,6 +56,12 @@ public class PlaneManager : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.TransformPoint(massCenter), 1);
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -63,7 +69,6 @@ public class PlaneManager : MonoBehaviour
         planePhysic = gameObject.GetComponent<Rigidbody>();
         planePhysic.velocity = transform.forward * initialSpeed;
 
-        planePhysic.centerOfMass = massCenter;
         ThrottleNotch = initialThrottleNotch;
         ApuSwitch = initialApuSwitch;
         RetractGear = initialRetractGear;
@@ -73,7 +78,19 @@ public class PlaneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        planePhysic.centerOfMass = massCenter;
 
+        float ro = 1.25f;
+        float liftCoef = 1f;
+        float surface = 27.87f;
+
+        foreach (var part in GetComponentsInChildren<Rigidbody>()) {
+            float velocity = Mathf.Abs(transform.InverseTransformDirection(part.velocity).z);
+
+
+            part.AddForce(transform.up * 0.5f * ro * liftCoef * surface * velocity * velocity * Time.deltaTime);
+            Debug.DrawLine(transform.position, transform.position + transform.up * 0.5f * ro * liftCoef * surface * velocity * velocity * Time.deltaTime);
+        }
     }
 
     /**
