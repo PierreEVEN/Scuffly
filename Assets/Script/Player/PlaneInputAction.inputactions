@@ -166,6 +166,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "f1272277-b7be-408e-b028-9421cc16d0aa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -348,7 +357,7 @@
                 {
                     "name": "negative",
                     "id": "56015e13-c9f4-49bc-80af-f1e02b3c71c7",
-                    "path": "<Keyboard>/pageDown",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -359,7 +368,7 @@
                 {
                     "name": "positive",
                     "id": "98dca308-8323-429c-8a7d-0fa22f22a332",
-                    "path": "<Keyboard>/pageUp",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -496,6 +505,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7bbf102-ac4b-4dc2-af4c-f215852f12fc",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
