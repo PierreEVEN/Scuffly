@@ -12,11 +12,17 @@ public class PlayerManager : NetworkBehaviour
     public NetworkVariable<GameObject> viewPlane = new NetworkVariable<GameObject>();
 
 
+    public GameObject playerUI;
+
     // Start is called before the first frame update
     void Start()
     {
         if (NetworkManager.Singleton.IsHost)
             PossessPlane(Gamemode.Singleton.SpawnPlane(GameObject.FindGameObjectWithTag("SpawnPoint"), DefaultPlane));
+
+        if (playerUI)
+            GameObject.Instantiate(playerUI);
+
     }
 
     // Update is called once per frame
