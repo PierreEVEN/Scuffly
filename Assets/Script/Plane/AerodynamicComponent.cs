@@ -19,7 +19,6 @@ using UnityEngine;
  * 3) apply resulting force on the parent obejct rigidBody
  * (not accurate at all, but the result is not so bad for a dumb approximation)
  */
-[RequireComponent(typeof(MeshCollider))]
 public class AerodynamicComponent : MonoBehaviour
 {
     private struct PhysicSurface
@@ -33,6 +32,8 @@ public class AerodynamicComponent : MonoBehaviour
     public bool drawSurfaceInfluence = false;
     public bool drawTotalForce = false;
     public bool drawPerSurfaceForce = false;
+
+    public Mesh meshOverride;
 
     // Physic object
     private Rigidbody rigidBody;
@@ -48,9 +49,6 @@ public class AerodynamicComponent : MonoBehaviour
         rigidBody = gameObject.GetComponentInParent<Rigidbody>();
         meshCollider = gameObject.GetComponent<MeshCollider>();
 
-        if (!meshCollider)
-            Debug.LogError("Aerodynamic Component requires a mesh collider component in the current gameObject : " + gameObject.name);
-
         if (!rigidBody)
             Debug.LogError("Aerodynamic Component requires a rigidbody component in parents game objects" + gameObject.name);
 
@@ -61,13 +59,17 @@ public class AerodynamicComponent : MonoBehaviour
     {
         Surfaces.Clear();
 
-        for (int sectionID = 0; sectionID < meshCollider.sharedMesh.subMeshCount; sectionID++) {
-            int[] triangles = meshCollider.sharedMesh.GetTriangles(sectionID);
+        Mesh mesh = meshCollider ? meshCollider.sharedMesh : meshOverride;
+
+        if (!mesh) return;
+
+        for (int sectionID = 0; sectionID < mesh.subMeshCount; sectionID++) {
+            int[] triangles = mesh.GetTriangles(sectionID);
             for (int i = 0; i < triangles.Length / 3; ++i)
             {
-                Vector3 v1 = meshCollider.sharedMesh.vertices[triangles[i * 3]];
-                Vector3 v2 = meshCollider.sharedMesh.vertices[triangles[i * 3 + 1]];
-                Vector3 v3 = meshCollider.sharedMesh.vertices[triangles[i * 3 + 2]];
+                Vector3 v1 = mesh.vertices[triangles[i * 3]];
+                Vector3 v2 = mesh.vertices[triangles[i * 3 + 1]];
+                Vector3 v3 = mesh.vertices[triangles[i * 3 + 2]];
                 Surfaces.Add(ComputePhysicSurface(v1, v2, v3));
             }
         }

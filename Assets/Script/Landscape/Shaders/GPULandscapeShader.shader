@@ -87,7 +87,6 @@ Shader "HDRP/GpuLandscapeShader"
 
 			#include "AltitudeGenerator.cginc"
 
-
 			struct VertexInput
 			{
 				uint vertex_id		: SV_VertexID;
@@ -146,17 +145,17 @@ Shader "HDRP/GpuLandscapeShader"
 				float alpha = 1.0;
 
 
-				float3 color;
+				float3 color = lerp(float3(0.3, 0.4, 0.3), float3(0.1, 0.5, 0), max(pow(dot(IN.normalWS, float3(0, 1, 0)), 50), 0));
+
+
 
 				if (IN.worldPosition.y < 0)
 					color = float3(0, 0.5, 1);
-				else
-					color = float3(0.1, 0.5, 0);
 
 
 				SurfaceData surfaceData;
 				ZERO_INITIALIZE(SurfaceData, surfaceData);
-				surfaceData.baseColor = float4(color, 1);
+				surfaceData.baseColor = float3(color);
 				surfaceData.normalWS = IN.normalWS;
 				surfaceData.geomNormalWS = T2W(input, 2);
 				surfaceData.tangentWS = normalize(T2W(input, 0).xyz);
@@ -181,7 +180,7 @@ Shader "HDRP/GpuLandscapeShader"
 
 				BuiltinData builtinData;
 				InitBuiltinData(posInput, alpha, surfaceData.normalWS, -T2W(input, 2), input.texCoord1, input.texCoord2, builtinData);
-				builtinData.emissiveColor = float4(0, 0, 0, 0);
+				builtinData.emissiveColor = float3(0, 0, 0);
 				builtinData.depthOffset = 0.0;
 				builtinData.distortion = float2(0.0, 0.0);
 				builtinData.distortionBlur = 0.0;

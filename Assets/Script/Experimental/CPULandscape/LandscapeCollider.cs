@@ -13,6 +13,7 @@ public class LandscapeCollider : MonoBehaviour
 
     void Start()
     {
+        return;
         CreateMesh();
     }
 
@@ -27,9 +28,11 @@ public class LandscapeCollider : MonoBehaviour
             generatedCollider = collisionPrefab.AddComponent<MeshCollider>();
     }
 
+
     // Update is called once per frame
     void Update()
     {
+        return;
         int verticeWidth = resolutionRadius * 2 + 1;
 
         Mesh new_mesh = new Mesh();

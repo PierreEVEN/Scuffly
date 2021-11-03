@@ -33,7 +33,6 @@ public class GPULandscape : MonoBehaviour
     public Material landscape_material;
 
     [Header("Developper features")]
-    public bool FreezeGeneration = false;
     public bool Reset = false;
     public bool showBounds = false;
 
@@ -64,7 +63,9 @@ public class GPULandscape : MonoBehaviour
     void Refresh()
     {
         if (Reset) ResetLandscape();
-        if (FreezeGeneration) return;
+        if (!landscape_material) return;
+
+        IModifierGPUArray.UpdateMaterial(landscape_material);
 
         UpdateCameraLocation();
 
@@ -102,7 +103,7 @@ public class GPULandscape : MonoBehaviour
             foreach (var section in GeneratedSections)
                 section.root_node.OnDrawGizmos();
 
-        if (Application.isEditor && !FreezeGeneration)
+        if (Application.isEditor)
         {
             Refresh();
         }

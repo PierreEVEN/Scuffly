@@ -134,6 +134,7 @@ public class PlanePlayerInputs : MonoBehaviour
         if (!playerManager.controlledPlane)
             return;
         playerManager.controlledPlane.ThrottleNotch = !playerManager.controlledPlane.ThrottleNotch;
+        playerManager.controlledPlane.SetThrustInput(currentKeyboardThrottle);
     }
 
     public void OnSwitchGear()
