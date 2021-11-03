@@ -4,6 +4,8 @@
  */
 struct LandscapeMask_Rectangle
 {
+	int priority;
+	int mode;
 	float2 position;
 	float2 halfExtent;
 	float margins;
@@ -18,6 +20,8 @@ int RectangleModifier_Count = 0;
  */
 struct LandscapeMask_Texture
 {
+	int priority;
+	int mode;
 	int maskId;
 	float3 position;
 	float3 scale;
@@ -46,28 +50,12 @@ float2 uvToAtlasMask(float2 uv, int textureID)
 	float2 from = data.from;
 	float2 to = data.to;
 	
-	return float2(lerp(from.x, to.x, uv.x), lerp(from.y, to.y, uv.y));
+	return float2(lerp(from.x, from.x + to.x, uv.x), lerp(from.y, from.y + to.y, uv.y));
 }
 
 
 void addAltitudeOverrides(float2 position, inout float altitude)
 {
-	for (int i = 0; i < RectangleModifier_Count; ++i)
-	{
-		float2 pos = RectangleModifier[i].position;
-		float2 ext = RectangleModifier[i].halfExtent;
-		float mar = RectangleModifier[i].margins;
-
-		if (
-			position.x > pos.x - ext.x &&
-			position.y > pos.y - ext.y &&
-			position.x < pos.x + ext.x &&
-			position.y < pos.y + ext.y)
-		{
-			altitude = lerp(RectangleModifier[i].altitude, altitude, clamp(0, 0, 1));
-		}
-	}
-
 	for (int i = 0; i < TextureModifier_Count; ++i)
 	{
 		LandscapeMask_Texture data = TextureModifier[i];
@@ -83,11 +71,27 @@ void addAltitudeOverrides(float2 position, inout float altitude)
 
 			float2 uvPos = (position - data.position.xz) / data.scale.xz + float2(0.5, 0.5);
 
-			uvPos = 2 * uvPos - float2(0.5, 0.5);
-			
 			float4 color = tex2Dlod(LandscapeMaskAtlas, float4(uvToAtlasMask(uvPos, data.maskId), 0, 0));
 
-			altitude = data.position.y + color.r * data.scale.y;
+			altitude = data.position.y + color.r * data.scale.y + (data.mode == 1 ? 0 : altitude);
 		}
 	}
+	
+	for (int i = 0; i < RectangleModifier_Count; ++i)
+	{
+		LandscapeMask_Rectangle data = RectangleModifier[i];
+		float2 pos = data.position;
+		float2 ext = data.halfExtent;
+		float mar = data.margins;
+
+		if (
+			position.x > pos.x - ext.x &&
+			position.y > pos.y - ext.y &&
+			position.x < pos.x + ext.x &&
+			position.y < pos.y + ext.y)
+		{
+			altitude = lerp(data.altitude, altitude, clamp(0, 0, 1)) + (data.mode == 1 ? 0 : altitude);
+		}
+	}
+
 }

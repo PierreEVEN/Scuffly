@@ -11,8 +11,10 @@ class GPULandscapeTextureMask
         public int ID;
     }
 
-    static Dictionary<Texture2D, AtlasTextureReference> textureMap;
-    static Texture2D packedAtlas = new Texture2D(8192, 8192);
+
+
+    static Dictionary<Texture2D, AtlasTextureReference> textureMap = new Dictionary<Texture2D, AtlasTextureReference>();
+    static Texture2D packedAtlas;
     static Rect[] texturePositions;
     static ComputeBuffer texturePositionBuffer;
 
@@ -40,17 +42,13 @@ class GPULandscapeTextureMask
         if (texturePositionBuffer != null)
             texturePositionBuffer.Dispose();
 
+
         texturePositionBuffer = new ComputeBuffer(textureMap.Count, System.Runtime.InteropServices.Marshal.SizeOf(typeof(Rect)));
+        if (!packedAtlas)
+            packedAtlas = new Texture2D(1, 1, TextureFormat.RGBAFloat, false);
         texturePositions = packedAtlas.PackTextures(textures, 2);
         texturePositionBuffer.SetData(texturePositions);
         OnRebuildAtlas.Invoke();
-
-        Debug.Log("res : " + packedAtlas.width + "x" + packedAtlas.height);
-
-        for (int i = 0; i  <texturePositions.Length; ++i)
-        {
-            Debug.Log("test : " + texturePositions[i] + " : " + textures[i].name);
-        }
     }
 
     public static void UpdateMaterial(Material mat)
@@ -66,16 +64,20 @@ class GPULandscapeTextureMask
 
     public static int GetTextureID(Texture2D inTexture)
     {
+        if (!textureMap.ContainsKey(inTexture))
+            return 0;
         return textureMap[inTexture].ID;
     }
 
     public static void AddTexture(Texture2D texture)
     {
         if (!texture) return;
-        if (textureMap == null) textureMap = new Dictionary<Texture2D, AtlasTextureReference>();
 
         if (!texture.isReadable)
+        {
             Debug.LogError("texture " + texture.name + " should be marked as \"readable\"");
+            return;
+        }
 
         if (textureMap.ContainsKey(texture))
         {
@@ -84,7 +86,6 @@ class GPULandscapeTextureMask
             textureMap[texture] = data;
         }
         else
-
         {
             var data = new AtlasTextureReference();
             data.referenceCounter = 1;
@@ -106,15 +107,20 @@ class GPULandscapeTextureMask
             {
                 textureMap.Remove(texture);
                 BuildAtlas();
+
+                if (texturePositionBuffer != null)
+                {
+                    texturePositionBuffer.Dispose();
+                    texturePositionBuffer = null;
+                }
             }
-            textureMap[texture] = data;
+            else
+            {
+                textureMap[texture] = data;
+            }
         }
 
-        if (textureMap.Count == 0 && texturePositionBuffer != null)
-        {
-            texturePositionBuffer.Dispose();
-            texturePositionBuffer = null;
-        }
+
     }
 }
 
@@ -141,9 +147,6 @@ interface IModifierGPUArray
             }
             else
                 mat.SetInt(buffer.Key + "_Count", 0);
-
-            //Debug.Log("update mat : " + buffer.Key);
-            //Debug.Log("update mat : " + buffer.Key + "_Count " + (buffer.Value.GetBuffer() == null ? 0 : buffer.Value.GetBuffer().count));
         }
 
         GPULandscapeTextureMask.UpdateMaterial(mat);
@@ -196,15 +199,20 @@ class ModifierGPUArray<Modifier_T, Data_T> : IModifierGPUArray
         else
         {
             if (GPUBuffer == null || GPUBuffer.count != trackedModifiers.Count)
+            {
+                if (GPUBuffer != null)
+                    GPUBuffer.Dispose();
                 GPUBuffer = new ComputeBuffer(trackedModifiers.Count, System.Runtime.InteropServices.Marshal.SizeOf(typeof(Data_T)));
+            }
         }
+
         if (GPUBuffer == null)
             return;
-
         Data_T[] data = new Data_T[trackedModifiers.Count];
         trackedModifiers.Values.CopyTo(data, 0);
         GPUBuffer.SetData(data);
     }
+
 
     ComputeBuffer IModifierGPUArray.GetBuffer()
     {
@@ -217,9 +225,24 @@ class ModifierGPUArray<Modifier_T, Data_T> : IModifierGPUArray
 
 public abstract class GPULandscapeModifier : MonoBehaviour
 {
+    [Range(short.MinValue, short.MaxValue)]
+    public short priority = 0;
+    public bool overwrite = false;
+
+    bool isReady = false;
+    private void Start()
+    {
+        isReady = true;
+    }
+    private void OnDestroy()
+    {
+        isReady = false;
+    }
+
     private void OnValidate()
     {
-        OnUpdateData();
+        if (isReady)
+            OnUpdateData();
     }
 
     public abstract void OnUpdateData();

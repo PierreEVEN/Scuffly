@@ -7,10 +7,15 @@ public class TextureModifier : GPULandscapeModifier
 {
     public struct TextureModifierData
     {
+        public int priority;
+        public int mode;
         public int textureID;
         public Vector3 position;
         public Vector3 scale;
     }
+
+    [System.NonSerialized]
+    bool added = false;
 
     private static ModifierGPUArray<TextureModifier, TextureModifierData> gpuData = new ModifierGPUArray<TextureModifier, TextureModifierData>("TextureModifier");
 
@@ -23,8 +28,12 @@ public class TextureModifier : GPULandscapeModifier
         gpuData.TrackModifier(this);
         if (textureMask != null)
         {
-            GPULandscapeTextureMask.AddTexture(textureMask);
-            data.textureID = GPULandscapeTextureMask.GetTextureID(textureMask);
+            if (!added)
+            {
+                GPULandscapeTextureMask.AddTexture(textureMask);
+                data.textureID = GPULandscapeTextureMask.GetTextureID(textureMask);
+                added = true;
+            }
         }
         GPULandscapeTextureMask.OnRebuildAtlas.AddListener(OnRebuildAtlas);
         OnUpdateData();
@@ -38,27 +47,41 @@ public class TextureModifier : GPULandscapeModifier
 
     private void OnDisable()
     {
-        GPULandscapeTextureMask.OnRebuildAtlas.RemoveListener(OnRebuildAtlas);
-        GPULandscapeTextureMask.RemoveTexture(textureMask);
-        gpuData.UntrackModifier(this);
+        if (added)
+        {
+            GPULandscapeTextureMask.OnRebuildAtlas.RemoveListener(OnRebuildAtlas);
+            GPULandscapeTextureMask.RemoveTexture(textureMask);
+            gpuData.UntrackModifier(this);
+            added = false;
+        }
     }
-
     public override void OnUpdateData()
     {
         data.position = transform.position;
         data.scale = transform.localScale;
 
-        if (internalTextureMask)
+        if (internalTextureMask != textureMask)
         {
-            GPULandscapeTextureMask.RemoveTexture(internalTextureMask);
-        }
+            if (internalTextureMask)
+            {
+                if (added)
+                {
+                    added = false;
+                    GPULandscapeTextureMask.RemoveTexture(internalTextureMask);
+                }
+            }
 
-        internalTextureMask = textureMask;
+            internalTextureMask = textureMask;
 
-        if (internalTextureMask)
-        {
-            GPULandscapeTextureMask.AddTexture(internalTextureMask);
-            data.textureID = GPULandscapeTextureMask.GetTextureID(textureMask);
+            if (internalTextureMask)
+            {
+                if (!added)
+                {
+                    added = true;
+                    GPULandscapeTextureMask.AddTexture(internalTextureMask);
+                    data.textureID = GPULandscapeTextureMask.GetTextureID(textureMask);
+                }
+            }
         }
 
         gpuData.UpdateValue(this, data);
@@ -67,7 +90,7 @@ public class TextureModifier : GPULandscapeModifier
     private void OnDrawGizmos()
     {
         Gizmos.color = new Color(0.5f, 0.5f, 0, 0.2f);
-        Gizmos.DrawCube(data.position, data.scale);
+        Gizmos.DrawCube(data.position + new Vector3(0, data.scale.y / 2, 0), data.scale);
     }
     
     // Update is called once per frame

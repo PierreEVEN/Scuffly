@@ -102,11 +102,6 @@ public class GPULandscape : MonoBehaviour
         if (showBounds)
             foreach (var section in GeneratedSections)
                 section.root_node.OnDrawGizmos();
-
-        if (Application.isEditor)
-        {
-            Refresh();
-        }
     }
 
     public void OnDisable()

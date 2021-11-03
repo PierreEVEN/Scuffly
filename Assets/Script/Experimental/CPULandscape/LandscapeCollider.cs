@@ -14,7 +14,7 @@ public class LandscapeCollider : MonoBehaviour
     void Start()
     {
         return;
-        CreateMesh();
+        //CreateMesh();
     }
 
     void CreateMesh()
@@ -33,6 +33,7 @@ public class LandscapeCollider : MonoBehaviour
     void Update()
     {
         return;
+        /*
         int verticeWidth = resolutionRadius * 2 + 1;
 
         Mesh new_mesh = new Mesh();
@@ -71,5 +72,6 @@ public class LandscapeCollider : MonoBehaviour
         if (!generatedCollider)
             CreateMesh();
         generatedCollider.sharedMesh = new_mesh;
+        */
     }
 }

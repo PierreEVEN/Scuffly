@@ -7,6 +7,8 @@ public class RectangleModifier : GPULandscapeModifier
 
     public struct RectangleModifierData
     {
+        public int priority;
+        public int mode;
         public Vector2 position;
         public Vector2 halfExtent;
         public float margins;
