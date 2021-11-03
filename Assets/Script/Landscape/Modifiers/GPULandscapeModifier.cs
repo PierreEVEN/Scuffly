@@ -12,7 +12,7 @@ class GPULandscapeTextureMask
     }
 
     static Dictionary<Texture2D, AtlasTextureReference> textureMap;
-    static Texture2D packedAtlas = new Texture2D(10, 10);
+    static Texture2D packedAtlas = new Texture2D(8192, 8192);
     static Rect[] texturePositions;
     static ComputeBuffer texturePositionBuffer;
 
@@ -44,6 +44,13 @@ class GPULandscapeTextureMask
         texturePositions = packedAtlas.PackTextures(textures, 2);
         texturePositionBuffer.SetData(texturePositions);
         OnRebuildAtlas.Invoke();
+
+        Debug.Log("res : " + packedAtlas.width + "x" + packedAtlas.height);
+
+        for (int i = 0; i  <texturePositions.Length; ++i)
+        {
+            Debug.Log("test : " + texturePositions[i] + " : " + textures[i].name);
+        }
     }
 
     public static void UpdateMaterial(Material mat)

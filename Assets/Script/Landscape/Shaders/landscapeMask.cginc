@@ -1,4 +1,7 @@
 
+/*
+ * Rectangle modifiers
+ */
 struct LandscapeMask_Rectangle
 {
 	float2 position;
@@ -10,6 +13,9 @@ StructuredBuffer<LandscapeMask_Rectangle> RectangleModifier;
 int RectangleModifier_Count = 0;
 
 
+/*
+ * Texture modifiers
+ */
 struct LandscapeMask_Texture
 {
 	int maskId;
@@ -19,7 +25,9 @@ struct LandscapeMask_Texture
 StructuredBuffer<LandscapeMask_Texture> TextureModifier;
 int TextureModifier_Count = 0;
 
-
+/*
+ * Mask atlas
+ */
 struct LandscapeTextureRefs
 {
 	float2 from;
@@ -31,8 +39,14 @@ int TextureMasksRefs_Count = 0;
 
 float2 uvToAtlasMask(float2 uv, int textureID)
 {
+	uv.x = clamp(uv.x, 0, 1);
+	uv.y = clamp(uv.y, 0, 1);
+
 	LandscapeTextureRefs data = TextureMasksRefs[textureID];
-	return float2(lerp(data.from.x, data.to.x, uv.x), lerp(data.from.y, data.to.y, uv.y));
+	float2 from = data.from;
+	float2 to = data.to;
+	
+	return float2(lerp(from.x, to.x, uv.x), lerp(from.y, to.y, uv.y));
 }
 
 
@@ -50,12 +64,6 @@ void addAltitudeOverrides(float2 position, inout float altitude)
 			position.x < pos.x + ext.x &&
 			position.y < pos.y + ext.y)
 		{
-			float marginScale =
-				min(
-					min(pos.x + ext.x - position.x, pos.y + ext.y - position.y),
-					min(position.x - (pos.x - ext.x), position.y - (pos.y - ext.y))
-				);
-
 			altitude = lerp(RectangleModifier[i].altitude, altitude, clamp(0, 0, 1));
 		}
 	}
@@ -73,8 +81,10 @@ void addAltitudeOverrides(float2 position, inout float altitude)
 			position.y < pos.y + ext.y)
 		{
 
-			float2 uvPos = (position - data.position.xz) / data.scale.xz;
+			float2 uvPos = (position - data.position.xz) / data.scale.xz + float2(0.5, 0.5);
 
+			uvPos = 2 * uvPos - float2(0.5, 0.5);
+			
 			float4 color = tex2Dlod(LandscapeMaskAtlas, float4(uvToAtlasMask(uvPos, data.maskId), 0, 0));
 
 			altitude = data.position.y + color.r * data.scale.y;
