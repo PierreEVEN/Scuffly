@@ -20,6 +20,40 @@ class GPULandscapeTextureMask
 
     public static UnityEvent OnRebuildAtlas = new UnityEvent();
 
+    static Texture2D PackTexture(ref Texture2D[] textures, ref Rect[] transforms)
+    {
+        int width = 0;
+        int maxHeight = 0;
+        foreach (var text in textures)
+        {
+            width += text.width + 2;
+            if (text.height > maxHeight)
+                maxHeight = text.height;
+        }
+        if (width > 2)
+            width -= 2;
+
+        if (maxHeight <= 0 || width <= 0)
+            return new Texture2D(1, 1);
+
+        Texture2D txt = new Texture2D(width, maxHeight, TextureFormat.RGBAFloat, false);
+
+        int currentWidth = 0;
+        int textID = 0;
+        transforms = new Rect[textures.Length];
+
+        foreach (var text in textures)
+        {
+            txt.SetPixels(currentWidth, 0, text.width, text.height, text.GetPixels());
+            transforms[textID++] = new Rect(currentWidth / (float)width, 0, text.width / (float)width, text.height / (float)maxHeight);
+            currentWidth += text.width + 2;
+        }
+
+        txt.Apply();
+        return txt;
+    }
+
+
     public static void BuildAtlas()
     {
         if (textureMap.Count == 0)
@@ -37,6 +71,7 @@ class GPULandscapeTextureMask
             texRef.ID = textId;
             textureMap[key] = texRef;
             textId++;
+
         }
 
         if (texturePositionBuffer != null)
@@ -44,9 +79,12 @@ class GPULandscapeTextureMask
 
 
         texturePositionBuffer = new ComputeBuffer(textureMap.Count, System.Runtime.InteropServices.Marshal.SizeOf(typeof(Rect)));
-        if (!packedAtlas)
-            packedAtlas = new Texture2D(1, 1, TextureFormat.RGBAFloat, false);
-        texturePositions = packedAtlas.PackTextures(textures, 2);
+
+        //if (!packedAtlas) packedAtlas = new Texture2D(1, 1, TextureFormat.RGBAFloat, false);
+        //texturePositions = packedAtlas.PackTextures(textures, 2);
+
+        packedAtlas = PackTexture(ref textures, ref texturePositions);
+
         texturePositionBuffer.SetData(texturePositions);
         OnRebuildAtlas.Invoke();
     }
@@ -61,6 +99,15 @@ class GPULandscapeTextureMask
         }
     }
 
+    public static void UpdateCompute(ComputeShader mat, int kernelIndex)
+    {
+        if (packedAtlas != null && texturePositionBuffer != null && texturePositions != null)
+        {
+            mat.SetTexture(kernelIndex, "LandscapeMaskAtlas", packedAtlas);
+            mat.SetBuffer(kernelIndex, "TextureMasksRefs", texturePositionBuffer);
+            mat.SetInt("TextureMasksRefs_Count", texturePositions.Length);
+        }
+    }
 
     public static int GetTextureID(Texture2D inTexture)
     {
@@ -150,6 +197,23 @@ interface IModifierGPUArray
         }
 
         GPULandscapeTextureMask.UpdateMaterial(mat);
+    }
+
+
+    public static void UpdateCompute(ComputeShader mat, int kernelIndex)
+    {
+        foreach (var buffer in ModifierArrays)
+        {
+            if (buffer.Value.GetBuffer() != null)
+            {
+                mat.SetBuffer(kernelIndex, buffer.Key, buffer.Value.GetBuffer());
+                mat.SetInt(buffer.Key + "_Count", buffer.Value.GetBuffer().count);
+            }
+            else
+                mat.SetInt(buffer.Key + "_Count", 0);
+        }
+
+        GPULandscapeTextureMask.UpdateCompute(mat, kernelIndex);
     }
 }
 

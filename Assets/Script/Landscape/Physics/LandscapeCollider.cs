@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class LandscapeCollider : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -13,8 +14,7 @@ public class LandscapeCollider : MonoBehaviour
 
     void Start()
     {
-        return;
-        //CreateMesh();
+        CreateMesh();
     }
 
     void CreateMesh()
@@ -32,29 +32,20 @@ public class LandscapeCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        return;
-        /*
         int verticeWidth = resolutionRadius * 2 + 1;
 
         Mesh new_mesh = new Mesh();
         Vector3[] vertices = new Vector3[verticeWidth * verticeWidth];
         int[] triangles = new int[verticeWidth * verticeWidth * 6];
 
-        for (int x = -resolutionRadius; x <= resolutionRadius; ++x)
-        {
-            for (int y = -resolutionRadius; y <= resolutionRadius; ++y)
-            {
-                int VertexIndex = (x + resolutionRadius + (y + resolutionRadius) * verticeWidth);
-                float l_PosX = (x) * cellWidth + transform.position.x;
-                float l_posZ = (y) * cellWidth + transform.position.z;
-                vertices[VertexIndex] = new Vector3(l_PosX, HeightGenerator.Singleton.GetAltitudeAtLocation(l_PosX, l_posZ), l_posZ);
-            }
-        }
-
         for (int x = 0; x < verticeWidth - 1; ++x)
         {
             for (int y = 0; y < verticeWidth - 1; ++y)
             {
+                vertices[x + y * verticeWidth] = new Vector3(x, 0, y);
+
+
+
                 int IndiceIndex = (x + y * verticeWidth) * 6;
 
                 triangles[IndiceIndex] = (x + y * verticeWidth);
@@ -67,11 +58,20 @@ public class LandscapeCollider : MonoBehaviour
             }
         }
 
+
+        if (GPULandscapeCollision.Singleton)
+        {
+            GPULandscapeCollision.Singleton.GetAltitudeGrid(ref vertices, verticeWidth, cellWidth);
+        }
+        else
+            Debug.LogError("missing landscape collision");
+
+
+
         new_mesh.vertices = vertices;
         new_mesh.triangles = triangles;
         if (!generatedCollider)
             CreateMesh();
         generatedCollider.sharedMesh = new_mesh;
-        */
     }
 }

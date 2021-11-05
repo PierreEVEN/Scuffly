@@ -1,0 +1,16 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float> Output;
+float AreaScale;
+float3 AreaOrigin;
+
+#include "AltitudeGenerator.cginc"
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{	
+	Output[id.xy] = GetAltitudeAtLocation(float2(AreaOrigin.x + AreaScale * id.x, AreaOrigin.z + AreaScale * id.y));
+}

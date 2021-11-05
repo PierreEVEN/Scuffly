@@ -118,10 +118,9 @@ Shader "HDRP/GpuLandscapeShader"
 				OUT.worldPosition = float3(posX - _Width / 2 * _Subdivision, 0, posY - _Width / 2 * _Subdivision) + _Offset;
 				OUT.worldPosition.y = GetAltitudeAtLocation(OUT.worldPosition.xz);
 
-
+				// Per vertex normal
 				float altX = max(0, GetAltitudeAtLocation(OUT.worldPosition.xz + float2(1, 0)));
 				float altZ = max(0, GetAltitudeAtLocation(OUT.worldPosition.xz + float2(0, 1)));
-
 				OUT.normalWS = normalize(cross(float3(-1, altX - OUT.worldPosition.y, 0), float3(0, altZ - OUT.worldPosition.y, 1)));
 
 				float3 finalWorldPos = OUT.worldPosition;
@@ -135,6 +134,12 @@ Shader "HDRP/GpuLandscapeShader"
 
 			void Frag(VertexOutput IN, OUTPUT_GBUFFER(outGBuffer))
 			{
+
+				// Per pixel normal
+				//float altX = max(0, GetAltitudeAtLocation(IN.worldPosition.xz + float2(1, 0)));
+				//float altZ = max(0, GetAltitudeAtLocation(IN.worldPosition.xz + float2(0, 1)));
+				//IN.normalWS = normalize(cross(float3(-1, altX - IN.worldPosition.y, 0), float3(0, altZ - IN.worldPosition.y, 1)));
+
 				FragInputs input;
 				ZERO_INITIALIZE(FragInputs, input);
 				input.positionSS = IN.positionCS;

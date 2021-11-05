@@ -38,6 +38,7 @@ struct LandscapeTextureRefs
 	float2 to;
 };
 sampler2D LandscapeMaskAtlas;
+
 StructuredBuffer<LandscapeTextureRefs> TextureMasksRefs;
 int TextureMasksRefs_Count = 0;
 
@@ -77,9 +78,9 @@ void addAltitudeOverrides(float2 position, inout float altitude)
 		}
 	}
 	
-	for (int i = 0; i < RectangleModifier_Count; ++i)
+	for (int j = 0; j < RectangleModifier_Count; ++j)
 	{
-		LandscapeMask_Rectangle data = RectangleModifier[i];
+		LandscapeMask_Rectangle data = RectangleModifier[j];
 		float2 pos = data.position;
 		float2 ext = data.halfExtent;
 		float mar = data.margins;
@@ -90,7 +91,7 @@ void addAltitudeOverrides(float2 position, inout float altitude)
 			position.x < pos.x + ext.x &&
 			position.y < pos.y + ext.y)
 		{
-			altitude = lerp(data.altitude, altitude, clamp(0, 0, 1)) + (data.mode == 1 ? 0 : altitude);
+			altitude = lerp(data.altitude, altitude, clamp(0, 0, 1)) + (data.mode == 0 ? 1 : altitude);
 		}
 	}
 
