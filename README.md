@@ -4,6 +4,11 @@
 
 Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissage d'Unity3D pour les cours de moteur de jeu 3D.
 
+## Auteurs
+
+- Pierre EVEN
+- Léo GOSSELIN
+
 ## Objectifs
 
 > Apprendre à utiliser les différents aspects d'Unity3D (Rendu / Shaders / Audio / Physique / Animation etc...)
@@ -25,3 +30,7 @@ Pierre :
 - Recherche sur la simulation physique aérodynamique d'aéronefs
 - Recherche sur la generation de terrain sur GPU
 - Recherche sur des systemes de génération procédurale controlée.
+
+## Credits
+[Unity3D](https://unity3d.com/)
+[Amplifyimpostor](http://amplify.pt/unity/amplify-impostors/)
