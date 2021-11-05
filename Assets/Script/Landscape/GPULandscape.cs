@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+#if (UNITY_EDITOR)
 using UnityEditor;
+#endif
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -130,6 +132,7 @@ public class GPULandscape : MonoBehaviour
             if (IngamePlayerCamera)
                 CameraCurrentLocation = IngamePlayerCamera.transform.position;
         }
+#if (UNITY_EDITOR)
         else
         {
             // Else get editor camera location
@@ -137,6 +140,7 @@ public class GPULandscape : MonoBehaviour
             foreach (var cam in Cameras)
                 CameraCurrentLocation = cam.transform.position;
         }
+#endif
     }
 
     private void tryLoadSection(int posX, int posZ)

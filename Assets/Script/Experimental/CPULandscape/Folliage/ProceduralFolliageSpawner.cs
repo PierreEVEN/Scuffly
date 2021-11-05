@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if (UNITY_EDITOR)
 using UnityEditor;
+#endif
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -87,6 +89,7 @@ public class ProceduralFolliageSpawner : MonoBehaviour
             if (IngamePlayerCamera)
                 CameraPosition = IngamePlayerCamera.transform.position;
         }
+#if (UNITY_EDITOR)
         else
         {
             // Else get editor camera location
@@ -94,6 +97,7 @@ public class ProceduralFolliageSpawner : MonoBehaviour
             foreach (var cam in Cameras)
                 CameraPosition = cam.transform.position;
         }
+#endif
     }
 
     private void OnDrawGizmos()

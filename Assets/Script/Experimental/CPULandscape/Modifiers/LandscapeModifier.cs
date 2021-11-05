@@ -15,6 +15,7 @@ public class LandscapeModifier : MonoBehaviour
     [HideInInspector]
     public Rect worldBounds;
 
+#if (UNITY_EDITOR)
     static UnityEvent OnHotReload = new UnityEvent();
 
     [UnityEditor.Callbacks.DidReloadScripts]
@@ -22,6 +23,7 @@ public class LandscapeModifier : MonoBehaviour
     {
         OnHotReload.Invoke();
     }
+ #endif
 
     // Start is called before the first frame update
     void Start()
@@ -39,11 +41,15 @@ public class LandscapeModifier : MonoBehaviour
 
     public LandscapeModifier()
     {
+#if (UNITY_EDITOR)
         OnHotReload.AddListener(UpdateBounds);
+#endif
     }
     ~LandscapeModifier()
     {
+#if (UNITY_EDITOR)
         OnHotReload.RemoveListener(UpdateBounds);
+#endif
     }
 
     public void UpdateBounds()

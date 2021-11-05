@@ -17,7 +17,8 @@ public class PlanePlayerInputs : MonoBehaviour
 
     float LastVelocity = 0;
     float Acceleration = 0;
-
+    float pitchInput = 0;
+    float pitchTrim = 0;
     void OnGUI()
     {
         if (!playerManager.controlledPlane)
@@ -37,6 +38,11 @@ public class PlanePlayerInputs : MonoBehaviour
 
         if (!playerManager.controlledPlane)
             return;
+
+        pitchTrim += trimIncreaseInput * Time.deltaTime * 0.5f;
+        pitchTrim = Mathf.Clamp(pitchTrim, -1, 1);
+
+        playerManager.controlledPlane.SetPitchInput(Mathf.Clamp(pitchInput + pitchTrim, -1, 1));
 
     }
 
@@ -80,7 +86,7 @@ public class PlanePlayerInputs : MonoBehaviour
         if (!playerManager.controlledPlane)
             return;
 
-        playerManager.controlledPlane.SetPitchInput(input.Get<float>());
+        pitchInput = input.Get<float>();
     }
 
     /**
@@ -88,7 +94,7 @@ public class PlanePlayerInputs : MonoBehaviour
      */
 
     float currentKeyboardThrottle = 0;
-    float currentKeyboardPitch = 0;
+    float trimIncreaseInput = 0;
     float currentKeyboardYaw = 0;
     float currentKeyboardRoll = 0;
 
@@ -102,10 +108,7 @@ public class PlanePlayerInputs : MonoBehaviour
 
     public void OnSetPitch(InputValue input)
     {
-        currentKeyboardPitch = Mathf.Clamp(input.Get<float>(), -1, 1);
-        if (!playerManager.controlledPlane)
-            return;
-        playerManager.controlledPlane.SetPitchInput(currentKeyboardPitch);
+        trimIncreaseInput = Mathf.Clamp(input.Get<float>(), -1, 1);
     }
     public void OnSetYaw(InputValue input)
     {

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if (UNITY_EDITOR)
 using UnityEditor;
+#endif
 using UnityEngine.VFX;
 /**
  *  @Author : Pierre EVEN
@@ -138,6 +141,7 @@ public class ProceduralLandscape : MonoBehaviour
             if (IngamePlayerCamera)
                 CameraCurrentLocation = IngamePlayerCamera.transform.position;
         }
+#if (UNITY_EDITOR)
         else
         {
             // Else get editor camera location
@@ -145,6 +149,7 @@ public class ProceduralLandscape : MonoBehaviour
             foreach (var cam in Cameras)
                 CameraCurrentLocation = cam.transform.position;
         }
+#endif
     }
 
     private void tryLoadSection(int posX, int posZ)
