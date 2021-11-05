@@ -17,12 +17,18 @@ public class LandscapeCollider : MonoBehaviour
         CreateMesh();
     }
 
+    private void OnDestroy()
+    {
+        if (collisionPrefab)
+            Destroy(collisionPrefab);
+    }
+
     void CreateMesh()
     {
         if (!collisionPrefab)
         {
             collisionPrefab = new GameObject(gameObject.name + "_landscape_collision");
-            collisionPrefab.hideFlags = HideFlags.DontSave;
+            collisionPrefab.hideFlags = HideFlags.DontSave | HideFlags.HideInHierarchy;
         }
         if (!generatedCollider)
             generatedCollider = collisionPrefab.AddComponent<MeshCollider>();
@@ -38,13 +44,18 @@ public class LandscapeCollider : MonoBehaviour
         Vector3[] vertices = new Vector3[verticeWidth * verticeWidth];
         int[] triangles = new int[verticeWidth * verticeWidth * 6];
 
+        for (int x = 0; x < verticeWidth; ++x)
+        {
+            for (int y = 0; y < verticeWidth; ++y)
+            {
+                vertices[x + y * verticeWidth] = new Vector3(cellWidth * x, 0, cellWidth * y) + new Vector3(transform.position.x - cellWidth * resolutionRadius, 0, transform.position.z - cellWidth * resolutionRadius);
+            }
+        }
+
         for (int x = 0; x < verticeWidth - 1; ++x)
         {
             for (int y = 0; y < verticeWidth - 1; ++y)
             {
-                vertices[x + y * verticeWidth] = new Vector3(x, 0, y);
-
-
 
                 int IndiceIndex = (x + y * verticeWidth) * 6;
 
