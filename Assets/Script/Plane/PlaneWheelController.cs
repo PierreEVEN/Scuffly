@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlaneWheelController : MonoBehaviour
 {
     WheelCollider WheelPhysic;
-    float WheelRotation = 0;
     private Transform wheelAxisBone;
     Animation gearAnim;
     bool Deployed = true;
