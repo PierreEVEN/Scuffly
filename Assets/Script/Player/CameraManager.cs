@@ -41,7 +41,7 @@ public class CameraManager : MonoBehaviour
             Quaternion horiz = Quaternion.AngleAxis(Indoor ? indoorLookVector.x : lookVector.x, Vector3.up);
             Quaternion vert = Quaternion.AngleAxis(Indoor ? indoorLookVector.y : lookVector.y, Vector3.right);
             gameObject.transform.rotation = Indoor ? playerManager.viewPlane.Value.transform.rotation * horiz * vert : horiz * vert;
-            gameObject.transform.position = playerManager.viewPlane.Value.transform.position + gameObject.transform.forward * (Indoor ? 0 : -zoomInput) + playerManager.viewPlane.Value.transform.forward * 3.3f + playerManager.viewPlane.Value.transform.up * 1f;
+            gameObject.transform.position = playerManager.viewPlane.Value.transform.position + gameObject.transform.forward * (Indoor ? 0 : -zoomInput) + playerManager.viewPlane.Value.transform.forward * 3.3f + playerManager.viewPlane.Value.transform.up * 0.92f + gameObject.transform.forward * 0.1f;
             controlledCamera.fieldOfView = Indoor ? fov : 60;
         }
         else
@@ -54,9 +54,9 @@ public class CameraManager : MonoBehaviour
     public void OnLook(InputValue input)
     {
         if (Indoor)
-            indoorLookVector = new Vector2(input.Get<Vector2>().x + indoorLookVector.x, Mathf.Clamp(input.Get<Vector2>().y + indoorLookVector.y, -90, 90));
+            indoorLookVector = new Vector2(input.Get<Vector2>().x * 0.5f + indoorLookVector.x, Mathf.Clamp(input.Get<Vector2>().y * 0.5f + indoorLookVector.y, -90, 90));
         else
-            lookVector = new Vector2(input.Get<Vector2>().x + lookVector.x, Mathf.Clamp(input.Get<Vector2>().y + lookVector.y, -90, 90));
+            lookVector = new Vector2(input.Get<Vector2>().x * 0.5f + lookVector.x, Mathf.Clamp(input.Get<Vector2>().y * 0.5f + lookVector.y, -90, 90));
     }
     public void OnZoom(InputValue input)
     {

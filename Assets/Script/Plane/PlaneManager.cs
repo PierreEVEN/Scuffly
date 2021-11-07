@@ -173,7 +173,11 @@ public class PlaneManager : MonoBehaviour
 
     public float GetRoll()
     {
-        return (Mathf.Atan2(transform.right.y, transform.right.x) / Mathf.PI * 180 + 360) % 360 - 180;
+
+        Vector3 worldForward = new Vector3(transform.right.x, 0, transform.right.z).normalized;
+
+        float angle = Vector3.SignedAngle(transform.right, worldForward, new Vector3(transform.forward.x, 0, transform.forward.z).normalized);
+        return angle;
     }
 
     public float GetHeading()

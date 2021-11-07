@@ -67,7 +67,7 @@ public class Rocket : MonoBehaviour
     {
         transform.parent = null;
         rb = gameObject.AddComponent<Rigidbody>();
-        transform.position += transform.up * -weaponCollider.bounds.size.y;
+        transform.position += transform.up * -weaponCollider.bounds.size.y / 2;
         rb.velocity = initialSpeed + transform.up * -initialForce;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         if (vfx && vfx.visualEffectAsset)

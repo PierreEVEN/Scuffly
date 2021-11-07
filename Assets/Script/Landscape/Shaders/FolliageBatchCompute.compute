@@ -1,0 +1,43 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+#include "AltitudeGenerator.cginc"
+
+RWStructuredBuffer<float4x4> outputBuffer;
+float3 origin;
+float scale;
+int width;
+
+float2 rand_1_05(in float2 uv)
+{
+	float2 noise = (frac(sin(dot(uv, float2(12.9898, 78.233) * 2.0)) * 43758.5453));
+	return noise;
+	
+}float2 rand_2_0004(in float2 uv)
+{
+	float noiseX = (frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453));
+	float noiseY = (frac(sin(dot(uv, float2(12.9898, 78.233) * 2.0)) * 43758.5453));
+	return float2(noiseX, noiseY);
+}
+
+[numthreads(1,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+		float3 pos = float3(origin.x + id.x * scale / width, 0, origin.z + id.y * scale / width);
+
+		pos.xz += rand_2_0004(pos.xz) * scale / width * 2;
+
+	
+		pos.y = GetAltitudeAtLocation(pos.xz);
+
+		if ((pos.z > -150 && pos.z < 450 && pos.x > -1800 && pos.x < 1550) || pos.y < 10)
+			pos.y = -1000;
+
+		outputBuffer[id.x + id.y * width] = float4x4 (
+			1, 0, 0, pos.x,
+			0, 1, 0, pos.y,
+			0, 0, 1, pos.z,
+			0, 0, 0, 1
+			);
+	
+}

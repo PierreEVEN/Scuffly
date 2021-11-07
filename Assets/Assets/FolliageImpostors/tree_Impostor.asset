@@ -229,7 +229,7 @@ Material:
     m_Colors:
     - AlbedoCorretion: {r: 1, g: 1, b: 1, a: 1}
     - _AI_SizeOffset: {r: 12.503964, g: 12.529567, b: 0, a: 0.0003434066}
-    - _AlbedoCorretion: {r: 0.22027412, g: 0.6226415, b: 0.24251871, a: 1}
+    - _AlbedoCorretion: {r: 0.9755636, g: 1.1874057, b: 0.28564945, a: 1}
     - _HueVariation: {r: 0, g: 0, b: 0, a: 0}
     - _Offset: {r: -0.34271526, g: 6.0312185, b: 0.15312147, a: -0.0054945056}
   m_BuildTextureStacks: []

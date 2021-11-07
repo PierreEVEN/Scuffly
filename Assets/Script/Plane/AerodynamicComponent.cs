@@ -118,7 +118,7 @@ public class AerodynamicComponent : MonoBehaviour
             float areaDrag = Mathf.Max(0.0f, Vector3.Dot(gameObject.transform.TransformDirection(surface.localNormal), worldPointVelocity.normalized)) * surface.worldArea;
             Vector3 local_drag = (surface.localNormal * -1) * areaDrag * worldPointVelocity.magnitude * worldPointVelocity.magnitude * ro;
 
-            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * 60; //@TODO replace hardcoded friction with custom value
+            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * 50; //@TODO replace hardcoded friction with custom value
 
             if (drawTotalForce)
                 totalForce += dragApplyVector;

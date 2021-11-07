@@ -15,7 +15,7 @@ public class PlaneWheelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        WheelPhysic = gameObject.GetComponent<WheelCollider>();
+        WheelPhysic = gameObject.GetComponentInParent<WheelCollider>();
         WheelPhysic.brakeTorque = 0.0f;
         WheelPhysic.motorTorque = 0.01f;
 
@@ -40,8 +40,8 @@ public class PlaneWheelController : MonoBehaviour
     {
         if (!wheelAxisBone)
             return;
-        WheelRotation = (WheelRotation + WheelPhysic.rpm * 6 * Time.deltaTime) % 360.0f;
-        gameObject.transform.rotation = transform.parent.rotation * Quaternion.FromToRotation(wheelAxisBone.position, wheelAxisBone.parent.position) * Quaternion.Euler(0, 0, WheelPhysic.steerAngle) * Quaternion.Euler(0, -WheelRotation, 90);
+        //WheelRotation = (WheelRotation + WheelPhysic.rpm * 6 * Time.deltaTime) % 360.0f;
+        //gameObject.transform.rotation = transform.parent.rotation * Quaternion.FromToRotation(wheelAxisBone.position, wheelAxisBone.parent.position) * Quaternion.Euler(0, 0, WheelPhysic.steerAngle) * Quaternion.Euler(0, -WheelRotation, 90);
     }
 
     public void Retract(bool retract)

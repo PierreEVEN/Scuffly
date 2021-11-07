@@ -10,6 +10,7 @@ public class TextureModifier : GPULandscapeModifier
         public int priority;
         public int mode;
         public int textureID;
+        public float zOffset;
         public Vector3 position;
         public Vector3 scale;
     }
@@ -21,6 +22,8 @@ public class TextureModifier : GPULandscapeModifier
 
     public TextureModifierData data;
     public Texture2D textureMask;
+    [Range(0, 1)]
+    public float zOffset = 0;
     private Texture2D internalTextureMask;
 
     private void OnEnable()
@@ -59,7 +62,7 @@ public class TextureModifier : GPULandscapeModifier
     {
         data.position = transform.position;
         data.scale = transform.localScale;
-
+        data.zOffset = zOffset;
         if (internalTextureMask != textureMask)
         {
             if (internalTextureMask)

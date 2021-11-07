@@ -23,6 +23,7 @@ struct LandscapeMask_Texture
 	int priority;
 	int mode;
 	int maskId;
+	float zOffset;
 	float3 position;
 	float3 scale;
 };
@@ -72,7 +73,7 @@ void addAltitudeOverrides(float2 position, inout float altitude)
 
 			float2 uvPos = (position - data.position.xz) / data.scale.xz + float2(0.5, 0.5);
 
-			float4 color = tex2Dlod(LandscapeMaskAtlas, float4(uvToAtlasMask(uvPos, data.maskId), 0, 0));
+			float4 color = clamp(tex2Dlod(LandscapeMaskAtlas, float4(uvToAtlasMask(uvPos, data.maskId), 0, 0)) - data.zOffset, 0, 1);
 
 			altitude = data.position.y + color.r * data.scale.y + (data.mode == 1 ? 0 : altitude);
 		}

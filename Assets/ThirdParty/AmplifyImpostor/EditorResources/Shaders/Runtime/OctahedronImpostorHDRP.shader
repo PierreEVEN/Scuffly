@@ -6,7 +6,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor HDRP"
 	Properties
 	{
 		[NoScaleOffset] _Albedo("Albedo & Alpha", 2D) = "white" {}
-		_AlbedoCorretion("Albedo Corretion", Color) = (1,1,1,1)
+		[HDR] _AlbedoCorretion("Albedo Corretion", Color) = (1,1,1,1)
 		[NoScaleOffset]_Normals("Normals & Depth", 2D) = "white" {}
 		[NoScaleOffset]_Specular("Specular & Smoothness", 2D) = "black" {}
 		[NoScaleOffset]_Emission("Emission & Occlusion", 2D) = "black" {}

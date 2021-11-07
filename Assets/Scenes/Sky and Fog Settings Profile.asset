@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6864277108508107741
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88021d212f5ae445b46faa6d094c472, type: 3}
+  m_Name: OceanShader
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &-4903554676374266398
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -50,8 +66,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 400
   enableVolumetricFog:
-    m_OverrideState: 1
-    m_Value: 1
+    m_OverrideState: 0
+    m_Value: 0
   albedo:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -105,6 +121,7 @@ MonoBehaviour:
   - {fileID: 8714634655182515906}
   - {fileID: -4903554676374266398}
   - {fileID: 4551886473462880103}
+  - {fileID: -6864277108508107741}
 --- !u!114 &1195025563092805726
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -166,9 +183,9 @@ MonoBehaviour:
     m_Value: {x: 0, y: 0}
   lowestCloudAltitude:
     m_OverrideState: 1
-    m_Value: 1598.5
+    m_Value: 5000
   cloudThickness:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 8000
   fadeInMode:
     m_OverrideState: 0
@@ -180,10 +197,10 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   numPrimarySteps:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 98
   numLightSteps:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   cloudMap:
     m_OverrideState: 0
@@ -196,7 +213,7 @@ MonoBehaviour:
     m_Value: 0
   cloudPreset:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   cumulusMap:
     m_OverrideState: 0
     m_Value: {fileID: 0}
@@ -425,20 +442,20 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   temporalAccumulationFactor:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   ghostingReduction:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   shadows:
     m_OverrideState: 1
     m_Value: 1
   shadowResolution:
     m_OverrideState: 1
-    m_Value: 128
+    m_Value: 64
   shadowPlaneHeightOffset:
-    m_OverrideState: 1
-    m_Value: 0
+    m_OverrideState: 0
+    m_Value: 20000
   shadowDistance:
     m_OverrideState: 0
     m_Value: 8000
@@ -551,7 +568,7 @@ MonoBehaviour:
     m_Value: 0
   numberOfBounces:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 9
   groundTint:
     m_OverrideState: 0
     m_Value: {r: 0.4, g: 0.25, b: 0.15, a: 1}
