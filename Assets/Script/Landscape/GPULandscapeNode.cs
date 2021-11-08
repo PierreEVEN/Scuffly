@@ -3,14 +3,21 @@ using UnityEngine;
 
 public class GPULandscapeNode
 {
-    MaterialPropertyBlock MPB;
-    float width;
-    GPULandscape owner;
-    int quadtreeLevel;
-    Vector3 worldPosition;
-    bool shouldDisplay;
-    Bounds bounds;
+    private GPULandscape owner;
+    private bool shouldDisplay;
 
+    // Section informations
+    private int quadtreeLevel;
+    private float width;
+    private Vector3 worldPosition;
+
+    // Delimitations de la section (@TODO : faire la gestion des bounds sur l'axe y)
+    private Bounds bounds;
+
+    //  Informations pour le material sur le node courrant a afficher
+    private MaterialPropertyBlock MPB;
+
+    // Nodes enfant du quadtree
     private GPULandscapeNode[] children;
 
     public GPULandscapeNode(GPULandscape owner, int quadtreeLevel, Vector3 worldPosition, float width)
@@ -26,24 +33,18 @@ public class GPULandscapeNode
     public void destroy()
     {
         MPB = null;
-
         ShowCurrentNode();
-    }
-
-    public void OnDrawGizmos()
-    {
-
     }
 
     void DrawSection()
     {
         if (shouldDisplay)
         {
+            // Draw mesh using landscape material
             MPB.SetInt("_Subdivision", owner.chunkSubdivision);
             MPB.SetFloat("_Width", width / owner.chunkSubdivision);
             MPB.SetVector("_Offset", worldPosition);
-            int triangleVerticeCount = owner.chunkSubdivision * owner.chunkSubdivision * 6;
-            Graphics.DrawProcedural(owner.landscape_material, bounds, MeshTopology.Triangles, triangleVerticeCount, 1, null, MPB);
+            Graphics.DrawProcedural(owner.landscape_material, bounds, MeshTopology.Triangles, owner.chunkSubdivision * owner.chunkSubdivision * 6, 1, null, MPB);
         }
     }
 
@@ -51,7 +52,7 @@ public class GPULandscapeNode
     public void Update()
     {
         /*
-        Either we wants to subdivide this node if he is to close to the camera, either we wants to display its mesh section
+        Si le niveau de subdivision desire est superieur au niveau de subdivision courant : on subdivise, sinon on affiche le mesh courant et on detruit les nodes enfants
          */
         if (ComputeDesiredLODLevel() > quadtreeLevel)
             SubdivideCurrentNode();
@@ -68,6 +69,7 @@ public class GPULandscapeNode
     }
 
 
+    // Detruit les nodes enfant et active le rendu du mesh courant.
     private void ShowCurrentNode()
     {
         shouldDisplay = true;
@@ -81,7 +83,7 @@ public class GPULandscapeNode
         children = null;
     }
 
-    // Subdivide this node into 4 nodes 2 times smaller
+    // Subdivise le node courant en 4 nodes 2 fois plus petits. Desactive l'affichage du node courant
     private void SubdivideCurrentNode()
     {
         // Test if already subdivided, or start subdivision
@@ -116,8 +118,8 @@ public class GPULandscapeNode
     private int ComputeDesiredLODLevel()
     {
         // Height correction
-        Vector3 cameraGroundLocation = owner.GetCameraPosition();
-        cameraGroundLocation.y -= owner.GetAltitudeAtLocation(owner.GetCameraPosition().x, owner.GetCameraPosition().z);
+        Vector3 cameraGroundLocation = owner.CameraCurrentLocation;
+        cameraGroundLocation.y -= 0; // @TODO : get landscape altitude at camera location
         float Level = owner.maxLevel - Mathf.Min(owner.maxLevel, (Vector3.Distance(cameraGroundLocation, worldPosition) - width) / owner.quadtreeExponent);
         return (int)Level;
     }

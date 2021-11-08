@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 /**
  *  @Author : Pierre EVEN
+ *  
+ *  L'APU d'un avion est une generatrice electrique. Son fonctionnement est necessaire pour la mise en route du moteur
+ *  
  */
 public class APU : MonoBehaviour
 {
@@ -60,6 +61,7 @@ public class APU : MonoBehaviour
     {
         if (IsEnabled) return;
 
+        // Allume l'APU. Joue le son d'allumage
         CurrentStartupPercent = 0.0f;
         if (ApuStartAudioSource)
             ApuStartAudioSource.Play();
@@ -68,11 +70,13 @@ public class APU : MonoBehaviour
 
     public void StopApu()
     {
+        // Coupe l'APU : Joue le son d'etteinte.
         if (!IsEnabled) return;
         ApuShutdownAudioSource.Play();
         IsEnabled = false;
     }
 
+    // Test si l'APU genere assez d'energie pour permettre le demarrage des systemes de l'avion necessitant une forte puissance electrique
     public bool IsReady()
     {
         return CurrentStartupPercent > 0.9f;
@@ -80,7 +84,7 @@ public class APU : MonoBehaviour
 
     void Update()
     {
-
+        // On fait moduler le volume du son "idle" en fonction de l'etat de fonctionnement de l'APU
         ApuIdleAudioSource.volume = Mathf.Clamp(CurrentStartupPercent * 0.5f - 0.1f, 0, 1);
         if (CurrentStartupPercent < 0.01f && ApuIdleAudioSource.enabled)
             ApuIdleAudioSource.enabled = false;
@@ -89,6 +93,7 @@ public class APU : MonoBehaviour
             ApuIdleAudioSource.enabled = true;
             ApuIdleAudioSource.Play();
         }
+        // Met a jour l'etat courant de l'APU (= vitesse de rotation de l'alternateur)
         CurrentStartupPercent = Mathf.Clamp(CurrentStartupPercent + (IsEnabled ? Time.deltaTime / StartupDuration : -Time.deltaTime / ShutdownDuration), 0, 1);
     }
 }

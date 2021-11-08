@@ -45,7 +45,6 @@ public class PlanePlayerInputs : MonoBehaviour
         pitchTrim = Mathf.Clamp(pitchTrim, -1, 1);
 
         playerManager.controlledPlane.SetPitchInput(Mathf.Clamp(pitchInput + pitchTrim, -1, 1));
-
     }
 
     public void FixedUpdate()
@@ -132,6 +131,13 @@ public class PlanePlayerInputs : MonoBehaviour
         if (!playerManager.controlledPlane)
             return;
         playerManager.controlledPlane.ApuSwitch = !playerManager.controlledPlane.ApuSwitch;
+    }
+
+    public void OnSwitchPower()
+    {
+        if (!playerManager.controlledPlane)
+            return;
+        playerManager.controlledPlane.PowerState = !playerManager.controlledPlane.PowerState;
     }
 
     public void OnSwitchThrottleNotch()

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 /**
  *  @Author : Pierre EVEN
+ *  
+ *  Propulseur physique de l'avion.
+ *  Ne peut pas etre demarre sans APU ou source d'allimentation exterieure.
  */
-
 public class Thruster : MonoBehaviour
 {
     Rigidbody PhysicBody;
@@ -24,6 +26,7 @@ public class Thruster : MonoBehaviour
 
     void OnGUI()
     {
+        // @todo : remove debug
         GUILayout.Space(100);
         GUILayout.TextArea("Thrust input : " + EngineInput + " / engine status : " + FinalEngineInput);
         GUILayout.TextArea("Thrust force : " + thrustVector.magnitude);

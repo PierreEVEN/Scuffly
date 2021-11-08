@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+
+// Point de spawn d'un avion
 [ExecuteInEditMode]
 public class PlaneSpawnpoint : MonoBehaviour
 {
-
     public bool InFlight = false;
     public bool FlightReady = false;
     public Vector3 InitialVelocity = new Vector3();

@@ -1,8 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 /**
  *  @Author : Pierre EVEN
+ *  
+ *  Fait tourner les roues selons l'etat actuel de leur component physique / gere les animations de sortie / rentree des trains
+ *  Le skeletal mesh doit contenir un bone contenant le mot cle "axis". Ce bone sert à determiner la position de la roue.
  */
 public class PlaneWheelController : MonoBehaviour
 {
@@ -22,7 +24,7 @@ public class PlaneWheelController : MonoBehaviour
         gearAnim = GetComponentInParent<Animation>();
         var skeletalMesh = GetComponentInParent<SkinnedMeshRenderer>();
 
-
+        // Cherche parmis tous les bones du squelette un bone nommé "*axis*". Le bone sur lequel sera attaché la roue sera le point de fin de ce bone.
         foreach (var bone in skeletalMesh.bones)
         {
             if (bone.name.Contains("_end") && bone.parent.name.ToLower().Contains("axis"))
@@ -56,6 +58,7 @@ public class PlaneWheelController : MonoBehaviour
         }
         else
         {
+            // Pour rentrer le train : on joue l'animation dans le sens inverse en partant de la fin
             gearAnim[gearAnim.clip.name].speed = -1;
             if (gearAnim[gearAnim.clip.name].time < 0.01)
             gearAnim[gearAnim.clip.name].time = gearAnim.clip.length - Time.deltaTime;

@@ -1,6 +1,11 @@
 using UnityEngine;
 using UnityEngine.VFX;
 
+/*
+ * Armement de type missile attachable a un pod d'armement
+ * 
+ * @TODO : pas fini
+ */
 [RequireComponent(typeof(BoxCollider))]
 public class Rocket : MonoBehaviour
 {
