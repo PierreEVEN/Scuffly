@@ -25,7 +25,7 @@ public class ProceduralFolliageNode
         {
             GameObject container = new GameObject("procedural_folliage_" + asset + "_level_" + lodLevel);
             container.transform.parent = spawner.transform;
-            container.hideFlags = HideFlags.DontSave;
+            container.hideFlags = HideFlags.DontSave | HideFlags.HideInHierarchy;
 
             ProceduralFolliageBatch batch = container.AddComponent<ProceduralFolliageBatch>();
             batch.folliageParent = this;

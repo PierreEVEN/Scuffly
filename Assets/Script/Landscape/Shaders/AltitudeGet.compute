@@ -3,14 +3,13 @@
 
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
-RWTexture2D<float> Output;
-float AreaScale;
-float3 AreaOrigin;
+RWStructuredBuffer<float2> Input;
+RWStructuredBuffer<float> Output;
 
 #include "AltitudeGenerator.cginc"
 
-[numthreads(8,8,1)]
+[numthreads(256,1,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {	
-	Output[id.xy] = GetAltitudeAtLocation(float2(AreaOrigin.x + AreaScale * id.x, AreaOrigin.z + AreaScale * id.y));
+	Output[id.x] = GetAltitudeAtLocation(Input[id.x]);
 }

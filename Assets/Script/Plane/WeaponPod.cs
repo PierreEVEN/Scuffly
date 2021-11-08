@@ -15,16 +15,13 @@ public class WeaponPod : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //@TODO: Fixe weapon physics
-        return;
-        /*
-         if (spawnableWeapons.Count == 0) return;
+        // Spawn une arme random parmis la liste (0 pour l'instant)
+        if (spawnableWeapons.Count == 0) return;
 
         spawnedWeapon = GameObject.Instantiate(spawnableWeapons[0]);
         spawnedWeapon.transform.parent = transform;
         spawnedWeapon.transform.position = transform.position;
         spawnedWeapon.transform.rotation = transform.rotation;
-        */
     }
 
     // Update is called once per frame

@@ -31,19 +31,51 @@ public class Rocket : MonoBehaviour
         }
     }
 
+    int collisionID;
+    private void OnEnable()
+    {
+        collisionID = GPULandscapePhysic.Singleton.AddCollisionItem(new Vector2[1] { new Vector2(transform.position.x, transform.position.z) });
+        GPULandscapePhysic.Singleton.OnPreProcess.AddListener(OnPreprocessPhysic);
+        GPULandscapePhysic.Singleton.OnProcessed.AddListener(OnProcessedPhysic);
+    }
+    private void OnDisable()
+    {
+        GPULandscapePhysic.Singleton.RemoveCollisionItem(collisionID);
+        GPULandscapePhysic.Singleton.OnPreProcess.RemoveListener(OnPreprocessPhysic);
+        GPULandscapePhysic.Singleton.OnProcessed.RemoveListener(OnProcessedPhysic);
+    }
+
+    void OnPreprocessPhysic()
+    {
+        GPULandscapePhysic.Singleton.UpdateSourcePoints(collisionID, new Vector2[1] { new Vector2(transform.position.x, transform.position.z) });
+    }
+    void OnProcessedPhysic()
+    {
+        var fsxData = GPULandscapePhysic.Singleton.GetPhysicData(collisionID);
+        if (transform.position.y < fsxData[0]) Detonate();
+    }
+
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (rb.velocity.magnitude > 20)
-        {
-            Debug.Log("boom");
-            rb.velocity = new Vector3(0, 0, 0);
-            GameObject fxObj = new GameObject();
-            fxObj.transform.position = transform.position;
-            VisualEffect explfx = fxObj.AddComponent<VisualEffect>();
-            explfx.visualEffectAsset = explosionFx;
-            explfx.Play();
-            destroyed = true;
-        }
+        Detonate();
+    }
+
+    void Detonate()
+    {
+        if (destroyed)
+            return;
+        rb.velocity = new Vector3(0, 0, 0);
+        rb.freezeRotation = true;
+        Acceleration = 0;
+        vfx.enabled = false;
+        GameObject fxObj = new GameObject();
+        fxObj.transform.parent = transform;
+        fxObj.transform.localPosition = new Vector3(0, 0, 0);
+        VisualEffect explfx = fxObj.AddComponent<VisualEffect>();
+        explfx.visualEffectAsset = explosionFx;
+        explfx.Play();
+        destroyed = true;
     }
 
     // Update is called once per frame
@@ -65,7 +97,7 @@ public class Rocket : MonoBehaviour
         }
         else
             if (vfx)
-                vfx.enabled = false;
+            vfx.enabled = false;
     }
 
     public void Shoot(Vector3 initialSpeed)
