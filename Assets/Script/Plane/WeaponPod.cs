@@ -12,6 +12,7 @@ public class WeaponPod : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        return;
         if (spawnableWeapons.Count == 0) return;
 
         spawnedWeapon = GameObject.Instantiate(spawnableWeapons[0]);

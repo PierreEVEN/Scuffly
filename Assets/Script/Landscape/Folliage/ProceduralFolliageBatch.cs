@@ -7,20 +7,20 @@ public class ProceduralFolliageBatch : MonoBehaviour
     public ProceduralFolliageAsset folliageAsset;
     public ProceduralFolliageNode folliageParent;
 
-    ComputeBuffer matrixBuffer;
-    ComputeBuffer matrixArgsBuffer;
+    ComputeBuffer matrixBuffer = null;
+    ComputeBuffer matrixArgsBuffer = null;
     private uint[] matrixArgs = new uint[5] { 0, 0, 0, 0, 0 };
     MaterialPropertyBlock InstanceMaterialProperties;
 
-    public void OnStart()
-    {
-    }
     public void OnDisable()
     {
         if (matrixBuffer != null)
-            matrixBuffer.Dispose();
+            matrixBuffer.Release();
         if (matrixArgsBuffer != null)
-            matrixArgsBuffer.Dispose();
+            matrixArgsBuffer.Release();
+
+        matrixBuffer = null;
+        matrixArgsBuffer = null;
     }
 
     private void Update()
@@ -31,7 +31,7 @@ public class ProceduralFolliageBatch : MonoBehaviour
         if (InstanceMaterialProperties == null)
             InstanceMaterialProperties = new MaterialPropertyBlock();
 
-        Bounds bounds = new Bounds(folliageParent.nodePosition, new Vector3(folliageParent.nodeWidth, folliageParent.nodeWidth * 100, folliageParent.nodeWidth));
+        Bounds bounds = new Bounds(folliageParent.nodePosition, new Vector3(folliageParent.nodeWidth, folliageParent.nodeWidth * 0.1f, folliageParent.nodeWidth));
 
         if (matrixArgsBuffer == null)
             CreateOrRecreateMatrices();
@@ -46,11 +46,13 @@ public class ProceduralFolliageBatch : MonoBehaviour
         if (matrixBuffer == null || matrixBuffer.count != desiredCount)
         {
             if (matrixBuffer != null)
-                matrixBuffer.Dispose();
+            {
+                matrixBuffer.Release();
+            }
             matrixBuffer = new ComputeBuffer(desiredCount, sizeof(float) * 16, ComputeBufferType.IndirectArguments);
         }
 
-        if (matrixArgsBuffer != null) matrixArgsBuffer.Dispose();
+        if (matrixArgsBuffer != null) matrixArgsBuffer.Release();
         matrixArgsBuffer = new ComputeBuffer(1, matrixArgs.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
 
         // reset instance count;
