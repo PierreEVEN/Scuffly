@@ -1,0 +1,204 @@
+fileFormatVersion: 2
+guid: d9408a762d1063b4ba71bec74dbbfdd8
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: COG
+    100002: CONTROLS
+    100004: //RootNode
+    100006: DonQuixote:Body
+    100008: GlobalSRT
+    100010: Head
+    100012: HeadRoot
+    100014: Helmet
+    100016: LArmEff
+    100018: LArmRoot
+    100020: LBicept
+    100022: LFoot
+    100024: LFootEff
+    100026: LForearm
+    100028: LHand
+    100030: LHandEff
+    100032: LHandRoot
+    100034: LLegRoot
+    100036: LRootFoot
+    100038: LRootShoulder
+    100040: LShin
+    100042: LShoulder
+    100044: LShoulderEff
+    100046: LThigh
+    100048: LToe
+    100050: LToeEff
+    100052: ManSkeletonBasic
+    100054: Neck
+    100056: NeckEff
+    100058: RArmEff
+    100060: RArmRoot
+    100062: RBicept
+    100064: RFoot
+    100066: RFootEff
+    100068: RForearm
+    100070: RHand
+    100072: RHandEff
+    100074: RHandRoot
+    100076: RLegRoot
+    100078: RRootFoot
+    100080: RRootShoulder
+    100082: RShin
+    100084: RShoulder
+    100086: RShoulderEff
+    100088: RThigh
+    100090: RToe
+    100092: RToeEff
+    100094: Shield
+    100096: Skeleton
+    100098: Spear
+    100100: Spine1
+    100102: Spine2
+    100104: Spine3
+    100106: SpineEff
+    100108: SpineRoot
+    400000: COG
+    400002: CONTROLS
+    400004: //RootNode
+    400006: DonQuixote:Body
+    400008: GlobalSRT
+    400010: Head
+    400012: HeadRoot
+    400014: Helmet
+    400016: LArmEff
+    400018: LArmRoot
+    400020: LBicept
+    400022: LFoot
+    400024: LFootEff
+    400026: LForearm
+    400028: LHand
+    400030: LHandEff
+    400032: LHandRoot
+    400034: LLegRoot
+    400036: LRootFoot
+    400038: LRootShoulder
+    400040: LShin
+    400042: LShoulder
+    400044: LShoulderEff
+    400046: LThigh
+    400048: LToe
+    400050: LToeEff
+    400052: ManSkeletonBasic
+    400054: Neck
+    400056: NeckEff
+    400058: RArmEff
+    400060: RArmRoot
+    400062: RBicept
+    400064: RFoot
+    400066: RFootEff
+    400068: RForearm
+    400070: RHand
+    400072: RHandEff
+    400074: RHandRoot
+    400076: RLegRoot
+    400078: RRootFoot
+    400080: RRootShoulder
+    400082: RShin
+    400084: RShoulder
+    400086: RShoulderEff
+    400088: RThigh
+    400090: RToe
+    400092: RToeEff
+    400094: Shield
+    400096: Skeleton
+    400098: Spear
+    400100: Spine1
+    400102: Spine2
+    400104: Spine3
+    400106: SpineEff
+    400108: SpineRoot
+    2100000: Polygon3
+    2100002: Scene_Root
+    2100004: Polygon
+    2100006: Polygon1
+    2100008: Shield
+    4300000: DonQuixote:Body
+    9500000: //RootNode
+    13700000: DonQuixote:Body
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 10
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

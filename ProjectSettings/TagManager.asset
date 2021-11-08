@@ -9,6 +9,8 @@ TagManager:
   - Yaw
   - Roll
   - SpawnPoint
+  - Foe
+  - Thrust
   layers:
   - Default
   - TransparentFX

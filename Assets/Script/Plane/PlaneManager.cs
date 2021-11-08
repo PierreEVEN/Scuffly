@@ -23,7 +23,7 @@ public class PlaneManager : MonoBehaviour
     public bool initialRetractGear = false;
     public bool initialBrakes = true;
     public float initialSpeed = 0;
-    public bool initialPower = true;
+    public bool initialPower = false;
 
     Rigidbody planePhysic;
 
@@ -145,6 +145,10 @@ public class PlaneManager : MonoBehaviour
         {
             thruster.set_thrust_input(input);
         }
+
+        foreach (var part in GetComponentsInChildren<MobilePart>())
+            if (part.tag == "Thrust")
+                part.setInput(input);
     }
 
     public void SetPitchInput(float input)
