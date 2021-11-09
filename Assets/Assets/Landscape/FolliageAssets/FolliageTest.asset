@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinSpawnLevel: 2
   MaxSpawnLevel: 5
-  DensityPerLevel: 1
+  DensityPerLevel: 10
   Impostor: {fileID: 11400000, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}

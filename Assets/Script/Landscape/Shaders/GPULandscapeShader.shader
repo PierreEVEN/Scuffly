@@ -132,8 +132,7 @@ Shader "HDRP/GpuLandscapeShader"
 				OUT.normalWS = normalize(cross(float3(-1, altX - OUT.worldPosition.y, 0), float3(0, altZ - OUT.worldPosition.y, 1)));
 
 				float3 finalWorldPos = OUT.worldPosition;
-				if (finalWorldPos.y < 0)
-					finalWorldPos.y = 0;
+				if (finalWorldPos.y < 0) finalWorldPos.y = 0;
 
 				OUT.positionCS = TransformWorldToHClip(GetCameraRelativePositionWS(finalWorldPos));
 

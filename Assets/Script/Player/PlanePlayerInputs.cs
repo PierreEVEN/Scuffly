@@ -41,7 +41,7 @@ public class PlanePlayerInputs : MonoBehaviour
         if (!playerManager.controlledPlane)
             return;
 
-        pitchTrim += trimIncreaseInput * Time.deltaTime * 0.5f;
+        pitchTrim += trimIncreaseInput * Time.deltaTime * 1.5f;
         pitchTrim = Mathf.Clamp(pitchTrim, -1, 1);
 
         playerManager.controlledPlane.SetPitchInput(Mathf.Clamp(pitchInput + pitchTrim, -1, 1));
