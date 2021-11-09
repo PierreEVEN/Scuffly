@@ -101,13 +101,13 @@ Shader "HDRP/GpuLandscapeShader"
 			};
 
 			int _Subdivision;
-			float _Width;
-			float3 _Offset;
-
+			float _Width; // Width between quads
+			float3 _Offset; // world position offset
+			float worldExponent;
+			float minValue;
 
 			struct VertexOutput {
 				float4 positionCS               : SV_POSITION;
-				float2 uv                       : TEXCOORD0;
 				float3 worldPosition			: TEXCOORD1;
 				float3 normalWS					: TEXCOORD2;
 			};
@@ -116,13 +116,29 @@ Shader "HDRP/GpuLandscapeShader"
 			{
 				VertexOutput OUT;
 
+				if (_Subdivision == 0)
+					return OUT;
+
 				uint quadId = IN.vertex_id / 6;
 				uint vertId = IN.vertex_id % 6;
 
-				float posX = (quadId % _Subdivision) * _Width + (vertId == 2 || vertId == 4 || vertId == 5 ? _Width : 0);
-				float posY = (quadId / _Subdivision) * _Width + (vertId == 1 || vertId == 2 || vertId == 4 ? _Width : 0);
+				// Compute local position
+				float posX = (quadId % _Subdivision) + (vertId == 2 || vertId == 4 || vertId == 5 ? 1 : 0);
+				float posY = (quadId / _Subdivision) + (vertId == 1 || vertId == 2 || vertId == 4 ? 1 : 0);
+				posX -= _Subdivision / 2;
+				posY -= _Subdivision / 2;
+				posX *= _Width;
+				posY *= _Width;
 
-				OUT.uv = float2(posX, posY);
+				float manhattanDist = max(abs(posX), abs(posY)) + 2;
+
+				float clampedDist = ((int)manhattanDist / 1) * 1;
+				float clampedDistPrev = ((int)manhattanDist / 1) * 1;
+
+				float2 dirToCenter = normalize(float2(posX, posY));
+				posX = posX * clampedDist - dirToCenter.x * clampedDistPrev;
+				posY = posY * clampedDist - dirToCenter.y * clampedDistPrev;
+
 				OUT.worldPosition = float3(posX - _Width / 2 * _Subdivision, 0, posY - _Width / 2 * _Subdivision) + _Offset;
 				OUT.worldPosition.y = GetAltitudeAtLocation(OUT.worldPosition.xz);
 

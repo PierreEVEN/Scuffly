@@ -32,11 +32,12 @@ public class GPULandscape : MonoBehaviour
      */
 
     // Largeur d'une section (km)
-    [Header("Scale"), Range(1000, 100000)]
-    public float SectionWidth = 15000;
+    public float SectionWidth = .1f;
+    public float worldExponent = 4;
+    public float minValue = 0;
 
     // Niveau de subdivision maximal d'une section
-    [Header("LOD"), Range(1, 10)]
+    [Header("LOD"), Range(0, 10)]
     public int maxLevel = 4;
     // Reglage du seuil de subdivision
     [Header("LOD"), Range(50, 5000)]
@@ -47,7 +48,7 @@ public class GPULandscape : MonoBehaviour
     public int ViewDistance = 4;
 
     // Subdivision du maillage de chaque section
-    [Header("Rendering"), Range(2, 500)]
+    [Header("Rendering"), Range(2, 2000)]
     public int chunkSubdivision = 50;
 
     // Material du terrain (full GPU : doit generer les vertices)

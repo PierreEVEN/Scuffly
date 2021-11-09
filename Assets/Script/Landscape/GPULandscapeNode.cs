@@ -42,8 +42,10 @@ public class GPULandscapeNode
         {
             // Draw mesh using landscape material
             MPB.SetInt("_Subdivision", owner.chunkSubdivision);
-            MPB.SetFloat("_Width", width / owner.chunkSubdivision);
-            MPB.SetVector("_Offset", worldPosition);
+            MPB.SetFloat("_Width", owner.SectionWidth);
+            MPB.SetVector("_Offset", owner.CameraCurrentLocation);
+            MPB.SetFloat("worldExponent", owner.worldExponent);
+            MPB.SetFloat("minValue", owner.minValue);
             Graphics.DrawProcedural(owner.landscape_material, bounds, MeshTopology.Triangles, owner.chunkSubdivision * owner.chunkSubdivision * 6, 1, null, MPB);
         }
     }
@@ -54,10 +56,13 @@ public class GPULandscapeNode
         /*
         Si le niveau de subdivision desire est superieur au niveau de subdivision courant : on subdivise, sinon on affiche le mesh courant et on detruit les nodes enfants
          */
+
+        /*
         if (ComputeDesiredLODLevel() > quadtreeLevel)
             SubdivideCurrentNode();
         else
-            ShowCurrentNode();
+        */
+        ShowCurrentNode();
 
         if (shouldDisplay)
             DrawSection();
