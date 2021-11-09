@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[ExecuteInEditMode]
-public class GPULandscapePhysic : MonoBehaviour
+public class GPULandscapePhysic
 {
 
     struct CollisionItem
@@ -21,28 +20,19 @@ public class GPULandscapePhysic : MonoBehaviour
 
     private static GPULandscapePhysic singleton;
     public static GPULandscapePhysic Singleton { get {
+            if (singleton == null)
+            {
+                singleton = new GPULandscapePhysic();
+            }
+
             return singleton;
         } 
     }
 
-    public ComputeShader textureGridGetterShader;
+    private ComputeShader textureGridGetterShader;
 
     public UnityEvent OnPreProcess = new UnityEvent();
     public UnityEvent OnProcessed = new UnityEvent();
-
-
-    private void OnEnable()
-    {
-        singleton = this;
-    }
-    private void Awake()
-    {
-        singleton = this;
-    }
-    private void Start()
-    {
-        singleton = this;
-    }
 
     private void OnDisable()
     {
@@ -99,6 +89,9 @@ public class GPULandscapePhysic : MonoBehaviour
         for (int i = collisionItems.Count - 1; i >= 0; --i)
             if (collisionItems[i].id == id)
                 collisionItems.RemoveAt(i);
+
+        if (collisionItems.Count == 0)
+            OnDisable();
     }
 
     public void UpdateSourcePoints(int id, Vector2[] points)
@@ -119,7 +112,7 @@ public class GPULandscapePhysic : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void Update()
     {
         ProcessData();
     }
@@ -127,7 +120,22 @@ public class GPULandscapePhysic : MonoBehaviour
     public void ProcessData()
     {
         if (!textureGridGetterShader)
-            return;
+        {
+            GameObject landscape = GameObject.FindGameObjectWithTag("GPULandscape");
+            if (!landscape)
+            {
+                Debug.LogError("cannot find any landscape in current scene : required for physics");
+                return;
+            }
+
+
+            textureGridGetterShader = landscape.GetComponentInChildren<GPULandscape>().landscapePhysicGetter;
+            if (!textureGridGetterShader)
+            {
+                Debug.LogError("cannot find landscape shader physic getter");
+                return;
+            }
+        }
 
         OnPreProcess.Invoke();
         // We collect an array of point to process

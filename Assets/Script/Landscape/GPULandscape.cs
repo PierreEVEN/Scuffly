@@ -53,6 +53,9 @@ public class GPULandscape : MonoBehaviour
     // Material du terrain (full GPU : doit generer les vertices)
     public Material landscape_material;
 
+    [Header("Physics")]
+    public ComputeShader landscapePhysicGetter;
+
     [Header("Developper features")] // Debug
     public bool Reset = false;
 
@@ -71,17 +74,33 @@ public class GPULandscape : MonoBehaviour
     // Liste des sections affichées
     private List<LandscapeSection> GeneratedSections = new List<LandscapeSection>();
 
-    public void Start()
+    public void OnEnable()
     {
+        if (PlayerPrefs.HasKey("LandscapeResolution"))
+        {
+            chunkSubdivision = PlayerPrefs.GetInt("LandscapeResolution");
+        }
+
+
+
         IngamePlayerCamera = GameObject.FindGameObjectWithTag("MainCamera");
         UpdateCameraLocation();
         ResetLandscape();
         Refresh();
     }
 
+    public void OnValidate()
+    {
+        PlayerPrefs.SetInt("LandscapeResolution", chunkSubdivision);
+    }
+
+
     public void Update()
     {
         Refresh();
+
+
+        GPULandscapePhysic.Singleton.Update();
     }
 
     void Refresh()
@@ -123,6 +142,8 @@ public class GPULandscape : MonoBehaviour
 
     public void OnDisable()
     {
+        PlayerPrefs.Save();
+
         // Called on hot reload or when playing / returning back to editor ...
         ResetLandscape();
     }

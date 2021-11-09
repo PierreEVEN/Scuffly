@@ -58,7 +58,7 @@ public class PlaneManager : MonoBehaviour
         set
         {
             if (!power)
-                ApuSwitch = false;
+                apuSwitch = false;
             else
                 apuSwitch = value;
             foreach (var part in GetComponentsInChildren<APU>())

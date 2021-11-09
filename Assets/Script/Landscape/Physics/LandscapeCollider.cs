@@ -99,6 +99,7 @@ public class LandscapeCollider : MonoBehaviour
             }
         }
 
+
         if (vertices.Length < 3)
             return;
         if (vertices[0] == vertices[1] || vertices[1] == vertices[2] || vertices[0] == vertices[2])

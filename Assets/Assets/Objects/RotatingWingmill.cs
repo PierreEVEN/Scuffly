@@ -10,7 +10,7 @@ public class RotatingWingmill : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = (float)Random.RandomRange(40, 180);
+        speed = Random.Range(40, 180);
     }
 
     // Update is called once per frame
