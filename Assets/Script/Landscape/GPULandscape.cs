@@ -8,7 +8,7 @@ using UnityEngine;
 
 /*
  * Terrain procedural sur GPU : le maillage et le noise sont générés sur GPU évitant les lags de generation.
- * Permet une mise a jour du terrain en temps réelle à très grande échelle et de faire de la modelisation par masques
+ * Permet une mise a jour du terrain en temps réel à très grande échelle et de faire de la modelisation par masques directement sur GPU (CF : GPULandscapeModifier)
  * 
  * TODO : passer la gestion du quadtree sur GPU (pas prioritaire ni necessaire, mais probleme interessant à traiter)
  */ 
@@ -76,21 +76,28 @@ public class GPULandscape : MonoBehaviour
 
     public void OnEnable()
     {
+        // Mise a jour des parametrages
         if (PlayerPrefs.HasKey("LandscapeResolution"))
-        {
             chunkSubdivision = PlayerPrefs.GetInt("LandscapeResolution");
-        }
-
-
 
         IngamePlayerCamera = GameObject.FindGameObjectWithTag("MainCamera");
         UpdateCameraLocation();
         ResetLandscape();
         Refresh();
     }
+    
+    public static void OnUpdateProperties()
+    {
+        foreach (var landscape in GameObject.FindGameObjectsWithTag("GPULandscape"))
+        {
+            landscape.SetActive(false);
+            landscape.SetActive(true);
+        }
+    }
 
     public void OnValidate()
     {
+        // Sauvegarde les parametres du landscape dans les preferences du UnityPlayer
         PlayerPrefs.SetInt("LandscapeResolution", chunkSubdivision);
     }
 
@@ -99,8 +106,8 @@ public class GPULandscape : MonoBehaviour
     {
         Refresh();
 
-
-        GPULandscapePhysic.Singleton.Update();
+        // Met a jour la physique
+        GPULandscapePhysic.Singleton.ProcessData();
     }
 
     void Refresh()

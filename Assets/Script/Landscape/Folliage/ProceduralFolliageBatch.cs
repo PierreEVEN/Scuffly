@@ -31,6 +31,9 @@ public class ProceduralFolliageBatch : MonoBehaviour
         if (InstanceMaterialProperties == null)
             InstanceMaterialProperties = new MaterialPropertyBlock();
 
+        if (folliageParent == null)
+            return;
+
         Bounds bounds = new Bounds(folliageParent.nodePosition, new Vector3(folliageParent.nodeWidth, folliageParent.nodeWidth * 0.1f, folliageParent.nodeWidth));
 
         if (matrixArgsBuffer == null)
@@ -49,7 +52,7 @@ public class ProceduralFolliageBatch : MonoBehaviour
             {
                 matrixBuffer.Release();
             }
-            matrixBuffer = new ComputeBuffer(desiredCount, sizeof(float) * 16, ComputeBufferType.IndirectArguments);
+            matrixBuffer = new ComputeBuffer(desiredCount, sizeof(float) * 16, ComputeBufferType.Structured);
         }
 
         if (matrixArgsBuffer != null) matrixArgsBuffer.Release();
@@ -63,6 +66,12 @@ public class ProceduralFolliageBatch : MonoBehaviour
         matrixArgsBuffer.SetData(matrixArgs);
 
         ComputeShader generationCS = folliageParent.folliageSpawner.generationShader;
+        if (!generationCS)
+        {
+            Debug.LogError("missing folliage generation compute shader");
+            return;
+        }
+
         int kernelIndex = generationCS.FindKernel("CSMain");
         generationCS.SetBuffer(kernelIndex, "outputBuffer", matrixBuffer);
         generationCS.SetVector("origin", folliageParent.nodePosition - new Vector3(folliageParent.nodeWidth / 2, 0, folliageParent.nodeWidth / 2));
@@ -70,9 +79,7 @@ public class ProceduralFolliageBatch : MonoBehaviour
         generationCS.SetInt("width", folliageAsset.DensityPerLevel);
         IModifierGPUArray.UpdateCompute(generationCS, kernelIndex);
         // Run compute shader
-        InstanceMaterialProperties.SetBuffer("matrixBuffer", matrixBuffer);
         generationCS.Dispatch(kernelIndex, folliageAsset.DensityPerLevel, folliageAsset.DensityPerLevel, 1);
-
-
+        InstanceMaterialProperties.SetBuffer("matrixBuffer", matrixBuffer);
     }
 }

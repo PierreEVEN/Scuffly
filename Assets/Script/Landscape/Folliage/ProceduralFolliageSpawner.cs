@@ -11,7 +11,7 @@ public class ProceduralFolliageSpawner : MonoBehaviour
     [HideInInspector]
     public List<float> LodLevels = new List<float>();
 
-    public List<ProceduralFolliageAsset> foliageAssets;
+    public List<ProceduralFolliageAsset> foliageAssets = new List<ProceduralFolliageAsset>();
     [Range(0, 5)]
     public int Radius = 2;
     [Range(100, 20000)]
@@ -35,7 +35,7 @@ public class ProceduralFolliageSpawner : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (Reset)
         {
