@@ -20,6 +20,8 @@ public class Rocket : MonoBehaviour
     VisualEffect vfx;
     public VisualEffectAsset explosionFx;
 
+    private Vector3 targetPosition = new Vector3(0, 300, 0); //position de la cible stockée sous forme de vecteur
+
     // Start is called before the first frame update
     void Start()
     {
@@ -93,7 +95,10 @@ public class Rocket : MonoBehaviour
         if (rb && Endurance > 0)
         {
             Endurance -= Time.deltaTime;
-            rb.velocity += transform.forward * Time.deltaTime * Acceleration;
+            float step = Acceleration * Time.deltaTime; // calcule la distance que le missile va parcourir à la prochaine étape
+            Vector3 vecteurAddition = Vector3.MoveTowards(transform.position, targetPosition, step);
+            rb.velocity += vecteurAddition; // on ajoute au vecteur vélocité du missile un vecteur qui a pour "direction" la position de la cible sur une distance step
+            Debug.Log(vecteurAddition);
         }
         else
             if (vfx)
