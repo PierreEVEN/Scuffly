@@ -55,6 +55,7 @@ public class MobilePart : MonoBehaviour
             finalRotation = Quaternion.Lerp(intNeutralRotation, intMaxRotation, inputValue);
         else
             finalRotation = Quaternion.Lerp(intNeutralRotation, intMinRotation, -inputValue);
-        gameObject.transform.rotation = gameObject.transform.parent.rotation * finalRotation;
+        if (gameObject.transform.parent)
+            gameObject.transform.rotation = gameObject.transform.parent.rotation * finalRotation;
     }
 }

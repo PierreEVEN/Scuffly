@@ -23,6 +23,9 @@ public class ProceduralFolliageNode
         //@TODO don't generate all kind of foliage everywhere
         foreach (var asset in spawner.foliageAssets)
         {
+            if (lodLevel < asset.MinSpawnLevel || lodLevel > asset.MaxSpawnLevel)
+                continue;
+
             GameObject container = new GameObject("procedural_folliage_" + asset + "_level_" + lodLevel);
             container.transform.parent = spawner.transform;
             container.hideFlags = HideFlags.DontSave | HideFlags.HideInHierarchy;

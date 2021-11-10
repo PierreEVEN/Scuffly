@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0344a066be3a8164ba2c7280ef49da81, type: 3}
+  m_Name: BirchFolliageAsset
+  m_EditorClassIdentifier: 
+  MinSpawnLevel: 1
+  MaxSpawnLevel: 2
+  DensityPerLevel: 100
+  spawnedMesh: {fileID: -5013144756241044092, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}
+  usedMaterial: {fileID: -2826065132357868018, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}

@@ -37,7 +37,7 @@ public class WeaponPod : MonoBehaviour
             return;
         Rocket comp = spawnedWeapon.GetComponent<Rocket>();
         if (comp)
-            comp.Shoot(GetComponentInParent<Rigidbody>().velocity);
+            comp.Shoot(GetComponentInParent<Rigidbody>().velocity, GameObject.Find("Windmill"));
         spawnedWeapon = null; // l'arme a ete tiree
     }
 }

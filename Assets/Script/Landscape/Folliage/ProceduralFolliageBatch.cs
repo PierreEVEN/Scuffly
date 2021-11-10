@@ -25,7 +25,7 @@ public class ProceduralFolliageBatch : MonoBehaviour
 
     private void Update()
     {
-        if (folliageAsset == null || folliageAsset.Impostor == null)
+        if (folliageAsset == null || folliageAsset.spawnedMesh == null || folliageAsset.usedMaterial == null)
             return;
 
         if (InstanceMaterialProperties == null)
@@ -39,7 +39,7 @@ public class ProceduralFolliageBatch : MonoBehaviour
         if (matrixArgsBuffer == null)
             CreateOrRecreateMatrices();
 
-        Graphics.DrawMeshInstancedIndirect(folliageAsset.Impostor.Mesh, 0, folliageAsset.Impostor.Material, bounds, matrixArgsBuffer, 0, InstanceMaterialProperties);
+        Graphics.DrawMeshInstancedIndirect(folliageAsset.spawnedMesh, 0, folliageAsset.usedMaterial, bounds, matrixArgsBuffer, 0, InstanceMaterialProperties);
     }
 
     void CreateOrRecreateMatrices()
@@ -59,10 +59,10 @@ public class ProceduralFolliageBatch : MonoBehaviour
         matrixArgsBuffer = new ComputeBuffer(1, matrixArgs.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
 
         // reset instance count;
-        matrixArgs[0] = folliageAsset.Impostor.Mesh.GetIndexCount(0);
+        matrixArgs[0] = folliageAsset.spawnedMesh.GetIndexCount(0);
         matrixArgs[1] = (uint)desiredCount;
-        matrixArgs[2] = folliageAsset.Impostor.Mesh.GetIndexStart(0);
-        matrixArgs[3] = folliageAsset.Impostor.Mesh.GetBaseVertex(0);
+        matrixArgs[2] = folliageAsset.spawnedMesh.GetIndexStart(0);
+        matrixArgs[3] = folliageAsset.spawnedMesh.GetBaseVertex(0);
         matrixArgsBuffer.SetData(matrixArgs);
 
         ComputeShader generationCS = folliageParent.folliageSpawner.generationShader;

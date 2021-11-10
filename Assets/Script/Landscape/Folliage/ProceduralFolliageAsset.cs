@@ -10,8 +10,8 @@ public class ProceduralFolliageAsset : ScriptableObject
 
     public int DensityPerLevel = 20;
 
-    public AmplifyImpostors.AmplifyImpostorAsset Impostor;
-
+    public Mesh spawnedMesh;
+    public Material usedMaterial;
 
     private void OnValidate()
     {

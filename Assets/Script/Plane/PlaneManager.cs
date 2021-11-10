@@ -228,4 +228,20 @@ public class PlaneManager : MonoBehaviour
     {
         return transform.rotation.eulerAngles.y;
     }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        foreach (var component in GetComponentsInChildren<DamageableComponent>())
+        {
+            Vector3[] points = new Vector3[collision.contactCount];
+
+            for (int i = 0; i < collision.contactCount; ++i)
+            {
+                points[i] = collision.contacts[i].point;
+            }
+
+            component.ApplyDamageAtLocation(points, 0.5f, collision.impulse.magnitude / 200);
+        }
+    }
 }

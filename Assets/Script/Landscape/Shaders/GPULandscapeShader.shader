@@ -3,13 +3,10 @@ Shader "HDRP/GpuLandscapeShader"
 	Properties
 	{
 		[NoScaleOffset] _GrassAlbedo("Grass_Albedo", 2D) = "white" {}
-		[NoScaleOffset] _GrassNormal("Grass_Normal", 2D) = "white" {}
+		[NoScaleOffset] _Grass2Albedo("Grass2_Albedo", 2D) = "white" {}
 		[NoScaleOffset] _RockAlbedo("Rock_Albedo", 2D) = "white" {}
-		[NoScaleOffset] _RockNormal("Rock_Normal", 2D) = "white" {}
 		[NoScaleOffset] _SnowAlbedo("Snow_Albedo", 2D) = "white" {}
-		[NoScaleOffset] _SnowNormal("Snow_Normal", 2D) = "white" {}
 		[NoScaleOffset] _SandAlbedo("Sand_Albedo", 2D) = "white" {}
-		[NoScaleOffset] _SandNormal("Sand_Normal", 2D) = "white" {}
 	}
 
 	SubShader
@@ -140,13 +137,10 @@ Shader "HDRP/GpuLandscapeShader"
 			}
 
 			sampler2D _GrassAlbedo;
-			sampler2D _GrassNormal;
+			sampler2D _Grass2Albedo;
 			sampler2D _RockAlbedo;
-			sampler2D _RocksNormal;
 			sampler2D _SnowAlbedo;
-			sampler2D _SnowNormal;
 			sampler2D _SandAlbedo;
-			sampler2D _SandNormal;
 
 
 
@@ -368,7 +362,7 @@ Shader "HDRP/GpuLandscapeShader"
 
 
 				float3 color = tex2D(_GrassAlbedo, IN.worldPosition.xz * 0.1);
-
+				color = lerp(tex2D(_Grass2Albedo, IN.worldPosition.xz * 0.1), color, (snoise(IN.worldPosition * 0.003) * snoise(IN.worldPosition * 0.001)) * 0.5 + 0.5);
 				// add snow
 				color = lerp(color, tex2D(_SnowAlbedo, IN.worldPosition.xz * 0.1), clamp((IN.worldPosition.y - 1000 + snoise(IN.worldPosition.xz * 0.001) * 100) * 0.001, 0, 1));
 

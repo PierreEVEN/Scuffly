@@ -18,6 +18,14 @@ public class PlaneATHManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!owningPlane)
+            return;
+        if (!canvas)
+        {
+            canvas = GetComponentInChildren<Canvas>();
+            canvasGroup = GetComponentInChildren<CanvasGroup>();
+        }
+
         canvas.enabled = owningPlane.PowerState;
         alpha = Mathf.Clamp01(alpha + (owningPlane.PowerState ? 0.5f * Time.deltaTime : -4f * Time.deltaTime));
         canvasGroup.alpha = alpha;

@@ -66,7 +66,6 @@ public class Thruster : MonoBehaviour
         float linearVelocity = transform.InverseTransformDirection(PhysicBody.velocity).z;
 
         // Compute thrust vector
-        Debug.Log("linear velo : " + linearVelocity);
         thrustVector = gameObject.transform.forward.normalized * FinalEngineInput * ThrustForceCurve.Evaluate(linearVelocity);
 
         PhysicBody.AddForceAtPosition(thrustVector * Time.deltaTime, gameObject.transform.position);
