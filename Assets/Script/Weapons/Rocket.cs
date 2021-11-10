@@ -96,14 +96,24 @@ public class Rocket : MonoBehaviour
         {
             Endurance -= Time.deltaTime;
             float step = Acceleration * Time.deltaTime; // calcule la distance que le missile va parcourir à la prochaine étape
-            Vector3 vecteurAddition = Vector3.MoveTowards(transform.position, targetPosition, step);
-            rb.velocity += vecteurAddition; // on ajoute au vecteur vélocité du missile un vecteur qui a pour "direction" la position de la cible sur une distance step
-            Debug.Log(vecteurAddition);
+            float dragLimiter = 0.9f;
+            int turningSpeed = 60;
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation((targetPosition - transform.position).normalized * step, new Vector3(0, 1, 0)), turningSpeed * Time.deltaTime);
+            rb.velocity += transform.forward * step;
+
+            Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
+            localVelocity.x *= dragLimiter;
+            localVelocity.y *= dragLimiter;
+            rb.velocity = transform.TransformDirection(localVelocity);
+
         }
         else
             if (vfx)
             vfx.enabled = false;
     }
+
+
 
     public void Shoot(Vector3 initialSpeed)
     {
