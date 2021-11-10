@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinSpawnLevel: 1
   MaxSpawnLevel: 2
-  DensityPerLevel: 100
+  DensityPerLevel: 150
   spawnedMesh: {fileID: -5013144756241044092, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}
   usedMaterial: {fileID: -2826065132357868018, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}

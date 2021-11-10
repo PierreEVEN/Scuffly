@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 5371.6816, g: 3330.33, b: 2729.1133, a: 1}
+  m_IndirectSpecularColor: {r: 4913.495, g: 3101.3027, b: 2608.3867, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -146,7 +146,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1377782}
-  m_LocalRotation: {x: 0.19294433, y: 0.12477646, z: 0.34883192, w: 0.90858114}
+  m_LocalRotation: {x: 0.54769784, y: -0.3958694, z: 0.21676348, w: 0.70450556}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -155,7 +155,7 @@ Transform:
   - {fileID: 1468484113}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 15.281, y: 21.999, z: 44.994}
+  m_LocalEulerAnglesHint: {x: 70.619, y: -74.868, z: -22.728}
 --- !u!1001 &63487258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1482,11 +1482,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7794992
+      value: 0.5798318
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6264033
+      value: 0.81473625
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1573,11 +1573,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9447158
+      value: 0.61891186
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.3278903
+      value: 0.7854604
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2093,7 +2093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9372818
+      value: 0.52385855
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2101,7 +2101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.3485726
+      value: 0.85180527
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2408,7 +2408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.95033467
+      value: 0.9246516
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2416,7 +2416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.31122988
+      value: 0.38081416
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: a1b5c2a961c637d42a2fb8e968f04d52, type: 3}
       propertyPath: m_LocalRotation.z
@@ -3191,8 +3191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c3cb232c1444bc46a4a6224717306d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnDelay: 2
-  initialDelay: 1
+  SpawnDelay: 5
+  initialDelay: 5
   rocketToSpawn: {fileID: 8199080138934079208, guid: 4bc73f857d1b3334aa60241aa79b30a3, type: 3}
 --- !u!1 &1906631131 stripped
 GameObject:

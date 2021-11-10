@@ -34,7 +34,7 @@ public class ProceduralFolliageBatch : MonoBehaviour
         if (folliageParent == null)
             return;
 
-        Bounds bounds = new Bounds(folliageParent.nodePosition, new Vector3(folliageParent.nodeWidth, folliageParent.nodeWidth * 0.1f, folliageParent.nodeWidth));
+        Bounds bounds = new Bounds(folliageParent.nodePosition, new Vector3(folliageParent.nodeWidth, folliageParent.nodeWidth * 100f, folliageParent.nodeWidth));
 
         if (matrixArgsBuffer == null)
             CreateOrRecreateMatrices();

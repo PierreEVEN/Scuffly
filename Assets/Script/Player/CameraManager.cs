@@ -22,8 +22,9 @@ public class CameraManager : MonoBehaviour
     private Vector2 indoorLookVector = new Vector2();
     private Camera controlledCamera;
 
+    float groundAltitude = 0;
     private PlayerManager playerManager;
-
+    int collisionId;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,26 @@ public class CameraManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         playerManager = gameObject.GetComponent<PlayerManager>();
         controlledCamera = gameObject.GetComponent<Camera>();
+
+        collisionId = GPULandscapePhysic.Singleton.AddCollisionItem(new Vector2[] { new Vector2() });
+        GPULandscapePhysic.Singleton.OnPreProcess.AddListener(OnPreProcessPhysic);
+        GPULandscapePhysic.Singleton.OnProcessed.AddListener(OnProcessPhysic);
+    }
+
+    private void OnDestroy()
+    {
+        GPULandscapePhysic.Singleton.OnPreProcess.RemoveListener(OnPreProcessPhysic);
+        GPULandscapePhysic.Singleton.OnProcessed.RemoveListener(OnProcessPhysic);
+    }
+
+    void OnPreProcessPhysic()
+    {
+        GPULandscapePhysic.Singleton.UpdateSourcePoints(collisionId, new Vector2[] { new Vector2(transform.position.x, transform.position.z) });
+
+    }
+    void OnProcessPhysic()
+    {
+        groundAltitude = GPULandscapePhysic.Singleton.GetPhysicData(collisionId)[0];
     }
 
     // Update is called once per frame
@@ -42,6 +63,8 @@ public class CameraManager : MonoBehaviour
             Quaternion vert = Quaternion.AngleAxis(Indoor ? indoorLookVector.y : lookVector.y, Vector3.right);
             gameObject.transform.rotation = Indoor ? playerManager.viewPlane.Value.transform.rotation * horiz * vert : horiz * vert;
             gameObject.transform.position = playerManager.viewPlane.Value.transform.position + gameObject.transform.forward * (Indoor ? 0 : -zoomInput) + playerManager.viewPlane.Value.transform.forward * 3.3f + playerManager.viewPlane.Value.transform.up * (0.92f - indoorLookVector.y * 0.002f) + playerManager.viewPlane.Value.transform.right * indoorLookVector.x * 0.002f;
+            if (gameObject.transform.position.y < groundAltitude + 1)
+                gameObject.transform.position = new Vector3(gameObject.transform.position.x, groundAltitude + 1, gameObject.transform.position.z);
             controlledCamera.fieldOfView = Indoor ? fov : 60;
         }
         else

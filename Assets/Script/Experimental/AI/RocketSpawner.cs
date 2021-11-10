@@ -14,7 +14,7 @@ public class RocketSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -26,11 +26,16 @@ public class RocketSpawner : MonoBehaviour
             initialDelay = SpawnDelay;
             if (rocketToSpawn)
             {
+                GameObject target = GameObject.FindWithTag("Plane");
+                if (Vector3.Distance(target.transform.position, transform.position) > 5000)
+                    return;
+
                 GameObject rocketObj = GameObject.Instantiate(rocketToSpawn);
+
                 rocketObj.transform.position = transform.position;
                 rocketObj.transform.rotation = transform.rotation;
                 Rocket rocket = rocketObj.GetComponentInChildren<Rocket>();
-                rocket.Shoot(transform.forward * 1, GameObject.FindWithTag("Plane"));
+                rocket.Shoot(transform.forward * 1, target);
             }
         }
     }
