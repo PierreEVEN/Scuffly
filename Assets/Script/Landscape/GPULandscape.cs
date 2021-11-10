@@ -70,6 +70,8 @@ public class GPULandscape : MonoBehaviour
     {
         get { return cameraCurrentLocation; }
     }
+    int physicId;
+    public float currentGroundHeight = 0;
 
     // Liste des sections affichées
     private List<LandscapeSection> GeneratedSections = new List<LandscapeSection>();
@@ -84,8 +86,21 @@ public class GPULandscape : MonoBehaviour
         UpdateCameraLocation();
         ResetLandscape();
         Refresh();
+
+        physicId = GPULandscapePhysic.Singleton.AddCollisionItem(new Vector2[] { new Vector2(CameraCurrentLocation.x, CameraCurrentLocation.z)});
+        GPULandscapePhysic.Singleton.OnPreProcess.AddListener(OnWantUpdateGroundAltitude);
+        GPULandscapePhysic.Singleton.OnPreProcess.RemoveListener(OnUpdateGroundAltitude);
     }
-    
+
+    void OnWantUpdateGroundAltitude()
+    {
+        GPULandscapePhysic.Singleton.UpdateSourcePoints(physicId, new Vector2[] { new Vector2(CameraCurrentLocation.x, CameraCurrentLocation.z) });
+    }
+    void OnUpdateGroundAltitude()
+    {
+        currentGroundHeight = GPULandscapePhysic.Singleton.GetPhysicData(physicId)[0];
+    }
+
     public static void OnUpdateProperties()
     {
         foreach (var landscape in GameObject.FindGameObjectsWithTag("GPULandscape"))
