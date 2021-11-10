@@ -13,9 +13,15 @@ public class Thruster : MonoBehaviour
     private APU PlaneAPU;
 
     // ENGINE
-    public float MaxThrustPower = 3000000.0f; // max thrust power of the engine
     public float EngineAcceleration = 0.1f; // what is the acceleration rate of the engine
     public float StartupEngineAcceleration = 0.004f; // what is the acceleration rate of the engine
+
+    // Courbe du pourcentage d'acceleration du moteur en fonction de l'input (
+    public AnimationCurve ThrustPercentCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(0.7f, 0.6f), new Keyframe(1, 1.1f) });
+
+    // Courbe de force de poussee maximale en fonction de la vitesse
+    public AnimationCurve ThrustForceCurve = new AnimationCurve(new Keyframe[]{new Keyframe(0, 3000000.0f), new Keyframe(300, 8000000.0f)});
+
     private float FinalEngineInput = 0.0f; // Real thrust power of the engine
 
     // INPUT
@@ -55,10 +61,13 @@ public class Thruster : MonoBehaviour
         if (FinalEngineInput < EngineDesiredInput)
             FinalEngineInput += Mathf.Min(EngineDesiredInput - FinalEngineInput, Time.deltaTime * (FinalEngineInput < 0.02f ? StartupEngineAcceleration : EngineAcceleration));
         else
-            FinalEngineInput -= Mathf.Min(FinalEngineInput - EngineDesiredInput, Time.deltaTime * (FinalEngineInput < 0.02f ? StartupEngineAcceleration : EngineAcceleration));
+            FinalEngineInput -= Mathf.Min(FinalEngineInput - ThrustPercentCurve.Evaluate(EngineDesiredInput), Time.deltaTime * (FinalEngineInput < 0.02f ? StartupEngineAcceleration : EngineAcceleration));
+
+        float linearVelocity = transform.InverseTransformDirection(PhysicBody.velocity).z;
 
         // Compute thrust vector
-        thrustVector = gameObject.transform.forward.normalized * FinalEngineInput * MaxThrustPower;
+        Debug.Log("linear velo : " + linearVelocity);
+        thrustVector = gameObject.transform.forward.normalized * FinalEngineInput * ThrustForceCurve.Evaluate(linearVelocity);
 
         PhysicBody.AddForceAtPosition(thrustVector * Time.deltaTime, gameObject.transform.position);
         Debug.DrawLine(gameObject.transform.position, gameObject.transform.position + thrustVector * -0.006f, Color.cyan);

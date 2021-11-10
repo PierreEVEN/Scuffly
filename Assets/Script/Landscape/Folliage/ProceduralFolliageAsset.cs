@@ -11,4 +11,16 @@ public class ProceduralFolliageAsset : ScriptableObject
     public int DensityPerLevel = 20;
 
     public AmplifyImpostors.AmplifyImpostorAsset Impostor;
+
+
+    private void OnValidate()
+    {
+        GameObject landscape = GameObject.FindGameObjectWithTag("GPULandscape");
+        if (!landscape)
+            return;
+        ProceduralFolliageSpawner folliage = landscape.GetComponentInChildren<ProceduralFolliageSpawner>();
+        if (!folliage)
+            return;
+        folliage.Reset = true;
+    }
 }

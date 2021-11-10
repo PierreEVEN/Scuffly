@@ -47,7 +47,6 @@ ExportedObj/
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
-UserSettings/Layouts/default-*
 
 # Unity3D generated file on crash reports
 sysinfo.txt
@@ -63,4 +62,5 @@ Assets/Developper
 
 *.blend1
 
-coucou/
+/UserSettings/Layouts/*
+/UserSettings/EditorUserSettings.asset

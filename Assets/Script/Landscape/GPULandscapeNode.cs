@@ -119,7 +119,7 @@ public class GPULandscapeNode
     {
         // Height correction
         Vector3 cameraGroundLocation = owner.CameraCurrentLocation;
-        cameraGroundLocation.y -= 0; // @TODO : get landscape altitude at camera location
+        cameraGroundLocation.y -= owner.currentGroundHeight; // substract landscape altitude at camera location
         float Level = owner.maxLevel - Mathf.Min(owner.maxLevel, (Vector3.Distance(cameraGroundLocation, worldPosition) - width) / owner.quadtreeExponent);
         return (int)Level;
     }
