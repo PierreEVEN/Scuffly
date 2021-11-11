@@ -10,6 +10,13 @@ public class ProceduralFolliageAsset : ScriptableObject
 
     public int DensityPerLevel = 20;
 
+
+    public float minNormal = 0;
+    public float maxNormal = 0.95f;
+
+    public float minAltitude = 10;
+    public float maxAltitude = 3000;
+
     public Mesh spawnedMesh;
     public Material usedMaterial;
 

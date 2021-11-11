@@ -18,6 +18,7 @@ public class ProceduralFolliageSpawner : MonoBehaviour
     public float SectionWidth = 2000;
 
     public ComputeShader generationShader;
+    public ComputeShader matrixbuildShader;
 
     public bool Reset = false;
     public bool FreezeGeneration = false;

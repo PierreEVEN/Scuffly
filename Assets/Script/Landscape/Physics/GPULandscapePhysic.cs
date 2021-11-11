@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 
 public interface GPULandscapePhysicInterface
@@ -42,6 +43,10 @@ public class GPULandscapePhysic
     // Compute shader qui sera charge de traiter les donnees
     private ComputeShader CSdataProcess;
 
+    float[][] outputBlocks;
+    NativeArray<float> dataResult;
+    bool canProcessNext = true;
+
     private void FreeAllocations()
     {
         if (sendDataBuffer != null)
@@ -50,7 +55,13 @@ public class GPULandscapePhysic
             receiveDataBuffer.Release();
         sendDataBuffer = null;
         receiveDataBuffer = null;
+
+        AsyncGPUReadback.WaitAllRequests();
+
+        if (dataResult.IsCreated)
+            dataResult.Dispose();
     }
+
 
 
     // Enregistre une liste de points a tester
@@ -71,6 +82,9 @@ public class GPULandscapePhysic
     // Traitement des donnees
     public void ProcessData()
     {
+        if (!canProcessNext)
+            return;
+
         // On cherche le compute shader a utiliser
         if (!CSdataProcess)
         {
@@ -90,7 +104,7 @@ public class GPULandscapePhysic
             }
         }
 
-        float[][] outputBlocks = new float[collisionItems.Count][];
+        outputBlocks = new float[collisionItems.Count][];
 
         // On regroupe la liste de groupes a traiter dans un seul grand vecteur
         List<Vector2> points = new List<Vector2>();
@@ -118,6 +132,8 @@ public class GPULandscapePhysic
             receiveDataBuffer = new ComputeBuffer(points.Count, sizeof(float), ComputeBufferType.Structured);
         }
 
+        canProcessNext = false;
+
         // On met a jour les donnees a traiter
         sendDataBuffer.SetData(points.ToArray());
 
@@ -127,20 +143,32 @@ public class GPULandscapePhysic
         CSdataProcess.SetBuffer(kernelIndex, "Input", sendDataBuffer);
         CSdataProcess.SetBuffer(kernelIndex, "Output", receiveDataBuffer);
         CSdataProcess.Dispatch(kernelIndex, points.Count, 1, 1);
+        if (dataResult.IsCreated)
+            dataResult.Dispose();
+        dataResult = new NativeArray<float>(receiveDataBuffer.count, Allocator.Persistent, NativeArrayOptions.UninitializedMemory);
+        AsyncGPUReadback.RequestIntoNativeArray(ref dataResult, receiveDataBuffer, OnProcessedPhysics);
+    }
 
+    void OnProcessedPhysics(AsyncGPUReadbackRequest request)
+    {
+        NativeArray<float> data = request.GetData<float>();
         // On recupere les donnees traitees
-        float[] outputData = new float[points.Count];
-        receiveDataBuffer.GetData(outputData);
+        float[] outputData = new float[data.Length];
+        data.CopyTo(outputData);
 
         // On copie les donnees traitees dans chaque groupe correspondant
         int indexCounter = 0;
-        for (int i = 0; i < collisionItems.Count; ++i) {
-
+        for (int i = 0; i < outputBlocks.Length; ++i)
+        {
             for (int p = 0; p < outputBlocks[i].Length; ++p)
                 outputBlocks[i][p] = outputData[indexCounter + p];
+
             indexCounter += outputBlocks[i].Length;
 
-            collisionItems[i].OnPointsProcessed(outputBlocks[i]);
+            if (collisionItems.Count == outputBlocks.Length)
+                collisionItems[i].OnPointsProcessed(outputBlocks[i]);
         }
+        canProcessNext = true;
+        dataResult.Dispose();
     }
 }

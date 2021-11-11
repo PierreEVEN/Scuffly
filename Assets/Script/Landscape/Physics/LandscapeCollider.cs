@@ -72,7 +72,11 @@ public class LandscapeCollider : MonoBehaviour, GPULandscapePhysicInterface
         Vector3[] vertices = new Vector3[verticeWidth * verticeWidth];
         int[] triangles = new int[verticeWidth * verticeWidth * 6];
 
-        for (int x = 0; x < verticeWidth; ++x)
+
+        if (processedPoints.Length != verticeWidth * verticeWidth)
+            return;
+
+            for (int x = 0; x < verticeWidth; ++x)
             for (int y = 0; y < verticeWidth; ++y)
                 vertices[x + y * verticeWidth] = new Vector3(
                     internalWidth * x + transform.position.x - internalWidth * internalRadius,

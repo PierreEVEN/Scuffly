@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: BirchFolliageAsset
   m_EditorClassIdentifier: 
   MinSpawnLevel: 1
-  MaxSpawnLevel: 2
-  DensityPerLevel: 150
+  MaxSpawnLevel: 3
+  DensityPerLevel: 80
+  minNormal: 0.7
+  maxNormal: 0.95
+  minAltitude: 10
+  maxAltitude: 3000
   spawnedMesh: {fileID: -5013144756241044092, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}
   usedMaterial: {fileID: -2826065132357868018, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}

@@ -112,7 +112,6 @@ Shader "HDRP/GpuLandscapeShader"
 			VertexOutput Vert(VertexInput IN)
 			{
 				VertexOutput OUT;
-
 				uint quadId = IN.vertex_id / 6;
 				uint vertId = IN.vertex_id % 6;
 
@@ -374,7 +373,10 @@ Shader "HDRP/GpuLandscapeShader"
 
 				float3 normal = IN.normalWS;
 
+				float cameraDistance = length(_WorldSpaceCameraPos - IN.worldPosition);
 
+				// Darker wide pos
+				color = pow(color, max(1, min(2, pow(cameraDistance / 5000, 0.5))));
 
 
 				if (IN.worldPosition.y < 0) {

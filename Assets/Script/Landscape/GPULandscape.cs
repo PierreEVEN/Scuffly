@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 using UnityEngine;
+using UnityEngine.Profiling;
 
 
 /*
@@ -11,7 +12,7 @@ using UnityEngine;
  * Permet une mise a jour du terrain en temps réel à très grande échelle et de faire de la modelisation par masques directement sur GPU (CF : GPULandscapeModifier)
  * 
  * TODO : passer la gestion du quadtree sur GPU (pas prioritaire ni necessaire, mais probleme interessant à traiter)
- */ 
+ */
 
 [ExecuteInEditMode]
 public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
@@ -58,6 +59,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
 
     [Header("Developper features")] // Debug
     public bool Reset = false;
+    public bool PhysicUpdates = true;
 
     /**
      * Data
@@ -111,7 +113,13 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
         Refresh();
 
         // Met a jour la physique
-        GPULandscapePhysic.Singleton.ProcessData();
+        if (PhysicUpdates)
+        {
+
+            Profiler.BeginSample("Update landscape Physics");
+            GPULandscapePhysic.Singleton.ProcessData();
+            Profiler.EndSample();
+        }
     }
 
     void Refresh()
@@ -119,10 +127,13 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
         if (Reset) ResetLandscape();
         if (!landscape_material) return;
 
-        IModifierGPUArray.UpdateMaterial(landscape_material);
-
+        Profiler.BeginSample("Update camera and materials");
         UpdateCameraLocation();
+        IModifierGPUArray.UpdateMaterial(landscape_material);
+        Profiler.EndSample();
 
+
+        Profiler.BeginSample("Update sections");
         // Remove out of range section
         int cameraX = (int)Math.Truncate(CameraCurrentLocation.x / SectionWidth);
         int cameraZ = (int)Math.Truncate(CameraCurrentLocation.z / SectionWidth);
@@ -145,10 +156,13 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
             for (int y = cameraZ - ViewDistance; y <= cameraZ + ViewDistance; ++y)
                 TryLoadSection(x, y);
 
+        Profiler.EndSample();
+
         // For each section : update quadtree and draw mesh
+        Profiler.BeginSample("Update landscape quadtree");
         foreach (var section in GeneratedSections)
             section.root_node.Update();
-
+        Profiler.EndSample();
     }
 
     public void OnDisable()
