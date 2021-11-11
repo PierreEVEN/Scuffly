@@ -2,6 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+public interface GPULandscapePhysicInterface
+{
+    public Vector2[] Collectpoints();
+    public void OnPointsProcessed(float[] processedPoints);
+}
+
+
 /*
  * Gestion de la physique du terrain
  * ### Principe de fonctionnement ###
@@ -15,14 +23,7 @@ using UnityEngine.Events;
 public class GPULandscapePhysic
 {
     // Un group de points dont on veut connaitre l'altitude.
-    struct CollisionItem
-    {
-        public Vector2[] points; // Ensemble des points a traiter
-        public float[] result; // altitude des points correspondants
-        public bool processed; // est-ce que les points ont ete traites
-        public int id; // id du group de points
-    }
-    List<CollisionItem> collisionItems = new List<CollisionItem>();
+    List<GPULandscapePhysicInterface> collisionItems = new List<GPULandscapePhysicInterface>();
 
     // Compute buffer contenant l'ensemble des points a traiter (CPU -> GPU)
     ComputeBuffer sendDataBuffer;
@@ -41,12 +42,7 @@ public class GPULandscapePhysic
     // Compute shader qui sera charge de traiter les donnees
     private ComputeShader CSdataProcess;
 
-    // Event appele lorsqu'on doit collecter la liste de points a traiter
-    public UnityEvent OnPreProcess = new UnityEvent();
-    // Event appele une fois que les points ont ete traites
-    public UnityEvent OnProcessed = new UnityEvent();
-
-    private void OnDisable()
+    private void FreeAllocations()
     {
         if (sendDataBuffer != null)
             sendDataBuffer.Release();
@@ -56,77 +52,20 @@ public class GPULandscapePhysic
         receiveDataBuffer = null;
     }
 
-    public float[] GetPoints(int collisionId)
-    {
-        foreach (var item in collisionItems)
-            if (item.id == collisionId)
-                return item.result;
-        return null;
-    }
-
-    // Regarde si un ID a deja ete utilise
-    bool DoesIdExists(int id)
-    {
-        foreach (var item in collisionItems)
-            if (item.id == id)
-                return true;
-        return false;
-    }
 
     // Enregistre une liste de points a tester
     // Retourne l'id du groupe de collision
-    public int AddCollisionItem(Vector2[] pointList)
+    public void AddListener(GPULandscapePhysicInterface listener)
     {
-        int id = 0;
-        while (DoesIdExists(id)) id++;
-
-        collisionItems.Add(new CollisionItem()
-        {
-            points = pointList,
-            result = new float[pointList.Length],
-            processed = false,
-            id = id
-        });
-        return id;
-    }
-
-    // Recupere les donnees traites pour le groupe de points correspondant a l'id indique
-    public float[] GetPhysicData(int id)
-    {
-        foreach (var item in collisionItems)
-            if (item.id == id && item.processed)
-                return item.result;
-        return null;
+        collisionItems.Add(listener);
     }
 
     // Libere le groupe de points correspondant a l'id
-    public void RemoveCollisionItem(int id)
+    public void RemoveListener(GPULandscapePhysicInterface listener)
     {
-        for (int i = collisionItems.Count - 1; i >= 0; --i)
-            if (collisionItems[i].id == id)
-                collisionItems.RemoveAt(i);
-
+        collisionItems.Remove(listener);
         if (collisionItems.Count == 0)
-            OnDisable();
-    }
-
-    // Met a jour la liste des points dont on veut connaitre l'altitude
-    public void UpdateSourcePoints(int id, Vector2[] points)
-    {
-        for (int i = 0; i < collisionItems.Count; ++i)
-        {
-            if (collisionItems[i].id == id)
-            {
-                if (collisionItems[i].points.Length != points.Length)
-                {
-                    var data = collisionItems[i];
-                    data.points = points;
-                    collisionItems[i] = data;
-                }
-                else
-                    points.CopyTo(collisionItems[i].points, 0);
-            }
-        }
+            FreeAllocations();
     }
 
     // Traitement des donnees
@@ -151,13 +90,15 @@ public class GPULandscapePhysic
             }
         }
 
-        // Mise a jour des donnees a traiter
-        OnPreProcess.Invoke();
+        float[][] outputBlocks = new float[collisionItems.Count][];
 
         // On regroupe la liste de groupes a traiter dans un seul grand vecteur
         List<Vector2> points = new List<Vector2>();
-        foreach (var item in collisionItems)
-            points.AddRange(item.points);
+        for (int i = 0; i < collisionItems.Count; ++i) {
+            var collectedPoints = collisionItems[i].Collectpoints();
+            points.AddRange(collectedPoints);
+            outputBlocks[i] = new float[collectedPoints.Length];
+        }
 
         // Rien a traiter
         if (points.Count == 0)
@@ -193,20 +134,13 @@ public class GPULandscapePhysic
 
         // On copie les donnees traitees dans chaque groupe correspondant
         int indexCounter = 0;
-        foreach (var item in collisionItems)
-            for (int i = 0; i < item.result.Length; ++i)
-                item.result[i] = outputData[indexCounter++];
+        for (int i = 0; i < collisionItems.Count; ++i) {
 
-        // Mark each item as processed
-        for (int i = 0; i < collisionItems.Count; ++i)
-        {
-            // C# is trash -_-
-            var value = collisionItems[i];
-            value.processed = true;
-            collisionItems[i] = value;
+            for (int p = 0; p < outputBlocks[i].Length; ++p)
+                outputBlocks[i][p] = outputData[indexCounter + p];
+            indexCounter += outputBlocks[i].Length;
+
+            collisionItems[i].OnPointsProcessed(outputBlocks[i]);
         }
-
-        // On notifie tout le monde que les donnees ont ete traitees
-        OnProcessed.Invoke();
     }
 }

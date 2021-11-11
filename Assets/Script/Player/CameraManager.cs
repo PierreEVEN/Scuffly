@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
  */
 
 [RequireComponent(typeof(Camera), typeof(PlayerManager))]
-public class CameraManager : MonoBehaviour
+public class CameraManager : MonoBehaviour, GPULandscapePhysicInterface
 {
     public Vector2 ZoomBounds = new Vector2(5, 200);
     public Vector2 FovBounds = new Vector2(30, 120);
@@ -24,34 +24,18 @@ public class CameraManager : MonoBehaviour
 
     float groundAltitude = 0;
     private PlayerManager playerManager;
-    int collisionId;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.Locked;
         playerManager = gameObject.GetComponent<PlayerManager>();
         controlledCamera = gameObject.GetComponent<Camera>();
-
-        collisionId = GPULandscapePhysic.Singleton.AddCollisionItem(new Vector2[] { new Vector2() });
-        GPULandscapePhysic.Singleton.OnPreProcess.AddListener(OnPreProcessPhysic);
-        GPULandscapePhysic.Singleton.OnProcessed.AddListener(OnProcessPhysic);
+        GPULandscapePhysic.Singleton.AddListener(this);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        GPULandscapePhysic.Singleton.OnPreProcess.RemoveListener(OnPreProcessPhysic);
-        GPULandscapePhysic.Singleton.OnProcessed.RemoveListener(OnProcessPhysic);
-    }
-
-    void OnPreProcessPhysic()
-    {
-        GPULandscapePhysic.Singleton.UpdateSourcePoints(collisionId, new Vector2[] { new Vector2(transform.position.x, transform.position.z) });
-
-    }
-    void OnProcessPhysic()
-    {
-        groundAltitude = GPULandscapePhysic.Singleton.GetPhysicData(collisionId)[0];
+        GPULandscapePhysic.Singleton.RemoveListener(this);
     }
 
     // Update is called once per frame
@@ -89,4 +73,15 @@ public class CameraManager : MonoBehaviour
             zoomInput = Mathf.Clamp(zoomInput + input.Get<float>(), ZoomBounds.x, ZoomBounds.y);
     }
     public void OnSwitchView() => Indoor = !Indoor;
+
+    public Vector2[] Collectpoints()
+    {
+        return new Vector2[] { new Vector2(transform.position.x, transform.position.z) };
+    }
+
+    public void OnPointsProcessed(float[] processedPoints)
+    {
+        groundAltitude = processedPoints[0];
+    }
+
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class LandscapeCollider : MonoBehaviour
+public class LandscapeCollider : MonoBehaviour, GPULandscapePhysicInterface
 {
     // Start is called before the first frame update
     GameObject collisionPrefab;
@@ -11,31 +11,46 @@ public class LandscapeCollider : MonoBehaviour
 
     public int resolutionRadius = 2;
     public float cellWidth = 5.0f;
-    int collisionID;
-    bool physicInitialized = false;
 
     private int internalRadius;
     private float internalWidth;
 
     private void OnEnable()
     {
-        GPULandscapePhysic.Singleton.OnPreProcess.AddListener(OnPreProcessPhysic);
-        GPULandscapePhysic.Singleton.OnProcessed.AddListener(OnProcessedPhysic);
+        GPULandscapePhysic.Singleton.AddListener(this);
         CreateMesh();
     }
 
     private void OnDisable()
     {
-        physicInitialized = false;
-        GPULandscapePhysic.Singleton.OnPreProcess.RemoveListener(OnPreProcessPhysic);
-        GPULandscapePhysic.Singleton.OnProcessed.RemoveListener(OnProcessedPhysic);
-        GPULandscapePhysic.Singleton.RemoveCollisionItem(collisionID);
+        GPULandscapePhysic.Singleton.RemoveListener(this);
 
         if (collisionPrefab)
             DestroyImmediate(collisionPrefab);
     }
+    void CreateMesh()
+    {
+        if (!collisionPrefab)
+        {
+            collisionPrefab = new GameObject(gameObject.name + "_landscape_collision");
+            collisionPrefab.hideFlags = HideFlags.DontSave | HideFlags.HideInHierarchy;
+        }
+        if (!generatedCollider)
+            generatedCollider = collisionPrefab.AddComponent<MeshCollider>();
+    }
 
-    void OnPreProcessPhysic()
+    private void Update()
+    {
+        if (internalRadius != resolutionRadius || internalWidth != cellWidth)
+        {
+            OnDisable();
+            internalRadius = resolutionRadius;
+            internalWidth = cellWidth;
+            OnEnable();
+        }
+    }
+
+    public Vector2[] Collectpoints()
     {
         int verticeWidth = internalRadius * 2 + 1;
 
@@ -45,48 +60,30 @@ public class LandscapeCollider : MonoBehaviour
             for (int y = 0; y < verticeWidth; ++y)
                 points[x + y * verticeWidth] = new Vector2(internalWidth * x, internalWidth * y) + new Vector2(transform.position.x - internalWidth * internalRadius, transform.position.z - internalWidth * internalRadius);
 
-        if (!physicInitialized)
-            collisionID = GPULandscapePhysic.Singleton.AddCollisionItem(points);
-        else
-            GPULandscapePhysic.Singleton.UpdateSourcePoints(collisionID, points);
-
-        physicInitialized = true;
+        return points;
     }
 
-    void OnProcessedPhysic()
+    public void OnPointsProcessed(float[] processedPoints)
     {
+
         int verticeWidth = internalRadius * 2 + 1;
 
         Mesh new_mesh = new Mesh();
         Vector3[] vertices = new Vector3[verticeWidth * verticeWidth];
         int[] triangles = new int[verticeWidth * verticeWidth * 6];
 
-        var collisionData = GPULandscapePhysic.Singleton.GetPhysicData(collisionID);
-
         for (int x = 0; x < verticeWidth; ++x)
-        {
             for (int y = 0; y < verticeWidth; ++y)
-            {
                 vertices[x + y * verticeWidth] = new Vector3(
                     internalWidth * x + transform.position.x - internalWidth * internalRadius,
-                    collisionData[x + y * verticeWidth],
+                    processedPoints[x + y * verticeWidth],
                     internalWidth * y + transform.position.z - internalWidth * internalRadius
                     );
-            }
-        }
 
         for (int x = 0; x < verticeWidth - 1; ++x)
         {
             for (int y = 0; y < verticeWidth - 1; ++y)
             {
-
-                vertices[x + y * verticeWidth] = new Vector3(
-                    internalWidth * x + transform.position.x - internalWidth * internalRadius,
-                    collisionData[x + y * verticeWidth],
-                    internalWidth * y + transform.position.z - internalWidth * internalRadius
-                    );
-
-
                 int IndiceIndex = (x + y * verticeWidth) * 6;
 
                 triangles[IndiceIndex] = (x + y * verticeWidth);
@@ -110,28 +107,5 @@ public class LandscapeCollider : MonoBehaviour
         if (!generatedCollider)
             CreateMesh();
         generatedCollider.sharedMesh = new_mesh;
-    }
-
-
-    void CreateMesh()
-    {
-        if (!collisionPrefab)
-        {
-            collisionPrefab = new GameObject(gameObject.name + "_landscape_collision");
-            collisionPrefab.hideFlags = HideFlags.DontSave | HideFlags.HideInHierarchy;
-        }
-        if (!generatedCollider)
-            generatedCollider = collisionPrefab.AddComponent<MeshCollider>();
-    }
-
-    private void Update()
-    {
-        if (internalRadius != resolutionRadius || internalWidth != cellWidth)
-        {
-            OnDisable();
-            internalRadius = resolutionRadius;
-            internalWidth = cellWidth;
-            OnEnable();
-        }
     }
 }

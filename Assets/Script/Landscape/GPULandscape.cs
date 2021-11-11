@@ -14,7 +14,7 @@ using UnityEngine;
  */ 
 
 [ExecuteInEditMode]
-public class GPULandscape : MonoBehaviour
+public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
 {
     /*
      * Le terrain est découpé en N x N sections (N = ViewDistance * 2 + 1)
@@ -70,7 +70,6 @@ public class GPULandscape : MonoBehaviour
     {
         get { return cameraCurrentLocation; }
     }
-    int physicId;
     public float currentGroundHeight = 0;
 
     // Liste des sections affichées
@@ -87,19 +86,9 @@ public class GPULandscape : MonoBehaviour
         ResetLandscape();
         Refresh();
 
-        physicId = GPULandscapePhysic.Singleton.AddCollisionItem(new Vector2[] { new Vector2(CameraCurrentLocation.x, CameraCurrentLocation.z)});
-        GPULandscapePhysic.Singleton.OnPreProcess.AddListener(OnWantUpdateGroundAltitude);
-        GPULandscapePhysic.Singleton.OnPreProcess.RemoveListener(OnUpdateGroundAltitude);
+        GPULandscapePhysic.Singleton.AddListener(this);
     }
 
-    void OnWantUpdateGroundAltitude()
-    {
-        GPULandscapePhysic.Singleton.UpdateSourcePoints(physicId, new Vector2[] { new Vector2(CameraCurrentLocation.x, CameraCurrentLocation.z) });
-    }
-    void OnUpdateGroundAltitude()
-    {
-        currentGroundHeight = GPULandscapePhysic.Singleton.GetPhysicData(physicId)[0];
-    }
 
     public static void OnUpdateProperties()
     {
@@ -164,12 +153,16 @@ public class GPULandscape : MonoBehaviour
 
     public void OnDisable()
     {
+
+        GPULandscapePhysic.Singleton.RemoveListener(this);
+
         PlayerPrefs.Save();
 
         // Called on hot reload or when playing / returning back to editor ...
         ResetLandscape();
     }
-
+    
+    
     private void UpdateCameraLocation()
     {
         if (Application.isPlaying)
@@ -218,5 +211,15 @@ public class GPULandscape : MonoBehaviour
             section.root_node.destroy();
         }
         GeneratedSections.Clear();
+    }
+
+    public Vector2[] Collectpoints()
+    {
+        return new Vector2[] { new Vector2(CameraCurrentLocation.x, CameraCurrentLocation.z) };
+    }
+
+    public void OnPointsProcessed(float[] processedPoints)
+    {
+        currentGroundHeight = processedPoints[0];
     }
 }

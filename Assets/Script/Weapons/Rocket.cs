@@ -8,7 +8,7 @@ using UnityEngine.VFX;
  * 
  */
 [RequireComponent(typeof(BoxCollider))]
-public class Rocket : MonoBehaviour
+public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
 {
     public float Acceleration = 100;
     public float Endurance = 5;
@@ -33,28 +33,13 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    int collisionID;
     private void OnEnable()
     {
-        collisionID = GPULandscapePhysic.Singleton.AddCollisionItem(new Vector2[1] { new Vector2(transform.position.x, transform.position.z) });
-        GPULandscapePhysic.Singleton.OnPreProcess.AddListener(OnPreprocessPhysic);
-        GPULandscapePhysic.Singleton.OnProcessed.AddListener(OnProcessedPhysic);
+        GPULandscapePhysic.Singleton.AddListener(this);
     }
     private void OnDisable()
     {
-        GPULandscapePhysic.Singleton.RemoveCollisionItem(collisionID);
-        GPULandscapePhysic.Singleton.OnPreProcess.RemoveListener(OnPreprocessPhysic);
-        GPULandscapePhysic.Singleton.OnProcessed.RemoveListener(OnProcessedPhysic);
-    }
-
-    void OnPreprocessPhysic()
-    {
-        GPULandscapePhysic.Singleton.UpdateSourcePoints(collisionID, new Vector2[1] { new Vector2(transform.position.x, transform.position.z) });
-    }
-    void OnProcessedPhysic()
-    {
-        var fsxData = GPULandscapePhysic.Singleton.GetPhysicData(collisionID);
-        if (transform.position.y < fsxData[0]) Detonate();
+        GPULandscapePhysic.Singleton.RemoveListener(this);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -141,5 +126,15 @@ public class Rocket : MonoBehaviour
         {
             vfx.enabled = true;
         }
+    }
+
+    public Vector2[] Collectpoints()
+    {
+        return new Vector2[1] { new Vector2(transform.position.x, transform.position.z) };
+    }
+
+    public void OnPointsProcessed(float[] processedPoints)
+    {
+        if (transform.position.y < processedPoints[0]) Detonate();
     }
 }
