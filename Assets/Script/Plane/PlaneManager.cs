@@ -107,8 +107,8 @@ public class PlaneManager : MonoBehaviour
 
         // On allume les batteries le temps de parametrer l'etat par defaut de l'avion
         PowerState = true;
-        ThrottleNotch = initialThrottleNotch;
         ApuSwitch = initialApuSwitch;
+        ThrottleNotch = initialThrottleNotch;
         RetractGear = initialRetractGear;
         Brakes = initialBrakes;
         PowerState = initialPower;

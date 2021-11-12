@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BirchFolliageAsset
   m_EditorClassIdentifier: 
   MinSpawnLevel: 1
-  MaxSpawnLevel: 3
-  DensityPerLevel: 80
+  MaxSpawnLevel: 2
+  DensityPerLevel: 250
   minNormal: 0.7
   maxNormal: 0.95
   minAltitude: 10

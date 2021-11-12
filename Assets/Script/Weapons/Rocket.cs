@@ -135,6 +135,10 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
 
     public void OnPointsProcessed(float[] processedPoints)
     {
-        if (transform.position.y < processedPoints[0]) Detonate();
+        if (transform.position.y < processedPoints[0])
+        {
+            transform.position = new Vector3(transform.position.x, processedPoints[0], transform.position.z);
+            Detonate();
+        }
     }
 }

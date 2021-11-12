@@ -16,7 +16,6 @@ public class PlayerManager : NetworkBehaviour
     {
         if (NetworkManager.Singleton.IsHost)
             PossessPlane(Gamemode.Singleton.SpawnPlane(GameObject.FindGameObjectWithTag("SpawnPoint"), DefaultPlane));
-
     }
 
     // Update is called once per frame
