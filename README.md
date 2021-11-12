@@ -1,7 +1,7 @@
 
 # Description du projet
 
-Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissage d'Unity3D pour les cours de moteur de jeu 3D en 3e année de licence CMI à Strasbourg.
+Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissage d'Unity3D pour les cours de moteur de jeu 3D en 3e année de cursus CMI à Strasbourg.
 
 ### Objectifs techniques et gameplay
 - Pouvoir faire décoller un avion et atterrir sur plusieurs aéroports.
