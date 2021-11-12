@@ -1,3 +1,4 @@
+
 # Description du projet
 
 Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissage d'Unity3D pour les cours de moteur de jeu 3D en 3e année de licence CMI à Strasbourg.
@@ -9,21 +10,20 @@ Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissag
 - Terrain pseudo-infini généré procéduralement.
 - Permettre la possibilité de jouer à plusieurs.
 - Interactions dans le cockpit.
-____
-
-# Notes pour l'alpha
-
-Un mode multijoueur est a l'étude, mais demande encore de la mise au point.
-
-En attendant, nous avons ramené Don Quichotte du passé que nous retrouvons sur son nouveau destrier modernisé *(il sera votre instructeur de vol derrière vous dans l'avion)*. Les meuniers 2.0 eux ne l'ont pas oublié, faites donc bien attention à ne pas trop vous en approcher !
-
-## Performances
-Le jeu est assez gourmand, et certains GPU peuvent avoir du mal à le faire tourner.
+>____
+># Notes pour l'alpha
+>
+>Un mode multijoueur est a l'étude, mais demande encore de la mise au point.
+>
+>En attendant, nous avons ramené Don Quichotte du passé que nous retrouvons sur >son nouveau destrier modernisé *(il sera votre instructeur de vol derrière vous dans l'avion)*. Les meuniers 2.0 eux ne l'ont pas oublié, faites donc bien attention à ne pas trop vous en approcher !
+>
+>## Performances
+>Le jeu est assez gourmand, et certains GPU peuvent avoir du mal à le faire tourner.
 En attendant un menu pour régler les options, il est possible de le faire via l’éditeur d'Unity.
-
-Dans la scène, trouvez un Objet du nom de "GPULandscape". Celui ci est composé de 2 principaux component : un pour le maillage, et un 2e pour la végétation.
+>
+>Dans la scène, trouvez un Objet du nom de "GPULandscape". Celui ci est composé de 2 principaux component : un pour le maillage, et un 2e pour la végétation.
 La densité du maillage peut y être réduite. La densité de la végétation se règle pour chaque type de folliage utilisé. Pour cela, sélectionner chaque asset de folliage dans la liste des folliage du component dédié, puis réduire la densité manuellement.
-___
+>___
 
 ## Informations techniques
 
