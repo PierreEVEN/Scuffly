@@ -123,9 +123,9 @@ Shader "HDRP/GpuLandscapeShader"
 				OUT.worldPosition.y = GetAltitudeAtLocation(OUT.worldPosition.xz);
 
 				// Per vertex normal
-				float altX = max(0, GetAltitudeAtLocation(OUT.worldPosition.xz + float2(1, 0)));
-				float altZ = max(0, GetAltitudeAtLocation(OUT.worldPosition.xz + float2(0, 1)));
-				OUT.normalWS = normalize(cross(float3(-1, altX - OUT.worldPosition.y, 0), float3(0, altZ - OUT.worldPosition.y, 1)));
+				// float altX = max(0, GetAltitudeAtLocation(OUT.worldPosition.xz + float2(1, 0)));
+				// float altZ = max(0, GetAltitudeAtLocation(OUT.worldPosition.xz + float2(0, 1)));
+				// OUT.normalWS = normalize(cross(float3(-1, altX - OUT.worldPosition.y, 0), float3(0, altZ - OUT.worldPosition.y, 1)));
 
 				float3 finalWorldPos = OUT.worldPosition;
 				if (finalWorldPos.y < 0) finalWorldPos.y = 0;
@@ -341,11 +341,15 @@ Shader "HDRP/GpuLandscapeShader"
 
 			void Frag(VertexOutput IN, OUTPUT_GBUFFER(outGBuffer))
 			{
+				float cameraDistance = length(_WorldSpaceCameraPos - IN.worldPosition);
+
+				float normalFetchDistance = clamp(cameraDistance / 100, 1, 200);
 
 				// Per pixel normal
-				//float altX = max(0, GetAltitudeAtLocation(IN.worldPosition.xz + float2(1, 0)));
-				//float altZ = max(0, GetAltitudeAtLocation(IN.worldPosition.xz + float2(0, 1)));
-				//IN.normalWS = normalize(cross(float3(-1, altX - IN.worldPosition.y, 0), float3(0, altZ - IN.worldPosition.y, 1)));
+				float altX = max(0, GetAltitudeAtLocation(IN.worldPosition.xz + float2(normalFetchDistance, 0)));
+				float altZero = max(0, GetAltitudeAtLocation(IN.worldPosition.xz));
+				float altZ = max(0, GetAltitudeAtLocation(IN.worldPosition.xz + float2(0, normalFetchDistance)));
+				IN.normalWS = normalize(cross(float3(-normalFetchDistance, altX - altZero, 0), float3(0, altZ - altZero, normalFetchDistance)));
 
 				FragInputs input;
 				ZERO_INITIALIZE(FragInputs, input);
@@ -372,8 +376,6 @@ Shader "HDRP/GpuLandscapeShader"
 				color = lerp(tex2D(_SandAlbedo, IN.worldPosition.xz * 0.1), color, clamp(IN.worldPosition.y * 0.2 - 2, 0, 1));
 
 				float3 normal = IN.normalWS;
-
-				float cameraDistance = length(_WorldSpaceCameraPos - IN.worldPosition);
 
 				// Darker wide pos
 				color = pow(color, max(1, min(2, pow(cameraDistance / 5000, 0.5))));
