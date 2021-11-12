@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0344a066be3a8164ba2c7280ef49da81, type: 3}
-  m_Name: GrassFolliageAsset
+  m_Name: BirchFolliageAsset 1
   m_EditorClassIdentifier: 
-  MinSpawnLevel: 3
-  MaxSpawnLevel: 4
-  DensityPerLevel: 50
-  minNormal: 0.95
-  maxNormal: 1
+  MinSpawnLevel: 1
+  MaxSpawnLevel: 2
+  DensityPerLevel: 250
+  minNormal: 0.7
+  maxNormal: 0.95
   minAltitude: 10
   maxAltitude: 3000
-  spawnedMesh: {fileID: 7355401690364982606, guid: 3000bd26b03869a4581218d62bb36674, type: 2}
-  usedMaterial: {fileID: -5760444756787429024, guid: 3000bd26b03869a4581218d62bb36674, type: 2}
+  spawnedMesh: {fileID: -5013144756241044092, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}
+  usedMaterial: {fileID: -2826065132357868018, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}

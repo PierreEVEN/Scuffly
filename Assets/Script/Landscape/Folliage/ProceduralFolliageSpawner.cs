@@ -16,6 +16,8 @@ public class ProceduralFolliageSpawner : MonoBehaviour
     public int Radius = 2;
     [Range(100, 20000)]
     public float SectionWidth = 2000;
+    [Range(0.1f, 2.0f)]
+    public float foliageDensityMultiplier = 1.0f;
 
     public ComputeShader generationShader;
     public ComputeShader matrixbuildShader;
@@ -81,6 +83,11 @@ public class ProceduralFolliageSpawner : MonoBehaviour
 
         foreach (var node in nodes)
             node.Value.UpdateInternal();
+    }
+
+    private void OnValidate()
+    {
+        Reset = true;
     }
 
     private void UpdateCameraLocation()

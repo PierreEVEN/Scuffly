@@ -54,17 +54,19 @@ public class ProceduralFolliageBatch : MonoBehaviour
     void CreateOrRecreateMatrices()
     {
         // Recreate matrice buffer if needed
-        int desiredCount = folliageAsset.DensityPerLevel * folliageAsset.DensityPerLevel;
+        int finalDensity = (int)(folliageAsset.DensityPerLevel * folliageParent.folliageSpawner.foliageDensityMultiplier);
+
+        int desiredCount = finalDensity * finalDensity;
         if (treeMatrices == null || treeMatrices.count != desiredCount)
         {
             if (treeMatrices != null)
             {
                 treeMatrices.Release();
             }
-            treeMatrices = new ComputeBuffer(desiredCount, sizeof(float) * 16, ComputeBufferType.Structured);
+            treeMatrices = new ComputeBuffer(desiredCount, sizeof(float) * 16, ComputeBufferType.Default);
             if (shouldSpawnTreeBuffer != null)
                 shouldSpawnTreeBuffer.Dispose();
-            shouldSpawnTreeBuffer = new ComputeBuffer(desiredCount, sizeof(float) * 3 + sizeof(int), ComputeBufferType.Structured);
+            shouldSpawnTreeBuffer = new ComputeBuffer(desiredCount, sizeof(float) * 3 + sizeof(int), ComputeBufferType.Default);
         }
 
         if (proceduralDrawArgs != null) proceduralDrawArgs.Release();
@@ -89,17 +91,16 @@ public class ProceduralFolliageBatch : MonoBehaviour
         generationCS.SetBuffer(kernelIndex, "shouldSpawnTreeBuffer", shouldSpawnTreeBuffer);
         generationCS.SetVector("origin", folliageParent.nodePosition - new Vector3(folliageParent.nodeWidth / 2, 0, folliageParent.nodeWidth / 2));
         generationCS.SetFloat("scale", folliageParent.nodeWidth);
-        generationCS.SetInt("width", folliageAsset.DensityPerLevel);
+        generationCS.SetInt("width", finalDensity);
 
         generationCS.SetFloat("minNormal", folliageAsset.minNormal);
         generationCS.SetFloat("maxNormal", folliageAsset.maxNormal);
         generationCS.SetFloat("minAltitude", folliageAsset.minAltitude);
         generationCS.SetFloat("maxAltitude", folliageAsset.maxAltitude);
 
-        InstanceMaterialProperties.SetBuffer("matrixBuffer", treeMatrices);
         IModifierGPUArray.UpdateCompute(generationCS, kernelIndex);
         // Run compute shader
-        generationCS.Dispatch(kernelIndex, folliageAsset.DensityPerLevel, folliageAsset.DensityPerLevel, 1);
+        generationCS.Dispatch(kernelIndex, finalDensity, finalDensity, 1);
 
         int kernel2Index = matrixbuildShader.FindKernel("CSMain");
         matrixbuildShader.SetBuffer(kernel2Index, "treeMatrices", treeMatrices);
@@ -107,8 +108,9 @@ public class ProceduralFolliageBatch : MonoBehaviour
         matrixbuildShader.SetBuffer(kernel2Index, "shouldSpawnTreeBuffer", shouldSpawnTreeBuffer);
         matrixbuildShader.SetInt("elemCount", desiredCount);
         matrixbuildShader.Dispatch(kernel2Index, 1, 1, 1);
-
         proceduralDrawArgs.GetData(matrixArgs);
+
+        InstanceMaterialProperties.SetBuffer("matrixBuffer", treeMatrices);
 
         shouldSpawnTreeBuffer.Dispose();
         shouldSpawnTreeBuffer = null;

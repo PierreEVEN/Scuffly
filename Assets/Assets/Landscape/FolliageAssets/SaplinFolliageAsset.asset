@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0344a066be3a8164ba2c7280ef49da81, type: 3}
-  m_Name: BirchFolliageAsset
+  m_Name: SaplinFolliageAsset
   m_EditorClassIdentifier: 
   MinSpawnLevel: 1
   MaxSpawnLevel: 2
@@ -19,5 +19,5 @@ MonoBehaviour:
   maxNormal: 0.95
   minAltitude: 10
   maxAltitude: 3000
-  spawnedMesh: {fileID: -5013144756241044092, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}
-  usedMaterial: {fileID: -2826065132357868018, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}
+  spawnedMesh: {fileID: 97203141304513492, guid: 0bf26b5adc365794aaabe365e8272eed, type: 2}
+  usedMaterial: {fileID: 4992251971409798517, guid: 0bf26b5adc365794aaabe365e8272eed, type: 2}
