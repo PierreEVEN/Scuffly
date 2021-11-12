@@ -22,7 +22,7 @@ En vol, l'avion se contrôle avec `A, E, Z, Q, S, D`.
 
 ## En vol
 
-Pour l'instant, il n'est possible que de tirer quelques missiles *(aim9 infrarouge)* via la touche `espace`. La cible de ceux ci est déjà prédéfinie, il sera possible plus tard de la choisir précisément.
+Pour l'instant, il n'est possible que de tirer quelques missiles *(aim9 infrarouge)* via la touche `espace`. La cible de ceux-ci est déjà prédéfinie, il sera possible plus tard de la choisir précisément.
 
 ## Atterrissage
 
