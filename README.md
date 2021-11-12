@@ -28,7 +28,7 @@ pouvant nous aider à en trouver l'origine (Screenshots / Dump RenderDoc etc...)
 >Le jeu est assez gourmand, et certains GPU peuvent avoir du mal à le faire tourner.
 En attendant un menu pour régler les options, il est possible de le faire via l’éditeur d'Unity.
 >
->Dans la scène, trouvez un Objet du nom de "GPULandscape". Celui ci est composé de 2 principaux component : un pour le maillage, et un 2e pour la végétation.
+>Dans la scène, trouvez un Objet du nom de "GPULandscape". Celui ci est composé de 2 principaux components : un pour le maillage, et un 2e pour la végétation.
 La densité du maillage peut y être réduite. La densité de la végétation se règle pour chaque type de folliage utilisé. Pour cela, sélectionner chaque asset de folliage dans la liste des folliage du component dédié, puis réduire la densité manuellement.
 >___
 
