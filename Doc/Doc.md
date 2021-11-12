@@ -1,6 +1,6 @@
 # Documentations et notes sur l'architecture du projet
 
-Ce document contient les informations principales à connaitre pour comprendre l'architecture du projet, et le role de chaque component.
+Ce document contient les informations principales à connaitre pour comprendre l'architecture du projet, et le role de chaque composant.
 
 ## Le joueur
 
