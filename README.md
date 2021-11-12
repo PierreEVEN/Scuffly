@@ -25,12 +25,9 @@ En attendant un menu pour régler les options, il est possible de le faire via l
 La densité du maillage peut y être réduite. La densité de la végétation se règle pour chaque type de folliage utilisé. Pour cela, sélectionner chaque asset de folliage dans la liste des folliage du component dédié, puis réduire la densité manuellement.
 >___
 
-## Informations techniques
+# Documentation
 
 Réalisé avec Unity 2021 version 2.0f1 *(nécessaire pour avoir certaines fonctions de la pipeline hdrp manquantes dans les précédentes versions d'unity, et les nuages volumétriques)*
-
-
-# Documentation
 
 **Notice d'utilisation :**
 
