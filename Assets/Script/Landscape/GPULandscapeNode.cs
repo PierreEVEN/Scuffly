@@ -20,6 +20,9 @@ public class GPULandscapeNode
     // Nodes enfant du quadtree
     private GPULandscapeNode[] children;
 
+    private int[] indirectArgs = {0, 1, 0, 0, 0};
+    private ComputeBuffer indirectArgsBuffer;
+
     public GPULandscapeNode(GPULandscape owner, int quadtreeLevel, Vector3 worldPosition, float width)
     {
         this.owner = owner;
@@ -28,11 +31,14 @@ public class GPULandscapeNode
         this.width = width;
         MPB = new MaterialPropertyBlock();
         bounds = new Bounds(worldPosition, new Vector3(this.width, 100000, this.width));
+
+        indirectArgsBuffer = new ComputeBuffer(5, sizeof(int), ComputeBufferType.IndirectArguments);
     }
 
     public void destroy()
     {
         MPB = null;
+        indirectArgsBuffer.Release();
         ShowCurrentNode();
     }
 
@@ -44,7 +50,14 @@ public class GPULandscapeNode
             MPB.SetInt("_Subdivision", owner.chunkSubdivision);
             MPB.SetFloat("_Width", width / owner.chunkSubdivision);
             MPB.SetVector("_Offset", worldPosition);
-            Graphics.DrawProcedural(owner.landscape_material, bounds, MeshTopology.Triangles, owner.chunkSubdivision * owner.chunkSubdivision * 6, 1, null, MPB);
+
+            if (indirectArgs[0] != owner.chunkSubdivision * owner.chunkSubdivision * 6)
+            {
+                indirectArgs[0] = owner.chunkSubdivision * owner.chunkSubdivision * 6;
+                indirectArgsBuffer.SetData(indirectArgs);
+            }
+
+            Graphics.DrawProceduralIndirect(owner.landscape_material, bounds, MeshTopology.Triangles, indirectArgsBuffer, 0, null, MPB);
         }
     }
 
