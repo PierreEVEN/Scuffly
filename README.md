@@ -11,8 +11,10 @@ Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissag
 - Permettre la possibilité de jouer à plusieurs.
 - Interactions dans le cockpit.
 
-![#f03c15]( /!\ BUG SUR CARTE GRAPHIQUE **AMD** :)Il semblerait qu'il y a un problème avec les cartes graphiques AMD. Si vous rencontrez ce problème, nous sommes intéréssés par toute informations pouvant nous aider à trouver l'origine du problème (Screenshots / Dump RenderDoc etc...)
-
+```diff
+- /!\ BUG SUR CARTE GRAPHIQUE **AMD** :
+Il semblerait qu'il y a un problème avec les cartes graphiques AMD. Si vous rencontrez ce problème, nous sommes intéréssés par toute informations pouvant nous aider à trouver l'origine du problème (Screenshots / Dump RenderDoc etc...)
+```
 >____
 ># Notes pour l'alpha
 >
