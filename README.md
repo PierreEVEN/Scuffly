@@ -13,6 +13,8 @@ Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissag
 >____
 ># Notes pour l'alpha
 >
+> /!\ BUG SUR CARTE GRAPHIQUE **AMD** : Il semblerait qu'il y a un problème avec les cartes graphiques AMD. Si vous rencontrez ce problème, nous sommes intéréssés par toute informations pouvant nous aider à trouver l'origine du problème (Screenshots / Dump RenderDoc etc...)
+>
 >Un mode multijoueur est a l'étude, mais demande encore de la mise au point.
 >
 >En attendant, nous avons ramené Don Quichotte du passé que nous retrouvons sur son nouveau destrier modernisé *(il sera votre instructeur de vol derrière vous dans l'avion)*. Les meuniers 2.0 eux ne l'ont pas oublié, faites donc bien attention à ne pas trop vous en approcher !
