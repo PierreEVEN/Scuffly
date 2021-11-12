@@ -20,7 +20,9 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
     BoxCollider weaponCollider;
     VisualEffect vfx;
     public VisualEffectAsset explosionFx;
+    private VisualEffect explCompFx;
     GameObject target;
+    Vector3 hitVelocity = new Vector3(0, 0, 0);
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +46,10 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
 
     private void OnCollisionEnter(Collision collision)
     {
+        Rigidbody collRb = collision.gameObject.GetComponentInParent<Rigidbody>();
+        if (collRb)
+            hitVelocity = collRb.velocity;
+
         Detonate();
 
         foreach (var comp in collision.gameObject.GetComponentsInChildren<DamageableComponent>())
@@ -66,9 +72,11 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
         GameObject fxObj = new GameObject();
         fxObj.transform.parent = transform;
         fxObj.transform.localPosition = new Vector3(0, 0, 0);
-        VisualEffect explfx = fxObj.AddComponent<VisualEffect>();
-        explfx.visualEffectAsset = explosionFx;
-        explfx.Play();
+        explCompFx = fxObj.AddComponent<VisualEffect>();
+        explCompFx.visualEffectAsset = explosionFx;
+        explCompFx.SetVector3("Position", transform.position);
+        explCompFx.SetVector3("Velocity", hitVelocity * 0.8f);
+        explCompFx.Play();
         destroyed = true;
     }
 

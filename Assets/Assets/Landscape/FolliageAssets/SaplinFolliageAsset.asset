@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinSpawnLevel: 1
   MaxSpawnLevel: 2
-  DensityPerLevel: 250
-  minNormal: 0.7
-  maxNormal: 0.95
-  minAltitude: 10
-  maxAltitude: 3000
+  DensityPerLevel: 100
+  minNormal: 0.5
+  maxNormal: 0.9
+  minAltitude: 200
+  maxAltitude: 10000
   spawnedMesh: {fileID: 97203141304513492, guid: 0bf26b5adc365794aaabe365e8272eed, type: 2}
   usedMaterial: {fileID: 4992251971409798517, guid: 0bf26b5adc365794aaabe365e8272eed, type: 2}
