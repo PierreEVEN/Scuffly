@@ -43,5 +43,6 @@ La documentation technique du projet est disponible [ici](Doc/Doc.md)
 - Léo GOSSELIN
 
 ## Credits
-[Unity3D](https://unity3d.com/)
-[Amplifyimpostor](http://amplify.pt/unity/amplify-impostors/)
+
+- [Unity3D](https://unity3d.com/)
+- [Amplifyimpostor](http://amplify.pt/unity/amplify-impostors/)
