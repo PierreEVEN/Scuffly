@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinSpawnLevel: 3
   MaxSpawnLevel: 4
-  DensityPerLevel: 100
+  DensityPerLevel: 70
   minNormal: 0.5
   maxNormal: 1
   minAltitude: 10

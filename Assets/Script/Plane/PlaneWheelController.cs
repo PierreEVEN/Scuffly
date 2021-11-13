@@ -18,8 +18,7 @@ public class PlaneWheelController : MonoBehaviour
     void Start()
     {
         WheelPhysic = gameObject.GetComponentInParent<WheelCollider>();
-        WheelPhysic.brakeTorque = 0.0f;
-        WheelPhysic.motorTorque = 0.01f;
+        WheelPhysic.motorTorque = 0.001f; // Evite de bloquer les roues
 
         gearAnim = GetComponentInParent<Animation>();
         var skeletalMesh = GetComponentInParent<SkinnedMeshRenderer>();

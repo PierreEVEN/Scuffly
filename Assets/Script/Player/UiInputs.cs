@@ -5,6 +5,8 @@ using UnityEngine;
 public class UiInputs : MonoBehaviour
 {
     public GameObject UIObject;
+    GameObject spawnedPauseMenu;
+    bool isPaused = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +22,20 @@ public class UiInputs : MonoBehaviour
 
     void OnPause()
     {
-        if (UIObject)
-            GameObject.Instantiate(UIObject);
+        isPaused = !isPaused;
+        if (isPaused)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            if (UIObject)
+                spawnedPauseMenu = GameObject.Instantiate(UIObject);
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            if (spawnedPauseMenu)
+                GameObject.Destroy(spawnedPauseMenu);
+        }
     }
 }

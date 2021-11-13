@@ -27,6 +27,8 @@ public class RocketSpawner : MonoBehaviour
             if (rocketToSpawn)
             {
                 GameObject target = GameObject.FindWithTag("Plane");
+                if (!target)
+                    return;
                 if (Vector3.Distance(target.transform.position, transform.position) > 3000)
                     return;
 

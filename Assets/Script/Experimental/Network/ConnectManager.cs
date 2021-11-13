@@ -8,7 +8,8 @@ public class ConnectManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        NetworkManager.Singleton.StartHost();
+        Destroy(this);
     }
 
     private void OnGUI()
