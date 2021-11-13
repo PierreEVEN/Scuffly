@@ -17,19 +17,6 @@ Il semblerait qu'il y a un gros problème d'affichage avec les cartes graphiques
 Si vous rencontrez ce problème, nous sommes intéréssés par toute informations
 pouvant nous aider à en trouver l'origine (Screenshots / Dump RenderDoc etc...)
 ```
->____
-># Notes pour l'alpha
->
->Un mode multijoueur est a l'étude, mais demande encore de la mise au point.
->
->En attendant, nous avons ramené Don Quichotte du passé que nous retrouvons sur son nouveau destrier modernisé *(il sera votre instructeur de vol derrière vous dans l'avion)*. Les meuniers 2.0 eux ne l'ont pas oublié, faites donc bien attention à ne pas trop vous en approcher !
->
->## Performances
->Le jeu est assez gourmand, et certains GPU peuvent avoir du mal à le faire tourner. Il est possible de regler les options en jeu en faisant `echap`
->
->Dans l'éditeur, trouver un Objet du nom de "GPULandscape". Celui ci est composé de 2 principaux components : un pour le maillage, et un 2e pour la végétation.
-Réduire ensuite la densité de chacun des 2 composants dans l'onglet "quality".
->___
 
 # Documentation
 
