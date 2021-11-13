@@ -41,8 +41,8 @@ public class ProceduralFolliageNode
     {
         if (lodLevel < folliageSpawner.LodLevels.Count)
         {
-            float subdivisionDistance = folliageSpawner.LodLevels[lodLevel];
-            float currentDistance = Vector3.Distance(folliageSpawner.CameraPosition, nodePosition + new Vector3(0, HeightGenerator.Singleton.GetAltitudeAtLocation(nodePosition.x, nodePosition.z), 0)) - nodeWidth / 2;
+            float subdivisionDistance = folliageSpawner.LodLevels[lodLevel]; //@TODO Use camera relative altitude
+            float currentDistance = Vector3.Distance(folliageSpawner.CameraPosition, nodePosition + new Vector3(0, 0, 0)) - nodeWidth / 2;
 
             if (currentDistance < subdivisionDistance)
                 Subdivide();

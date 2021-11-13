@@ -14,7 +14,7 @@ using UnityEngine.Profiling;
  * TODO : passer la gestion du quadtree sur GPU (pas prioritaire ni necessaire, mais probleme interessant à traiter)
  */
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
 {
     /*
@@ -106,15 +106,6 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
     public void Update()
     {
         Refresh();
-
-        // Met a jour la physique
-        if (enablePhysicUpdates)
-        {
-
-            Profiler.BeginSample("Update landscape Physics");
-            GPULandscapePhysic.Singleton.ProcessData();
-            Profiler.EndSample();
-        }
     }
 
     void Refresh()
@@ -158,6 +149,17 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
         foreach (var section in GeneratedSections)
             section.root_node.Update();
         Profiler.EndSample();
+
+        
+
+        // Met a jour la physique
+        if (enablePhysicUpdates)
+        {
+
+            Profiler.BeginSample("Update landscape Physics");
+            GPULandscapePhysic.Singleton.ProcessData();
+            Profiler.EndSample();
+        }
     }
 
     public void OnDisable()
