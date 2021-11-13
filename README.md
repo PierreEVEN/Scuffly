@@ -25,11 +25,10 @@ pouvant nous aider à en trouver l'origine (Screenshots / Dump RenderDoc etc...)
 >En attendant, nous avons ramené Don Quichotte du passé que nous retrouvons sur son nouveau destrier modernisé *(il sera votre instructeur de vol derrière vous dans l'avion)*. Les meuniers 2.0 eux ne l'ont pas oublié, faites donc bien attention à ne pas trop vous en approcher !
 >
 >## Performances
->Le jeu est assez gourmand, et certains GPU peuvent avoir du mal à le faire tourner.
-En attendant un menu pour régler les options, il est possible de le faire via l’éditeur d'Unity.
+>Le jeu est assez gourmand, et certains GPU peuvent avoir du mal à le faire tourner. Il est possible de regler les options en jeu en faisant `echap`
 >
->Dans la scène, trouvez un Objet du nom de "GPULandscape". Celui ci est composé de 2 principaux components : un pour le maillage, et un 2e pour la végétation.
-La densité du maillage peut y être réduite. La densité de la végétation se règle pour chaque type de folliage utilisé. Pour cela, sélectionner chaque asset de folliage dans la liste des folliage du component dédié, puis réduire la densité manuellement.
+>Dans l'éditeur, trouver un Objet du nom de "GPULandscape". Celui ci est composé de 2 principaux components : un pour le maillage, et un 2e pour la végétation.
+Réduire ensuite la densité de chacun des 2 composants dans l'onglet "quality".
 >___
 
 # Documentation
@@ -42,7 +41,7 @@ Le fonctionnement d'un avion n'est pas simple, il est donc recommandé, au moins
 
 **Documentation développeur**
 
-La documentation technique du projet est disponible [ici](Doc/Doc.md)
+La documentation technique du projet est disponible [ici](Doc/Doc.md) *(en cours de rédaction)*
 
 ## Auteurs
 
