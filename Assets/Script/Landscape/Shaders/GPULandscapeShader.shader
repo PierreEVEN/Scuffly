@@ -35,9 +35,6 @@ Shader "HDRP/GpuLandscapeShader"
 				PassBack Replace
 			}
 
-			// Debug
-			// <None>
-
 			// --------------------------------------------------
 			// Pass
 
@@ -83,7 +80,6 @@ Shader "HDRP/GpuLandscapeShader"
 			#define T2W(var, index) var.tangentToWorld[index]
 
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/NormalSurfaceGradient.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
@@ -195,8 +191,6 @@ Shader "HDRP/GpuLandscapeShader"
 				surfaceData.transmittanceColor = float3(1.0, 1.0, 1.0);
 				surfaceData.atDistance = 1.0;
 				surfaceData.transmittanceMask = 0.0;
-				//surfaceData.materialFeatures = MATERIALFEATUREFLAGS_LIT_SPECULAR_COLOR;
-
 
 #if HAVE_DECALS
 				if (_EnableDecals)
@@ -225,32 +219,15 @@ Shader "HDRP/GpuLandscapeShader"
 			Name "ShadowCaster"
 			Tags { "LightMode" = "ShadowCaster" }
 
-			// Render State
-				Cull Back
-				ZWrite On
-			//ZClip [_ZClip]
+			Cull[_CullMode]
+			ZWrite On
 			ColorMask 0
-			ZTest On
-			Stencil
-			{
-				Ref 10
-				CompFront Always
-				PassFront Replace
-				CompBack Always
-				PassBack Replace
-			}
-			// Debug
-			// <None>
+			ZClip[_ZClip]
 
 			// --------------------------------------------------
 			// Pass
 
 			HLSLPROGRAM
-
-
-					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
-					#define SHADERPASS SHADERPASS_SHADOWS
-					#define USE_LEGACY_UNITY_MATRIX_VARIABLES
 
 			// Pragmas
 			#pragma instancing_options renderinglayer
@@ -261,43 +238,28 @@ Shader "HDRP/GpuLandscapeShader"
 			#pragma multi_compile_instancing
 
 			// Keywords
-			#pragma multi_compile_fragment _ LIGHT_LAYERS
-			#pragma multi_compile_raytracing _ LIGHT_LAYERS
 			#pragma shader_feature _ _SURFACE_TYPE_TRANSPARENT
 			#pragma shader_feature_local _BLENDMODE_OFF _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
 			#pragma shader_feature_local _ _DOUBLESIDED_ON
 			#pragma shader_feature_local _ _ADD_PRECOMPUTED_VELOCITY
 			#pragma shader_feature_local _ _TRANSPARENT_WRITES_MOTION_VEC
 			#pragma shader_feature_local_fragment _ _ENABLE_FOG_ON_TRANSPARENT
-			#pragma multi_compile _ DEBUG_DISPLAY
 			#pragma shader_feature_local_fragment _ _DISABLE_DECALS
 			#pragma shader_feature_local_raytracing _ _DISABLE_DECALS
 			#pragma shader_feature_local_fragment _ _DISABLE_SSR
 			#pragma shader_feature_local_raytracing _ _DISABLE_SSR
 			#pragma shader_feature_local_fragment _ _DISABLE_SSR_TRANSPARENT
 			#pragma shader_feature_local_raytracing _ _DISABLE_SSR_TRANSPARENT
-			#pragma multi_compile _ LIGHTMAP_ON
-			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
-			#pragma multi_compile_fragment PROBE_VOLUMES_OFF PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
-			#pragma multi_compile_raytracing PROBE_VOLUMES_OFF PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
-			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
-			#pragma multi_compile_fragment _ SHADOWS_SHADOWMASK
-			#pragma multi_compile_raytracing _ SHADOWS_SHADOWMASK
-			#pragma multi_compile_fragment DECALS_OFF DECALS_3RT DECALS_4RT
-			#pragma multi_compile_fragment _ DECAL_SURFACE_GRADIENT
 			#pragma shader_feature_local _REFRACTION_OFF _REFRACTION_PLANE _REFRACTION_SPHERE _REFRACTION_THIN
 
-			#define SHADERPASS SHADERPASS_GBUFFER
+
+			#define SHADERPASS SHADERPASS_SHADOWS
 			#define AI_HD_RENDERPIPELINE
-			#define T2W(var, index) var.tangentToWorld[index]
 
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/NormalSurfaceGradient.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/Lit.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
 
 			#include "AltitudeGenerator.cginc"
 			#include "GPULandscapeShaderLibrary.cginc"
@@ -323,31 +285,22 @@ Shader "HDRP/GpuLandscapeShader"
 			Tags { "LightMode" = "DepthOnly" }
 
 			// Render State
-				Cull Back
-				ZWrite On
-			//ZClip [_ZClip]
-			ColorMask 0
-			ZTest On
+			Cull[_CullMode]
+			ZWrite On
 			Stencil
 			{
-				Ref 10
+				WriteMask[_StencilWriteMaskDepth]
+				Ref[_StencilRefDepth]
 				CompFront Always
 				PassFront Replace
 				CompBack Always
 				PassBack Replace
 			}
-			// Debug
-			// <None>
 
 			// --------------------------------------------------
 			// Pass
 
 			HLSLPROGRAM
-
-
-					#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
-					#define SHADERPASS SHADERPASS_SHADOWS
-					#define USE_LEGACY_UNITY_MATRIX_VARIABLES
 
 			// Pragmas
 			#pragma instancing_options renderinglayer
@@ -358,46 +311,31 @@ Shader "HDRP/GpuLandscapeShader"
 			#pragma multi_compile_instancing
 
 			// Keywords
-			#pragma multi_compile_fragment _ LIGHT_LAYERS
-			#pragma multi_compile_raytracing _ LIGHT_LAYERS
+			#pragma multi_compile _ WRITE_NORMAL_BUFFER
+			#pragma multi_compile_fragment _ WRITE_MSAA_DEPTH
 			#pragma shader_feature _ _SURFACE_TYPE_TRANSPARENT
 			#pragma shader_feature_local _BLENDMODE_OFF _BLENDMODE_ALPHA _BLENDMODE_ADD _BLENDMODE_PRE_MULTIPLY
 			#pragma shader_feature_local _ _DOUBLESIDED_ON
 			#pragma shader_feature_local _ _ADD_PRECOMPUTED_VELOCITY
 			#pragma shader_feature_local _ _TRANSPARENT_WRITES_MOTION_VEC
 			#pragma shader_feature_local_fragment _ _ENABLE_FOG_ON_TRANSPARENT
-			#pragma multi_compile _ DEBUG_DISPLAY
 			#pragma shader_feature_local_fragment _ _DISABLE_DECALS
 			#pragma shader_feature_local_raytracing _ _DISABLE_DECALS
 			#pragma shader_feature_local_fragment _ _DISABLE_SSR
 			#pragma shader_feature_local_raytracing _ _DISABLE_SSR
 			#pragma shader_feature_local_fragment _ _DISABLE_SSR_TRANSPARENT
 			#pragma shader_feature_local_raytracing _ _DISABLE_SSR_TRANSPARENT
-			#pragma multi_compile _ LIGHTMAP_ON
-			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
-			#pragma multi_compile_fragment PROBE_VOLUMES_OFF PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
-			#pragma multi_compile_raytracing PROBE_VOLUMES_OFF PROBE_VOLUMES_L1 PROBE_VOLUMES_L2
-			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
-			#pragma multi_compile_fragment _ SHADOWS_SHADOWMASK
-			#pragma multi_compile_raytracing _ SHADOWS_SHADOWMASK
-			#pragma multi_compile_fragment DECALS_OFF DECALS_3RT DECALS_4RT
-			#pragma multi_compile_fragment _ DECAL_SURFACE_GRADIENT
+			#pragma multi_compile _ WRITE_DECAL_BUFFER
 			#pragma shader_feature_local _REFRACTION_OFF _REFRACTION_PLANE _REFRACTION_SPHERE _REFRACTION_THIN
 
-			#define SHADERPASS SHADERPASS_GBUFFER
+			#define SHADERPASS SHADERPASS_DEPTH_ONLY
 			#define AI_HD_RENDERPIPELINE
-			#define T2W(var, index) var.tangentToWorld[index]
 
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/NormalSurfaceGradient.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/Lit.hlsl"
-			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
 
 			#include "AltitudeGenerator.cginc"
-
 			#include "GPULandscapeShaderLibrary.cginc"
 
 			void Frag(VertexOutput IN, out float outputDepth : SV_Depth)
