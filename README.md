@@ -11,12 +11,6 @@ Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissag
 - Permettre la possibilité de jouer à plusieurs.
 - Interactions dans le cockpit.
 
-```diff
-- /!\ BUG SUR CARTE GRAPHIQUE AMD :
-Il semblerait qu'il y a un gros problème d'affichage avec les cartes graphiques AMD
-Si vous rencontrez ce problème, nous sommes intéréssés par toute informations
-pouvant nous aider à en trouver l'origine (Screenshots / Dump RenderDoc etc...)
-```
 >____
 ># Notes pour l'alpha
 >
@@ -30,9 +24,16 @@ pouvant nous aider à en trouver l'origine (Screenshots / Dump RenderDoc etc...)
 >Dans l'éditeur, trouver un Objet du nom de "GPULandscape". Celui ci est composé de 2 principaux components : un pour le maillage, et un 2e pour la végétation.
 Réduire ensuite la densité de chacun des 2 composants dans l'onglet "quality".
 >
-> Téléchargez une version compilée du jeu [ICI](https://cdn.discordapp.com/attachments/887213381243764748/909146218427457606/Scuffly_Alpha.zip)
+> Une version compilée du jeu est disponible [ICI](https://cdn.discordapp.com/attachments/887213381243764748/909146218427457606/Scuffly_Alpha.zip)
 >
 >___
+
+```diff
+- /!\ BUG SUR CARTE GRAPHIQUE AMD :
+Il semblerait qu'il y a un gros problème d'affichage avec les cartes graphiques AMD
+Si vous rencontrez ce problème, nous sommes intéréssés par toute informations
+pouvant nous aider à en trouver l'origine (Screenshots / Dump RenderDoc etc...)
+```
 
 # Documentation
 
