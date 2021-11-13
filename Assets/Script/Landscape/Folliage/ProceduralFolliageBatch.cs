@@ -54,7 +54,7 @@ public class ProceduralFolliageBatch : MonoBehaviour
     void CreateOrRecreateMatrices()
     {
         // Recreate matrice buffer if needed
-        int finalDensity = (int)(folliageAsset.DensityPerLevel * folliageParent.folliageSpawner.foliageDensityMultiplier);
+        int finalDensity = (int)(folliageAsset.DensityPerLevel * folliageParent.folliageSpawner.densityMultiplier);
 
         int desiredCount = finalDensity * finalDensity;
         if (treeMatrices == null || treeMatrices.count != desiredCount)

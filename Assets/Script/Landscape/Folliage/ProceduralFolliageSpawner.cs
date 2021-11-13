@@ -12,12 +12,14 @@ public class ProceduralFolliageSpawner : MonoBehaviour
     public List<float> LodLevels = new List<float>();
 
     public List<ProceduralFolliageAsset> foliageAssets = new List<ProceduralFolliageAsset>();
-    [Range(0, 5)]
-    public int Radius = 2;
-    [Range(100, 20000)]
-    public float SectionWidth = 2000;
+    [Header("Quality"), Range(0, 5)]
+    public int sectionLoadDistance = 2;
     [Range(0.1f, 2.0f)]
-    public float foliageDensityMultiplier = 1.0f;
+    public float densityMultiplier = 1.0f;
+
+
+    [Header("LodSettings"), Range(100, 20000)]
+    public float SectionWidth = 2000;
 
     public ComputeShader generationShader;
     public ComputeShader matrixbuildShader;
@@ -56,10 +58,10 @@ public class ProceduralFolliageSpawner : MonoBehaviour
         foreach (var node in nodes)
         {
             if (
-                node.Key.x < cameraX - Radius ||
-                node.Key.x > cameraX + Radius ||
-                node.Key.y < cameraZ - Radius ||
-                node.Key.y > cameraZ + Radius
+                node.Key.x < cameraX - sectionLoadDistance ||
+                node.Key.x > cameraX + sectionLoadDistance ||
+                node.Key.y < cameraZ - sectionLoadDistance ||
+                node.Key.y > cameraZ + sectionLoadDistance
             )
             {
                 node.Value.DestroyNode();
@@ -70,9 +72,9 @@ public class ProceduralFolliageSpawner : MonoBehaviour
             nodes.Remove(node);
 
 
-        for (int x = -Radius; x <= Radius; ++x)
+        for (int x = -sectionLoadDistance; x <= sectionLoadDistance; ++x)
         {
-            for (int z = -Radius; z <= Radius; ++z)
+            for (int z = -sectionLoadDistance; z <= sectionLoadDistance; ++z)
             {
                 Vector2Int key = new Vector2Int(cameraX + x, cameraZ + z);
 

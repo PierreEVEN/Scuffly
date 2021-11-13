@@ -32,34 +32,28 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
      * Parameters
      */
 
-    // Largeur d'une section (km)
-    [Header("Scale"), Range(1000, 100000)]
-    public float SectionWidth = 15000;
+    [Header("Quality"), Range(0, 20)]
+    public int sectionLoadDistance = 4; // Distance / nombre de sections a charger (0 = 1 section à la fois)
+    [Range(1, 100)]
+    public int meshDensity = 50; // Subdivision du maillage de chaque section
 
-    // Niveau de subdivision maximal d'une section
-    [Header("LOD"), Range(1, 10)]
-    public int maxLevel = 4;
-    // Reglage du seuil de subdivision
-    [Header("LOD"), Range(50, 5000)]
-    public float quadtreeExponent = 500;
+    [Header("LodSettings"), Range(1000, 100000)]
+    public float SectionWidth = 15000; // Largeur d'une section (km)
+    [Range(1, 10)]
+    public int maxSubdivisionLevel = 4; // Niveau de subdivision maximal d'une section
+    [Range(50, 5000)]
+    public float subdivisionThreshold = 500; // Reglage du seuil de subdivision
 
-    // Distance / nombre de sections a charger (0 = 1 section à la fois)
-    [Header("Rendering"), Range(0, 20)]
-    public int ViewDistance = 4;
-
-    // Subdivision du maillage de chaque section
-    [Header("Rendering"), Range(2, 500)]
-    public int chunkSubdivision = 50;
 
     // Material du terrain (full GPU : doit generer les vertices)
     public Material landscape_material;
 
     [Header("Physics")]
     public ComputeShader landscapePhysicGetter;
+    public bool enablePhysicUpdates = true;
 
     [Header("Developper features")] // Debug
     public bool Reset = false;
-    public bool PhysicUpdates = true;
 
     /**
      * Data
@@ -72,6 +66,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
     {
         get { return cameraCurrentLocation; }
     }
+    [HideInInspector]
     public float currentGroundHeight = 0;
 
     // Liste des sections affichées
@@ -81,7 +76,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
     {
         // Mise a jour des parametrages
         if (PlayerPrefs.HasKey("LandscapeResolution"))
-            chunkSubdivision = PlayerPrefs.GetInt("LandscapeResolution");
+            meshDensity = PlayerPrefs.GetInt("LandscapeResolution");
 
         IngamePlayerCamera = GameObject.FindGameObjectWithTag("MainCamera");
         UpdateCameraLocation();
@@ -104,7 +99,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
     public void OnValidate()
     {
         // Sauvegarde les parametres du landscape dans les preferences du UnityPlayer
-        PlayerPrefs.SetInt("LandscapeResolution", chunkSubdivision);
+        PlayerPrefs.SetInt("LandscapeResolution", meshDensity);
     }
 
 
@@ -113,7 +108,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
         Refresh();
 
         // Met a jour la physique
-        if (PhysicUpdates)
+        if (enablePhysicUpdates)
         {
 
             Profiler.BeginSample("Update landscape Physics");
@@ -140,10 +135,10 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
         for (int i = GeneratedSections.Count - 1; i >= 0; --i)
         {
             if (
-                GeneratedSections[i].posX < cameraX - ViewDistance ||
-                GeneratedSections[i].posX > cameraX + ViewDistance ||
-                GeneratedSections[i].posZ < cameraZ - ViewDistance ||
-                GeneratedSections[i].posZ > cameraZ + ViewDistance
+                GeneratedSections[i].posX < cameraX - sectionLoadDistance ||
+                GeneratedSections[i].posX > cameraX + sectionLoadDistance ||
+                GeneratedSections[i].posZ < cameraZ - sectionLoadDistance ||
+                GeneratedSections[i].posZ > cameraZ + sectionLoadDistance
             )
             {
                 GeneratedSections[i].root_node.destroy();
@@ -152,8 +147,8 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
         }
 
         // Try load missing sections that are in range
-        for (int x = cameraX - ViewDistance; x <= cameraX + ViewDistance; ++x)
-            for (int y = cameraZ - ViewDistance; y <= cameraZ + ViewDistance; ++y)
+        for (int x = cameraX - sectionLoadDistance; x <= cameraX + sectionLoadDistance; ++x)
+            for (int y = cameraZ - sectionLoadDistance; y <= cameraZ + sectionLoadDistance; ++y)
                 TryLoadSection(x, y);
 
         Profiler.EndSample();

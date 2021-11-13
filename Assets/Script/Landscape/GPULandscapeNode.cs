@@ -47,13 +47,15 @@ public class GPULandscapeNode
         if (shouldDisplay)
         {
             // Draw mesh using landscape material
-            MPB.SetInt("_Subdivision", owner.chunkSubdivision);
-            MPB.SetFloat("_Width", width / owner.chunkSubdivision);
+            int totalVerticeWidth = owner.meshDensity + 2;
+
+            MPB.SetInt("_Subdivision", totalVerticeWidth);
+            MPB.SetFloat("_Width", width / owner.meshDensity);
             MPB.SetVector("_Offset", worldPosition);
 
-            if (indirectArgs[0] != owner.chunkSubdivision * owner.chunkSubdivision * 6)
+            if (indirectArgs[0] != totalVerticeWidth * totalVerticeWidth * 6)
             {
-                indirectArgs[0] = owner.chunkSubdivision * owner.chunkSubdivision * 6;
+                indirectArgs[0] = totalVerticeWidth * totalVerticeWidth * 6;
                 indirectArgsBuffer.SetData(indirectArgs);
             }
 
@@ -133,7 +135,7 @@ public class GPULandscapeNode
         // Height correction
         Vector3 cameraGroundLocation = owner.CameraCurrentLocation;
         cameraGroundLocation.y -= owner.currentGroundHeight; // substract landscape altitude at camera location
-        float Level = owner.maxLevel - Mathf.Min(owner.maxLevel, (Vector3.Distance(cameraGroundLocation, worldPosition) - width) / owner.quadtreeExponent);
+        float Level = owner.maxSubdivisionLevel - Mathf.Min(owner.maxSubdivisionLevel, (Vector3.Distance(cameraGroundLocation, worldPosition) - width) / owner.subdivisionThreshold);
         return (int)Level;
     }
 }
