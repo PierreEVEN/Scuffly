@@ -29,6 +29,9 @@ pouvant nous aider à en trouver l'origine (Screenshots / Dump RenderDoc etc...)
 >
 >Dans l'éditeur, trouver un Objet du nom de "GPULandscape". Celui ci est composé de 2 principaux components : un pour le maillage, et un 2e pour la végétation.
 Réduire ensuite la densité de chacun des 2 composants dans l'onglet "quality".
+>
+> Téléchargez une version compilée du jeu [ICI](https://cdn.discordapp.com/attachments/887213381243764748/909146218427457606/Scuffly_Alpha.zip)
+>
 >___
 
 # Documentation
