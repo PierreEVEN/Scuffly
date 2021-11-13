@@ -1,6 +1,11 @@
 using MLAPI;
+using MLAPI.Messaging;
 using MLAPI.NetworkVariable;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.Rendering.HighDefinition;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -9,28 +14,60 @@ public class PlayerManager : NetworkBehaviour
     [HideInInspector]
     public PlaneManager controlledPlane;
     [HideInInspector]
-    public NetworkVariable<GameObject> viewPlane = new NetworkVariable<GameObject>();
+    public PlaneManager viewPlane;
+
+    NetworkVariable<string> playerName = new NetworkVariable<string>("toto ");
 
     // Start is called before the first frame update
     void Start()
     {
-        if (NetworkManager.Singleton.IsHost)
-            PossessPlane(Gamemode.Singleton.SpawnPlane(GameObject.FindGameObjectWithTag("SpawnPoint"), DefaultPlane));
+        //gameObject.GetComponent<NetworkObject>().
+        if (IsLocalPlayer)
+        {
+            RequestPlaneServerRpc();
+        }
+        else
+        {
+            Destroy(GetComponent<PlayerInput>());
+            Destroy(GetComponent<AudioListener>());
+            GetComponent<Camera>().enabled = false;
+            Destroy(GetComponent<InputSystemUIInputModule>());
+            Destroy(GetComponent<EventSystem>());
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 
-    public void PossessPlane(GameObject plane)
+    [ServerRpc]
+    void RequestPlaneServerRpc()
     {
-        if (!NetworkManager.Singleton.IsHost)
-            return;
+        foreach (var spawner in GameObject.FindGameObjectsWithTag("PlaneSpawnPoint"))
+        {
+            if (!spawner.GetComponent<PlaneSpawnpoint>().hasSpawned.Value)
+            {
+                GameObject plane = spawner.GetComponent<PlaneSpawnpoint>().SpawnPlane(OwnerClientId);
+                if (!plane) return;
+                NetworkObject planeNet = plane.GetComponent<NetworkObject>();
+                OnPlaneSpawnedClientRpc(planeNet.NetworkObjectId);
+                break;
+            }
+        }
+    }
 
-        controlledPlane = plane.GetComponent<PlaneManager>();
-        viewPlane.Value = plane;
-        Debug.Log("posses server");
+    [ClientRpc]
+    public void OnPlaneSpawnedClientRpc(ulong planeId)
+    {
+        NetworkObject viewPlaneNet = GetNetworkObject(planeId);
+        if (!viewPlaneNet)
+        {
+            Debug.LogError("plane spawned but cannot be found on client side : " + planeId);
+            return;
+        }
+        controlledPlane = viewPlaneNet.GetComponent<PlaneManager>();
+        viewPlane = controlledPlane;
+        Debug.Log("client received plane spawn info");
     }
 }

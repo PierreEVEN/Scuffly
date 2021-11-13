@@ -49,6 +49,8 @@ public class PlanePlayerInputs : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (!playerManager || !playerManager.controlledPlane)
+            return;
 
         float currentVelocity = playerManager.controlledPlane.GetComponent<Rigidbody>().velocity.magnitude;
         Acceleration = (Mathf.Abs(currentVelocity - LastVelocity)) / Time.fixedDeltaTime + 9.81f;

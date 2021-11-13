@@ -8,10 +8,10 @@ TagManager:
   - Pitch
   - Yaw
   - Roll
-  - SpawnPoint
   - Foe
   - Thrust
   - GPULandscape
+  - PlaneSpawnPoint
   layers:
   - Default
   - TransparentFX

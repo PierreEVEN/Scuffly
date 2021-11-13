@@ -11,8 +11,8 @@ using UnityEngine;
  * @TODO : implementer les batteries
  */ 
 
-[RequireComponent(typeof(Rigidbody), typeof(NetworkBehaviour))]
-public class PlaneManager : MonoBehaviour
+[RequireComponent(typeof(Rigidbody))]
+public class PlaneManager : NetworkBehaviour
 {
     // Definis le centre de gravite physique de l'avion
     public Vector3 massCenter = new Vector3(0, 0, 0);
