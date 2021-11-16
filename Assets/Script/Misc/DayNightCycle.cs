@@ -11,6 +11,7 @@ public class DayNightCycle : MonoBehaviour
     float lastOrientation = 0;
 
     public float rotationSpeed = 0.1f;
+    public float step = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,7 @@ public class DayNightCycle : MonoBehaviour
     {
         orientation += rotationSpeed * Time.deltaTime;
 
-        if (Mathf.Abs(orientation - lastOrientation) > 1)
+        if (Mathf.Abs(orientation - lastOrientation) > step)
         {
             lastOrientation = orientation;
             transform.rotation = Quaternion.Euler(lastOrientation, azimut, 0);

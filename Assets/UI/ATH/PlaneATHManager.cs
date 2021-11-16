@@ -24,6 +24,8 @@ public class PlaneATHManager : MonoBehaviour
         {
             canvas = GetComponentInChildren<Canvas>();
             canvasGroup = GetComponentInChildren<CanvasGroup>();
+            if (!canvas)
+                return;
         }
 
         canvas.enabled = owningPlane.PowerState;

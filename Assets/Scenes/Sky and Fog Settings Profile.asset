@@ -485,7 +485,7 @@ MonoBehaviour:
     m_Value: 0
   exposure:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 1
   multiplier:
     m_OverrideState: 0
     m_Value: 1
@@ -505,11 +505,11 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   includeSunInBaking:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   type:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   sphericalMode:
     m_OverrideState: 1
     m_Value: 1
@@ -551,31 +551,31 @@ MonoBehaviour:
     m_Value: 0
   numberOfBounces:
     m_OverrideState: 1
-    m_Value: 9
+    m_Value: 6
   groundTint:
     m_OverrideState: 0
-    m_Value: {r: 0.4, g: 0.25, b: 0.15, a: 1}
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
   groundColorTexture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
   groundEmissionTexture:
     m_OverrideState: 0
-    m_Value: {fileID: 0}
+    m_Value: {fileID: 8900000, guid: 7b4ff1bec798a094ebb269affe1b496b, type: 3}
   groundEmissionMultiplier:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 30000
   planetRotation:
     m_OverrideState: 0
     m_Value: {x: 0, y: 0, z: 0}
   spaceEmissionTexture:
-    m_OverrideState: 0
-    m_Value: {fileID: 0}
+    m_OverrideState: 1
+    m_Value: {fileID: 8900000, guid: 7b4ff1bec798a094ebb269affe1b496b, type: 3}
   spaceEmissionMultiplier:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 4
   spaceRotation:
-    m_OverrideState: 0
-    m_Value: {x: 0, y: 0, z: 0}
+    m_OverrideState: 1
+    m_Value: {x: -909.2, y: -94.3, z: -77}
   colorSaturation:
     m_OverrideState: 0
     m_Value: 1
