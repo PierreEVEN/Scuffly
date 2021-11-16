@@ -73,7 +73,8 @@ public class APU : PlaneComponent, IPowerProvider
 
         Plane.OnApuChange.AddListener(UpdateState);
         Plane.OnPowerSwitchChanged.AddListener(UpdateState);
-        Plane.powerProviders.Add(this);
+        Plane.RegisterPowerProvider(this);
+        Debug.Log("register APU");
         if (Plane.initialApuSwitch)
         {
             currentStartupPercent = 1;
@@ -84,7 +85,6 @@ public class APU : PlaneComponent, IPowerProvider
 
     private void OnDisable()
     {
-        Plane.powerProviders.Remove(this);
         Plane.OnApuChange.RemoveListener(UpdateState);
         Plane.OnPowerSwitchChanged.RemoveListener(UpdateState);
         StopApu();

@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class UiInputs : MonoBehaviour
 {
-    public GameObject UIObject;
+    public GameObject PauseUIObject;
+    public GameObject IngameUIObject;
     GameObject spawnedPauseMenu;
+    GameObject spawnedIngameUI;
     bool isPaused = false;
 
-    // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        
+        if (IngameUIObject)
+            spawnedIngameUI = Instantiate(IngameUIObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        if (spawnedIngameUI)
+            Destroy(spawnedIngameUI);
     }
 
     void OnPause()
@@ -27,8 +29,8 @@ public class UiInputs : MonoBehaviour
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            if (UIObject)
-                spawnedPauseMenu = GameObject.Instantiate(UIObject);
+            if (PauseUIObject)
+                spawnedPauseMenu = GameObject.Instantiate(PauseUIObject);
         }
         else
         {

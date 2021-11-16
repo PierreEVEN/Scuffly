@@ -42,7 +42,6 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     {
         GPULandscapePhysic.Singleton.RemoveListener(this);
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -61,8 +60,18 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             gameObject.transform.position = Vector3.zero;
             gameObject.transform.rotation = Quaternion.identity;
         }
+        Ray rayTarget = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+        Debug.DrawRay(rayTarget.origin, rayTarget.direction);
+        if (Physics.Raycast(rayTarget, out hit, 10))
+        {
+            ClickableSwitch sw = hit.collider.GetComponent<ClickableSwitch>();
+            if (sw)
+            {
+            }
+        }
     }
-
+    
     public void OnLook(InputValue input)
     {
         if (Indoor)
@@ -89,4 +98,23 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         groundAltitude = processedPoints[0];
     }
 
+    private void OnClickButton()
+    {
+        Ray rayTarget = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+        Debug.DrawRay(rayTarget.origin, rayTarget.direction);
+        if (Physics.Raycast(rayTarget, out hit, 10))
+        {
+            ClickableSwitch sw = hit.collider.GetComponent<ClickableSwitch>();
+            if (sw)
+            {
+                Debug.Log("click");
+                sw.Switch();
+            }
+            else
+            {
+                Debug.Log(hit.collider.gameObject.name);
+            }
+        }
+    }
 }

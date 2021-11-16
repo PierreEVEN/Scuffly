@@ -25,14 +25,13 @@ public class Thruster : PlaneComponent, IPowerProvider
 
     void OnEnable()
     {
-        Plane.powerProviders.Add(this);
+        Plane.RegisterPowerProvider(this);
         if (Plane.initialThrottleNotch)
             engineStartupPercent = 1;
     }
 
     private void OnDisable()
     {
-        Plane.powerProviders.Remove(this);
     }
 
     void Update()

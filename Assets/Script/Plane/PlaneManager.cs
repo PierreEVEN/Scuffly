@@ -57,7 +57,13 @@ public class PlaneManager : NetworkBehaviour
     public UnityEvent OnGlobalPowerChanged = new UnityEvent(); // alimentation principale on / off
 
     // Liste des composants fournissant de l'energie
-    public List<IPowerProvider> powerProviders = new List<IPowerProvider>();
+    private List<IPowerProvider> powerProviders = new List<IPowerProvider>();
+
+    public void RegisterPowerProvider(IPowerProvider provider)
+    {
+        if (!powerProviders.Contains(provider))
+            powerProviders.Add(provider);
+    }
 
     public bool EnableDebug
     {
@@ -170,7 +176,8 @@ public class PlaneManager : NetworkBehaviour
 
         // Ajoute artificiellement un coefficient de portance a tout l'avion (simuler uniquement la trainée sur l'avion permet d'avoir une physique utilisable pour un gameplay "arcade",
         // cependant il faut en réalité aussi prendre en compte l'effet de la portance (qui est beaucoup plus complexe a calculer)
-        foreach (var part in GetComponentsInChildren<Rigidbody>()) {
+        foreach (var part in GetComponentsInChildren<Rigidbody>())
+        {
             float velocity = Mathf.Abs(transform.InverseTransformDirection(part.velocity).z);
 
             // Calcul classique de portance
@@ -186,7 +193,9 @@ public class PlaneManager : NetworkBehaviour
         // Update power
         float newPower = MainPower ? 20 : 0;
         foreach (var provider in powerProviders)
+        {
             newPower += provider.GetPower();
+        }
         if (newPower != currentEnginePower)
         {
             OnGlobalPowerChanged.Invoke();
