@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class DayNightCycle : MonoBehaviour
 {
     public float azimut = 0;
@@ -22,6 +23,9 @@ public class DayNightCycle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!Application.isPlaying)
+            return;
+
         orientation += rotationSpeed * Time.deltaTime;
 
         if (Mathf.Abs(orientation - lastOrientation) > step)
