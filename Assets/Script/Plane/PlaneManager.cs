@@ -1,5 +1,12 @@
 using MLAPI;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+public interface IPowerProvider
+{
+    public float GetPower(); // Energie produite en KVA
+}
 
 /*
  * Class definissant un avion. (a placer a la racine du GameObject correspondant)
@@ -9,7 +16,7 @@ using UnityEngine;
  * 
  * 
  * @TODO : implementer les batteries
- */ 
+ */
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlaneManager : NetworkBehaviour
@@ -26,6 +33,7 @@ public class PlaneManager : NetworkBehaviour
     public bool initialPower = false;
 
     Rigidbody planePhysic;
+    private float currentEnginePower;
 
     // Etat courant de l'avion
     private bool throttleNotch = false;
@@ -35,48 +43,78 @@ public class PlaneManager : NetworkBehaviour
     private bool power = false;
 
     // Active ou desactive des fonctionnalites de l'avion
+    [HideInInspector]
+    public UnityEvent OnGearChange = new UnityEvent(); // train rentre / sortis
+    [HideInInspector]
+    public UnityEvent OnThrottleNotchChange = new UnityEvent(); // manette des gaz activee / bloquee
+    [HideInInspector]
+    public UnityEvent OnApuChange = new UnityEvent(); // apu active / bloque
+    [HideInInspector]
+    public UnityEvent OnBrakesChange = new UnityEvent(); // freins actives / relaches
+    [HideInInspector]
+    public UnityEvent OnPowerSwitchChanged = new UnityEvent(); // alimentation principale on / off
+    [HideInInspector]
+    public UnityEvent OnGlobalPowerChanged = new UnityEvent(); // alimentation principale on / off
 
-    public bool PowerState
+    // Liste des composants fournissant de l'energie
+    public List<IPowerProvider> powerProviders = new List<IPowerProvider>();
+
+    public bool EnableDebug
+    {
+        get { return true; }
+    }
+
+    // Getter et setter sur l'etat de l'avion. Appelle des events sur lesquels se bind les differents composants
+    public bool MainPower
     {
         get { return power; }
-        set { 
-            power = value;
-            if (!power)
+        set
+        {
+            if (value != power)
             {
-                ApuSwitch = false;
+                UpdatePlanePower();
+                power = value;
+                OnPowerSwitchChanged.Invoke();
             }
         }
     }
     public bool ThrottleNotch
     {
         get { return throttleNotch; }
-        set { throttleNotch = value; }
+        set
+        {
+            if (value != throttleNotch)
+            {
+                UpdatePlanePower();
+                throttleNotch = value;
+                OnThrottleNotchChange.Invoke();
+            }
+        }
     }
-    public bool ApuSwitch
+    public bool EnableAPU
     {
         get { return apuSwitch; }
         set
         {
-            if (!power)
-                apuSwitch = false;
-            else
+            if (value != apuSwitch)
+            {
+                UpdatePlanePower();
                 apuSwitch = value;
-            foreach (var part in GetComponentsInChildren<APU>())
-                if (apuSwitch)
-                    part.StartApu();
-                else
-                    part.StopApu();
+                OnApuChange.Invoke();
+            }
         }
     }
     public bool RetractGear
     {
         get { return retractGear; }
-        set {
-            if (!power)
-                return;
-            retractGear = value;
-            foreach (var part in GetComponentsInChildren<PlaneWheelController>())
-                part.Retract(retractGear);
+        set
+        {
+            if (value != retractGear)
+            {
+                UpdatePlanePower();
+                retractGear = value;
+                OnGearChange.Invoke();
+            }
         }
     }
     public bool Brakes
@@ -84,12 +122,20 @@ public class PlaneManager : NetworkBehaviour
         get { return brakes; }
         set
         {
-            if (!power)
-                return;
-            brakes = value;
-            foreach (var part in GetComponentsInChildren<WheelCollider>())
-                part.brakeTorque = brakes ? 3000 : 0;
+            if (value != brakes)
+            {
+                UpdatePlanePower();
+                brakes = value;
+                OnBrakesChange.Invoke();
+            }
         }
+    }
+
+    // Calcule l'apport en electricite (en KVA) des differents sous - composants
+    private float lastPower = 0;
+    public float GetCurrentPower()
+    {
+        return currentEnginePower;
     }
 
     private void OnDrawGizmos()
@@ -98,7 +144,6 @@ public class PlaneManager : NetworkBehaviour
         Gizmos.DrawSphere(transform.TransformPoint(massCenter), 1);
     }
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -106,12 +151,12 @@ public class PlaneManager : NetworkBehaviour
         planePhysic.velocity = transform.forward * initialSpeed;
 
         // On allume les batteries le temps de parametrer l'etat par defaut de l'avion
-        PowerState = true;
-        ApuSwitch = initialApuSwitch;
+        MainPower = true;
+        EnableAPU = initialApuSwitch;
         ThrottleNotch = initialThrottleNotch;
         RetractGear = initialRetractGear;
         Brakes = initialBrakes;
-        PowerState = initialPower;
+        MainPower = initialPower;
     }
 
     // Update is called once per frame
@@ -132,6 +177,33 @@ public class PlaneManager : NetworkBehaviour
             part.AddForce(transform.up * 0.5f * ro * liftCoef * surface * velocity * velocity * Time.deltaTime);
             Debug.DrawLine(transform.position, transform.position + transform.up * 0.5f * ro * liftCoef * surface * velocity * velocity * Time.deltaTime);
         }
+
+        UpdatePlanePower();
+    }
+
+    void UpdatePlanePower()
+    {
+        // Update power
+        float newPower = MainPower ? 20 : 0;
+        foreach (var provider in powerProviders)
+            newPower += provider.GetPower();
+        if (newPower != currentEnginePower)
+        {
+            OnGlobalPowerChanged.Invoke();
+            currentEnginePower = newPower;
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (!EnableDebug)
+            return;
+        GUILayout.BeginArea(new Rect(0, 0, 200, 100));
+        GUILayout.Label("PLANE POWER : " + currentEnginePower);
+        GUILayout.Label("PowerSwitch : " + MainPower);
+        GUILayout.Label("Gear : " + !RetractGear);
+        GUILayout.Label("Brakes : " + Brakes);
+        GUILayout.EndArea();
     }
 
     /**
@@ -139,11 +211,9 @@ public class PlaneManager : NetworkBehaviour
      */
     public void SetThrustInput(float input)
     {
-        input = Mathf.Clamp(throttleNotch ? input * 0.95f + 0.05f : 0, 0, 1);
-
         foreach (var thruster in GetComponentsInChildren<Thruster>())
         {
-            thruster.set_thrust_input(input);
+            thruster.setThrustInput(input);
         }
 
         foreach (var part in GetComponentsInChildren<MobilePart>())

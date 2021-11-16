@@ -132,14 +132,14 @@ public class PlanePlayerInputs : MonoBehaviour
     {
         if (!playerManager.controlledPlane)
             return;
-        playerManager.controlledPlane.ApuSwitch = !playerManager.controlledPlane.ApuSwitch;
+        playerManager.controlledPlane.EnableAPU = !playerManager.controlledPlane.EnableAPU;
     }
 
     public void OnSwitchPower()
     {
         if (!playerManager.controlledPlane)
             return;
-        playerManager.controlledPlane.PowerState = !playerManager.controlledPlane.PowerState;
+        playerManager.controlledPlane.MainPower = !playerManager.controlledPlane.MainPower;
     }
 
     public void OnSwitchThrottleNotch()

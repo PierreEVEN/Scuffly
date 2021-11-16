@@ -28,8 +28,8 @@ public class PlaneATHManager : MonoBehaviour
                 return;
         }
 
-        canvas.enabled = owningPlane.PowerState;
-        alpha = Mathf.Clamp01(alpha + (owningPlane.PowerState ? 0.5f * Time.deltaTime : -4f * Time.deltaTime));
-        canvasGroup.alpha = alpha;
+        canvas.enabled = owningPlane.MainPower;
+        alpha = Mathf.Clamp01(alpha + (owningPlane.MainPower ? 0.5f * Time.deltaTime : -4f * Time.deltaTime));
+        canvasGroup.alpha = Mathf.Clamp01((owningPlane.GetCurrentPower() - 80) / 30);
     }
 }

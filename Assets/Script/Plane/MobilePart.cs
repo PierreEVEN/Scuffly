@@ -8,7 +8,7 @@ using UnityEngine;
  *  
  *  @TODO rendre le fonctionnement des parties mobiles dependantes a l'etat des systemes hydrolique de l'avion
  */
-public class MobilePart : MonoBehaviour
+public class MobilePart : PlaneComponent
 {
     // Note : les rotations sont parametrees en angle d'euler pour simplifier le parametrage
 
@@ -29,6 +29,8 @@ public class MobilePart : MonoBehaviour
     private float inputValue = 0;
     private float InterpolationSpeed = 2;
 
+    public bool RequirePlanePower = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,10 @@ public class MobilePart : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Necessite de la puissance pour fonctionner
+        if (RequirePlanePower && Plane.GetCurrentPower() < 95)
+            return;
+
         // Deplace la partie mobile vers la position desiree
         inputValue += Mathf.Clamp(desiredInput - inputValue, -Time.deltaTime * InterpolationSpeed, Time.deltaTime * InterpolationSpeed);
         Quaternion finalRotation;

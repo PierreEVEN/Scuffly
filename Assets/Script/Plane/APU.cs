@@ -5,95 +5,161 @@ using UnityEngine;
  *  L'APU d'un avion est une generatrice electrique. Son fonctionnement est necessaire pour la mise en route du moteur
  *  
  */
-public class APU : MonoBehaviour
+public class APU : PlaneComponent, IPowerProvider
 {
-    public float StartupDuration = 7.3f;
-    public float ShutdownDuration = 7.3f;
+    public float StartupDuration = 14;
+    public float ShutdownDuration = 12;
 
     public AudioClip StartupAudio;
     public AudioClip IdleAudio;
     public AudioClip ShutdownAudio;
 
-    private AudioSource ApuStartAudioSource;
-    private AudioSource ApuIdleAudioSource;
-    private AudioSource ApuShutdownAudioSource;
+    private AudioSource apuStartAudioSource;
+    private AudioSource apuIdleAudioSource;
+    private AudioSource apuShutdownAudioSource;
 
-    private GameObject StartupContainer;
-    private GameObject ShutdownContainer;
+    private GameObject startupContainer;
+    private GameObject shutdownContainer;
 
-    float CurrentStartupPercent = 0.0f;
+    float currentStartupPercent = 0.0f;
 
-    bool IsEnabled = false;
+    bool apuEnabled = false;
 
-    void Start()
+    float enoughPowerTimer = 0;
+
+
+    void OnEnable()
     {
-        StartupContainer = new GameObject("Startup container");
-        StartupContainer.transform.parent = gameObject.transform;
-        StartupContainer.transform.position = gameObject.transform.position;
-        ShutdownContainer = new GameObject("Shutdown container");
-        ShutdownContainer.transform.parent = gameObject.transform;
-        ShutdownContainer.transform.position = gameObject.transform.position;
+        if (!startupContainer)
+        {
+            startupContainer = new GameObject("Startup container");
+            startupContainer.transform.parent = gameObject.transform;
+            startupContainer.transform.position = gameObject.transform.position;
+        }
+        if (!shutdownContainer)
+        {
+            shutdownContainer = new GameObject("Shutdown container");
+            shutdownContainer.transform.parent = gameObject.transform;
+            shutdownContainer.transform.position = gameObject.transform.position;
+        }
+        if (!apuIdleAudioSource)
+        {
+            apuIdleAudioSource = gameObject.AddComponent<AudioSource>();
+            apuIdleAudioSource.spatialBlend = 1.0f;
+            apuIdleAudioSource.dopplerLevel = 0;
+            apuIdleAudioSource.minDistance = 20;
+            apuIdleAudioSource.clip = IdleAudio;
+            apuIdleAudioSource.loop = true;
+            apuIdleAudioSource.volume = 0.5f;
+        }
+        if (!apuStartAudioSource)
+        {
+            apuStartAudioSource = startupContainer.AddComponent<AudioSource>();
+            apuStartAudioSource.spatialBlend = 1.0f;
+            apuStartAudioSource.minDistance = 20;
+            apuStartAudioSource.dopplerLevel = 0;
+            apuStartAudioSource.clip = StartupAudio;
+            apuStartAudioSource.volume = 0.5f;
+        }
+        if (!apuShutdownAudioSource)
+        {
+            apuShutdownAudioSource = shutdownContainer.AddComponent<AudioSource>();
+            apuShutdownAudioSource.spatialBlend = 1.0f;
+            apuShutdownAudioSource.dopplerLevel = 0;
+            apuShutdownAudioSource.minDistance = 20;
+            apuShutdownAudioSource.clip = ShutdownAudio;
+            apuShutdownAudioSource.volume = 0.5f;
+        }
 
-        ApuIdleAudioSource = gameObject.AddComponent<AudioSource>();
-        ApuIdleAudioSource.spatialBlend = 1.0f;
-        ApuIdleAudioSource.dopplerLevel = 0;
-        ApuIdleAudioSource.minDistance = 20;
-        ApuIdleAudioSource.clip = IdleAudio;
-        ApuIdleAudioSource.loop = true;
-        ApuIdleAudioSource.volume = 0.5f;
+        Plane.OnApuChange.AddListener(UpdateState);
+        Plane.OnPowerSwitchChanged.AddListener(UpdateState);
+        Plane.powerProviders.Add(this);
+        if (Plane.initialApuSwitch)
+        {
+            currentStartupPercent = 1;
+            apuEnabled = true;
+        }
+        UpdateState();
+    }
 
-        ApuStartAudioSource = StartupContainer.AddComponent<AudioSource>();
-        ApuStartAudioSource.spatialBlend = 1.0f;
-        ApuStartAudioSource.minDistance = 20;
-        ApuStartAudioSource.dopplerLevel = 0;
-        ApuStartAudioSource.clip = StartupAudio;
-        ApuStartAudioSource.volume = 0.5f;
+    private void OnDisable()
+    {
+        Plane.powerProviders.Remove(this);
+        Plane.OnApuChange.RemoveListener(UpdateState);
+        Plane.OnPowerSwitchChanged.RemoveListener(UpdateState);
+        StopApu();
+    }
 
-        ApuShutdownAudioSource = ShutdownContainer.AddComponent<AudioSource>();
-        ApuShutdownAudioSource.spatialBlend = 1.0f;
-        ApuShutdownAudioSource.dopplerLevel = 0;
-        ApuShutdownAudioSource.minDistance = 20;
-        ApuShutdownAudioSource.clip = ShutdownAudio;
-        ApuShutdownAudioSource.volume = 0.5f;
+    private void OnGUI()
+    {
+        if (!Plane.EnableDebug)
+            return;
+        GUILayout.BeginArea(new Rect(200, 0, 200, 100));
+        GUILayout.Label("APU Enabled : " + apuEnabled);
+        GUILayout.Label("APU IN : " + Plane.GetCurrentPower() + " / 5");
+        GUILayout.Label("APU OUT : " + currentStartupPercent * 40);
+        GUILayout.EndArea();
+    }
+
+    void UpdateState()
+    {
+        // requiere 5 KVA pour demarrer / produit 40 kva
+        if (Plane.EnableAPU && Plane.GetCurrentPower() > 5 && enoughPowerTimer < 10) // si le moteur de l'avion fournit assez d'energie, couper l'APU car inutile
+            StartApu();
+        else
+        {
+            enoughPowerTimer = 0;
+            StopApu();
+            Plane.EnableAPU = false;
+        }
     }
 
     public void StartApu()
     {
-        if (IsEnabled) return;
+        if (apuEnabled) return;
 
         // Allume l'APU. Joue le son d'allumage
-        CurrentStartupPercent = 0.0f;
-        if (ApuStartAudioSource)
-            ApuStartAudioSource.Play();
-        IsEnabled = true;
+        if (apuStartAudioSource)
+            apuStartAudioSource.Play();
+        apuEnabled = true;
     }
 
     public void StopApu()
     {
         // Coupe l'APU : Joue le son d'etteinte.
-        if (!IsEnabled) return;
-        ApuShutdownAudioSource.Play();
-        IsEnabled = false;
-    }
-
-    // Test si l'APU genere assez d'energie pour permettre le demarrage des systemes de l'avion necessitant une forte puissance electrique
-    public bool IsReady()
-    {
-        return CurrentStartupPercent > 0.9f;
+        if (!apuEnabled) return;
+        apuShutdownAudioSource.Play();
+        apuEnabled = false;
     }
 
     void Update()
     {
         // On fait moduler le volume du son "idle" en fonction de l'etat de fonctionnement de l'APU
-        ApuIdleAudioSource.volume = Mathf.Clamp(CurrentStartupPercent * 0.5f - 0.1f, 0, 1);
-        if (CurrentStartupPercent < 0.01f && ApuIdleAudioSource.enabled)
-            ApuIdleAudioSource.enabled = false;
-        else if (CurrentStartupPercent > 0.02f && !ApuIdleAudioSource.enabled)
+        apuIdleAudioSource.volume = Mathf.Clamp(currentStartupPercent * 0.5f - 0.1f, 0, 1);
+        if (currentStartupPercent < 0.01f && apuIdleAudioSource.enabled)
+            apuIdleAudioSource.enabled = false;
+        else if (currentStartupPercent > 0.02f && !apuIdleAudioSource.enabled)
         {
-            ApuIdleAudioSource.enabled = true;
-            ApuIdleAudioSource.Play();
+            apuIdleAudioSource.enabled = true;
+            apuIdleAudioSource.Play();
         }
         // Met a jour l'etat courant de l'APU (= vitesse de rotation de l'alternateur)
-        CurrentStartupPercent = Mathf.Clamp(CurrentStartupPercent + (IsEnabled ? Time.deltaTime / StartupDuration : -Time.deltaTime / ShutdownDuration), 0, 1);
+        currentStartupPercent = Mathf.Clamp(currentStartupPercent + (apuEnabled ? Time.deltaTime / StartupDuration : -Time.deltaTime / ShutdownDuration), 0, 1);
+
+        // verifie si l'apu peut etre eteint
+        if (apuEnabled)
+        {
+            if (Plane.GetCurrentPower() > 80)
+                enoughPowerTimer += Time.deltaTime;
+            else
+                enoughPowerTimer = 0;
+            UpdateState();
+        }
+
+    }
+
+    public float GetPower()
+    {
+        return currentStartupPercent * 40;
     }
 }

@@ -11,7 +11,7 @@ public class PlaneAIController : MonoBehaviour
     void Start()
     {
         controlledPlane = GetComponent<PlaneManager>();
-        controlledPlane.ApuSwitch = true;
+        controlledPlane.EnableAPU = true;
         controlledPlane.ThrottleNotch = true;
         controlledPlane.Brakes = false;
         controlledPlane.SetThrustInput(1.0f);
