@@ -12,11 +12,12 @@ TagManager:
   - Thrust
   - GPULandscape
   - PlaneSpawnPoint
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Outlines
   - Water
   - UI
   - 

@@ -24,6 +24,8 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     float groundAltitude = 0;
     private PlayerManager playerManager;
 
+    private GameObject lastLookedObject;
+
     private void Start()
     {
         if (!IsLocalPlayer)
@@ -68,6 +70,19 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             ClickableSwitch sw = hit.collider.GetComponent<ClickableSwitch>();
             if (sw)
             {
+                if (lastLookedObject != sw.gameObject)
+                {
+                    if (lastLookedObject)
+                        lastLookedObject.layer = 0;
+
+                    lastLookedObject = sw.gameObject;
+                    lastLookedObject.layer = 3;
+                }
+            }
+            else if (lastLookedObject)
+            {
+                lastLookedObject.layer = 0;
+                lastLookedObject = null;
             }
         }
     }
