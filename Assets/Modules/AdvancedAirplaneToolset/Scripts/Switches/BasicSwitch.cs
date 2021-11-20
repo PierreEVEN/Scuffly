@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ESwitchTarget {
+public enum ESwitchTarget
+{
+    None,
     MainPower,
     APU,
     Gear,
@@ -10,8 +12,8 @@ public enum ESwitchTarget {
     ThrottleNotch
 }
 
-[ExecuteInEditMode]
-public class ClickableSwitch : PlaneComponent
+[ExecuteInEditMode, RequireComponent(typeof(AudioSource))]
+public class BasicSwitch : PlaneComponent
 {
     public bool On = false;
     public ESwitchTarget modifiedProperty;
@@ -23,10 +25,23 @@ public class ClickableSwitch : PlaneComponent
     public Vector3 PositionOff = new Vector3();
     public Quaternion RotationOff = new Quaternion();
 
+    AudioSource audioSource;
+
+    private void OnEnable()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     public void Switch()
     {
-        Debug.Log("clicked");
+        Debug.Log("switch");
         On = !On;
+
+        audioSource.Play();
+
+        if (modifiedProperty == ESwitchTarget.None)
+            return;
+
         switch (modifiedProperty)
         {
             case ESwitchTarget.MainPower:
@@ -49,7 +64,7 @@ public class ClickableSwitch : PlaneComponent
 
     private void Update()
     {
-        if (Application.isPlaying)
+        if (Application.isPlaying && modifiedProperty != ESwitchTarget.None)
         {
             switch (modifiedProperty)
             {
@@ -71,7 +86,23 @@ public class ClickableSwitch : PlaneComponent
             }
         }
 
-        transform.localPosition = On ? PositionOn : PositionOff;
-        transform.localRotation = On ? RotationOn : RotationOff;
+        for (int i = 0; i < transform.childCount; ++i)
+        {
+            Transform child = transform.GetChild(i);
+            child.localPosition = On ? PositionOn : PositionOff;
+            child.localRotation = On ? RotationOn : RotationOff;
+        }
+    }
+
+    public void StartOver()
+    {
+        for (int i = 0; i < transform.childCount; ++i)
+            transform.GetChild(i).gameObject.layer = 3;
+    }
+
+    public void StopOver()
+    {
+        for (int i = 0; i < transform.childCount; ++i)
+            transform.GetChild(i).gameObject.layer = 0;
     }
 }

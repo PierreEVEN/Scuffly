@@ -34,19 +34,19 @@ public class Thruster : PlaneComponent, IPowerProvider
     {
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Met a jour la rotation du moteur en fonction de son etat d'activation et de la puissance d'allimentation de l'avion
-        engineStartupPercent = Mathf.Clamp01(engineStartupPercent + (Plane.ThrottleNotch && Plane.GetCurrentPower() > 55 ? Time.deltaTime * engineStartupPercentPerSeconds : -Time.deltaTime * engineStartupPercentPerSeconds));
+        engineStartupPercent = Mathf.Clamp01(engineStartupPercent + (Plane.ThrottleNotch && Plane.GetCurrentPower() > 55 ? Time.fixedDeltaTime * engineStartupPercentPerSeconds : -Time.fixedDeltaTime * engineStartupPercentPerSeconds));
 
         // Tant que le moteur n'est pas demarre, on ne fait rien
         float targetInput = engineStartupPercent < 1 ? 0 : throttleDesiredPercent;
 
-        throttleCurrentPercent = Mathf.Clamp01(throttleCurrentPercent + Mathf.Clamp(targetInput - throttleCurrentPercent, -thrustPercentAcceleration, thrustPercentAcceleration) * Time.deltaTime);
+        throttleCurrentPercent = Mathf.Clamp01(throttleCurrentPercent + Mathf.Clamp(targetInput - throttleCurrentPercent, -thrustPercentAcceleration, thrustPercentAcceleration) * Time.fixedDeltaTime);
         // Meme a l'arret, le moteur produit une legere poussee
         float totalInputPercent = throttleCurrentPercent + engineStartupPercent * idleEngineThrustPercent;
         float forwardVelocity = transform.InverseTransformDirection(Physics.velocity).z;
-        Physics.AddForceAtPosition(transform.forward * Time.deltaTime * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
+        Physics.AddForceAtPosition(transform.forward * Time.fixedDeltaTime * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
     }
 
     private void OnGUI()

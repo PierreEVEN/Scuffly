@@ -24,8 +24,6 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     float groundAltitude = 0;
     private PlayerManager playerManager;
 
-    private GameObject lastLookedObject;
-
     private void Start()
     {
         if (!IsLocalPlayer)
@@ -62,31 +60,35 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             gameObject.transform.position = Vector3.zero;
             gameObject.transform.rotation = Quaternion.identity;
         }
+
+        RaycastSwitchs();
+    }
+
+    private bool hasClicked = false;
+    private BasicSwitch lastSwitch;
+    public void RaycastSwitchs()
+    {
+        if (lastSwitch)
+            lastSwitch.StopOver();
+        lastSwitch = null;
+
         Ray rayTarget = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
         Debug.DrawRay(rayTarget.origin, rayTarget.direction);
         if (Physics.Raycast(rayTarget, out hit, 10))
         {
-            ClickableSwitch sw = hit.collider.GetComponent<ClickableSwitch>();
+            BasicSwitch sw = hit.collider.GetComponent<BasicSwitch>();
             if (sw)
             {
-                if (lastLookedObject != sw.gameObject)
-                {
-                    if (lastLookedObject)
-                        lastLookedObject.layer = 0;
-
-                    lastLookedObject = sw.gameObject;
-                    lastLookedObject.layer = 3;
-                }
-            }
-            else if (lastLookedObject)
-            {
-                lastLookedObject.layer = 0;
-                lastLookedObject = null;
+                lastSwitch = sw;
+                lastSwitch.StartOver();
+                if (hasClicked)
+                    lastSwitch.Switch();
             }
         }
+        hasClicked = false;
     }
-    
+
     public void OnLook(InputValue input)
     {
         if (Indoor)
@@ -115,21 +117,6 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
     private void OnClickButton()
     {
-        Ray rayTarget = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        RaycastHit hit;
-        Debug.DrawRay(rayTarget.origin, rayTarget.direction);
-        if (Physics.Raycast(rayTarget, out hit, 10))
-        {
-            ClickableSwitch sw = hit.collider.GetComponent<ClickableSwitch>();
-            if (sw)
-            {
-                Debug.Log("click");
-                sw.Switch();
-            }
-            else
-            {
-                Debug.Log(hit.collider.gameObject.name);
-            }
-        }
+        hasClicked = true;
     }
 }

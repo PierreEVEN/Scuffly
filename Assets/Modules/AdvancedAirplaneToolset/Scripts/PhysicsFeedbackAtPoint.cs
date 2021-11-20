@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 public class PhysicsFeedbackAtPoint : MonoBehaviour
 {
     Rigidbody rb;
-    VisualEffect particleSystem;
+    VisualEffect fxTest;
 
     float currentAcceleration = 0;
 
@@ -42,19 +42,19 @@ public class PhysicsFeedbackAtPoint : MonoBehaviour
 
         lastVelocity = rb.velocity;
 
-        if (!particleSystem)
-            particleSystem = GetComponent<VisualEffect>();
-        if (!particleSystem)
+        if (!fxTest)
+            fxTest = GetComponent<VisualEffect>();
+        if (!fxTest)
             return;
 
-        if (particleSystem.HasFloat("Acceleration"))
+        if (fxTest.HasFloat("Acceleration"))
         {
-            particleSystem.SetFloat("Acceleration", currentAcceleration);
+            fxTest.SetFloat("Acceleration", currentAcceleration);
         }
 
-        if (particleSystem.HasFloat("UpVelocity"))
+        if (fxTest.HasFloat("UpVelocity"))
         {
-            particleSystem.SetFloat("UpVelocity", relativeVelocity.y);
+            fxTest.SetFloat("UpVelocity", relativeVelocity.y);
         }
     }
 }
