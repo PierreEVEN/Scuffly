@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public enum ESwitchTarget
@@ -12,7 +11,7 @@ public enum ESwitchTarget
     ThrottleNotch
 }
 
-[ExecuteInEditMode, RequireComponent(typeof(AudioSource))]
+[ExecuteInEditMode]
 public class BasicSwitch : PlaneComponent
 {
     public bool On = false;
@@ -25,20 +24,17 @@ public class BasicSwitch : PlaneComponent
     public Vector3 PositionOff = new Vector3();
     public Quaternion RotationOff = new Quaternion();
 
-    AudioSource audioSource;
+    public AK.Wwise.Event PlayEvent;
 
     private void OnEnable()
     {
-        audioSource = GetComponent<AudioSource>();
     }
 
     public void Switch()
     {
         Debug.Log("switch");
         On = !On;
-
-        audioSource.Play();
-
+        PlayEvent.Post(gameObject);
         if (modifiedProperty == ESwitchTarget.None)
             return;
 

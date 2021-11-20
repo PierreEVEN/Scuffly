@@ -1,6 +1,8 @@
+using AK.Wwise;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 /**
  *  @Author : Pierre EVEN
  *  
@@ -22,6 +24,10 @@ public class Thruster : PlaneComponent, IPowerProvider
     public float thrustPercentAcceleration = 0.4f; // vitesse d'acceleration du moteur
     private float throttleDesiredPercent = 0; // pourcentage de puissance du moteur desire
     private float throttleCurrentPercent = 0; // pourcentage de puissance reel du moteur
+
+    public RTPC EngineStatusRTPC;
+    public RTPC CameraDistanceRPC;
+
 
     void OnEnable()
     {
@@ -46,7 +52,10 @@ public class Thruster : PlaneComponent, IPowerProvider
         // Meme a l'arret, le moteur produit une legere poussee
         float totalInputPercent = throttleCurrentPercent + engineStartupPercent * idleEngineThrustPercent;
         float forwardVelocity = transform.InverseTransformDirection(Physics.velocity).z;
-        Physics.AddForceAtPosition(transform.forward * Time.fixedDeltaTime * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
+        Physics.AddForceAtPosition(-transform.forward * Time.fixedDeltaTime * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
+
+        EngineStatusRTPC.SetValue(gameObject, totalInputPercent * 100);
+        CameraDistanceRPC.SetValue(gameObject, Vector3.Distance(Camera.main.transform.position, transform.position) / 4);
     }
 
     private void OnGUI()

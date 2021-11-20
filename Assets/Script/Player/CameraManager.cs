@@ -11,9 +11,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Camera), typeof(PlayerManager))]
 public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 {
-    public Vector2 ZoomBounds = new Vector2(5, 200);
+    public Vector2 ZoomBounds = new Vector2(5, 1000);
     public Vector2 FovBounds = new Vector2(30, 120);
-    public bool Indoor = false;
+    public bool Indoor = true;
 
     private float zoomInput = 50;
     private float fov = 60;
@@ -101,7 +101,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         if (Indoor)
             fov = Mathf.Clamp(fov + input.Get<float>(), FovBounds.x, FovBounds.y);
         else
-            zoomInput = Mathf.Clamp(zoomInput + input.Get<float>(), ZoomBounds.x, ZoomBounds.y);
+            zoomInput = Mathf.Clamp(zoomInput + input.Get<float>() * 5, ZoomBounds.x, ZoomBounds.y);
     }
     public void OnSwitchView() => Indoor = !Indoor;
 

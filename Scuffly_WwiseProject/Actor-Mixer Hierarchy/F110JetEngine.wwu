@@ -1,0 +1,1515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" SchemaVersion="103">
+	<AudioObjects>
+		<WorkUnit Name="F110JetEngine" ID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" PersistMode="Standalone">
+			<ChildrenList>
+				<BlendContainer Name="F110Thrust" ID="{2E7DB56C-036F-414B-AAB7-CA1819A1D517}" ShortID="743615865">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="F16-Far" ID="{FCC38E9D-28A3-47B0-A95C-A9DEC2B4FFB3}" ShortID="29864213">
+							<PropertyList>
+								<Property Name="Highpass" Type="int16">
+									<RTPCList>
+										<RTPC Name="" ID="{BAD7E859-3BFA-425D-8EA1-CB897A493CAB}" ShortID="1019425966">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{2B12481E-A3E9-404B-9BD6-7264A907B0D2}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="65537"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>37</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>-50</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="MakeUpGain" Type="Real64">
+									<RTPCList>
+										<RTPC Name="" ID="{3B26AB0E-EEDF-4C11-9781-193EE2D11DCF}" ShortID="227234648">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="Distance" ID="{656863CD-C3ED-4AB6-B5B5-6D36C2AFE3C7}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{B86A3FA0-DB75-4013-83FD-C2F16AD60EB2}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-6.46583</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>24.18953</XPos>
+														<YPos>1.08932</YPos>
+														<Flags>0</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>5.06213</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+										<RTPC Name="" ID="{435DA150-9CDF-460C-85C6-0004D382BB1A}" ShortID="120647331">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{F9048EBE-53EC-4088-AAF0-149323114A30}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-5.87676</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>1.84819</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>6</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="F16-Far" ID="{9493405A-4D78-40F7-B5B4-BB01BB22F90E}">
+									<Language>SFX</Language>
+									<AudioFile>F16-Far.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="996229628"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="F16-Far" ID="{9493405A-4D78-40F7-B5B4-BB01BB22F90E}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="F16-OutsideMax" ID="{9C529B7C-A2FC-4EAE-B21E-2C46B728C0F1}" ShortID="136612373">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="MakeUpGain" Type="Real64">
+									<RTPCList>
+										<RTPC Name="" ID="{600EF1CE-716D-49CF-BD27-F0B4972B2307}" ShortID="29916608">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="Distance" ID="{656863CD-C3ED-4AB6-B5B5-6D36C2AFE3C7}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{98D05D9D-3BBD-474A-87D4-260FCE3A7C1C}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-15.5622</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>18.57856</XPos>
+														<YPos>3.0586</YPos>
+														<Flags>0</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>-192</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+								<Property Name="Pitch" Type="int32">
+									<RTPCList>
+										<RTPC Name="" ID="{B88C66F3-F121-4356-A96C-6CEF2304DD47}" ShortID="858255500">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="Distance" ID="{656863CD-C3ED-4AB6-B5B5-6D36C2AFE3C7}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{C7DA90AE-5A85-4C4B-B086-073366F1B85B}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="65537"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-400</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>120</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>4</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="F16-OutsideMax" ID="{0F4EFAFB-0759-45D7-9E92-EE6B96863121}">
+									<Language>SFX</Language>
+									<AudioFile>F16-OutsideMax.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="875417865"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="F16-OutsideMax" ID="{0F4EFAFB-0759-45D7-9E92-EE6B96863121}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<BlendContainer Name="F16Close" ID="{7E76C5AB-982A-4304-881D-4FD5231D6B41}" ShortID="692674845">
+							<PropertyList>
+								<Property Name="MakeUpGain" Type="Real64">
+									<RTPCList>
+										<RTPC Name="" ID="{C5BC5927-9914-4CF5-BD40-BDA2BE1907D3}" ShortID="1044525322">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="Distance" ID="{656863CD-C3ED-4AB6-B5B5-6D36C2AFE3C7}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{01CFA1E8-B582-4137-A79A-59DB48FF4141}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>0.14612</YPos>
+														<Flags>5</Flags>
+														<SegmentShape>Log1</SegmentShape>
+													</Point>
+													<Point>
+														<XPos>12.59352</XPos>
+														<YPos>-7.30051</YPos>
+														<Flags>0</Flags>
+														<SegmentShape>Log2</SegmentShape>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>-192</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
+									</RTPCList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="WindTunnel" ID="{89AFE3A9-FBDA-4D66-BC7B-63056204BEB0}" ShortID="298522024">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="Highpass" Type="int16">
+											<RTPCList>
+												<RTPC Name="" ID="{AFDA1938-FBBC-43FD-9218-E29462B506CF}" ShortID="138826398">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{FBB126CB-BCC6-48B6-932A-570C408A907E}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="MakeUpGain" Type="Real64">
+											<RTPCList>
+												<RTPC Name="" ID="{45AAD2C8-4A38-463C-AE52-F619D1A3975D}" ShortID="259264494">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{5DBEB43D-A96E-490D-9371-C16A83D636B2}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-95.80263</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>25.93516</XPos>
+																<YPos>-3.29138</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0.07268</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>12</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="WindTunnel" ID="{F429B3FB-779C-457E-AF73-20A4A9D7D18F}">
+											<Language>SFX</Language>
+											<AudioFile>WindTunnel.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="658027025"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<PositioningInfo>
+										<Panner Name="" ID="{3D0AD474-B5F2-4A7A-AA60-87548304A02B}">
+											<PropertyList>
+												<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
+												<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
+											</PropertyList>
+										</Panner>
+										<Position Name="" ID="{39714DB7-11E4-4883-A6B1-1C703124FCFD}">
+											<ChildrenList>
+												<Path2D Name="New Blend Container_Path" ID="{00CDA70B-1BFF-4AD9-85B1-0AFB5AE274C0}">
+													<PointList>
+														<Point>
+															<XPos>0</XPos>
+															<YPos>50</YPos>
+															<Flags>12</Flags>
+															<Time>0</Time>
+														</Point>
+													</PointList>
+												</Path2D>
+											</ChildrenList>
+										</Position>
+									</PositioningInfo>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="WindTunnel" ID="{F429B3FB-779C-457E-AF73-20A4A9D7D18F}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="f110Acceleration_0" ID="{C85F8D3B-34FF-43C6-99B7-35A5CFF607F3}" ShortID="335161093">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="MakeUpGain" Type="Real64">
+											<RTPCList>
+												<RTPC Name="" ID="{BEDAB82D-F4D4-448D-A58E-CBE51F52BA05}" ShortID="20327432">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{4A4E8DB1-B144-4BB9-A835-BE3B2616B731}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>19.96454</XPos>
+																<YPos>-192</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-192</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<RTPCList>
+												<RTPC Name="" ID="{782D3FE3-68EE-47BA-A59F-6A9583B5270B}" ShortID="758307129">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{F538EB56-21A4-4677-B391-FB2C2F4CB092}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>15</XPos>
+																<YPos>226</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>2009</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="f110Acceleration_0" ID="{7EA9D897-E82D-431F-8BBF-97DA4BC75A14}">
+											<Language>SFX</Language>
+											<AudioFile>f110Acceleration_0.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="261906621"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<PositioningInfo>
+										<Panner Name="" ID="{8278A4CB-B3FA-4BCA-9CAA-D8DAD44B68BA}">
+											<PropertyList>
+												<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
+												<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
+											</PropertyList>
+										</Panner>
+										<Position Name="" ID="{E6F0440F-26AF-4BBF-A4C6-3B6B7AE0ADBE}">
+											<ChildrenList>
+												<Path2D Name="New Blend Container_Path" ID="{4B65B7DC-50A8-4EDE-9214-EDF753919927}">
+													<PointList>
+														<Point>
+															<XPos>0</XPos>
+															<YPos>50</YPos>
+															<Flags>12</Flags>
+															<Time>0</Time>
+														</Point>
+													</PointList>
+												</Path2D>
+											</ChildrenList>
+										</Position>
+									</PositioningInfo>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="f110Acceleration_0" ID="{7EA9D897-E82D-431F-8BBF-97DA4BC75A14}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="f110Acceleration_5" ID="{53F41E3D-10FF-4078-8ECA-D4B7A674F17D}" ShortID="893699617">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="MakeUpGain" Type="Real64">
+											<RTPCList>
+												<RTPC Name="" ID="{64B8AC14-B438-41B8-84C6-57BDDA857A05}" ShortID="312924221">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{7BC2B358-78BB-4897-8765-7DFF47278B11}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-96</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>54.96454</XPos>
+																<YPos>-192</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>75</XPos>
+																<YPos>0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<RTPCList>
+												<RTPC Name="" ID="{37F890DC-1D4E-4840-931D-57D379AC1698}" ShortID="367024398">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{84D20CDB-346D-42BB-994F-EA392915485C}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>60.07092</XPos>
+																<YPos>-223</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>75</XPos>
+																<YPos>0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>5</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="f110Acceleration_5" ID="{552D58D4-6AAC-4091-823A-4F61861808DE}">
+											<Language>SFX</Language>
+											<AudioFile>f110Acceleration_5.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="660309497"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<PositioningInfo>
+										<Panner Name="" ID="{B2C3BEEF-B6F9-4BE4-A46B-0952813A7634}">
+											<PropertyList>
+												<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
+												<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
+											</PropertyList>
+										</Panner>
+										<Position Name="" ID="{88CA3B0A-39D5-4C21-8D9C-54F8B6434A79}">
+											<ChildrenList>
+												<Path2D Name="New Blend Container_Path" ID="{0D528833-9A15-406E-B6D0-78A043C2A31A}">
+													<PointList>
+														<Point>
+															<XPos>0</XPos>
+															<YPos>50</YPos>
+															<Flags>12</Flags>
+															<Time>0</Time>
+														</Point>
+													</PointList>
+												</Path2D>
+											</ChildrenList>
+										</Position>
+									</PositioningInfo>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="f110Acceleration_5" ID="{552D58D4-6AAC-4091-823A-4F61861808DE}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="f110Acceleration_3" ID="{8D7FD443-DFC0-4410-A9CB-028F4220D90C}" ShortID="291558293">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="MakeUpGain" Type="Real64">
+											<RTPCList>
+												<RTPC Name="" ID="{D3295376-4A73-4782-B783-0F169921BED1}" ShortID="756856322">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{206590B6-5F46-4F56-B377-74B2DFA07287}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-96</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>25.03546</XPos>
+																<YPos>-192</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>45</XPos>
+																<YPos>0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>64.8227</XPos>
+																<YPos>-192</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-192</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<RTPCList>
+												<RTPC Name="" ID="{FDEDC05B-DA5A-4333-B332-560C2B4B6041}" ShortID="915832157">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{A1F32799-55AE-4043-8ABA-0013C5CDF90B}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-670</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>30.07092</XPos>
+																<YPos>-249</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>60.07092</XPos>
+																<YPos>200</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>744</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>2</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="f110Acceleration_3" ID="{C9FE2F25-A9BE-4823-AAF2-B840A31A9F35}">
+											<Language>SFX</Language>
+											<AudioFile>f110Acceleration_3.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="446192538"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<PositioningInfo>
+										<Panner Name="" ID="{BC77374D-451E-409A-B11C-289444DC551B}">
+											<PropertyList>
+												<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
+												<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
+											</PropertyList>
+										</Panner>
+										<Position Name="" ID="{2E3E4245-5E04-403D-B7E3-1F6CD7A1BD31}">
+											<ChildrenList>
+												<Path2D Name="New Blend Container_Path" ID="{EC48E8F3-28D9-4F6B-8B86-419700E47311}">
+													<PointList>
+														<Point>
+															<XPos>0</XPos>
+															<YPos>50</YPos>
+															<Flags>12</Flags>
+															<Time>0</Time>
+														</Point>
+													</PointList>
+												</Path2D>
+											</ChildrenList>
+										</Position>
+									</PositioningInfo>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="f110Acceleration_3" ID="{C9FE2F25-A9BE-4823-AAF2-B840A31A9F35}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="f110Acceleration_2" ID="{1F0D9612-3BD7-4752-B714-AA8295E4064D}" ShortID="955138860">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="MakeUpGain" Type="Real64">
+											<RTPCList>
+												<RTPC Name="" ID="{6CBF88C4-D249-4893-B79A-6EC472E1EA0B}" ShortID="619500505">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{E43F1094-9527-443A-B8B5-EC713222D0E2}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-96</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>12.87234</XPos>
+																<YPos>-192</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>30</XPos>
+																<YPos>0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>48.5461</XPos>
+																<YPos>-192</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-192</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<RTPCList>
+												<RTPC Name="" ID="{E2A921B1-3685-4DD7-9D83-3B476FF95EF4}" ShortID="472926851">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{340D2B4E-7462-4DC1-8689-B13609864BE2}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-721</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>15</XPos>
+																<YPos>-400</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>45</XPos>
+																<YPos>300</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>1389</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>1</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="f110Acceleration_2" ID="{8AD5FD09-B50D-4F55-8F5A-23A6C9DAB7B5}">
+											<Language>SFX</Language>
+											<AudioFile>f110Acceleration_2.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="272649227"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<PositioningInfo>
+										<Panner Name="" ID="{872881E4-0E58-4011-9FF7-0C5209A2DEBA}">
+											<PropertyList>
+												<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
+												<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
+											</PropertyList>
+										</Panner>
+										<Position Name="" ID="{0792F092-0330-451A-91C1-F0A142CDF444}">
+											<ChildrenList>
+												<Path2D Name="New Blend Container_Path" ID="{AE5D96F9-FF8A-4B03-96DA-03F58A624C95}">
+													<PointList>
+														<Point>
+															<XPos>0</XPos>
+															<YPos>50</YPos>
+															<Flags>12</Flags>
+															<Time>0</Time>
+														</Point>
+													</PointList>
+												</Path2D>
+											</ChildrenList>
+										</Position>
+									</PositioningInfo>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="f110Acceleration_2" ID="{8AD5FD09-B50D-4F55-8F5A-23A6C9DAB7B5}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="f110Acceleration_1" ID="{5A002CDB-1FC9-4A38-B17A-19021C9759BB}" ShortID="266387335">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="MakeUpGain" Type="Real64">
+											<RTPCList>
+												<RTPC Name="" ID="{F7FA4D0B-1190-4B90-A4B4-2BE686FFA936}" ShortID="46031627">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{CFEA072E-3659-43B6-BCD0-8E5F746B06D5}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-12.66878</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>15</XPos>
+																<YPos>0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>34.96454</XPos>
+																<YPos>-192</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-192</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<RTPCList>
+												<RTPC Name="" ID="{D441285E-8A0B-4ACD-B9DD-D04D79A9C7D9}" ShortID="785830443">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{D8AB9835-17A4-4F68-A749-E9B983AF726C}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-211</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>30.07092</XPos>
+																<YPos>310</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>1240</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="f110Acceleration_1" ID="{ADB65245-C09C-49AA-A199-97BB3A7DBB4D}">
+											<Language>SFX</Language>
+											<AudioFile>f110Acceleration_1.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="205787666"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<PositioningInfo>
+										<Panner Name="" ID="{F596DF61-1C0C-47EB-9896-42E6C5AA9C4C}">
+											<PropertyList>
+												<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
+												<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
+											</PropertyList>
+										</Panner>
+										<Position Name="" ID="{6DF20F50-AC25-4B0B-ABA8-162BACE2FD49}">
+											<ChildrenList>
+												<Path2D Name="New Blend Container_Path" ID="{5466A068-78B8-44EE-9FA1-3FB55E34E404}">
+													<PointList>
+														<Point>
+															<XPos>0</XPos>
+															<YPos>50</YPos>
+															<Flags>12</Flags>
+															<Time>0</Time>
+														</Point>
+													</PointList>
+												</Path2D>
+											</ChildrenList>
+										</Position>
+									</PositioningInfo>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="f110Acceleration_1" ID="{ADB65245-C09C-49AA-A199-97BB3A7DBB4D}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="f110Acceleration_4" ID="{EDFC12D3-A30B-4802-89E7-BCA0EBC5510F}" ShortID="396748668">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="MakeUpGain" Type="Real64">
+											<RTPCList>
+												<RTPC Name="" ID="{7DF1BCF4-8309-40A4-B2BE-E372969A08E5}" ShortID="1034645478">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{10F2B38D-5204-43A8-8759-9EA29D33B11F}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-96</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>40.03546</XPos>
+																<YPos>-192</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>60</XPos>
+																<YPos>0</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>79.68085</XPos>
+																<YPos>-192</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-192</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<RTPCList>
+												<RTPC Name="" ID="{1FBF9FA8-BCF1-422C-A433-086DA76E879D}" ShortID="860329723">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{16E1AC2A-C012-4FCA-B749-4CC523DB910F}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>44.92908</XPos>
+																<YPos>-146</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>75.14184</XPos>
+																<YPos>249</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>0</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>3</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="f110Acceleration_4" ID="{764C47D0-ABB3-492F-B973-7831092EDC9A}">
+											<Language>SFX</Language>
+											<AudioFile>f110Acceleration_4.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="770591842"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<PositioningInfo>
+										<Panner Name="" ID="{CCD21C9D-8C00-47AA-8923-B267F2B64D29}">
+											<PropertyList>
+												<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
+												<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
+											</PropertyList>
+										</Panner>
+										<Position Name="" ID="{1C43D24E-B7C3-46FF-BD0C-2C4203EF14DB}">
+											<ChildrenList>
+												<Path2D Name="New Blend Container_Path" ID="{5270C694-870A-4904-8BA2-EA8F0AF3237B}">
+													<PointList>
+														<Point>
+															<XPos>0</XPos>
+															<YPos>50</YPos>
+															<Flags>12</Flags>
+															<Time>0</Time>
+														</Point>
+													</PointList>
+												</Path2D>
+											</ChildrenList>
+										</Position>
+									</PositioningInfo>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="f110Acceleration_4" ID="{764C47D0-ABB3-492F-B973-7831092EDC9A}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="F16-IdleOutside" ID="{8111A94C-22F1-497C-ABB1-17FDDA8A74D8}" ShortID="155276115">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="2"/>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="MakeUpGain" Type="Real64">
+											<RTPCList>
+												<RTPC Name="" ID="{D09D2A8D-A178-4FE7-89A5-52F83E8A7E35}" ShortID="102220128">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{297BB769-4F00-4703-ACE7-79CE759D5AFF}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>38.90274</XPos>
+																<YPos>-0.32739</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-192</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<RTPCList>
+												<RTPC Name="" ID="{D1207E2A-6680-4E11-A14A-80C8740C6320}" ShortID="318150362">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="EngineStatus" ID="{73F3B65E-1450-417E-893F-143C009AC549}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{4549C1DE-19D6-416E-9D9B-A38737871E7F}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>17.70574</XPos>
+																<YPos>237</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>1200</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
+											</RTPCList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>12</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="F16-IdleOutside" ID="{9B4BA468-C688-43A8-A3DD-A8E71E994953}">
+											<Language>SFX</Language>
+											<AudioFile>F16-IdleOutside.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="319507435"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<PositioningInfo>
+										<Panner Name="" ID="{00ADB614-860A-46F1-AAA0-107A03582007}">
+											<PropertyList>
+												<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
+												<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
+											</PropertyList>
+										</Panner>
+										<Position Name="" ID="{7D07AC6A-5E71-4DAE-B4F5-EA1ACF397021}">
+											<ChildrenList>
+												<Path2D Name="New Blend Container_Path" ID="{65C5F927-481D-4FD0-AC8B-CFE12AB29C70}">
+													<PointList>
+														<Point>
+															<XPos>0</XPos>
+															<YPos>50</YPos>
+															<Flags>12</Flags>
+															<Time>0</Time>
+														</Point>
+													</PointList>
+												</Path2D>
+											</ChildrenList>
+										</Position>
+									</PositioningInfo>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="F16-IdleOutside" ID="{9B4BA468-C688-43A8-A3DD-A8E71E994953}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+							<ObjectLists/>
+						</BlendContainer>
+					</ChildrenList>
+					<PositioningInfo>
+						<Panner Name="" ID="{8582A975-32B2-4D63-A182-90E784665AF8}">
+							<PropertyList>
+								<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
+								<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
+							</PropertyList>
+						</Panner>
+						<Position Name="" ID="{C7319406-3FE2-4B11-9FD3-8C1BCF7B0AB4}">
+							<ChildrenList>
+								<Path2D Name="New Blend Container_Path" ID="{6152EF00-E74B-4B6A-B35F-403DD1E76D1A}">
+									<PointList>
+										<Point>
+											<XPos>0</XPos>
+											<YPos>50</YPos>
+											<Flags>12</Flags>
+											<Time>0</Time>
+										</Point>
+									</PointList>
+								</Path2D>
+							</ChildrenList>
+						</Position>
+					</PositioningInfo>
+					<StateInfo>
+						<StateGroupList>
+							<StateGroupInfo>
+								<StateGroupRef Name="F110State" ID="{9B3BD4E4-BD87-4896-A1C5-BDD5ADA0FE59}"/>
+							</StateGroupInfo>
+						</StateGroupList>
+						<CustomStateList>
+							<CustomState>
+								<StateRef Name="Stopping" ID="{99ACF14A-259E-4719-9690-1FEDE61E5684}"/>
+								<CustomState Name="" ID="{C717F052-5AB6-45B3-8A63-DE97F38B610F}" ShortID="153495963">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64" Value="-108"/>
+									</PropertyList>
+								</CustomState>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="Starting" ID="{C743A750-35F1-4847-9F8B-F040EE725FFC}"/>
+								<CustomState Name="" ID="{E248CCA9-89E3-468A-8CAB-58A2EB90DE6F}" ShortID="923451204">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64" Value="-108"/>
+									</PropertyList>
+								</CustomState>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="None" ID="{CFC851D0-86A0-49D7-993E-F5D268DCC4E7}"/>
+								<CustomState Name="" ID="{46362C74-B933-49C3-B411-8CF0D458490C}" ShortID="880193447"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="Enabled" ID="{9CF47901-ACD2-4FB4-A981-18B2CD998B8E}"/>
+								<CustomState Name="" ID="{93A50722-F56C-44B4-AD69-0013DF718948}" ShortID="961998337"/>
+							</CustomState>
+						</CustomStateList>
+					</StateInfo>
+					<ObjectLists/>
+				</BlendContainer>
+				<Sound Name="f110Startup" ID="{F1FBFAAA-A5E3-4A02-A2E4-0FC61944A944}" ShortID="192629363">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="f110Startup" ID="{48CCB8BF-78EA-499C-8D85-6A753C332AF6}">
+							<Language>SFX</Language>
+							<AudioFile>f110Startup.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="820349579"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<StateInfo>
+						<StateGroupList>
+							<StateGroupInfo>
+								<StateGroupRef Name="F110State" ID="{9B3BD4E4-BD87-4896-A1C5-BDD5ADA0FE59}"/>
+							</StateGroupInfo>
+						</StateGroupList>
+						<CustomStateList>
+							<CustomState>
+								<StateRef Name="Stopping" ID="{99ACF14A-259E-4719-9690-1FEDE61E5684}"/>
+								<CustomState Name="" ID="{63A14A63-203E-480D-B9EC-2F3DD0367BC9}" ShortID="583502618">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64" Value="-108"/>
+									</PropertyList>
+								</CustomState>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="Starting" ID="{C743A750-35F1-4847-9F8B-F040EE725FFC}"/>
+								<CustomState Name="" ID="{C191F22D-CBEA-4F22-A636-DD13519F0D26}" ShortID="900068846"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="None" ID="{CFC851D0-86A0-49D7-993E-F5D268DCC4E7}"/>
+								<CustomState Name="" ID="{DF1C227B-ADD4-4920-B58F-32744723317B}" ShortID="1044554507"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="Enabled" ID="{9CF47901-ACD2-4FB4-A981-18B2CD998B8E}"/>
+								<CustomState Name="" ID="{6AC04437-BBA6-4470-9E11-EB479AF94219}" ShortID="910486348">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64" Value="-108"/>
+									</PropertyList>
+								</CustomState>
+							</CustomState>
+						</CustomStateList>
+					</StateInfo>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="f110Startup" ID="{48CCB8BF-78EA-499C-8D85-6A753C332AF6}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="f110ShutDown" ID="{19E0A642-CFA4-45F8-81A8-9700B84D0C90}" ShortID="828511013">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="f110ShutDown" ID="{895F03A5-E17C-4B4C-B39D-90617BE0599F}">
+							<Language>SFX</Language>
+							<AudioFile>f110ShutDown.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="657079121"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<PositioningInfo>
+						<Panner Name="" ID="{A2497CCC-8280-490A-AFAB-52331A00C320}">
+							<PropertyList>
+								<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
+								<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
+							</PropertyList>
+						</Panner>
+						<Position Name="" ID="{4B8F19B6-55A6-4812-A3B0-DD5903868FB4}">
+							<ChildrenList>
+								<Path2D Name="New Blend Container_Path" ID="{197918EB-F7C8-4526-921D-B21DB75B95F4}">
+									<PointList>
+										<Point>
+											<XPos>0</XPos>
+											<YPos>50</YPos>
+											<Flags>12</Flags>
+											<Time>0</Time>
+										</Point>
+									</PointList>
+								</Path2D>
+							</ChildrenList>
+						</Position>
+					</PositioningInfo>
+					<StateInfo>
+						<StateGroupList>
+							<StateGroupInfo>
+								<StateGroupRef Name="F110State" ID="{9B3BD4E4-BD87-4896-A1C5-BDD5ADA0FE59}"/>
+							</StateGroupInfo>
+						</StateGroupList>
+						<CustomStateList>
+							<CustomState>
+								<StateRef Name="Stopping" ID="{99ACF14A-259E-4719-9690-1FEDE61E5684}"/>
+								<CustomState Name="" ID="{5C841521-965C-42A2-BF89-400602A8A06A}" ShortID="242774806"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="Starting" ID="{C743A750-35F1-4847-9F8B-F040EE725FFC}"/>
+								<CustomState Name="" ID="{EF0A66A5-7491-431E-9496-F9B60613E44C}" ShortID="235662002">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64" Value="-108"/>
+									</PropertyList>
+								</CustomState>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="None" ID="{CFC851D0-86A0-49D7-993E-F5D268DCC4E7}"/>
+								<CustomState Name="" ID="{BB52FB06-7067-498A-9B02-00F9A124904E}" ShortID="53498190"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="Enabled" ID="{9CF47901-ACD2-4FB4-A981-18B2CD998B8E}"/>
+								<CustomState Name="" ID="{568423AF-4656-49C6-9CE6-0F894967A77C}" ShortID="1061098519">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64" Value="-108"/>
+									</PropertyList>
+								</CustomState>
+							</CustomState>
+						</CustomStateList>
+					</StateInfo>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="f110ShutDown" ID="{895F03A5-E17C-4B4C-B39D-90617BE0599F}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

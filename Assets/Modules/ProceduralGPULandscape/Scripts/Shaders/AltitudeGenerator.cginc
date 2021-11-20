@@ -1,5 +1,6 @@
 #include "simplexNoiseGPU.cginc"
 
+
 #include "landscapeMask.cginc"
 
 float GetAltitudeAtLocation(float2 posX)

@@ -1,0 +1,304 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95dfd1836aab24843b68bdf38b46208a, type: 3}
+  m_Name: AkWwiseProjectData
+  m_EditorClassIdentifier: 
+  AcousticTextureWwu:
+  - PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Virtual Acoustics
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 1ce7b3834163d14fb75e06e13470ef48
+    ParentPath: Virtual Acoustics\Default Work Unit
+    guid: 1ce7b3834163d14fb75e06e13470ef48
+    GuidInternal: 
+    m_lastTime: -8585641801720193075
+    List: []
+  AuxBusWwu:
+  - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Master-Mixer Hierarchy
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 67032a444b4d7d4dba6dad1078e3398c
+    ParentPath: Master-Mixer Hierarchy\Default Work Unit
+    guid: 67032a444b4d7d4dba6dad1078e3398c
+    GuidInternal: 
+    m_lastTime: -8585641801719893542
+    List:
+    - name: Master Audio Bus
+      guid: d8a41415a61d2a41a17e75ca0c2149f3
+      id: 3803692087
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 67032a444b4d7d4dba6dad1078e3398c
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus
+  BankWwu:
+  - PhysicalPath: SoundBanks\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: SoundBanks
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 30fd23938bdd0f4d92e863f4145c1acc
+    ParentPath: SoundBanks\Default Work Unit
+    guid: 30fd23938bdd0f4d92e863f4145c1acc
+    GuidInternal: 
+    m_lastTime: -8585641682387083883
+    List:
+    - name: TestSB
+      guid: 4ffeca94bd54074a8e5063309778da14
+      id: 3331313354
+      PathAndIcons:
+      - ElementName: SoundBanks
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 30fd23938bdd0f4d92e863f4145c1acc
+      - ElementName: TestSB
+        ObjectType: 7
+        guid: 4ffeca94bd54074a8e5063309778da14
+      Path: SoundBanks\Default Work Unit\TestSB
+  EventWwu:
+  - PhysicalPath: Events\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: d670788d2bdfe249bb965a44b8b1ea61
+    ParentPath: Events\Default Work Unit
+    guid: d670788d2bdfe249bb965a44b8b1ea61
+    GuidInternal: 
+    m_lastTime: -8585641682387053876
+    List:
+    - name: PlayEngine
+      guid: c0b8c8d4b4bd6648b816f8e97bdc1489
+      id: 737062081
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: d670788d2bdfe249bb965a44b8b1ea61
+      - ElementName: PlayEngine
+        ObjectType: 3
+        guid: c0b8c8d4b4bd6648b816f8e97bdc1489
+      Path: Events\Default Work Unit\PlayEngine
+      maxAttenuation: 1000
+      maxDuration: -1
+      minDuration: -1
+    - name: ToggleSwitch
+      guid: 71bd647a960c994fb3b280f41f27e3ad
+      id: 598009201
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: d670788d2bdfe249bb965a44b8b1ea61
+      - ElementName: ToggleSwitch
+        ObjectType: 3
+        guid: 71bd647a960c994fb3b280f41f27e3ad
+      Path: Events\Default Work Unit\ToggleSwitch
+      maxAttenuation: 100
+      maxDuration: -1
+      minDuration: -1
+  RtpcWwu:
+  - PhysicalPath: Game Parameters\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Game Parameters
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: c54fb2825993714c9d77885654107e65
+    ParentPath: Game Parameters\Default Work Unit
+    guid: c54fb2825993714c9d77885654107e65
+    GuidInternal: 
+    m_lastTime: -8585641740994653991
+    List:
+    - name: Distance
+      guid: cd636865edc3b64ab5b56d36c2afe3c7
+      id: 1240670792
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: Distance
+        ObjectType: 13
+        guid: cd636865edc3b64ab5b56d36c2afe3c7
+      Path: Game Parameters\Default Work Unit\Distance
+    - name: EngineStatus
+      guid: 5eb6f37350147e41893f143c009ac549
+      id: 3156709873
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: EngineStatus
+        ObjectType: 13
+        guid: 5eb6f37350147e41893f143c009ac549
+      Path: Game Parameters\Default Work Unit\EngineStatus
+  StateWwu:
+  - PhysicalPath: States\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: States
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 8bf94d9c662c3b42a846975a7eed3e32
+    ParentPath: States\Default Work Unit
+    guid: 8bf94d9c662c3b42a846975a7eed3e32
+    GuidInternal: 
+    m_lastTime: -8585641685217292652
+    List:
+    - name: F110State
+      guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
+      id: 46539784
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 8bf94d9c662c3b42a846975a7eed3e32
+      - ElementName: F110State
+        ObjectType: 9
+        guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
+      Path: States\Default Work Unit\F110State
+      values:
+      - name: Enabled
+        guid: 0179f49cd2acb44fa98118b2cd998b8e
+        id: 4174102348
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 8bf94d9c662c3b42a846975a7eed3e32
+        - ElementName: F110State
+          ObjectType: 9
+          guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
+        - ElementName: Enabled
+          ObjectType: 8
+          guid: 0179f49cd2acb44fa98118b2cd998b8e
+      - name: None
+        guid: d051c8cfa086d749993ef5d268dcc4e7
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 8bf94d9c662c3b42a846975a7eed3e32
+        - ElementName: F110State
+          ObjectType: 9
+          guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
+        - ElementName: None
+          ObjectType: 8
+          guid: d051c8cfa086d749993ef5d268dcc4e7
+      - name: Starting
+        guid: 50a743c7f13547489f8bf040ee725ffc
+        id: 399468041
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 8bf94d9c662c3b42a846975a7eed3e32
+        - ElementName: F110State
+          ObjectType: 9
+          guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
+        - ElementName: Starting
+          ObjectType: 8
+          guid: 50a743c7f13547489f8bf040ee725ffc
+      - name: Stopping
+        guid: 4af1ac999e25194796901fede61e5684
+        id: 759925417
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 8bf94d9c662c3b42a846975a7eed3e32
+        - ElementName: F110State
+          ObjectType: 9
+          guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
+        - ElementName: Stopping
+          ObjectType: 8
+          guid: 4af1ac999e25194796901fede61e5684
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+  SwitchWwu:
+  - PhysicalPath: Switches\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Switches
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 7ee377a4a0e3d248a20945f2fd72c259
+    ParentPath: Switches\Default Work Unit
+    guid: 7ee377a4a0e3d248a20945f2fd72c259
+    GuidInternal: 
+    m_lastTime: -8585641801720066034
+    List: []
+  TriggerWwu:
+  - PhysicalPath: Triggers\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Triggers
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 5723028e7a0ad845b727960e24b39bdb
+    ParentPath: Triggers\Default Work Unit
+    guid: 5723028e7a0ad845b727960e24b39bdb
+    GuidInternal: 
+    m_lastTime: -8585641801720086579
+    List: []
+  ExpandedFileSystemItemIds: 
+  ExpandedWaapiItemIds: 0100000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000120000001300000014000000ff00000000010000d9010000da010000
+  AutoSyncSelection: 0
+  autoPopulateEnabled: 1
+  currentDataSource: 0
+  CurrentPluginConfig: 

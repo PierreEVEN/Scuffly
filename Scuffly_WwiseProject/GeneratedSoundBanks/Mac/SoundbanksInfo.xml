@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Mac" BasePlatform="Mac" SchemaVersion="12" SoundbankVersion="140">
+	<RootPaths>
+		<ProjectRoot>C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\GeneratedSoundBanks\Mac\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\GeneratedSoundBanks\Mac</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX" Hash="2404219919">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="3331313354" Language="SFX" Hash="3959460555">
+			<ObjectPath>\SoundBanks\Default Work Unit\TestSB</ObjectPath>
+			<ShortName>TestSB</ShortName>
+			<Path>TestSB.bnk</Path>
+			<IncludedEvents>
+				<Event Id="737062081" Name="PlayEngine" ObjectPath="\Events\Default Work Unit\PlayEngine" MaxAttenuation="1000.000000">
+					<IncludedMemoryFiles>
+						<File Id="205787666" Language="SFX">
+							<ShortName>f110Acceleration_1.wav</ShortName>
+							<Path>SFX\f110Acceleration_1_D79FB2B7.wem</Path>
+						</File>
+						<File Id="261906621" Language="SFX">
+							<ShortName>f110Acceleration_0.wav</ShortName>
+							<Path>SFX\f110Acceleration_0_D79FB2B7.wem</Path>
+						</File>
+						<File Id="272649227" Language="SFX">
+							<ShortName>f110Acceleration_2.wav</ShortName>
+							<Path>SFX\f110Acceleration_2_D79FB2B7.wem</Path>
+						</File>
+						<File Id="319507435" Language="SFX">
+							<ShortName>F16-IdleOutside.wav</ShortName>
+							<Path>SFX\F16-IdleOutside_D79FB2B7.wem</Path>
+						</File>
+						<File Id="446192538" Language="SFX">
+							<ShortName>f110Acceleration_3.wav</ShortName>
+							<Path>SFX\f110Acceleration_3_D79FB2B7.wem</Path>
+						</File>
+						<File Id="658027025" Language="SFX">
+							<ShortName>WindTunnel.wav</ShortName>
+							<Path>SFX\WindTunnel_D79FB2B7.wem</Path>
+						</File>
+						<File Id="660309497" Language="SFX">
+							<ShortName>f110Acceleration_5.wav</ShortName>
+							<Path>SFX\f110Acceleration_5_D79FB2B7.wem</Path>
+						</File>
+						<File Id="770591842" Language="SFX">
+							<ShortName>f110Acceleration_4.wav</ShortName>
+							<Path>SFX\f110Acceleration_4_D79FB2B7.wem</Path>
+						</File>
+						<File Id="875417865" Language="SFX">
+							<ShortName>F16-OutsideMax.wav</ShortName>
+							<Path>SFX\F16-OutsideMax_D79FB2B7.wem</Path>
+						</File>
+						<File Id="996229628" Language="SFX">
+							<ShortName>F16-Far.wav</ShortName>
+							<Path>SFX\F16-Far_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="598009201" Name="ToggleSwitch" ObjectPath="\Events\Default Work Unit\ToggleSwitch" MaxAttenuation="100.000000">
+					<IncludedMemoryFiles>
+						<File Id="370917366" Language="SFX">
+							<ShortName>SwitchToggle.wav</ShortName>
+							<Path>SFX\SwitchToggle_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="205787666" Language="SFX">
+					<ShortName>f110Acceleration_1.wav</ShortName>
+					<Path>SFX\f110Acceleration_1_D79FB2B7.wem</Path>
+				</File>
+				<File Id="261906621" Language="SFX">
+					<ShortName>f110Acceleration_0.wav</ShortName>
+					<Path>SFX\f110Acceleration_0_D79FB2B7.wem</Path>
+				</File>
+				<File Id="272649227" Language="SFX">
+					<ShortName>f110Acceleration_2.wav</ShortName>
+					<Path>SFX\f110Acceleration_2_D79FB2B7.wem</Path>
+				</File>
+				<File Id="319507435" Language="SFX">
+					<ShortName>F16-IdleOutside.wav</ShortName>
+					<Path>SFX\F16-IdleOutside_D79FB2B7.wem</Path>
+				</File>
+				<File Id="370917366" Language="SFX">
+					<ShortName>SwitchToggle.wav</ShortName>
+					<Path>SFX\SwitchToggle_10C4C929.wem</Path>
+				</File>
+				<File Id="446192538" Language="SFX">
+					<ShortName>f110Acceleration_3.wav</ShortName>
+					<Path>SFX\f110Acceleration_3_D79FB2B7.wem</Path>
+				</File>
+				<File Id="658027025" Language="SFX">
+					<ShortName>WindTunnel.wav</ShortName>
+					<Path>SFX\WindTunnel_D79FB2B7.wem</Path>
+				</File>
+				<File Id="660309497" Language="SFX">
+					<ShortName>f110Acceleration_5.wav</ShortName>
+					<Path>SFX\f110Acceleration_5_D79FB2B7.wem</Path>
+				</File>
+				<File Id="770591842" Language="SFX">
+					<ShortName>f110Acceleration_4.wav</ShortName>
+					<Path>SFX\f110Acceleration_4_D79FB2B7.wem</Path>
+				</File>
+				<File Id="875417865" Language="SFX">
+					<ShortName>F16-OutsideMax.wav</ShortName>
+					<Path>SFX\F16-OutsideMax_D79FB2B7.wem</Path>
+				</File>
+				<File Id="996229628" Language="SFX">
+					<ShortName>F16-Far.wav</ShortName>
+					<Path>SFX\F16-Far_D79FB2B7.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+			<GameParameters>
+				<GameParameter Id="1240670792" Name="Distance" ObjectPath="\Game Parameters\Default Work Unit\Distance"/>
+				<GameParameter Id="3156709873" Name="EngineStatus" ObjectPath="\Game Parameters\Default Work Unit\EngineStatus"/>
+			</GameParameters>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

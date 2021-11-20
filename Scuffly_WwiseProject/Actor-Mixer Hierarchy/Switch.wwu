@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" SchemaVersion="103">
+	<AudioObjects>
+		<WorkUnit Name="Switch" ID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="SwitchToggle" ID="{562E5173-8935-484E-986D-9511F4EA622D}" ShortID="141385846">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>8</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="SwitchAttenuation" ID="{65B1FC21-26CD-4B39-ABE4-A7FB6250CEA9}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="SwitchToggle" ID="{D4DC5DDC-85C0-4D12-8C1B-DD573A3601EB}">
+							<Language>SFX</Language>
+							<AudioFile>SwitchToggle.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="370917366"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="SwitchToggle" ID="{D4DC5DDC-85C0-4D12-8C1B-DD573A3601EB}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

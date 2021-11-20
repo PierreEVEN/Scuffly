@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" SchemaVersion="103">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="PlayEngine" ID="{D4C8B8C0-BDB4-4866-B816-F8E97BDC1489}">
+					<ChildrenList>
+						<Action Name="" ID="{D369369D-4E4B-4D56-830B-2D2A75D744D4}" ShortID="822336852">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F110Thrust" ID="{2E7DB56C-036F-414B-AAB7-CA1819A1D517}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="ToggleSwitch" ID="{7A64BD71-0C96-4F99-B3B2-80F41F27E3AD}">
+					<ChildrenList>
+						<Action Name="" ID="{C4056FFA-426F-49F0-A5EF-AA5AA79A0799}" ShortID="677612626">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SwitchToggle" ID="{562E5173-8935-484E-986D-9511F4EA622D}" WorkUnitID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

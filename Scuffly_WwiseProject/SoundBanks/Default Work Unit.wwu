@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{9323FD30-DD8B-4D0F-92E8-63F4145C1ACC}" SchemaVersion="103">
+	<SoundBanks>
+		<WorkUnit Name="Default Work Unit" ID="{9323FD30-DD8B-4D0F-92E8-63F4145C1ACC}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="TestSB" ID="{94CAFE4F-54BD-4A07-8E50-63309778DA14}">
+					<ObjectInclusionList>
+						<ObjectRef Name="f110Acceleration_5" ID="{53F41E3D-10FF-4078-8ECA-D4B7A674F17D}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="F110Thrust" ID="{2E7DB56C-036F-414B-AAB7-CA1819A1D517}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="f110Acceleration_0" ID="{C85F8D3B-34FF-43C6-99B7-35A5CFF607F3}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="f110Acceleration_3" ID="{8D7FD443-DFC0-4410-A9CB-028F4220D90C}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Switch" ID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" WorkUnitID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="f110Acceleration_2" ID="{1F0D9612-3BD7-4752-B714-AA8295E4064D}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="f110Acceleration_4" ID="{EDFC12D3-A30B-4802-89E7-BCA0EBC5510F}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="SwitchToggle" ID="{562E5173-8935-484E-986D-9511F4EA622D}" WorkUnitID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlayEngine" ID="{D4C8B8C0-BDB4-4866-B816-F8E97BDC1489}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="F16-IdleOutside" ID="{8111A94C-22F1-497C-ABB1-17FDDA8A74D8}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="f110Acceleration_1" ID="{5A002CDB-1FC9-4A38-B17A-19021C9759BB}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="WindTunnel" ID="{89AFE3A9-FBDA-4D66-BC7B-63056204BEB0}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="ToggleSwitch" ID="{7A64BD71-0C96-4F99-B3B2-80F41F27E3AD}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>
