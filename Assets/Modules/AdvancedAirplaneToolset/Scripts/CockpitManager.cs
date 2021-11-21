@@ -27,7 +27,8 @@ public class CockpitManager : PlaneComponent
         {
             metter.LineColor = color;
             metter.UpdateMaterialProperties();
-            foreach (var canvas in metter.gameObject.GetComponentsInChildren<CanvasGroup>()) {
+            foreach (var canvas in metter.gameObject.GetComponentsInChildren<CanvasGroup>())
+            {
                 canvas.alpha = intensity;
             }
         }

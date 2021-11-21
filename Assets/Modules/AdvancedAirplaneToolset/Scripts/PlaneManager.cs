@@ -60,8 +60,13 @@ public class PlaneManager : NetworkBehaviour
     // Liste des composants fournissant de l'energie
     private List<IPowerProvider> powerProviders = new List<IPowerProvider>();
 
+    public static List<PlaneManager> PlaneList = new List<PlaneManager>();
+
+
     public VisualEffectAsset explosionFx;
     public AK.Wwise.Event explosionAudio;
+
+    public GameObject cockpitObject;
 
     public void RegisterPowerProvider(IPowerProvider provider)
     {
@@ -166,6 +171,15 @@ public class PlaneManager : NetworkBehaviour
         RetractGear = initialRetractGear;
         Brakes = initialBrakes;
         MainPower = initialPower;
+    }
+
+    private void OnEnable()
+    {
+        PlaneList.Add(this);
+    }
+    private void OnDisable()
+    {
+        PlaneList.Remove(this);
     }
 
     // Update is called once per frame
@@ -354,5 +368,17 @@ public class PlaneManager : NetworkBehaviour
         fx.Play();
         fx.SetVector3("Position", transform.position);
         explosionAudio.Post(gameObject);
+    }
+
+    bool? indoorEnabled = null;
+    public void EnableIndoor(bool enable)
+    {
+        if (indoorEnabled == enable)
+            return;
+
+        if (!cockpitObject)
+            return;
+
+        cockpitObject.SetActive(enable);
     }
 }

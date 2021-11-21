@@ -2,6 +2,7 @@ using MLAPI;
 using MLAPI.Messaging;
 using MLAPI.NetworkVariable;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -11,17 +12,32 @@ public class PlayerManager : NetworkBehaviour
 {
     public GameObject DefaultPlane;
 
+    private static GameObject localPlayer;
+    public static GameObject LocalPlayer
+    {
+        get { return localPlayer; }
+    }
+
     [HideInInspector]
     public PlaneManager controlledPlane;
-    [HideInInspector]
-    public PlaneManager viewPlane;
 
     NetworkVariable<string> playerName = new NetworkVariable<string>("toto ");
+
+    private void OnEnable()
+    {
+        localPlayer = gameObject;
+    }
+    private void OnDisable()
+    {
+        localPlayer = null;
+    }
+
+    [HideInInspector]
+    public UnityEvent<PlaneManager> OnPossessPlane = new UnityEvent<PlaneManager>();
 
     // Start is called before the first frame update
     void Start()
     {
-        //gameObject.GetComponent<NetworkObject>().
         if (IsLocalPlayer)
         {
             RequestPlaneServerRpc();
@@ -67,7 +83,7 @@ public class PlayerManager : NetworkBehaviour
             return;
         }
         controlledPlane = viewPlaneNet.GetComponent<PlaneManager>();
-        viewPlane = controlledPlane;
+        OnPossessPlane.Invoke(controlledPlane);
         Debug.Log("client received plane spawn info");
     }
 }

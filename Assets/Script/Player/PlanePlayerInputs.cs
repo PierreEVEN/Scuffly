@@ -15,30 +15,29 @@ public class PlanePlayerInputs : MonoBehaviour
         playerManager = gameObject.GetComponent<PlayerManager>();
     }
 
-    float LastVelocity = 0;
-    float Acceleration = 0;
     float pitchInput = 0;
     float pitchTrim = 0;
-    void OnGUI()
-    {
-        if (!playerManager.controlledPlane)
-            return;
-        /*
-        GUILayout.Space(250);
-        GUILayout.TextArea("Velocity : " + LastVelocity + " m/s  |  " + LastVelocity * 3.6 + " km/h  |  " + LastVelocity * 1.94384519992989f + " noeuds");
-        GUILayout.TextArea("Force : " + Acceleration + " m/s  |  " + Acceleration / 9.81 + " g");
-        GUILayout.TextArea("Attitude : " + playerManager.controlledPlane.GetAttitude());
-        GUILayout.TextArea("Roll : " + playerManager.controlledPlane.GetRoll());
-        GUILayout.TextArea("Heading : " + playerManager.controlledPlane.GetHeading());
-        */
-    }
 
     public Vector3 MassCenter = new Vector3(0, 0, 0);
 
+    bool enableInputs = false;
+
+    public bool EnableInputs
+    {
+        set
+        {
+            enableInputs = value;
+        }
+        get
+        {
+            return enableInputs && playerManager && playerManager.controlledPlane;
+        }
+    }
+
+
     void Update()
     {
-
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
 
         pitchTrim += trimIncreaseInput * Time.deltaTime * 1.5f;
@@ -47,23 +46,13 @@ public class PlanePlayerInputs : MonoBehaviour
         playerManager.controlledPlane.SetPitchInput(Mathf.Clamp(pitchInput + pitchTrim, -1, 1));
     }
 
-    public void FixedUpdate()
-    {
-        if (!playerManager || !playerManager.controlledPlane)
-            return;
-
-        float currentVelocity = playerManager.controlledPlane.GetComponent<Rigidbody>().velocity.magnitude;
-        Acceleration = (Mathf.Abs(currentVelocity - LastVelocity)) / Time.fixedDeltaTime + 9.81f;
-        LastVelocity = currentVelocity;
-    }
-
     /**
      * Direct axis
      */
 
     public void OnAxisThrottle(InputValue input)
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
 
         playerManager.controlledPlane.SetThrustInput(input.Get<float>() * 0.5f + 0.5f);
@@ -71,7 +60,7 @@ public class PlanePlayerInputs : MonoBehaviour
 
     public void OnAxisYaw(InputValue input)
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
 
         playerManager.controlledPlane.SetYawInput(input.Get<float>());
@@ -79,14 +68,14 @@ public class PlanePlayerInputs : MonoBehaviour
 
     public void OnAxisRoll(InputValue input)
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
 
         playerManager.controlledPlane.SetRollInput(input.Get<float>());
     }
     public void OnAxisPitch(InputValue input)
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
 
         pitchInput = input.Get<float>();
@@ -100,11 +89,10 @@ public class PlanePlayerInputs : MonoBehaviour
     float trimIncreaseInput = 0;
     float currentKeyboardYaw = 0;
     float currentKeyboardRoll = 0;
-
     public void OnIncreaseThrottle(InputValue input)
     {
         currentKeyboardThrottle = Mathf.Clamp(currentKeyboardThrottle + input.Get<float>(), 0, 1);
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
         playerManager.controlledPlane.SetThrustInput(currentKeyboardThrottle);
     }
@@ -116,35 +104,35 @@ public class PlanePlayerInputs : MonoBehaviour
     public void OnSetYaw(InputValue input)
     {
         currentKeyboardYaw = Mathf.Clamp(input.Get<float>(), -1, 1);
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
         playerManager.controlledPlane.SetYawInput(currentKeyboardYaw);
     }
     public void OnSetRoll(InputValue input)
     {
         currentKeyboardRoll = Mathf.Clamp(input.Get<float>(), -1, 1);
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
         playerManager.controlledPlane.SetRollInput(currentKeyboardRoll);
     }
 
     public void OnSwitchAPU()
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
         playerManager.controlledPlane.EnableAPU = !playerManager.controlledPlane.EnableAPU;
     }
 
     public void OnSwitchPower()
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
         playerManager.controlledPlane.MainPower = !playerManager.controlledPlane.MainPower;
     }
 
     public void OnSwitchThrottleNotch()
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
         playerManager.controlledPlane.ThrottleNotch = !playerManager.controlledPlane.ThrottleNotch;
         playerManager.controlledPlane.SetThrustInput(currentKeyboardThrottle);
@@ -152,28 +140,28 @@ public class PlanePlayerInputs : MonoBehaviour
 
     public void OnSwitchGear()
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
         playerManager.controlledPlane.RetractGear = !playerManager.controlledPlane.RetractGear;
     }
 
     public void OnSwitchBrakes()
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
         playerManager.controlledPlane.Brakes = !playerManager.controlledPlane.Brakes;
     }
 
     public void OnSetBrake(InputValue input)
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
         playerManager.controlledPlane.Brakes = input.isPressed;
     }
 
     public void OnShoot()
     {
-        if (!playerManager.controlledPlane)
+        if (!EnableInputs)
             return;
         playerManager.controlledPlane.Shoot();
     }
