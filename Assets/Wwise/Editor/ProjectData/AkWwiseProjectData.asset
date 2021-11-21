@@ -110,7 +110,7 @@ MonoBehaviour:
         ObjectType: 3
         guid: 2ae09b84f994a74c8457c812f4dee887
       Path: Events\Default Work Unit\PlaneExplosion
-      maxAttenuation: 0
+      maxAttenuation: 1000
       maxDuration: -1
       minDuration: -1
     - name: PlayEngine

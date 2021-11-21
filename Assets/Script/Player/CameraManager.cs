@@ -56,7 +56,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             Quaternion horiz = Quaternion.AngleAxis(Indoor ? indoorLookVector.x : lookVector.x, Vector3.up);
             Quaternion vert = Quaternion.AngleAxis(Indoor ? indoorLookVector.y : lookVector.y, Vector3.right);
             gameObject.transform.rotation = Indoor ? playerManager.viewPlane.transform.rotation * horiz * vert : horiz * vert;
-            gameObject.transform.position = gameObject.transform.forward * (Indoor ? 0 : -zoomInput) + viewPoint.GetCameraLocation() + playerManager.viewPlane.transform.up * indoorLookVector.y * 0.002f + playerManager.viewPlane.transform.right * indoorLookVector.x * 0.0017f;
+            gameObject.transform.position = gameObject.transform.forward * (Indoor ? 0 : -zoomInput) + viewPoint.GetCameraLocation() + playerManager.viewPlane.transform.up * indoorLookVector.y * -0.002f + playerManager.viewPlane.transform.right * indoorLookVector.x * 0.0017f;
             if (gameObject.transform.position.y < groundAltitude + 1)
                 gameObject.transform.position = new Vector3(gameObject.transform.position.x, groundAltitude + 1, gameObject.transform.position.z);
             controlledCamera.fieldOfView = Indoor ? fov : 60;
@@ -78,7 +78,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     }
 
     private bool hasClicked = false;
-    private BasicSwitch lastSwitch;
+    private SwitchBase lastSwitch;
     public void RaycastSwitchs()
     {
         if (lastSwitch)
@@ -90,7 +90,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         Debug.DrawRay(rayTarget.origin, rayTarget.direction);
         if (Physics.Raycast(rayTarget, out hit, 10))
         {
-            BasicSwitch sw = hit.collider.GetComponent<BasicSwitch>();
+            SwitchBase sw = hit.collider.GetComponent<SwitchBase>();
             if (sw)
             {
                 lastSwitch = sw;

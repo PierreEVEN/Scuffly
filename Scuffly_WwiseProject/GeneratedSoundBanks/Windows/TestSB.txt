@@ -16,7 +16,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	446192538	f110Acceleration_3	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Acceleration_3_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_3		1043412
 	484202815	PlaneExplode	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\PlaneExplode_10C4C929.wem		\Actor-Mixer Hierarchy\PlaneExplosion\PlaneExplode		2591280
 	657079121	f110ShutDown	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110ShutDown_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\f110ShutDown		7774268
-	658027025	WindTunnel	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\WindTunnel_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\WindTunnel		2973760
+	658027025	WindTunnel	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\WindTunnel_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\WindTunnel		4464704
 	660309497	f110Acceleration_5	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Acceleration_5_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_5		835642
 	770591842	f110Acceleration_4	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Acceleration_4_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_4		1035260
 	820349579	f110Startup	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Startup_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\f110Startup		8142912

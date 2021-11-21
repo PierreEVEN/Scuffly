@@ -30,11 +30,11 @@
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Virtual Acoustics\Default Work Unit.wwu" DateLow="1637414244" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Triggers\Default Work Unit.wwu" DateLow="1637414244" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Switches\Default Work Unit.wwu" DateLow="1637414244" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\States\Default Work Unit.wwu" DateLow="1637438363" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\States\Default Work Unit.wwu" DateLow="1637444636" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1637414244" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\SoundBanks\Default Work Unit.wwu" DateLow="1637438646" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\SoundBanks\Default Work Unit.wwu" DateLow="1637456326" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Scuffly_WwiseProject.wproj" DateLow="1637414275" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Scuffly_WwiseProject.pierre.wsettings" DateLow="1637424484" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Scuffly_WwiseProject.pierre.wsettings" DateLow="1637493788" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Queries\Factory Queries.wwu" DateLow="1637414042" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Queries\Default Work Unit.wwu" DateLow="1637414244" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Presets\Factory Spatial Audio.wwu" DateLow="1637414042" DateHigh="0"/>
@@ -45,7 +45,7 @@
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1637414244" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1637418501" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Game Parameters\Default Work Unit.wwu" DateLow="1637432786" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Events\Default Work Unit.wwu" DateLow="1637438646" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Events\Default Work Unit.wwu" DateLow="1637456231" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Effects\Factory Effects.wwu" DateLow="1637434005" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Effects\Default Work Unit.wwu" DateLow="1637414244" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1637414244" DateHigh="0"/>
@@ -55,6 +55,7 @@
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Audio Devices\Default Work Unit.wwu" DateLow="1637414244" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Attenuations\Default Work Unit.wwu" DateLow="1637436914" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Actor-Mixer Hierarchy\Switch.wwu" DateLow="1637431952" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Actor-Mixer Hierarchy\F110JetEngine.wwu" DateLow="1637438842" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Actor-Mixer Hierarchy\PlaneExplosion.wwu" DateLow="1637456368" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Actor-Mixer Hierarchy\F110JetEngine.wwu" DateLow="1637445535" DateHigh="0"/>
 	<ValidationCacheItem File="C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1637418509" DateHigh="0"/>
 </ValidationCache>

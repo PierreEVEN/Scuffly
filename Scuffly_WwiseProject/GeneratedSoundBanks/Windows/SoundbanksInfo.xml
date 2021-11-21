@@ -16,12 +16,12 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="3331313354" Language="SFX" Hash="4155004162">
+		<SoundBank Id="3331313354" Language="SFX" Hash="200302873">
 			<ObjectPath>\SoundBanks\Default Work Unit\TestSB</ObjectPath>
 			<ShortName>TestSB</ShortName>
 			<Path>TestSB.bnk</Path>
 			<IncludedEvents>
-				<Event Id="3974827210" Name="PlaneExplosion" ObjectPath="\Events\Default Work Unit\PlaneExplosion">
+				<Event Id="3974827210" Name="PlaneExplosion" ObjectPath="\Events\Default Work Unit\PlaneExplosion" MaxAttenuation="1000.000000">
 					<IncludedMemoryFiles>
 						<File Id="484202815" Language="SFX">
 							<ShortName>PlaneExplode.wav</ShortName>
