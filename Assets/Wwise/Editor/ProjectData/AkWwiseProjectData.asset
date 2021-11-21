@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 30fd23938bdd0f4d92e863f4145c1acc
     GuidInternal: 
-    m_lastTime: -8585641682387083883
+    m_lastTime: -8585641505592213565
     List:
     - name: TestSB
       guid: 4ffeca94bd54074a8e5063309778da14
@@ -94,8 +94,25 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: d670788d2bdfe249bb965a44b8b1ea61
     GuidInternal: 
-    m_lastTime: -8585641682387053876
+    m_lastTime: -8585641506539944953
     List:
+    - name: PlaneExplosion
+      guid: 2ae09b84f994a74c8457c812f4dee887
+      id: 3974827210
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: d670788d2bdfe249bb965a44b8b1ea61
+      - ElementName: PlaneExplosion
+        ObjectType: 3
+        guid: 2ae09b84f994a74c8457c812f4dee887
+      Path: Events\Default Work Unit\PlaneExplosion
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: PlayEngine
       guid: c0b8c8d4b4bd6648b816f8e97bdc1489
       id: 737062081
@@ -184,90 +201,8 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: 8bf94d9c662c3b42a846975a7eed3e32
     GuidInternal: 
-    m_lastTime: -8585641685217292652
-    List:
-    - name: F110State
-      guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
-      id: 46539784
-      PathAndIcons:
-      - ElementName: States
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: 8bf94d9c662c3b42a846975a7eed3e32
-      - ElementName: F110State
-        ObjectType: 9
-        guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
-      Path: States\Default Work Unit\F110State
-      values:
-      - name: Enabled
-        guid: 0179f49cd2acb44fa98118b2cd998b8e
-        id: 4174102348
-        PathAndIcons:
-        - ElementName: States
-          ObjectType: 5
-          guid: 00000000000000000000000000000000
-        - ElementName: Default Work Unit
-          ObjectType: 12
-          guid: 8bf94d9c662c3b42a846975a7eed3e32
-        - ElementName: F110State
-          ObjectType: 9
-          guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
-        - ElementName: Enabled
-          ObjectType: 8
-          guid: 0179f49cd2acb44fa98118b2cd998b8e
-      - name: None
-        guid: d051c8cfa086d749993ef5d268dcc4e7
-        id: 748895195
-        PathAndIcons:
-        - ElementName: States
-          ObjectType: 5
-          guid: 00000000000000000000000000000000
-        - ElementName: Default Work Unit
-          ObjectType: 12
-          guid: 8bf94d9c662c3b42a846975a7eed3e32
-        - ElementName: F110State
-          ObjectType: 9
-          guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
-        - ElementName: None
-          ObjectType: 8
-          guid: d051c8cfa086d749993ef5d268dcc4e7
-      - name: Starting
-        guid: 50a743c7f13547489f8bf040ee725ffc
-        id: 399468041
-        PathAndIcons:
-        - ElementName: States
-          ObjectType: 5
-          guid: 00000000000000000000000000000000
-        - ElementName: Default Work Unit
-          ObjectType: 12
-          guid: 8bf94d9c662c3b42a846975a7eed3e32
-        - ElementName: F110State
-          ObjectType: 9
-          guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
-        - ElementName: Starting
-          ObjectType: 8
-          guid: 50a743c7f13547489f8bf040ee725ffc
-      - name: Stopping
-        guid: 4af1ac999e25194796901fede61e5684
-        id: 759925417
-        PathAndIcons:
-        - ElementName: States
-          ObjectType: 5
-          guid: 00000000000000000000000000000000
-        - ElementName: Default Work Unit
-          ObjectType: 12
-          guid: 8bf94d9c662c3b42a846975a7eed3e32
-        - ElementName: F110State
-          ObjectType: 9
-          guid: e4d43b9b87bd9648a1c5bdd5ada0fe59
-        - ElementName: Stopping
-          ObjectType: 8
-          guid: 4af1ac999e25194796901fede61e5684
-      ValueGuids: []
-      ValueIcons: []
-      valuesInternal: []
+    m_lastTime: -8585641622491670272
+    List: []
   SwitchWwu:
   - PhysicalPath: Switches\Default Work Unit.wwu
     PathAndIcons:
@@ -297,7 +232,7 @@ MonoBehaviour:
     m_lastTime: -8585641801720086579
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0100000005000000060000000700000008000000090000000a0000000b0000000c0000000d000000120000001300000014000000ff00000000010000d9010000da010000
+  ExpandedWaapiItemIds: 0100000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000001200000013000000140000009400000095000000ff000000000100000d0100000e010000d9010000da010000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

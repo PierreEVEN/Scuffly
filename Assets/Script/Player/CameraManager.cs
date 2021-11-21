@@ -24,6 +24,8 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     float groundAltitude = 0;
     private PlayerManager playerManager;
 
+    private PilotEyePoint viewPoint;
+
     private void Start()
     {
         if (!IsLocalPlayer)
@@ -47,16 +49,27 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     {
         if (playerManager.viewPlane)
         {
+            if (!viewPoint)
+                viewPoint = playerManager.viewPlane.GetComponentInChildren<PilotEyePoint>();
+
+            gameObject.transform.parent = playerManager.viewPlane.transform;
             Quaternion horiz = Quaternion.AngleAxis(Indoor ? indoorLookVector.x : lookVector.x, Vector3.up);
             Quaternion vert = Quaternion.AngleAxis(Indoor ? indoorLookVector.y : lookVector.y, Vector3.right);
             gameObject.transform.rotation = Indoor ? playerManager.viewPlane.transform.rotation * horiz * vert : horiz * vert;
-            gameObject.transform.position = playerManager.viewPlane.transform.position + gameObject.transform.forward * (Indoor ? 0 : -zoomInput) + playerManager.viewPlane.transform.forward * 3.3f + playerManager.viewPlane.transform.up * (0.92f - indoorLookVector.y * 0.002f) + playerManager.viewPlane.transform.right * indoorLookVector.x * 0.002f;
+            gameObject.transform.position = gameObject.transform.forward * (Indoor ? 0 : -zoomInput) + viewPoint.GetCameraLocation() + playerManager.viewPlane.transform.up * indoorLookVector.y * 0.002f + playerManager.viewPlane.transform.right * indoorLookVector.x * 0.0017f;
             if (gameObject.transform.position.y < groundAltitude + 1)
                 gameObject.transform.position = new Vector3(gameObject.transform.position.x, groundAltitude + 1, gameObject.transform.position.z);
             controlledCamera.fieldOfView = Indoor ? fov : 60;
+
+            GForcePostProcessEffect.GForceIntensity = Indoor ? viewPoint.GetGforceEffect() * 10 : 0;
+
         }
         else
         {
+            GForcePostProcessEffect.GForceIntensity = 0;
+
+            viewPoint = null;
+            gameObject.transform.parent = null;
             gameObject.transform.position = Vector3.zero;
             gameObject.transform.rotation = Quaternion.identity;
         }

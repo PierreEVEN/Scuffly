@@ -3,15 +3,63 @@
 	<AudioObjects>
 		<WorkUnit Name="F110JetEngine" ID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" PersistMode="Standalone">
 			<ChildrenList>
+				<Sound Name="f110Startup" ID="{F1FBFAAA-A5E3-4A02-A2E4-0FC61944A944}" ShortID="192629363">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="f110Startup" ID="{48CCB8BF-78EA-499C-8D85-6A753C332AF6}">
+							<Language>SFX</Language>
+							<AudioFile>f110Startup.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="820349579"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="f110Startup" ID="{48CCB8BF-78EA-499C-8D85-6A753C332AF6}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="f110ShutDown" ID="{19E0A642-CFA4-45F8-81A8-9700B84D0C90}" ShortID="828511013">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="f110ShutDown" ID="{895F03A5-E17C-4B4C-B39D-90617BE0599F}">
+							<Language>SFX</Language>
+							<AudioFile>f110ShutDown.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="657079121"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="f110ShutDown" ID="{895F03A5-E17C-4B4C-B39D-90617BE0599F}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 				<BlendContainer Name="F110Thrust" ID="{2E7DB56C-036F-414B-AAB7-CA1819A1D517}" ShortID="743615865">
 					<PropertyList>
-						<Property Name="3DSpatialization" Type="int16" Value="2"/>
 						<Property Name="EnableDiffraction" Type="bool" Value="True"/>
 					</PropertyList>
 					<ReferenceList>
-						<Reference Name="Attenuation">
-							<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
-						</Reference>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
 						</Reference>
@@ -1308,207 +1356,8 @@
 							<ObjectLists/>
 						</BlendContainer>
 					</ChildrenList>
-					<PositioningInfo>
-						<Panner Name="" ID="{8582A975-32B2-4D63-A182-90E784665AF8}">
-							<PropertyList>
-								<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
-								<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
-							</PropertyList>
-						</Panner>
-						<Position Name="" ID="{C7319406-3FE2-4B11-9FD3-8C1BCF7B0AB4}">
-							<ChildrenList>
-								<Path2D Name="New Blend Container_Path" ID="{6152EF00-E74B-4B6A-B35F-403DD1E76D1A}">
-									<PointList>
-										<Point>
-											<XPos>0</XPos>
-											<YPos>50</YPos>
-											<Flags>12</Flags>
-											<Time>0</Time>
-										</Point>
-									</PointList>
-								</Path2D>
-							</ChildrenList>
-						</Position>
-					</PositioningInfo>
-					<StateInfo>
-						<StateGroupList>
-							<StateGroupInfo>
-								<StateGroupRef Name="F110State" ID="{9B3BD4E4-BD87-4896-A1C5-BDD5ADA0FE59}"/>
-							</StateGroupInfo>
-						</StateGroupList>
-						<CustomStateList>
-							<CustomState>
-								<StateRef Name="Stopping" ID="{99ACF14A-259E-4719-9690-1FEDE61E5684}"/>
-								<CustomState Name="" ID="{C717F052-5AB6-45B3-8A63-DE97F38B610F}" ShortID="153495963">
-									<PropertyList>
-										<Property Name="Volume" Type="Real64" Value="-108"/>
-									</PropertyList>
-								</CustomState>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="Starting" ID="{C743A750-35F1-4847-9F8B-F040EE725FFC}"/>
-								<CustomState Name="" ID="{E248CCA9-89E3-468A-8CAB-58A2EB90DE6F}" ShortID="923451204">
-									<PropertyList>
-										<Property Name="Volume" Type="Real64" Value="-108"/>
-									</PropertyList>
-								</CustomState>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="None" ID="{CFC851D0-86A0-49D7-993E-F5D268DCC4E7}"/>
-								<CustomState Name="" ID="{46362C74-B933-49C3-B411-8CF0D458490C}" ShortID="880193447"/>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="Enabled" ID="{9CF47901-ACD2-4FB4-A981-18B2CD998B8E}"/>
-								<CustomState Name="" ID="{93A50722-F56C-44B4-AD69-0013DF718948}" ShortID="961998337"/>
-							</CustomState>
-						</CustomStateList>
-					</StateInfo>
 					<ObjectLists/>
 				</BlendContainer>
-				<Sound Name="f110Startup" ID="{F1FBFAAA-A5E3-4A02-A2E4-0FC61944A944}" ShortID="192629363">
-					<PropertyList>
-						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="f110Startup" ID="{48CCB8BF-78EA-499C-8D85-6A753C332AF6}">
-							<Language>SFX</Language>
-							<AudioFile>f110Startup.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="820349579"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<StateInfo>
-						<StateGroupList>
-							<StateGroupInfo>
-								<StateGroupRef Name="F110State" ID="{9B3BD4E4-BD87-4896-A1C5-BDD5ADA0FE59}"/>
-							</StateGroupInfo>
-						</StateGroupList>
-						<CustomStateList>
-							<CustomState>
-								<StateRef Name="Stopping" ID="{99ACF14A-259E-4719-9690-1FEDE61E5684}"/>
-								<CustomState Name="" ID="{63A14A63-203E-480D-B9EC-2F3DD0367BC9}" ShortID="583502618">
-									<PropertyList>
-										<Property Name="Volume" Type="Real64" Value="-108"/>
-									</PropertyList>
-								</CustomState>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="Starting" ID="{C743A750-35F1-4847-9F8B-F040EE725FFC}"/>
-								<CustomState Name="" ID="{C191F22D-CBEA-4F22-A636-DD13519F0D26}" ShortID="900068846"/>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="None" ID="{CFC851D0-86A0-49D7-993E-F5D268DCC4E7}"/>
-								<CustomState Name="" ID="{DF1C227B-ADD4-4920-B58F-32744723317B}" ShortID="1044554507"/>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="Enabled" ID="{9CF47901-ACD2-4FB4-A981-18B2CD998B8E}"/>
-								<CustomState Name="" ID="{6AC04437-BBA6-4470-9E11-EB479AF94219}" ShortID="910486348">
-									<PropertyList>
-										<Property Name="Volume" Type="Real64" Value="-108"/>
-									</PropertyList>
-								</CustomState>
-							</CustomState>
-						</CustomStateList>
-					</StateInfo>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="f110Startup" ID="{48CCB8BF-78EA-499C-8D85-6A753C332AF6}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
-				<Sound Name="f110ShutDown" ID="{19E0A642-CFA4-45F8-81A8-9700B84D0C90}" ShortID="828511013">
-					<PropertyList>
-						<Property Name="3DSpatialization" Type="int16" Value="2"/>
-						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Attenuation">
-							<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
-						</Reference>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
-						</Reference>
-					</ReferenceList>
-					<ChildrenList>
-						<AudioFileSource Name="f110ShutDown" ID="{895F03A5-E17C-4B4C-B39D-90617BE0599F}">
-							<Language>SFX</Language>
-							<AudioFile>f110ShutDown.wav</AudioFile>
-							<MediaIDList>
-								<MediaID ID="657079121"/>
-							</MediaIDList>
-						</AudioFileSource>
-					</ChildrenList>
-					<PositioningInfo>
-						<Panner Name="" ID="{A2497CCC-8280-490A-AFAB-52331A00C320}">
-							<PropertyList>
-								<Property Name="PanX" Type="Real64" Value="-1.01351351351354"/>
-								<Property Name="PanY" Type="Real64" Value="0.362318840579698"/>
-							</PropertyList>
-						</Panner>
-						<Position Name="" ID="{4B8F19B6-55A6-4812-A3B0-DD5903868FB4}">
-							<ChildrenList>
-								<Path2D Name="New Blend Container_Path" ID="{197918EB-F7C8-4526-921D-B21DB75B95F4}">
-									<PointList>
-										<Point>
-											<XPos>0</XPos>
-											<YPos>50</YPos>
-											<Flags>12</Flags>
-											<Time>0</Time>
-										</Point>
-									</PointList>
-								</Path2D>
-							</ChildrenList>
-						</Position>
-					</PositioningInfo>
-					<StateInfo>
-						<StateGroupList>
-							<StateGroupInfo>
-								<StateGroupRef Name="F110State" ID="{9B3BD4E4-BD87-4896-A1C5-BDD5ADA0FE59}"/>
-							</StateGroupInfo>
-						</StateGroupList>
-						<CustomStateList>
-							<CustomState>
-								<StateRef Name="Stopping" ID="{99ACF14A-259E-4719-9690-1FEDE61E5684}"/>
-								<CustomState Name="" ID="{5C841521-965C-42A2-BF89-400602A8A06A}" ShortID="242774806"/>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="Starting" ID="{C743A750-35F1-4847-9F8B-F040EE725FFC}"/>
-								<CustomState Name="" ID="{EF0A66A5-7491-431E-9496-F9B60613E44C}" ShortID="235662002">
-									<PropertyList>
-										<Property Name="Volume" Type="Real64" Value="-108"/>
-									</PropertyList>
-								</CustomState>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="None" ID="{CFC851D0-86A0-49D7-993E-F5D268DCC4E7}"/>
-								<CustomState Name="" ID="{BB52FB06-7067-498A-9B02-00F9A124904E}" ShortID="53498190"/>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="Enabled" ID="{9CF47901-ACD2-4FB4-A981-18B2CD998B8E}"/>
-								<CustomState Name="" ID="{568423AF-4656-49C6-9CE6-0F894967A77C}" ShortID="1061098519">
-									<PropertyList>
-										<Property Name="Volume" Type="Real64" Value="-108"/>
-									</PropertyList>
-								</CustomState>
-							</CustomState>
-						</CustomStateList>
-					</StateInfo>
-					<ObjectLists/>
-					<ActiveSourceList>
-						<ActiveSource Name="f110ShutDown" ID="{895F03A5-E17C-4B4C-B39D-90617BE0599F}" Platform="Linked"/>
-					</ActiveSourceList>
-				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

@@ -1,19 +1,7 @@
 Event	ID	Name			Wwise Object Path	Notes
 	598009201	ToggleSwitch			\Default Work Unit\ToggleSwitch	
 	737062081	PlayEngine			\Default Work Unit\PlayEngine	
-
-State Group	ID	Name			Wwise Object Path	Notes
-	46539784	F110State			\Default Work Unit\F110State	
-
-State	ID	Name	State Group			Notes
-	399468041	Starting	F110State			
-	748895195	None	F110State			
-	759925417	Stopping	F110State			
-	4174102348	Enabled	F110State			
-
-Custom State	ID	Name	State Group	Owner		Notes
-	153495963	Stopping	F110State	\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust		
-	923451204	Starting	F110State	\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust		
+	3974827210	PlaneExplosion			\Default Work Unit\PlaneExplosion	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
 	1240670792	Distance			\Default Work Unit\Distance	
@@ -26,9 +14,12 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	319507435	F16-IdleOutside	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\F16-IdleOutside_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\F16-IdleOutside		2097216
 	370917366	SwitchToggle	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\SwitchToggle_10C4C929.wem		\Actor-Mixer Hierarchy\Switch\SwitchToggle		12864
 	446192538	f110Acceleration_3	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Acceleration_3_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_3		1043412
+	484202815	PlaneExplode	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\PlaneExplode_10C4C929.wem		\Actor-Mixer Hierarchy\PlaneExplosion\PlaneExplode		2591280
+	657079121	f110ShutDown	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110ShutDown_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\f110ShutDown		7774268
 	658027025	WindTunnel	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\WindTunnel_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\WindTunnel		2973760
 	660309497	f110Acceleration_5	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Acceleration_5_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_5		835642
 	770591842	f110Acceleration_4	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Acceleration_4_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_4		1035260
+	820349579	f110Startup	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Startup_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\f110Startup		8142912
 	875417865	F16-OutsideMax	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\F16-OutsideMax_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16-OutsideMax		1114176
 	996229628	F16-Far	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\F16-Far_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16-Far		3457088
 

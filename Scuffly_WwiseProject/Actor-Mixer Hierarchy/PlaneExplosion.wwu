@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{03D33B87-717D-4963-B2D1-4B78870918FE}" SchemaVersion="103">
+	<AudioObjects>
+		<WorkUnit Name="PlaneExplosion" ID="{03D33B87-717D-4963-B2D1-4B78870918FE}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="PlaneExplode" ID="{00017ECB-7F64-4713-834D-380905993579}" ShortID="706289199">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="PlaneExplode" ID="{9A62F4C9-1A38-475C-8145-DBC98A0AC3EA}">
+							<Language>SFX</Language>
+							<AudioFile>PlaneExplode.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="484202815"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="PlaneExplode" ID="{9A62F4C9-1A38-475C-8145-DBC98A0AC3EA}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

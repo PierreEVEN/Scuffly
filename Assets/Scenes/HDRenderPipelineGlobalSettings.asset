@@ -61,11 +61,11 @@ MonoBehaviour:
     materialQuality: 0
   m_RenderPipelineResources: {fileID: 11400000, guid: 3ce144cff5783da45aa5d4fdc2da14b7, type: 2}
   m_RenderPipelineRayTracingResources: {fileID: 0}
-  beforeTransparentCustomPostProcesses:
-  - OceanShader, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  beforeTransparentCustomPostProcesses: []
   beforePostProcessCustomPostProcesses: []
   afterPostProcessBlursCustomPostProcesses: []
-  afterPostProcessCustomPostProcesses: []
+  afterPostProcessCustomPostProcesses:
+  - GForcePostProcessEffect, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   beforeTAACustomPostProcesses: []
   lightLayerName0: Light LayerDefault
   lightLayerName1: InteriorOnly

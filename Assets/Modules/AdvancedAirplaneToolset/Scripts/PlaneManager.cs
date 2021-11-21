@@ -2,6 +2,7 @@ using MLAPI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.VFX;
 
 public interface IPowerProvider
 {
@@ -58,6 +59,9 @@ public class PlaneManager : NetworkBehaviour
 
     // Liste des composants fournissant de l'energie
     private List<IPowerProvider> powerProviders = new List<IPowerProvider>();
+
+    public VisualEffectAsset explosionFx;
+    public AK.Wwise.Event explosionAudio;
 
     public void RegisterPowerProvider(IPowerProvider provider)
     {
@@ -321,5 +325,34 @@ public class PlaneManager : NetworkBehaviour
 
             component.ApplyDamageAtLocation(points, 0.5f, collision.impulse.magnitude / 200);
         }
+
+        Debug.Log("test " + collision.gameObject.name + " compar to " + gameObject.name);
+
+        for (int i = 0; i < collision.contactCount; ++i)
+        {
+            if (collision.GetContact(i).thisCollider.gameObject == gameObject)
+            {
+                Debug.Log("aieuh " + collision.impulse.magnitude);
+                if (collision.impulse.magnitude > 20000)
+                {
+                    OnExplode();
+                    return;
+                }
+            }
+        }
+    }
+
+
+    public void OnExplode()
+    {
+        planePhysic.isKinematic = true;
+        transform.position = transform.position - new Vector3(0, 8, 0);
+        VisualEffect fx = gameObject.AddComponent<VisualEffect>();
+        fx.transform.rotation = Quaternion.identity;
+        fx.transform.position = transform.position;
+        fx.visualEffectAsset = explosionFx;
+        fx.Play();
+        fx.SetVector3("Position", transform.position);
+        explosionAudio.Post(gameObject);
     }
 }

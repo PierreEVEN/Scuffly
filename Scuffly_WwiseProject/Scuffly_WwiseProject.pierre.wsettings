@@ -4,7 +4,10 @@
 		<UserProjectSettings Name="" ID="{43DF1481-0F79-4A9B-BB4E-14E3EA798554}">
 			<PropertyList>
 				<Property Name="AudioFilesImporter\Path" Type="string" Value="C:\Users\pierre\Documents\projects\Scuffly\Sources\Audio\"/>
+				<Property Name="Event Action List\{44208E4E-EFB0-44F0-961A-DBC8D434C8A5}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{5748050A-C151-4853-9BBE-E1CE42E1A067}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{7A64BD71-0C96-4F99-B3B2-80F41F27E3AD}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{849BE02A-94F9-4CA7-8457-C812F4DEE887}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{D4C8B8C0-BDB4-4866-B816-F8E97BDC1489}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{E8FC4438-B411-41C5-9318-21D55E5B7D1B}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="EventView\FilterMode1" Type="int32" Value="2"/>

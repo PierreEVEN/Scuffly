@@ -11,17 +11,25 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="2835222265">
+		<SoundBank Id="1355168291" Language="SFX" Hash="608868685">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="3331313354" Language="SFX" Hash="3959460555">
+		<SoundBank Id="3331313354" Language="SFX" Hash="4155004162">
 			<ObjectPath>\SoundBanks\Default Work Unit\TestSB</ObjectPath>
 			<ShortName>TestSB</ShortName>
 			<Path>TestSB.bnk</Path>
 			<IncludedEvents>
-				<Event Id="737062081" Name="PlayEngine" ObjectPath="\Events\Default Work Unit\PlayEngine" MaxAttenuation="1000.000000">
+				<Event Id="3974827210" Name="PlaneExplosion" ObjectPath="\Events\Default Work Unit\PlaneExplosion">
+					<IncludedMemoryFiles>
+						<File Id="484202815" Language="SFX">
+							<ShortName>PlaneExplode.wav</ShortName>
+							<Path>SFX\PlaneExplode_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="737062081" Name="PlayEngine" ObjectPath="\Events\Default Work Unit\PlayEngine">
 					<IncludedMemoryFiles>
 						<File Id="205787666" Language="SFX">
 							<ShortName>f110Acceleration_1.wav</ShortName>
@@ -99,6 +107,14 @@
 					<ShortName>f110Acceleration_3.wav</ShortName>
 					<Path>SFX\f110Acceleration_3_D79FB2B7.wem</Path>
 				</File>
+				<File Id="484202815" Language="SFX">
+					<ShortName>PlaneExplode.wav</ShortName>
+					<Path>SFX\PlaneExplode_10C4C929.wem</Path>
+				</File>
+				<File Id="657079121" Language="SFX">
+					<ShortName>f110ShutDown.wav</ShortName>
+					<Path>SFX\f110ShutDown_D79FB2B7.wem</Path>
+				</File>
 				<File Id="658027025" Language="SFX">
 					<ShortName>WindTunnel.wav</ShortName>
 					<Path>SFX\WindTunnel_D79FB2B7.wem</Path>
@@ -110,6 +126,10 @@
 				<File Id="770591842" Language="SFX">
 					<ShortName>f110Acceleration_4.wav</ShortName>
 					<Path>SFX\f110Acceleration_4_D79FB2B7.wem</Path>
+				</File>
+				<File Id="820349579" Language="SFX">
+					<ShortName>f110Startup.wav</ShortName>
+					<Path>SFX\f110Startup_D79FB2B7.wem</Path>
 				</File>
 				<File Id="875417865" Language="SFX">
 					<ShortName>F16-OutsideMax.wav</ShortName>

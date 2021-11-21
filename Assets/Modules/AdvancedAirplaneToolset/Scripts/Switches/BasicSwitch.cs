@@ -32,7 +32,6 @@ public class BasicSwitch : PlaneComponent
 
     public void Switch()
     {
-        Debug.Log("switch");
         On = !On;
         PlayEvent.Post(gameObject);
         if (modifiedProperty == ESwitchTarget.None)
@@ -62,23 +61,29 @@ public class BasicSwitch : PlaneComponent
     {
         if (Application.isPlaying && modifiedProperty != ESwitchTarget.None)
         {
+            bool newOn = false;
             switch (modifiedProperty)
             {
                 case ESwitchTarget.MainPower:
-                    On = Plane.MainPower;
+                    newOn = Plane.MainPower;
                     break;
                 case ESwitchTarget.APU:
-                    On = Plane.EnableAPU;
+                    newOn = Plane.EnableAPU;
                     break;
                 case ESwitchTarget.Gear:
-                    On = Plane.RetractGear;
+                    newOn = Plane.RetractGear;
                     break;
                 case ESwitchTarget.Brakes:
-                    On = Plane.Brakes;
+                    newOn = Plane.Brakes;
                     break;
                 case ESwitchTarget.ThrottleNotch:
-                    On = Plane.ThrottleNotch;
+                    newOn = Plane.ThrottleNotch;
                     break;
+            }
+            if (newOn != On)
+            {
+                On = newOn;
+                PlayEvent.Post(gameObject);
             }
         }
 

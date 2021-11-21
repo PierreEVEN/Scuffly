@@ -1,12 +1,3 @@
-State Group	ID	Name			Wwise Object Path	Notes
-	46539784	F110State			\Default Work Unit\F110State	
-
-State	ID	Name	State Group			Notes
-	399468041	Starting	F110State			
-	748895195	None	F110State			
-	759925417	Stopping	F110State			
-	4174102348	Enabled	F110State			
-
 Audio Bus	ID	Name			Wwise Object Path	Notes
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 

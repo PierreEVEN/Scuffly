@@ -13,26 +13,10 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID PLANEEXPLOSION = 3974827210U;
         static const AkUniqueID PLAYENGINE = 737062081U;
         static const AkUniqueID TOGGLESWITCH = 598009201U;
     } // namespace EVENTS
-
-    namespace STATES
-    {
-        namespace F110STATE
-        {
-            static const AkUniqueID GROUP = 46539784U;
-
-            namespace STATE
-            {
-                static const AkUniqueID ENABLED = 4174102348U;
-                static const AkUniqueID NONE = 748895195U;
-                static const AkUniqueID STARTING = 399468041U;
-                static const AkUniqueID STOPPING = 759925417U;
-            } // namespace STATE
-        } // namespace F110STATE
-
-    } // namespace STATES
 
     namespace GAME_PARAMETERS
     {

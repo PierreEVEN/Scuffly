@@ -7,16 +7,26 @@
 					<ObjectInclusionList>
 						<ObjectRef Name="f110Acceleration_5" ID="{53F41E3D-10FF-4078-8ECA-D4B7A674F17D}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="F110Thrust" ID="{2E7DB56C-036F-414B-AAB7-CA1819A1D517}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="F110JetEngine" ID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="F16Close" ID="{7E76C5AB-982A-4304-881D-4FD5231D6B41}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_0" ID="{C85F8D3B-34FF-43C6-99B7-35A5CFF607F3}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_3" ID="{8D7FD443-DFC0-4410-A9CB-028F4220D90C}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Default Work Unit" ID="{EAAEA86F-5541-44A4-BA3F-DB12D96D5095}" WorkUnitID="{EAAEA86F-5541-44A4-BA3F-DB12D96D5095}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Switch" ID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" WorkUnitID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="f110ShutDown" ID="{19E0A642-CFA4-45F8-81A8-9700B84D0C90}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlaneExplode" ID="{00017ECB-7F64-4713-834D-380905993579}" WorkUnitID="{03D33B87-717D-4963-B2D1-4B78870918FE}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_2" ID="{1F0D9612-3BD7-4752-B714-AA8295E4064D}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="F16-Far" ID="{FCC38E9D-28A3-47B0-A95C-A9DEC2B4FFB3}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_4" ID="{EDFC12D3-A30B-4802-89E7-BCA0EBC5510F}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="SwitchToggle" ID="{562E5173-8935-484E-986D-9511F4EA622D}" WorkUnitID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="PlayEngine" ID="{D4C8B8C0-BDB4-4866-B816-F8E97BDC1489}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlaneExplosion" ID="{03D33B87-717D-4963-B2D1-4B78870918FE}" WorkUnitID="{03D33B87-717D-4963-B2D1-4B78870918FE}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="F16-IdleOutside" ID="{8111A94C-22F1-497C-ABB1-17FDDA8A74D8}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="f110Startup" ID="{F1FBFAAA-A5E3-4A02-A2E4-0FC61944A944}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_1" ID="{5A002CDB-1FC9-4A38-B17A-19021C9759BB}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlaneExplosion" ID="{849BE02A-94F9-4CA7-8457-C812F4DEE887}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="WindTunnel" ID="{89AFE3A9-FBDA-4D66-BC7B-63056204BEB0}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="F16-OutsideMax" ID="{9C529B7C-A2FC-4EAE-B21E-2C46B728C0F1}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="ToggleSwitch" ID="{7A64BD71-0C96-4F99-B3B2-80F41F27E3AD}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>

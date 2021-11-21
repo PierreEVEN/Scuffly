@@ -25,6 +25,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="PlaneExplosion" ID="{849BE02A-94F9-4CA7-8457-C812F4DEE887}">
+					<ChildrenList>
+						<Action Name="" ID="{FF4E742B-742D-4181-B1CE-414B30513727}" ShortID="364986788">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlaneExplode" ID="{00017ECB-7F64-4713-834D-380905993579}" WorkUnitID="{03D33B87-717D-4963-B2D1-4B78870918FE}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

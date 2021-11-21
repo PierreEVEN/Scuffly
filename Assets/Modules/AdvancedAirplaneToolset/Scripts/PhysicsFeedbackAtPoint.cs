@@ -10,13 +10,19 @@ public class PhysicsFeedbackAtPoint : MonoBehaviour
     Rigidbody rb;
     VisualEffect fxTest;
 
-    float currentAcceleration = 0;
+    Vector3 currentAcceleration;
+    Vector3 smoothedAcceleration;
 
     Vector3 lastVelocity;
 
-    public float Acceleration
+    public Vector3 Acceleration
     {
-        get { return currentAcceleration; }
+        get { return smoothedAcceleration; }
+    }
+
+    public Vector3 GForce
+    {
+        get { return smoothedAcceleration / -9.81f + new Vector3(0, -1, 0); }
     }
 
     void Start()
@@ -34,11 +40,13 @@ public class PhysicsFeedbackAtPoint : MonoBehaviour
             Debug.LogError("cannot find rigidbody");
 
         // Calcule la force d'acceleration
-        Vector3 currentVelocity = rb.GetPointVelocity(transform.position);
-        currentAcceleration = (currentVelocity - lastVelocity + new Vector3(0, -9.81f /* gravity */, 0) * Time.deltaTime).magnitude / Time.deltaTime;
+        Vector3 relativeVelocity = transform.InverseTransformDirection(rb.GetPointVelocity(transform.position));
+        currentAcceleration = (relativeVelocity - lastVelocity) / Time.deltaTime;
 
-        // Calcule la vitesse relative du component
-        Vector3 relativeVelocity = transform.InverseTransformDirection(rb.velocity);
+        smoothedAcceleration = new Vector3(
+            Mathf.Lerp(smoothedAcceleration.x, relativeVelocity.x, Time.deltaTime * 10),
+            Mathf.Lerp(smoothedAcceleration.y, relativeVelocity.y, Time.deltaTime * 10),
+            Mathf.Lerp(smoothedAcceleration.z, relativeVelocity.z, Time.deltaTime * 10));
 
         lastVelocity = rb.velocity;
 
@@ -49,7 +57,7 @@ public class PhysicsFeedbackAtPoint : MonoBehaviour
 
         if (fxTest.HasFloat("Acceleration"))
         {
-            fxTest.SetFloat("Acceleration", currentAcceleration);
+            fxTest.SetFloat("Acceleration", Acceleration.magnitude);
         }
 
         if (fxTest.HasFloat("UpVelocity"))
