@@ -7,7 +7,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class PlaneSpawnpoint : NetworkBehaviour
 {
-    public bool IsRedTeam = false;
     public GameObject assignedPlane;
 
     [HideInInspector]

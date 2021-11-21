@@ -23,7 +23,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
     float groundAltitude = 0;
 
-    private PilotEyePoint viewPoint;
+    private PilotEyePoint fpsViewPoint;
 
     private PlaneManager focusedPlane;
     private PlaneManager possessedPlane;
@@ -60,7 +60,10 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     {
         if (focusedPlane)
             focusedPlane.EnableIndoor(false);
+        fpsViewPoint = null;
         focusedPlane = inPlane;
+        gameObject.transform.parent = focusedPlane.transform;
+        Debug.Log("focus " + inPlane.GetInstanceID());
         if (focusedPlane)
             focusedPlane.EnableIndoor(true);
 
@@ -72,22 +75,21 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     {
         if (focusedPlane)
         {
-            if (!viewPoint)
+            if (!fpsViewPoint)
             {
-                viewPoint = focusedPlane.GetComponentInChildren<PilotEyePoint>();
+                fpsViewPoint = focusedPlane.GetComponentInChildren<PilotEyePoint>();
 
-                if (!viewPoint)
+                if (!fpsViewPoint)
                     Debug.LogError("bah zut");
             }
 
-            gameObject.transform.parent = focusedPlane.transform;
             Quaternion horiz = Quaternion.AngleAxis(Indoor ? indoorLookVector.x : lookVector.x, Vector3.up);
             Quaternion vert = Quaternion.AngleAxis(Indoor ? indoorLookVector.y : lookVector.y, Vector3.right);
             gameObject.transform.rotation = Indoor ? focusedPlane.transform.rotation * horiz * vert : horiz * vert;
 
             gameObject.transform.position =
                 gameObject.transform.forward * (Indoor ? 0 : -zoomInput) +
-                viewPoint.GetCameraLocation() +
+                fpsViewPoint.GetCameraLocation() +
                 focusedPlane.transform.up * indoorLookVector.y * -0.002f +
                 focusedPlane.transform.right * indoorLookVector.x * 0.0017f;
 
@@ -95,7 +97,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
                 gameObject.transform.position = new Vector3(gameObject.transform.position.x, groundAltitude + 1, gameObject.transform.position.z);
             controlledCamera.fieldOfView = Indoor ? fov : 60;
 
-            GForcePostProcessEffect.GForceIntensity = Indoor ? viewPoint.GetGforceEffect() * 10 : 0;
+            GForcePostProcessEffect.GForceIntensity = Indoor ? fpsViewPoint.GetGforceEffect() * 10 : 0;
 
             if (Indoor)
                 RaycastSwitchs();
@@ -103,8 +105,6 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         else // free cam movements
         {
             GForcePostProcessEffect.GForceIntensity = 0;
-            viewPoint = null;
-            gameObject.transform.parent = null;
             FreeCamMovements();
         }
     }
@@ -180,6 +180,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
                     if (PlaneManager.PlaneList[i] == focusedPlane)
                     {
                         SetFocusedPlane(PlaneManager.PlaneList[(i + 1) % PlaneManager.PlaneList.Count]);
+                        return;
                     }
                 }
             }
@@ -193,6 +194,9 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
     void OnFreeCam()
     {
+        if (!focusedPlane)
+            transform.parent = null;
+
         SetFocusedPlane(null);
     }
 

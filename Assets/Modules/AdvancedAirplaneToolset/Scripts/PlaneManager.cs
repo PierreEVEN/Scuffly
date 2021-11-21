@@ -19,6 +19,12 @@ public interface IPowerProvider
  * @TODO : implementer les batteries
  */
 
+public enum PlaneTeam
+{
+    Red,
+    Blue,
+}
+
 [RequireComponent(typeof(Rigidbody))]
 public class PlaneManager : NetworkBehaviour
 {
@@ -67,6 +73,7 @@ public class PlaneManager : NetworkBehaviour
     public AK.Wwise.Event explosionAudio;
 
     public GameObject cockpitObject;
+    public PlaneTeam planeTeam = PlaneTeam.Blue;
 
     public void RegisterPowerProvider(IPowerProvider provider)
     {
@@ -340,13 +347,10 @@ public class PlaneManager : NetworkBehaviour
             component.ApplyDamageAtLocation(points, 0.5f, collision.impulse.magnitude / 200);
         }
 
-        Debug.Log("test " + collision.gameObject.name + " compar to " + gameObject.name);
-
         for (int i = 0; i < collision.contactCount; ++i)
         {
             if (collision.GetContact(i).thisCollider.gameObject == gameObject)
             {
-                Debug.Log("aieuh " + collision.impulse.magnitude);
                 if (collision.impulse.magnitude > 20000)
                 {
                     OnExplode();

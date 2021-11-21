@@ -12,13 +12,6 @@ public struct SpawnPointInfos
     public bool isRedTeam;
 }
 
-enum Team
-{
-    Red,
-    Blue
-}
-
-
 public class GameManager : NetworkBehaviour
 {
     private static GameManager _singleton;
@@ -30,10 +23,6 @@ public class GameManager : NetworkBehaviour
             if (!_singleton) _singleton = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
             return _singleton;
         }
-    }
-
-    private void Start()
-    {
     }
 
     private void OnGUI()
@@ -56,10 +45,5 @@ public class GameManager : NetworkBehaviour
                 Destroy(this);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }

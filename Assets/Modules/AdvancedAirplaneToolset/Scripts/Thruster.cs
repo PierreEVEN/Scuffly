@@ -55,7 +55,8 @@ public class Thruster : PlaneComponent, IPowerProvider
         Physics.AddForceAtPosition(-transform.forward * Time.fixedDeltaTime * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
 
         EngineStatusRTPC.SetValue(gameObject, totalInputPercent * 100);
-        CameraDistanceRPC.SetValue(gameObject, Vector3.Distance(Camera.main.transform.position, transform.position) / 4);
+        if (Camera.main) 
+            CameraDistanceRPC.SetValue(gameObject, Vector3.Distance(Camera.main.transform.position, transform.position) / 4);
     }
 
     private void OnGUI()

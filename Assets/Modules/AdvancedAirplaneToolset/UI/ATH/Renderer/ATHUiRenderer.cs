@@ -10,13 +10,8 @@ public class ATHUiRenderer : MonoBehaviour
 {
     public GameObject RendererdUI;
     GameObject instanciedUI;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
         if (!instanciedUI && RendererdUI)
         {
@@ -28,7 +23,7 @@ public class ATHUiRenderer : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         if (instanciedUI)
             DestroyImmediate(instanciedUI);
