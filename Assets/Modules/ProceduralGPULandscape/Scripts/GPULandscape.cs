@@ -86,6 +86,14 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
         GPULandscapePhysic.Singleton.AddListener(this);
     }
 
+    private void Start()
+    {
+
+        if (Application.isPlaying)
+        {
+            DontDestroyOnLoad(this);
+        }
+    }
 
     public static void OnUpdateProperties()
     {

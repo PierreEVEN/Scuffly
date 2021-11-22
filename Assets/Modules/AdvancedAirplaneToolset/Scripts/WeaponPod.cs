@@ -30,14 +30,14 @@ public class WeaponPod : MonoBehaviour
         
     }
 
-    public void Shoot()
+    public void Shoot(GameObject target)
     {
         // On regarde si un arme est attachee au pod, si c'est le cas on l'active.
         if (!spawnedWeapon)
             return;
         Rocket comp = spawnedWeapon.GetComponent<Rocket>();
         if (comp)
-            comp.Shoot(GetComponentInParent<Rigidbody>().velocity, GameObject.Find("WindTurbine"));
+            comp.Shoot(GetComponentInParent<Rigidbody>().velocity, target);
         spawnedWeapon = null; // l'arme a ete tiree
     }
 }

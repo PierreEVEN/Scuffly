@@ -78,14 +78,15 @@ public class MetterRenderer : MonoBehaviour
         SpawnGraduations();
 
 #if UNITY_EDITOR
-        SceneView.duringSceneGui += updateScene;
+        SceneView.duringSceneGui += DrawInEditor;
 #endif
     }
+
 
     private void OnDisable()
     {
 #if UNITY_EDITOR
-        SceneView.duringSceneGui -= updateScene;
+        SceneView.duringSceneGui -= DrawInEditor;
 #endif
         foreach (var item in graduations)
             DestroyImmediate(item);
@@ -159,7 +160,7 @@ public class MetterRenderer : MonoBehaviour
 
     }
 #if UNITY_EDITOR
-    public void updateScene(SceneView sceneview)
+    public void DrawInEditor(SceneView sceneview)
     {
         Graphics.DrawMesh(sharedMesh, transform.localToWorldMatrix, metterMaterial, 0, SceneView.lastActiveSceneView.camera, 0, mpb);
     }

@@ -25,6 +25,12 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    private void Start()
+    {
+        NetworkManager.Singleton.StartHost();
+        Destroy(this);
+    }
+
     private void OnGUI()
     {
         if (!NetworkManager.Singleton.IsClient & !NetworkManager.Singleton.IsServer && !NetworkManager.Singleton.IsHost)

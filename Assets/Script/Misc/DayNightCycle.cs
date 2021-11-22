@@ -18,6 +18,10 @@ public class DayNightCycle : MonoBehaviour
     void Start()
     {
         orientation = Random.Range(initialRotationBounds.x, initialRotationBounds.y);
+        if (Application.isPlaying)
+        {
+            DontDestroyOnLoad(this);
+        }
     }
 
     // Update is called once per frame

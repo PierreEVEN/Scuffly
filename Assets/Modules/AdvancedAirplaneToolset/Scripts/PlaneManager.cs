@@ -206,7 +206,6 @@ public class PlaneManager : NetworkBehaviour
 
             // Calcul classique de portance
             part.AddForce(transform.up * 0.5f * ro * liftCoef * surface * velocity * velocity * Time.deltaTime);
-            Debug.DrawLine(transform.position, transform.position + transform.up * 0.5f * ro * liftCoef * surface * velocity * velocity * Time.deltaTime);
         }
 
         UpdatePlanePower();
@@ -286,13 +285,13 @@ public class PlaneManager : NetworkBehaviour
             if (part.tag == "Roll")
                 part.setInput(input);
     }
-    public void Shoot()
+    public void Shoot(GameObject target)
     {
         foreach (var part in GetComponentsInChildren<WeaponPod>())
         { // @todo handle weapon selection
             if (part.spawnedWeapon)
             {
-                part.Shoot();
+                part.Shoot(target);
                 return;
             }
         }

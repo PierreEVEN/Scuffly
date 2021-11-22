@@ -60,17 +60,19 @@ public class PlayerManager : NetworkBehaviour
     [ServerRpc]
     void RequestPlaneServerRpc()
     {
-        foreach (var spawner in GameObject.FindGameObjectsWithTag("PlaneSpawnPoint"))
+        AirportActor foundAirport = AirportActor.GetClosestAirport(PlaneTeam.Blue, new Vector3(0, 0, 0));
+        if (!foundAirport)
+            return;
+
+        foreach (var spawnpoint in foundAirport.GatherSpawnpoints())
         {
-            if (!spawner.GetComponent<PlaneSpawnpoint>().hasSpawned.Value)
-            {
-                GameObject plane = spawner.GetComponent<PlaneSpawnpoint>().SpawnPlane(OwnerClientId);
-                if (!plane) return;
-                NetworkObject planeNet = plane.GetComponent<NetworkObject>();
-                OnPlaneSpawnedClientRpc(planeNet.NetworkObjectId);
-                break;
-            }
+            GameObject plane = spawnpoint.SpawnPlane(OwnerClientId);
+            if (!plane) return;
+            NetworkObject planeNet = plane.GetComponent<NetworkObject>();
+            OnPlaneSpawnedClientRpc(planeNet.NetworkObjectId);
+            return;
         }
+        Debug.LogError("failed to spawn plane");
     }
 
     [ClientRpc]
@@ -84,6 +86,5 @@ public class PlayerManager : NetworkBehaviour
         }
         controlledPlane = viewPlaneNet.GetComponent<PlaneManager>();
         OnPossessPlane.Invoke(controlledPlane);
-        Debug.Log("client received plane spawn info");
     }
 }

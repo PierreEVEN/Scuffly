@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering.HighDefinition;
 
-public class PauseUIManager : MonoBehaviour
+public class OptionWidget : MonoBehaviour
 {
+    public HDRenderPipelineAsset hdrpAsset;
+
     Text fpsText;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,17 @@ public class PauseUIManager : MonoBehaviour
         }
     }
 
+    public void SetShadows(Toggle enable)
+    {
+        if (enable.isOn)
+            QualitySettings.SetQualityLevel(0);
+        else
+            QualitySettings.SetQualityLevel(2);
+    }
+
+    public void SetVolumetricClouds(bool enable)
+    {
+    }
 
     public void SetGraphicsMax()
     {
@@ -77,8 +91,12 @@ public class PauseUIManager : MonoBehaviour
         folliage.Reset = true;
     }
 
+
+
+
     public void Quit()
     {
+
         Application.Quit();
     }
 }

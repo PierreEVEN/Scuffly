@@ -1,4 +1,6 @@
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 
 public class GPULandscapeNode
@@ -20,7 +22,7 @@ public class GPULandscapeNode
     // Nodes enfant du quadtree
     private GPULandscapeNode[] children;
 
-    private int[] indirectArgs = {0, 1, 0, 0, 0};
+    private int[] indirectArgs = { 0, 1, 0, 0, 0 };
     private ComputeBuffer indirectArgsBuffer;
 
     public GPULandscapeNode(GPULandscape owner, int quadtreeLevel, Vector3 worldPosition, float width)
@@ -33,6 +35,10 @@ public class GPULandscapeNode
         bounds = new Bounds(worldPosition, new Vector3(this.width, 100000, this.width));
 
         indirectArgsBuffer = new ComputeBuffer(5, sizeof(int), ComputeBufferType.IndirectArguments);
+
+#if UNITY_EDITOR
+        SceneView.beforeSceneGui += DrawInEditor;
+#endif
     }
 
     public void destroy()
@@ -40,9 +46,14 @@ public class GPULandscapeNode
         MPB = null;
         indirectArgsBuffer.Release();
         ShowCurrentNode();
+
+#if UNITY_EDITOR
+        SceneView.beforeSceneGui -= DrawInEditor;
+#endif
     }
 
-    void DrawSection()
+
+    void DrawSection(Camera camera)
     {
         if (shouldDisplay)
         {
@@ -59,9 +70,19 @@ public class GPULandscapeNode
                 indirectArgsBuffer.SetData(indirectArgs);
             }
 
-            Graphics.DrawProceduralIndirect(owner.landscape_material, bounds, MeshTopology.Triangles, indirectArgsBuffer, 0, null, MPB);
+            Graphics.DrawProceduralIndirect(owner.landscape_material, bounds, MeshTopology.Triangles, indirectArgsBuffer, 0, camera, MPB);
         }
     }
+
+
+#if UNITY_EDITOR
+    public void DrawInEditor(SceneView sceneview)
+    {
+        if (EditorApplication.isPaused && EditorApplication.isPlaying)
+            DrawSection(SceneView.currentDrawingSceneView.camera);
+    }
+#endif
+
 
     // Update is called once per frame
     public void Update()
@@ -74,8 +95,10 @@ public class GPULandscapeNode
         else
             ShowCurrentNode();
 
-        if (shouldDisplay)
-            DrawSection();
+#if UNITY_EDITOR
+        if (Application.isPlaying || !EditorApplication.isPaused)
+#endif
+            DrawSection(null);
 
         // Propagate update through children
         if (children != null)

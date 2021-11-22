@@ -293,6 +293,7 @@ public abstract class GPULandscapeModifier : MonoBehaviour
     public short priority = 0;
     public bool overwrite = false;
 
+
     bool isReady = false;
     private void Start()
     {

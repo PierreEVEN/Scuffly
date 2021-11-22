@@ -1,5 +1,9 @@
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [ExecuteInEditMode]
 public class ProceduralFolliageBatch : MonoBehaviour
@@ -18,6 +22,13 @@ public class ProceduralFolliageBatch : MonoBehaviour
         int shouldSpawn;
     };
 
+    private void OnEnable()
+    {
+#if UNITY_EDITOR
+        SceneView.beforeSceneGui += DrawInEditor;
+#endif
+    }
+
     public void OnDisable()
     {
         if (treeMatrices != null)
@@ -30,9 +41,21 @@ public class ProceduralFolliageBatch : MonoBehaviour
         shouldSpawnTreeBuffer = null;
         treeMatrices = null;
         proceduralDrawArgs = null;
+
+#if UNITY_EDITOR
+        SceneView.beforeSceneGui -= DrawInEditor;
+#endif
     }
 
     private void Update()
+    {
+#if UNITY_EDITOR
+        if (Application.isPlaying || !EditorApplication.isPaused)
+#endif
+            DrawSection(null);
+    }
+
+    void DrawSection(Camera camera)
     {
         if (folliageAsset == null || folliageAsset.spawnedMesh == null || folliageAsset.usedMaterial == null)
             return;
@@ -48,8 +71,19 @@ public class ProceduralFolliageBatch : MonoBehaviour
         if (proceduralDrawArgs == null)
             CreateOrRecreateMatrices();
 
-        Graphics.DrawMeshInstancedIndirect(folliageAsset.spawnedMesh, 0, folliageAsset.usedMaterial, bounds, proceduralDrawArgs, 0, InstanceMaterialProperties);
+        Graphics.DrawMeshInstancedIndirect(folliageAsset.spawnedMesh, 0, folliageAsset.usedMaterial, bounds, proceduralDrawArgs, 0, InstanceMaterialProperties, ShadowCastingMode.On, true, 0, camera);
     }
+
+
+#if UNITY_EDITOR
+    public void DrawInEditor(SceneView sceneview)
+    {
+        if (EditorApplication.isPaused && EditorApplication.isPlaying)
+            DrawSection(SceneView.currentDrawingSceneView.camera);
+    }
+#endif
+
+
 
     void CreateOrRecreateMatrices()
     {

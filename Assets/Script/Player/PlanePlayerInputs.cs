@@ -163,7 +163,15 @@ public class PlanePlayerInputs : MonoBehaviour
     {
         if (!EnableInputs)
             return;
-        playerManager.controlledPlane.Shoot();
+
+        foreach (var Plane in PlaneManager.PlaneList) {
+
+            if (Plane.planeTeam != playerManager.controlledPlane.planeTeam)
+            {
+                playerManager.controlledPlane.Shoot(Plane.gameObject);
+                return;
+            }
+        }
     }
 
 }

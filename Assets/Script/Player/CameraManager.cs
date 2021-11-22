@@ -58,14 +58,18 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
     void SetFocusedPlane(PlaneManager inPlane)
     {
+        if (inPlane == focusedPlane)
+            return;
+
         if (focusedPlane)
             focusedPlane.EnableIndoor(false);
         fpsViewPoint = null;
         focusedPlane = inPlane;
-        gameObject.transform.parent = focusedPlane.transform;
-        Debug.Log("focus " + inPlane.GetInstanceID());
         if (focusedPlane)
+        {
+            gameObject.transform.parent = focusedPlane.transform;
             focusedPlane.EnableIndoor(true);
+        }
 
         GetComponent<PlanePlayerInputs>().EnableInputs = focusedPlane && focusedPlane == possessedPlane ? true : false;
     }
@@ -162,14 +166,19 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
     void OnFocusMyPlane()
     {
+        if (!possessedPlane)
+        {
+            OnFreeCam();
+            return;
+        }
         Indoor = true;
         SetFocusedPlane(possessedPlane);
     }
     void OnSwitchPlanes()
     {
-        if (focusedPlane)
+        if (focusedPlane || !possessedPlane)
         {
-            if (Indoor)
+            if (Indoor && focusedPlane)
             {
                 Indoor = false;
             }
@@ -177,7 +186,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             {
                 for (int i = 0; i < PlaneManager.PlaneList.Count; ++i)
                 {
-                    if (PlaneManager.PlaneList[i] == focusedPlane)
+                    if (PlaneManager.PlaneList[i] == focusedPlane || !focusedPlane)
                     {
                         SetFocusedPlane(PlaneManager.PlaneList[(i + 1) % PlaneManager.PlaneList.Count]);
                         return;
