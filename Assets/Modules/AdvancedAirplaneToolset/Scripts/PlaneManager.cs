@@ -325,7 +325,10 @@ public class PlaneManager : NetworkBehaviour
         return angle;
     }
 
-    // = Yaw
+    /// <summary>
+    /// Orientation de l'avion selon l'axe magnetique (en degres)
+    /// </summary>
+    /// <returns></returns>
     public float GetHeading()
     {
         return transform.rotation.eulerAngles.y;

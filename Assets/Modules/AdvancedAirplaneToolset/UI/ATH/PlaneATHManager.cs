@@ -6,11 +6,14 @@ public class PlaneATHManager : MonoBehaviour
     Canvas canvas;
     CanvasGroup canvasGroup;
     float alpha = 0;
-    // Start is called before the first frame update
-    void Start()
+
+    public float AthScale = 0.39f;
+
+    void OnEnable()
     {
         canvas = GetComponentInChildren<Canvas>();
         canvasGroup = GetComponentInChildren<CanvasGroup>();
+
     }
 
     // Update is called once per frame
@@ -29,5 +32,13 @@ public class PlaneATHManager : MonoBehaviour
         canvas.enabled = owningPlane.MainPower;
         alpha = Mathf.Clamp01(alpha + (owningPlane.MainPower ? 0.5f * Time.deltaTime : -4f * Time.deltaTime));
         canvasGroup.alpha = Mathf.Clamp01((owningPlane.GetCurrentPower() - 80) / 30);
+
+    }
+
+    public Vector2 WorldDirectionToScreenPosition(Vector3 worldDirection)
+    {
+        Vector3 PlaneRelativeDirection = owningPlane.transform.InverseTransformDirection(worldDirection).normalized;
+        var containerTransform = canvas.GetComponent<RectTransform>();
+        return new Vector2(PlaneRelativeDirection.x * containerTransform.sizeDelta.x, PlaneRelativeDirection.y * containerTransform.sizeDelta.y) / 0.39f;
     }
 }

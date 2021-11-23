@@ -21,6 +21,7 @@ public class ATHUiRenderer : MonoBehaviour
             if (!instanciedUI.GetComponent<PlaneATHManager>().owningPlane)
                 Debug.LogError("missing plane in parent hierarchy");
         }
+
     }
 
     private void OnDisable()
