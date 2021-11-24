@@ -14,15 +14,9 @@ public class ThreatWarningIndicator : PlaneComponent
         Plane.GetRadar().OnDetectNewTarget.AddListener(AddTarget);
         Plane.GetRadar().OnLostTarget.AddListener(RemoveTarget);
 
-        Debug.Log("bind radar");
-
         container = GetComponent<Canvas>();
         foreach (var target in Plane.GetRadar().scannedTargets)
             AddTarget(target.Key);
-
-        Debug.Log("bind radar 2");
-
-
     }
 
     private void OnDisable()

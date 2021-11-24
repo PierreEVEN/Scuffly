@@ -95,14 +95,12 @@ public class MetterRenderer : MonoBehaviour
 
     public void SpawnGraduations()
     {
-        Debug.Log("try spawn  gradsdsd");
         shouldUpdate = false;
         foreach (var item in graduations)
             DestroyImmediate(item);
         graduations.Clear();
         if (!RenderGraduations)
             return;
-        Debug.Log("spaqn gradsdsd");
         Canvas canvas = GetComponentInChildren<Canvas>();
         if (!canvas) return;
         float step = initialValue;
