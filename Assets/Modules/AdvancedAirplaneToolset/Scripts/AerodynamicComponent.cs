@@ -28,8 +28,8 @@ public class AerodynamicComponent : MonoBehaviour
         public float worldArea; // World space surface area
     }
 
-    static bool drawSurfaceInfluence = false;
-    static bool drawPerSurfaceForce = false;
+    static bool drawSurfaceInfluence = true;
+    static bool drawPerSurfaceForce = true;
 
     public Mesh meshOverride;
 
@@ -42,7 +42,7 @@ public class AerodynamicComponent : MonoBehaviour
     // All the surface are precomputed and stored into this surface list.
     private List<PhysicSurface> Surfaces = new List<PhysicSurface>();
 
-    void Start()
+    void OnEnable()
     {
         rigidBody = gameObject.GetComponentInParent<Rigidbody>();
         meshCollider = gameObject.GetComponent<MeshCollider>();

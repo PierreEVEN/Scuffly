@@ -29,7 +29,7 @@ public class RocketSpawner : MonoBehaviour
                 GameObject target = GameObject.FindWithTag("Plane");
                 if (!target)
                     return;
-                if (Vector3.Distance(target.transform.position, transform.position) > 3000)
+                if (Vector3.Distance(target.transform.position, transform.position) > 300000)
                     return;
 
                 GameObject rocketObj = GameObject.Instantiate(rocketToSpawn);
@@ -37,7 +37,7 @@ public class RocketSpawner : MonoBehaviour
                 rocketObj.transform.position = transform.position;
                 rocketObj.transform.rotation = transform.rotation;
                 Rocket rocket = rocketObj.GetComponentInChildren<Rocket>();
-                rocket.Shoot(transform.forward * 1, target);
+                rocket.Shoot(transform.forward * 10, target);
             }
         }
     }

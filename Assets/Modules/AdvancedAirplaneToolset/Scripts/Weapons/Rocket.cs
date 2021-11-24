@@ -14,6 +14,8 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
     public float Endurance = 5;
     public float initialForce = 20;
 
+    public float mass = 85;
+
     private float depopDelay = 10;
     private bool destroyed = false;
     Rigidbody rb;
@@ -24,8 +26,14 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
     GameObject target;
     Vector3 hitVelocity = new Vector3(0, 0, 0);
 
-    // Start is called before the first frame update
-    void Start()
+    public Mesh physicMesh;
+
+    private void OnEnable()
+    {
+        GPULandscapePhysic.Singleton.AddListener(this);
+    }
+
+    private void Start()
     {
         weaponCollider = GetComponent<BoxCollider>();
         vfx = GetComponentInChildren<VisualEffect>();
@@ -35,10 +43,6 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
         }
     }
 
-    private void OnEnable()
-    {
-        GPULandscapePhysic.Singleton.AddListener(this);
-    }
     private void OnDisable()
     {
         GPULandscapePhysic.Singleton.RemoveListener(this);
@@ -91,31 +95,50 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
                 Destroy(gameObject);
             }
         }
+    }
 
-        if (rb )
+
+    private void FixedUpdate()
+    {
+        if (rb && !destroyed)
         {
+
             Endurance -= Time.deltaTime;
             if (Endurance > 0)
             {
-                float step = Acceleration * Time.deltaTime; // calcule la distance que le missile va parcourir à la prochaine étape
+                float step = Acceleration * Time.fixedDeltaTime; // calcule la distance que le missile va parcourir à la prochaine étape
                 rb.velocity += transform.forward * step;
             }
             else if (vfx)
-                vfx.enabled = false;
+                //vfx.enabled = false;
+                ;
 
-            float dragLimiter = 0.9f;
-            int turningSpeed = 60;
+            Vector3 rocketRelativeVelocity = transform.InverseTransformDirection(rb.velocity);
+            rocketRelativeVelocity.z = 0;
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation((target.transform.position - transform.position).normalized, new Vector3(0, 1, 0)), turningSpeed * Time.deltaTime);
+            Vector3 rocketRadialVelocity = transform.TransformDirection(rocketRelativeVelocity);
 
-            Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
-            localVelocity.x *= dragLimiter;
-            localVelocity.y *= dragLimiter;
-            rb.velocity = transform.TransformDirection(localVelocity);
+
+            Vector3 targetPosition = target.transform.position;
+
+            float distanceToTarget = (targetPosition - transform.position).magnitude;
+            float timeBeforeImpact = distanceToTarget / rb.velocity.magnitude;
+
+            Vector3 targetVelocity = Vector3.zero;
+            var targetRb = target.GetComponent<Rigidbody>();
+            if (targetRb)
+            {
+                targetVelocity = targetRb.velocity;
+            }
+
+
+            Vector3 correctedTargetPosition = targetPosition + targetVelocity * timeBeforeImpact - rocketRadialVelocity * timeBeforeImpact * 0.1f;
+
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation((correctedTargetPosition - transform.position).normalized, new Vector3(0, 1, 0)), 350);
 
         }
     }
-
 
 
     public void Shoot(Vector3 initialSpeed, GameObject target)
@@ -126,6 +149,11 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
 
         transform.parent = null;
         rb = gameObject.AddComponent<Rigidbody>();
+        rb.mass = mass;
+
+        AerodynamicComponent aero = gameObject.AddComponent<AerodynamicComponent>();
+        aero.meshOverride = physicMesh;
+
         if (weaponCollider)
             transform.position += transform.up * -weaponCollider.bounds.size.y / 4;
         rb.velocity = initialSpeed + transform.up * -initialForce;
