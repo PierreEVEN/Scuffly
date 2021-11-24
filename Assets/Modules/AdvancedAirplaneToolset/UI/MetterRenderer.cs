@@ -95,13 +95,14 @@ public class MetterRenderer : MonoBehaviour
 
     public void SpawnGraduations()
     {
+        Debug.Log("try spawn  gradsdsd");
         shouldUpdate = false;
         foreach (var item in graduations)
             DestroyImmediate(item);
         graduations.Clear();
         if (!RenderGraduations)
             return;
-
+        Debug.Log("spaqn gradsdsd");
         Canvas canvas = GetComponentInChildren<Canvas>();
         if (!canvas) return;
         float step = initialValue;
@@ -120,6 +121,7 @@ public class MetterRenderer : MonoBehaviour
             Text txt = grad.AddComponent<Text>();
             txt.text = graduation.ToString();
             txt.alignment = TextAnchor.MiddleCenter;
+            txt.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
 
             RectTransform rect = txt.GetComponent<RectTransform>();
             rect.sizeDelta = new Vector2(30, 30);

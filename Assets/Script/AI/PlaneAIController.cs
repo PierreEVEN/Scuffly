@@ -78,7 +78,7 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
             case EAiMode.Flying:
 
                 bool found = false;
-                foreach (var plane in PlaneManager.PlaneList)
+                foreach (var plane in PlaneActor.PlaneList)
                 {
                     if (plane.planeTeam != Plane.planeTeam)
                     {

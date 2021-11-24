@@ -25,6 +25,11 @@ public class Thruster : PlaneComponent, IPowerProvider
     private float throttleDesiredPercent = 0; // pourcentage de puissance du moteur desire
     private float throttleCurrentPercent = 0; // pourcentage de puissance reel du moteur
 
+    public float ThrottlePercent
+    {
+        get { return throttleCurrentPercent * 100; }
+    }
+
     public RTPC EngineStatusRTPC;
     public RTPC CameraDistanceRPC;
 
@@ -34,10 +39,13 @@ public class Thruster : PlaneComponent, IPowerProvider
         Plane.RegisterPowerProvider(this);
         if (Plane.initialThrottleNotch)
             engineStartupPercent = 1;
+
+        Plane.RegisterThruster(this);
     }
 
     private void OnDisable()
     {
+        Plane.UnRegisterThruster(this);
     }
 
     void FixedUpdate()

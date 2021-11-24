@@ -19,7 +19,7 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [HideInInspector]
-    public PlaneManager controlledPlane;
+    public PlaneActor controlledPlane;
 
     NetworkVariable<string> playerName = new NetworkVariable<string>("toto ");
 
@@ -33,7 +33,7 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [HideInInspector]
-    public UnityEvent<PlaneManager> OnPossessPlane = new UnityEvent<PlaneManager>();
+    public UnityEvent<PlaneActor> OnPossessPlane = new UnityEvent<PlaneActor>();
 
     // Start is called before the first frame update
     void Start()
@@ -84,7 +84,7 @@ public class PlayerManager : NetworkBehaviour
             Debug.LogError("plane spawned but cannot be found on client side : " + planeId);
             return;
         }
-        controlledPlane = viewPlaneNet.GetComponent<PlaneManager>();
+        controlledPlane = viewPlaneNet.GetComponent<PlaneActor>();
         OnPossessPlane.Invoke(controlledPlane);
     }
 }

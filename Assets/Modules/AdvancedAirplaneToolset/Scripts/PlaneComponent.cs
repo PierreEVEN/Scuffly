@@ -5,7 +5,7 @@ using UnityEngine;
  */
 public class PlaneComponent : MonoBehaviour
 {
-    PlaneManager plane;
+    PlaneActor plane;
 
     Rigidbody physics;
 
@@ -16,20 +16,20 @@ public class PlaneComponent : MonoBehaviour
             if (!physics)
             {
                 physics = GetComponentInParent<Rigidbody>();
-                if (!physics) Debug.LogError("failed to find RigidBody in parents");
+                if (!physics && Application.isPlaying) Debug.LogError("failed to find RigidBody in parents");
             }
             return physics;
         }
     }
 
-    public PlaneManager Plane
+    public PlaneActor Plane
     {
         get
         {
             if (!plane)
             {
-                plane = GetComponentInParent<PlaneManager>();
-                if (!plane) Debug.LogError("failed to find PlaneManager in parents");
+                plane = GetComponentInParent<PlaneActor>();
+                if (!plane && Application.isPlaying) Debug.LogError("failed to find PlaneManager in parents");
             }
             return plane;
         }

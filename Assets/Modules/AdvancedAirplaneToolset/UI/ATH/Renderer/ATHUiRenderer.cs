@@ -17,8 +17,8 @@ public class ATHUiRenderer : MonoBehaviour
         {
             instanciedUI = GameObject.Instantiate(RendererdUI);
             instanciedUI.hideFlags = HideFlags.DontSave;
-            instanciedUI.GetComponent<PlaneATHManager>().owningPlane = GetComponentInParent<PlaneManager>();
-            if (!instanciedUI.GetComponent<PlaneATHManager>().owningPlane)
+            instanciedUI.GetComponent<PlaneATHManager>().owningPlane = GetComponentInParent<PlaneActor>();
+            if (!instanciedUI.GetComponent<PlaneATHManager>().owningPlane && Application.isPlaying)
                 Debug.LogError("missing plane in parent hierarchy");
         }
 

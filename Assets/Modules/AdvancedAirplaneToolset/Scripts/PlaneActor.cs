@@ -26,7 +26,7 @@ public enum PlaneTeam
 }
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlaneManager : NetworkBehaviour
+public class PlaneActor : NetworkBehaviour
 {
     // Definis le centre de gravite physique de l'avion
     public Vector3 massCenter = new Vector3(0, 0, 0);
@@ -66,7 +66,7 @@ public class PlaneManager : NetworkBehaviour
     // Liste des composants fournissant de l'energie
     private List<IPowerProvider> powerProviders = new List<IPowerProvider>();
 
-    public static List<PlaneManager> PlaneList = new List<PlaneManager>();
+    public static List<PlaneActor> PlaneList = new List<PlaneActor>();
 
 
     public VisualEffectAsset explosionFx;
@@ -386,5 +386,53 @@ public class PlaneManager : NetworkBehaviour
             return;
 
         cockpitObject.SetActive(enable);
+    }
+
+    /**
+     * 
+     * Thrusters 
+     * 
+     */
+
+
+    List<Thruster> thrusterList = new List<Thruster>();
+    public void RegisterThruster(Thruster thruster)
+    {
+        thrusterList.Add(thruster);
+    }
+    public void UnRegisterThruster(Thruster thruster)
+    {
+        thrusterList.Remove(thruster);
+    }
+    public float GetOilPressure()
+    {
+        return 0;
+    }
+    public float GetRpmPercent(int thrusterIndex)
+    {
+        if (thrusterList.Count <= thrusterIndex)
+            return 0;
+        return thrusterList[thrusterIndex].ThrottlePercent;
+    }
+
+    public float GetNozeOpenning()
+    {
+        return 0;
+    }
+
+
+    /**
+     * 
+     * Radars 
+     * 
+     */
+
+    Radar planeRadar;
+
+    public Radar GetRadar()
+    {
+        if (!planeRadar)
+            planeRadar = GetComponentInChildren<Radar>();
+        return planeRadar;
     }
 }

@@ -12,6 +12,7 @@ public enum MetterType
     HydrolicPressure
 }
 
+[ExecuteInEditMode]
 public class MetterUpdater : PlaneComponent
 {
     public GameObject metterText;
@@ -21,6 +22,8 @@ public class MetterUpdater : PlaneComponent
     public MetterType metterType = MetterType.Altitude;
 
     public float needleScale = 0.0001f;
+
+    public float currentValue = 0;
 
     void Update()
     {
@@ -33,6 +36,8 @@ public class MetterUpdater : PlaneComponent
 
     float getValue()
     {
+        if (!Plane)
+            return currentValue;
         switch (metterType)
         {
             case MetterType.Altitude:
@@ -41,19 +46,14 @@ public class MetterUpdater : PlaneComponent
                 return Plane.GetSpeedInNautics();
             case MetterType.OilPressure:
                 return 0;
-                break;
             case MetterType.NozPosOpen:
                 return 0;
-                break;
             case MetterType.RPMPercent:
-                return 0;
-                break;
+                return Plane.GetRpmPercent(0);
             case MetterType.Fuel:
                 return 0;
-                break;
             case MetterType.HydrolicPressure:
                 return 0;
-                break;
             default:
                 return 0;
         }

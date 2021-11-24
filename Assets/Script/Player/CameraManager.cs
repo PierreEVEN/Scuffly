@@ -25,8 +25,8 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
     private PilotEyePoint fpsViewPoint;
 
-    private PlaneManager focusedPlane;
-    private PlaneManager possessedPlane;
+    private PlaneActor focusedPlane;
+    private PlaneActor possessedPlane;
 
     private void Start()
     {
@@ -50,13 +50,13 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         gameObject.GetComponent<PlayerManager>().OnPossessPlane.RemoveListener(PossessPlane);
     }
 
-    void PossessPlane(PlaneManager inPlane)
+    void PossessPlane(PlaneActor inPlane)
     {
         possessedPlane = inPlane;
         SetFocusedPlane(inPlane);
     }
 
-    void SetFocusedPlane(PlaneManager inPlane)
+    void SetFocusedPlane(PlaneActor inPlane)
     {
         if (inPlane == focusedPlane)
             return;
@@ -184,11 +184,11 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             }
             else
             {
-                for (int i = 0; i < PlaneManager.PlaneList.Count; ++i)
+                for (int i = 0; i < PlaneActor.PlaneList.Count; ++i)
                 {
-                    if (PlaneManager.PlaneList[i] == focusedPlane || !focusedPlane)
+                    if (PlaneActor.PlaneList[i] == focusedPlane || !focusedPlane)
                     {
-                        SetFocusedPlane(PlaneManager.PlaneList[(i + 1) % PlaneManager.PlaneList.Count]);
+                        SetFocusedPlane(PlaneActor.PlaneList[(i + 1) % PlaneActor.PlaneList.Count]);
                         return;
                     }
                 }

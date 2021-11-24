@@ -164,7 +164,7 @@ public class PlanePlayerInputs : MonoBehaviour
         if (!EnableInputs)
             return;
 
-        foreach (var Plane in PlaneManager.PlaneList) {
+        foreach (var Plane in PlaneActor.PlaneList) {
 
             if (Plane.planeTeam != playerManager.controlledPlane.planeTeam)
             {

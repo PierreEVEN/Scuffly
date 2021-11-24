@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlaneATHManager : MonoBehaviour
 {
-    public PlaneManager owningPlane;
+    public PlaneActor owningPlane;
     Canvas canvas;
     CanvasGroup canvasGroup;
     float alpha = 0;
