@@ -60,7 +60,7 @@ public class Thruster : PlaneComponent, IPowerProvider
         // Meme a l'arret, le moteur produit une legere poussee
         float totalInputPercent = throttleCurrentPercent + engineStartupPercent * idleEngineThrustPercent;
         float forwardVelocity = transform.InverseTransformDirection(Physics.velocity).z;
-        Physics.AddForceAtPosition(-transform.forward * Time.fixedDeltaTime * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
+        Physics.AddForceAtPosition(-transform.forward * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
 
         EngineStatusRTPC.SetValue(gameObject, totalInputPercent * 100);
         if (Camera.main) 

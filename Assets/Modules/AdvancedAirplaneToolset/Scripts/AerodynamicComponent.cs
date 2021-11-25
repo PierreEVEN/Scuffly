@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 /**
- *  @Author : Pierre EVEN
- */
+*  @Author : Pierre EVEN
+*/
 
 
 /**
@@ -28,8 +29,8 @@ public class AerodynamicComponent : MonoBehaviour
         public float worldArea; // World space surface area
     }
 
-    static bool drawSurfaceInfluence = false;
-    static bool drawPerSurfaceForce = false;
+    static bool drawSurfaceInfluence = true;
+    static bool drawPerSurfaceForce = true;
 
     public Mesh meshOverride;
 
@@ -41,6 +42,14 @@ public class AerodynamicComponent : MonoBehaviour
 
     // All the surface are precomputed and stored into this surface list.
     private List<PhysicSurface> Surfaces = new List<PhysicSurface>();
+
+    struct DragApplication
+    {
+        public Vector3 position;
+        public Vector3 force;
+    }
+
+    DragApplication[] dragApplyVector;
 
     void OnEnable()
     {
@@ -55,13 +64,15 @@ public class AerodynamicComponent : MonoBehaviour
 
     private void RecomputeData()
     {
+        Profiler.BeginSample("Recompute aerodynamic surfaces");
         Surfaces.Clear();
 
         Mesh mesh = meshCollider ? meshCollider.sharedMesh : meshOverride;
 
         if (!mesh) return;
 
-        for (int sectionID = 0; sectionID < mesh.subMeshCount; sectionID++) {
+        for (int sectionID = 0; sectionID < mesh.subMeshCount; sectionID++)
+        {
             int[] triangles = mesh.GetTriangles(sectionID);
             for (int i = 0; i < triangles.Length / 3; ++i)
             {
@@ -71,6 +82,8 @@ public class AerodynamicComponent : MonoBehaviour
                 Surfaces.Add(ComputePhysicSurface(v1, v2, v3));
             }
         }
+        dragApplyVector = new DragApplication[Surfaces.Count];
+        Profiler.EndSample();
     }
 
     // A surface is caracterized by 3 triangles. This function will compute the area, the center, and the normal of the shape of the given triangle.
@@ -103,24 +116,38 @@ public class AerodynamicComponent : MonoBehaviour
         if (Surfaces.Count == 0)
             RecomputeData();
 
-        foreach (var surface in Surfaces)
-        {
-            Vector3 worldCenter = gameObject.transform.TransformPoint(surface.localCenter);
-            Vector3 worldPointVelocity = rigidBody.GetPointVelocity(worldCenter);
+        Profiler.BeginSample("Compute aerodynamic forces for " + transform.root.name + " : " + gameObject.name);
 
+        for (int i = 0; i < Surfaces.Count; ++i)
+        {
+            PhysicSurface surface = Surfaces[i];
+
+            Vector3 worldCenter = transform.TransformPoint(surface.localCenter);
+            Vector3 worldPointVelocity = rigidBody.GetPointVelocity(worldCenter);
+            Vector3 WorldNormal = transform.TransformDirection(surface.localNormal);
+            float pointMagnitude = worldPointVelocity.magnitude;
+
+            // Densite du milieu (100 pour l'eau au lieu de 1000 pour eviter de trop rebondir)
             float ro = worldCenter.y <= 0 ? 100.0f : 1.2f;
 
             // @TODO : don't set 0 in the first argument of max(), but an approximation of lift instead (allow negative force)
-            float areaDrag = Mathf.Max(0.0f, Vector3.Dot(gameObject.transform.TransformDirection(surface.localNormal), worldPointVelocity.normalized)) * surface.worldArea;
-            Vector3 local_drag = (surface.localNormal * -1) * areaDrag * worldPointVelocity.magnitude * worldPointVelocity.magnitude * ro;
+            float areaDrag = Mathf.Max(0.0f, Vector3.Dot(WorldNormal, worldPointVelocity.normalized)) * surface.worldArea;
+            Vector3 local_drag = surface.localNormal * areaDrag * pointMagnitude * pointMagnitude * ro * -1;
 
-            Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * 50; //@TODO replace hardcoded friction with custom value
+            Vector3 dragApplyVectors = gameObject.transform.TransformDirection(local_drag);
 
-            rigidBody.AddForceAtPosition(dragApplyVector * Time.fixedDeltaTime, worldCenter);
+            rigidBody.AddForceAtPosition(dragApplyVectors, worldCenter);
 
-            if (drawPerSurfaceForce) Debug.DrawLine(worldCenter, worldCenter + dragApplyVector * 0.0001f, Color.red);
+#if UNITY_EDITOR
+            if (drawPerSurfaceForce) Debug.DrawLine(worldCenter, worldCenter + dragApplyVectors * 0.002f, Color.red);
+#endif
         }
+        Profiler.EndSample();
+    }
 
+#if UNITY_EDITOR
+    private void Update()
+    {
         if (drawSurfaceInfluence)
         {
             foreach (var surface in Surfaces) // Draw drag areas
@@ -131,4 +158,5 @@ public class AerodynamicComponent : MonoBehaviour
             }
         }
     }
+#endif
 }

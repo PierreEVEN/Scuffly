@@ -170,12 +170,8 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
             acceleration.AddValue(targetAcceleration);
             LastTargetVelocity = targetRb.velocity;
 
-            Vector3 correctedTargetPosition = targetPosition + targetVelocity * timeBeforeImpact;// + acceleration.GetMean() * timeBeforeImpact * timeBeforeImpact;
-
-            //Debug.DrawLine(transform.position, targetPosition + targetVelocity * timeBeforeImpact);
-            Debug.DrawLine(transform.position, correctedTargetPosition);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation((correctedTargetPosition - transform.position).normalized, new Vector3(0, 1, 0)), 160 * Time.fixedDeltaTime);
-
+            Vector3 correctedTargetPosition = targetPosition + targetVelocity * timeBeforeImpact + targetAcceleration * timeBeforeImpact;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation((correctedTargetPosition - transform.position).normalized, new Vector3(0, 1, 0)), 50 * Time.fixedDeltaTime);
         }
     }
 
