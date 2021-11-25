@@ -7,6 +7,42 @@ using UnityEngine.VFX;
  * Armement de type missile attachable a un pod d'armement
  * 
  */
+
+
+class VectorSmoother
+{
+    public VectorSmoother(int valueCount)
+    {
+        data = new Vector3[valueCount];
+    }
+
+    Vector3[] data;
+    int currentSet = 0;
+    public void AddValue(Vector3 InValue)
+    {
+        data[currentSet] = InValue;
+        if (currentSet == data.Length - 1)
+            isReady = true;
+        currentSet = (currentSet + 1) % data.Length;
+    }
+
+    public Vector3 GetMean()
+    {
+        Vector3 mean = Vector3.zero;
+        foreach (var value in data)
+            mean += value;
+
+        return mean / data.Length;
+    }
+
+    bool isReady = false;
+
+    public bool IsReady()
+    {
+        return isReady;
+    }
+}
+
 [RequireComponent(typeof(BoxCollider))]
 public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
 {
@@ -97,27 +133,25 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
         }
     }
 
+    Vector3 LastTargetVelocity = Vector3.zero;
+
+
+
+    VectorSmoother acceleration = new VectorSmoother(30);
 
     private void FixedUpdate()
     {
         if (rb && !destroyed)
         {
 
-            Endurance -= Time.deltaTime;
+            Endurance -= Time.fixedDeltaTime;
             if (Endurance > 0)
             {
                 float step = Acceleration * Time.fixedDeltaTime; // calcule la distance que le missile va parcourir à la prochaine étape
                 rb.velocity += transform.forward * step;
             }
             else if (vfx)
-                //vfx.enabled = false;
-                ;
-
-            Vector3 rocketRelativeVelocity = transform.InverseTransformDirection(rb.velocity);
-            rocketRelativeVelocity.z = 0;
-
-            Vector3 rocketRadialVelocity = transform.TransformDirection(rocketRelativeVelocity);
-
+                vfx.enabled = false;
 
             Vector3 targetPosition = target.transform.position;
 
@@ -131,11 +165,16 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
                 targetVelocity = targetRb.velocity;
             }
 
+            Vector3 targetAcceleration = (Vector3)((targetRb.velocity - LastTargetVelocity) / Time.fixedDeltaTime);
 
-            Vector3 correctedTargetPosition = targetPosition + targetVelocity * timeBeforeImpact - rocketRadialVelocity * timeBeforeImpact * 0.1f;
+            acceleration.AddValue(targetAcceleration);
+            LastTargetVelocity = targetRb.velocity;
 
+            Vector3 correctedTargetPosition = targetPosition + targetVelocity * timeBeforeImpact;// + acceleration.GetMean() * timeBeforeImpact * timeBeforeImpact;
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation((correctedTargetPosition - transform.position).normalized, new Vector3(0, 1, 0)), 350);
+            //Debug.DrawLine(transform.position, targetPosition + targetVelocity * timeBeforeImpact);
+            Debug.DrawLine(transform.position, correctedTargetPosition);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation((correctedTargetPosition - transform.position).normalized, new Vector3(0, 1, 0)), 160 * Time.fixedDeltaTime);
 
         }
     }
@@ -150,7 +189,7 @@ public class Rocket : MonoBehaviour, GPULandscapePhysicInterface
         transform.parent = null;
         rb = gameObject.AddComponent<Rigidbody>();
         rb.mass = mass;
-
+        rb.freezeRotation = true;
         AerodynamicComponent aero = gameObject.AddComponent<AerodynamicComponent>();
         aero.meshOverride = physicMesh;
 

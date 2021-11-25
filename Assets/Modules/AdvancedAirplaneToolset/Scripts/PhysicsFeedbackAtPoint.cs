@@ -48,7 +48,7 @@ public class PhysicsFeedbackAtPoint : MonoBehaviour
             Mathf.Lerp(smoothedAcceleration.y, relativeVelocity.y, Time.deltaTime * 10),
             Mathf.Lerp(smoothedAcceleration.z, relativeVelocity.z, Time.deltaTime * 10));
 
-        lastVelocity = rb.velocity;
+        lastVelocity = relativeVelocity;
 
         if (!fxTest)
             fxTest = GetComponent<VisualEffect>();

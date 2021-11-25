@@ -28,8 +28,8 @@ public class AerodynamicComponent : MonoBehaviour
         public float worldArea; // World space surface area
     }
 
-    static bool drawSurfaceInfluence = true;
-    static bool drawPerSurfaceForce = true;
+    static bool drawSurfaceInfluence = false;
+    static bool drawPerSurfaceForce = false;
 
     public Mesh meshOverride;
 
@@ -98,7 +98,7 @@ public class AerodynamicComponent : MonoBehaviour
         return surface;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Surfaces.Count == 0)
             RecomputeData();
@@ -116,7 +116,7 @@ public class AerodynamicComponent : MonoBehaviour
 
             Vector3 dragApplyVector = gameObject.transform.TransformDirection(local_drag) * 50; //@TODO replace hardcoded friction with custom value
 
-            rigidBody.AddForceAtPosition(dragApplyVector * Time.deltaTime, worldCenter);
+            rigidBody.AddForceAtPosition(dragApplyVector * Time.fixedDeltaTime, worldCenter);
 
             if (drawPerSurfaceForce) Debug.DrawLine(worldCenter, worldCenter + dragApplyVector * 0.0001f, Color.red);
         }
