@@ -20,6 +20,7 @@ public class RocketSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         initialDelay -= Time.deltaTime;
         if (initialDelay <= 0)
         {
@@ -40,5 +41,6 @@ public class RocketSpawner : MonoBehaviour
                 rocket.Shoot(transform.forward * 10, target);
             }
         }
+        */
     }
 }

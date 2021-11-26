@@ -9,6 +9,8 @@ public class PlaneComponent : MonoBehaviour
 
     Rigidbody physics;
 
+    WeaponManager weaponSystem;
+
     public Rigidbody Physics
     {
         get
@@ -32,6 +34,19 @@ public class PlaneComponent : MonoBehaviour
                 if (!plane && Application.isPlaying) Debug.LogError("failed to find PlaneManager in parents");
             }
             return plane;
+        }
+    }
+
+    public WeaponManager WeaponSystem
+    {
+        get
+        {
+            if (!weaponSystem)
+            {
+                weaponSystem = GetComponentInParent<WeaponManager>();
+                if (!plane && Application.isPlaying) Debug.LogError("failed to find WeaponManager in parents");
+            }
+            return weaponSystem;
         }
     }
 }

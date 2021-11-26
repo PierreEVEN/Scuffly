@@ -164,14 +164,63 @@ public class PlanePlayerInputs : MonoBehaviour
         if (!EnableInputs)
             return;
 
-        foreach (var Plane in PlaneActor.PlaneList) {
+        WeaponManager weaponManager = playerManager.controlledPlane.GetComponent<WeaponManager>();
+        if (!weaponManager)
+            return;
 
-            if (Plane.planeTeam != playerManager.controlledPlane.planeTeam)
-            {
-                playerManager.controlledPlane.Shoot(Plane.gameObject);
-                return;
-            }
-        }
+        weaponManager.BeginShoot();
+    }
+    public void OnEndShoot()
+    {
+        WeaponManager weaponManager = playerManager.controlledPlane.GetComponent<WeaponManager>();
+        if (!weaponManager)
+            return;
+
+        weaponManager.EndShoot();
     }
 
+    public void OnSwitchCanon()
+    {
+        if (!EnableInputs)
+            return;
+
+        WeaponManager weaponManager = playerManager.controlledPlane.GetComponent<WeaponManager>();
+        if (!weaponManager)
+            return;
+
+        weaponManager.SwitchToCanon();
+    }
+    public void OnSwitchAirGround()
+    {
+        if (!EnableInputs)
+            return;
+
+        WeaponManager weaponManager = playerManager.controlledPlane.GetComponent<WeaponManager>();
+        if (!weaponManager)
+            return;
+
+        weaponManager.SwitchToAirGround();
+    }
+    public void OnSwitchAirAir()
+    {
+        if (!EnableInputs)
+            return;
+
+        WeaponManager weaponManager = playerManager.controlledPlane.GetComponent<WeaponManager>();
+        if (!weaponManager)
+            return;
+
+        weaponManager.SwitchToAirAir();
+    }
+    public void OnEnableWeapons()
+    {
+        if (!EnableInputs)
+            return;
+
+        WeaponManager weaponManager = playerManager.controlledPlane.GetComponent<WeaponManager>();
+        if (!weaponManager)
+            return;
+
+        weaponManager.IsToggledOn = !weaponManager.IsToggledOn;
+    }
 }

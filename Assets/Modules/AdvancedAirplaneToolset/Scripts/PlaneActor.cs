@@ -289,7 +289,7 @@ public class PlaneActor : NetworkBehaviour
     {
         foreach (var part in GetComponentsInChildren<WeaponPod>())
         { // @todo handle weapon selection
-            if (part.spawnedWeapon)
+            if (part.attachedPodItem)
             {
                 part.Shoot(target);
                 return;

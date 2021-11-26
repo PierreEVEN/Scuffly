@@ -256,6 +256,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "EnableWeapons",
+                    "type": "Button",
+                    "id": "040af7d9-ab50-4c69-9f2c-2f184c98d9f1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchAirAir",
+                    "type": "Button",
+                    "id": "237a8d62-cf98-4760-bd7c-a653a0253db0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchAirGround",
+                    "type": "Button",
+                    "id": "325a9ac2-ed5f-4a50-aac0-fd55365508a8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchCanon",
+                    "type": "Button",
+                    "id": "130ee413-d1a1-4aca-9228-0af0ea7a7cd1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -762,6 +798,50 @@
                     "processors": "Scale",
                     "groups": "",
                     "action": "FreeCam_Speed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "218d93cb-6227-44d7-aa8d-e82dd5ef8d8b",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnableWeapons",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c65ae0e-8f76-4fce-9309-11993db0e0fc",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchAirAir",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d4c7738-0eda-4557-ba4e-f74c07798798",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchAirGround",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72423de1-bf31-4613-bfe7-098108e8d7f7",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchCanon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
