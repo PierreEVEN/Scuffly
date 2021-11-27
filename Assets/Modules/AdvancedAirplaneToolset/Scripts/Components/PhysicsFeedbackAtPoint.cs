@@ -3,45 +3,36 @@ using UnityEngine.VFX;
 
 
 /*
- * Component qui recupere les forces physique au point indique, et transmet ces informations a un systeme de particule (ou autre)
+ * Component qui recupere les forces physique au point indiqué, et transmet ces informations a un systeme de particule (ou autre)
  */
-public class PhysicsFeedbackAtPoint : MonoBehaviour
+public class PhysicsFeedbackAtPoint : PlaneComponent
 {
-    Rigidbody rb;
-    VisualEffect fxTest;
+    VisualEffect fx;
 
-    Vector3 currentAcceleration;
     Vector3 smoothedAcceleration;
-
     Vector3 lastVelocity;
 
+    // Acceleration lissee (espace local)
     public Vector3 Acceleration
     {
         get { return smoothedAcceleration; }
     }
 
+    // Forces de G appliquees au point transform.position (espace local)
     public Vector3 GForce
     {
         get { return smoothedAcceleration / -9.81f + new Vector3(0, -1, 0); }
     }
 
-    void Start()
+    private void OnEnable()
     {
+        lastVelocity = Physics.velocity;
     }
 
     void FixedUpdate()
     {
-        if (!rb)
-        {
-            rb = GetComponentInParent<Rigidbody>();
-            lastVelocity = rb.velocity;
-        }
-        if (!rb)
-            Debug.LogError("cannot find rigidbody");
-
-        // Calcule la force d'acceleration
-        Vector3 relativeVelocity = transform.InverseTransformDirection(rb.GetPointVelocity(transform.position));
-        currentAcceleration = (relativeVelocity - lastVelocity) / Time.deltaTime;
+        // Calcule la force d'acceleration relative
+        Vector3 relativeVelocity = transform.InverseTransformDirection(Physics.GetPointVelocity(transform.position));
 
         smoothedAcceleration = new Vector3(
             Mathf.Lerp(smoothedAcceleration.x, relativeVelocity.x, Time.deltaTime * 10),
@@ -50,19 +41,20 @@ public class PhysicsFeedbackAtPoint : MonoBehaviour
 
         lastVelocity = relativeVelocity;
 
-        if (!fxTest)
-            fxTest = GetComponent<VisualEffect>();
-        if (!fxTest)
+        // transmet eventuellement les informations a un systeme de particule
+        if (!fx)
+            fx = GetComponent<VisualEffect>();
+        if (!fx)
             return;
 
-        if (fxTest.HasFloat("Acceleration"))
+        if (fx.HasFloat("Acceleration"))
         {
-            fxTest.SetFloat("Acceleration", Acceleration.magnitude);
+            fx.SetFloat("Acceleration", Acceleration.magnitude);
         }
 
-        if (fxTest.HasFloat("UpVelocity"))
+        if (fx.HasFloat("UpVelocity"))
         {
-            fxTest.SetFloat("UpVelocity", relativeVelocity.y);
+            fx.SetFloat("UpVelocity", relativeVelocity.y);
         }
     }
 }

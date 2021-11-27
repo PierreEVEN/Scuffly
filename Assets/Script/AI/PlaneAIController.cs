@@ -8,6 +8,7 @@ enum EAiMode
     Flying,
 }
 
+// WIP : AI controller => joueur IA a attacher a un avion pour le rendre autonome (l'avion n'est plus controllable par la suite)
 public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
 {
     // Start is called before the first frame update

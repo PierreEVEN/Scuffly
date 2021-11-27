@@ -26,6 +26,7 @@ public class WeaponPod : PlaneComponent
             Destroy(podItemObject);
     }
 
+    // Tire l'arme attachée au pod
     public void Shoot(GameObject target)
     {
         // On regarde si un arme est attachee au pod, si c'est le cas on l'active.

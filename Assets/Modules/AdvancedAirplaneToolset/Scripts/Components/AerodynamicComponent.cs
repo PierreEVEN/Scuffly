@@ -62,6 +62,7 @@ public class AerodynamicComponent : MonoBehaviour
         RecomputeData();
     }
 
+    // regenere les donnees et les surfaces (operation assez lourde)
     private void RecomputeData()
     {
         Profiler.BeginSample("Recompute aerodynamic surfaces");
@@ -118,6 +119,7 @@ public class AerodynamicComponent : MonoBehaviour
 
         Profiler.BeginSample("Compute aerodynamic forces for " + transform.root.name + " : " + gameObject.name);
 
+        // On applique une force à chaque surface
         for (int i = 0; i < Surfaces.Count; ++i)
         {
             PhysicSurface surface = Surfaces[i];
@@ -148,6 +150,7 @@ public class AerodynamicComponent : MonoBehaviour
 #if UNITY_EDITOR
     private void Update()
     {
+        // Debug
         if (drawSurfaceInfluence)
         {
             foreach (var surface in Surfaces) // Draw drag areas

@@ -1,6 +1,7 @@
 
 using UnityEngine;
 
+// Action de l'interrupteur
 public enum ESwitchTarget
 {
     None,
@@ -12,22 +13,28 @@ public enum ESwitchTarget
     Weapons
 }
 
+// Interrupteur a deux positions ON/OFF, a placer dans le cockpit de l'avion
 [ExecuteInEditMode]
 public class FlipFlopSwitch : SwitchBase
 {
+    // Position de base
     public bool On = false;
+    // Action de l'interrupteur
     public ESwitchTarget modifiedProperty;
 
+    // Positions et rotations de l'interupteur en position ON et OFF
     public Vector3 PositionOn = new Vector3();
     public Quaternion RotationOn = new Quaternion();
 
     public Vector3 PositionOff = new Vector3();
     public Quaternion RotationOff = new Quaternion();
 
+    // Son a l'appuis du bouton
     public AK.Wwise.Event PlayEvent;
 
     private void Update()
     {
+        // Detecte un eventuellement changement exterieur de la variable observee
         if (Application.isPlaying && modifiedProperty != ESwitchTarget.None)
         {
             bool newOn = false;
@@ -54,6 +61,7 @@ public class FlipFlopSwitch : SwitchBase
                 case ESwitchTarget.None:
                     break;
             }
+            // Met a jour l'etat bouton
             if (newOn != On)
             {
                 On = newOn;
@@ -61,6 +69,7 @@ public class FlipFlopSwitch : SwitchBase
             }
         }
 
+        // Met a jour la position graphique de l'interupteur
         for (int i = 0; i < transform.childCount; ++i)
         {
             Transform child = transform.GetChild(i);
@@ -69,6 +78,7 @@ public class FlipFlopSwitch : SwitchBase
         }
     }
 
+    // Change la position du bouton : On = !On
     public override void Switch()
     {
         On = !On;
@@ -76,6 +86,7 @@ public class FlipFlopSwitch : SwitchBase
         if (modifiedProperty == ESwitchTarget.None)
             return;
 
+        // Applique la modification a l'avion en fonction de la propriété modifiée
         switch (modifiedProperty)
         {
             case ESwitchTarget.MainPower:

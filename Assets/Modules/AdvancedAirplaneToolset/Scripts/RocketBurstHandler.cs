@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
+
+//@TODO : remove because it's useless and use VFXPropertySetter instead
 
 // Permet de mettre a jour la position de spawn de la particule dans le monde
 [RequireComponent(typeof(VisualEffect)), ExecuteInEditMode]

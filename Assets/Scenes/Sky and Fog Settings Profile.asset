@@ -105,20 +105,6 @@ MonoBehaviour:
   - {fileID: 8714634655182515906}
   - {fileID: -4903554676374266398}
   - {fileID: 4551886473462880103}
-  - {fileID: 113781328230892912}
---- !u!114 &113781328230892912
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43dc104985c092f46a6114990f0bbcfe, type: 3}
-  m_Name: GForcePostProcessEffect
-  m_EditorClassIdentifier: 
-  active: 1
 --- !u!114 &1195025563092805726
 MonoBehaviour:
   m_ObjectHideFlags: 3

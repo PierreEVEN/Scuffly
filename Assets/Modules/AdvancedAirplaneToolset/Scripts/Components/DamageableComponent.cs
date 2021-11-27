@@ -1,20 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
+/**
+ * Un DamageableComponent est un element de l'avion qui pourra potentiellement etre détaché de celui-ci en cas de choc ou autre.
+ */
 [RequireComponent(typeof(MeshCollider))]
 public class DamageableComponent : MonoBehaviour
 {
+    // Niveau de vie actuel du component
     public float health = 100;
+    // VFX d'incendis
+    public VisualEffectAsset smokeFXAsset;
 
     bool destroyed = false;
     MeshCollider meshCollider;
-
-    public VisualEffectAsset smokeFXAsset;
     VisualEffect smokeFX;
 
+    // Event appelé au moment où le component est détaché de son parent (dommages critiques)
     public UnityEvent OnDestroyed = new UnityEvent();
 
     // Start is called before the first frame update
@@ -24,6 +27,7 @@ public class DamageableComponent : MonoBehaviour
         UpdateHealth();
     }
 
+    // Applique des dommages a partir de points d'impacts. Les degars seront calcules en fonction du point d'impact, et du rayon.
     public void ApplyDamageAtLocation(Vector3[] impactLocations, float radius, float damage)
     {
         if (destroyed)
@@ -44,11 +48,13 @@ public class DamageableComponent : MonoBehaviour
         float damagePercent = 1 - (distance / radius);
         float healthBefore = health;
         health -= Mathf.Clamp01(damagePercent) * damage;
+        // Commence les effets de fumee dès qu'on passe en dessous des 50 de vie
         if (health < 50 && healthBefore >= 50)
             BeginSmoke(closestPoint);
         UpdateHealth();
     }
 
+    // Debut d'un incendis
     void BeginSmoke(Vector3 location)
     {
         GameObject smokeContainer = new GameObject("SmokeContainer");
@@ -66,10 +72,12 @@ public class DamageableComponent : MonoBehaviour
         smokeContainerParent.AddComponent<RocketBurstHandler>();
     }
 
+    // A appeler en cas de changement d'etat de la vie de l'avion
     void UpdateHealth()
     {
         if (health <= 0)
         {
+            // Si le component n'est pas encore détaché, on le detache.
             if (!destroyed)
             {
                 destroyed = true;
@@ -96,10 +104,5 @@ public class DamageableComponent : MonoBehaviour
                 Destroy(gameObject, 60);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }

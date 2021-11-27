@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//@TODO improve threat warning indicator
 [RequireComponent(typeof(Canvas))]
 public class ThreatWarningIndicator : PlaneComponent
 {

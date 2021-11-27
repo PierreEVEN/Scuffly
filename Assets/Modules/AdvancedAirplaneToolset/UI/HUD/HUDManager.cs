@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Gestion du HUD et de ses differents composants //@TODO : improve HUDManager
 public class HUDManager : MonoBehaviour
 {
 
@@ -87,11 +88,10 @@ public class HUDManager : MonoBehaviour
         GameObject widgetToDisplay = null;
 
         //@TODO : display landing widget
-        /*if (!Plane.RetractGear)
+        if (!Plane.RetractGear)
         {
         }
         else
-        */
         {
             WeaponManager weaponManager = Plane.GetComponent<WeaponManager>();
             if (weaponManager)

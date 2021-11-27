@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/*
+ * Instancie l'UI du HUD de l'avion. Le gameObject contenant l'UI sera rendu dans une texture via une camera dediee, la texture sera ensuite affichee sur le HUD de l'avion via un material simulant l'effet holographique
+ */ 
 [ExecuteInEditMode]
 public class HUDRenderer : PlaneComponent
 {

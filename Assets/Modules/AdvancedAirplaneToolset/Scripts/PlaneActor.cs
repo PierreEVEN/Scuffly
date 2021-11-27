@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
+// Interface a ajouter a un component capable de produire de l'energie
 public interface IPowerProvider
 {
     public float GetPower(); // Energie produite en KVA
@@ -15,10 +16,9 @@ public interface IPowerProvider
  * Pour fonctionner, l'avion a besoin d'une source d'energie ( ex : batteries qu'il faut d'abord allumer )
  * Le moteur et les systemes hydrauliques ne pourront etre allume que si l'APU est fonctionnel.
  * 
+ * //@TODO : cleanup PlaneActor
  * 
- * @TODO : implementer les batteries
  */
-
 public enum PlaneTeam
 {
     Red,

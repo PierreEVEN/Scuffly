@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+// Radar a placer sur un avion. Scan de façon reguliere les environs de l'avion
 public class Radar : PlaneComponent
 {
     public struct TargetMetaData
@@ -10,13 +11,18 @@ public class Radar : PlaneComponent
         public float scanTime;
     }
 
+    // Liste des objets detectes
     [HideInInspector]
     public Dictionary<GameObject, TargetMetaData> scannedTargets = new Dictionary<GameObject, TargetMetaData>();
 
+    // Rotation courante du scan
     [HideInInspector]
     public float currentScanRotation = 0;
 
+    // Vitesse de rotation (degres / seconde) du scan radar
     public float scanSpeed = 200;
+
+    // Delais au dela duquel une cible non rescannee est consideree comme perdue
     public float scanTimeout = 10;
 
     public UnityEvent<GameObject> OnDetectNewTarget = new UnityEvent<GameObject>();
@@ -31,6 +37,7 @@ public class Radar : PlaneComponent
         currentScanRotation = newRot;
     }
 
+    // Met a jour ou ajoute une cible.
     void UpdateTarget(GameObject target)
     {
         if (scannedTargets.ContainsKey(target))
@@ -56,16 +63,14 @@ public class Radar : PlaneComponent
         return new Vector3(inVector.x, yAxis, inVector.z);
     }
 
+    // Scan une zone dans un cone entre un rayon dirFrom et dirTo. Met a jour tous les avions trouves dans cette zone
     void ScanVector(float dirFrom, float dirTo)
     {
         foreach (var plane in PlaneActor.PlaneList)
         {
             if (plane.gameObject == Plane.gameObject) continue;
-
             plane.GetHeading();
-
             Vector3 relativeDirection = OverrideYAxis(plane.transform.position - Plane.transform.position, 0).normalized;
-
             float relativeAngle = (Vector3.SignedAngle(OverrideYAxis(relativeDirection, 0), OverrideYAxis(transform.forward, 0), new Vector3(0, 1, 0)) + 360) % 360;
 
             if (dirTo < dirFrom)
@@ -75,6 +80,7 @@ public class Radar : PlaneComponent
                 dirTo += 360;
             }
 
+            // Si l'avion est dans la zone de scan, le met a jour
             if (dirFrom <= relativeAngle && relativeAngle < dirTo)
             {
                 UpdateTarget(plane.gameObject);

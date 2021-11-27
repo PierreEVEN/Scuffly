@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//@TODO fix attitude widget
 public class UIAtitudeManager : HUDComponent
 {
     bool init = false;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /**
- * Classe de base pour tout component faisant partie d'un avion
+ * Classe de base pour tout component faisant partie d'un avion. Contient des getter permetant de recuperer une reference vers differents composants de l'avion
  */
 public class PlaneComponent : MonoBehaviour
 {

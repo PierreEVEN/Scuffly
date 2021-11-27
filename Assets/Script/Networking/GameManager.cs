@@ -12,6 +12,7 @@ public struct SpawnPointInfos
     public bool isRedTeam;
 }
 
+//@TODO improve multiplayer system
 public class GameManager : NetworkBehaviour
 {
     private static GameManager _singleton;

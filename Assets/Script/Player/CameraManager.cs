@@ -163,12 +163,13 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     }
 
     private bool hasClicked = false;
-    private SwitchBase lastSwitch;
+    [HideInInspector]
+    public SwitchBase selectedSwitch;
     public void RaycastSwitchs()
     {
-        if (lastSwitch)
-            lastSwitch.StopOver();
-        lastSwitch = null;
+        if (selectedSwitch)
+            selectedSwitch.StopOver();
+        selectedSwitch = null;
 
         Ray rayTarget = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
@@ -178,10 +179,10 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             SwitchBase sw = hit.collider.GetComponent<SwitchBase>();
             if (sw)
             {
-                lastSwitch = sw;
-                lastSwitch.StartOver();
+                selectedSwitch = sw;
+                selectedSwitch.StartOver();
                 if (hasClicked)
-                    lastSwitch.Switch();
+                    selectedSwitch.Switch();
             }
         }
         hasClicked = false;

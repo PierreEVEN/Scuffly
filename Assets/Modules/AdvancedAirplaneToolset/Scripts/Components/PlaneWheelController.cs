@@ -8,6 +8,8 @@ using UnityEngine;
  */
 public class PlaneWheelController : PlaneComponent
 {
+    //@TODO : improve the wheel system to be more reliable
+
     WheelCollider wheelPhysic;
     private Transform wheelAxisBone;
     float WheelRotation;
@@ -73,6 +75,7 @@ public class PlaneWheelController : PlaneComponent
         Plane.OnGearChange.RemoveListener(UpdateGear);
     }
 
+    // Appelé quand un changement d'etat est detecté. La rentree du train necessite un minimum d'energie
     void UpdateGear()
     {
         // On ne peut pas rentrer le train si pas assez d'energie
@@ -86,11 +89,11 @@ public class PlaneWheelController : PlaneComponent
             Retract(false);
     }
 
+    // Mise a jour de l'etat des freins
     void UpdateBrakes()
     {
         WheelPhysic.brakeTorque = UseBrakes && Plane.Brakes ? 3000 : 0;
     }
-
 
     // Update is called once per frame
     void Update()
@@ -101,7 +104,8 @@ public class PlaneWheelController : PlaneComponent
         gameObject.transform.rotation = transform.parent.rotation * Quaternion.FromToRotation(wheelAxisBone.position, wheelAxisBone.parent.position) * Quaternion.Euler(0, 0, WheelPhysic.steerAngle) * Quaternion.Euler(0, -WheelRotation, 90);
     }
 
-    public void Retract(bool retract)
+    // Rentre ou sort le train d'aterissage
+    void Retract(bool retract)
     {
         if (!gearAnim || retract != Deployed) return;
         if (Deployed)

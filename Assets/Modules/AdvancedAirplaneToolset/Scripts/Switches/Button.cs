@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Action du bouton
 public enum EButtonType
 {
     None,
@@ -7,14 +8,18 @@ public enum EButtonType
     AirGround,
 }
 
+// Bouton sur lequel on peut appuyer, a placer dans le cockpit
 public class Button : SwitchBase
 {
+    // Action du bouton
     public EButtonType buttonType;
-    Vector3 pushVector = new Vector3(0, 0, 0.005f);
+    // Offset maximal du bouton pressé
+    public Vector3 pushVector = new Vector3(0, 0, 0.005f);
 
     Vector3 initialRelativePos;
 
-    float Timeline;
+    // Temps de l'animation de pression sur le bouton
+    float Timeline = 0;
 
     private void OnEnable()
     {
@@ -27,12 +32,14 @@ public class Button : SwitchBase
         {
             Timeline -= Time.deltaTime * 5;
 
+            // Joue l'animation de timeline
             transform.localPosition = initialRelativePos + pushVector * (0.5f - Mathf.Abs(Timeline - 0.5f)) * 2;
-            if (Timeline <= 0)
-                transform.localPosition = initialRelativePos;
         }
+        if (Timeline <= 0)
+            transform.localPosition = initialRelativePos;
     }
-
+    
+    // Appel des differentes fonctions
     public override void Switch()
     {
         switch (buttonType)
@@ -46,6 +53,7 @@ public class Button : SwitchBase
             default:
                 break;
         }
+        // Joue la timeline depuis le debut
         Timeline = 1;
     }
 }

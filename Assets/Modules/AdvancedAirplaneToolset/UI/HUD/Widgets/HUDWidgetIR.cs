@@ -1,6 +1,7 @@
 using AK.Wwise;
 using UnityEngine;
 
+// Widget pour le HUD : systeme de visee infrarouge (pour les missiles de type Fox3 / Aim9)
 public class HUDWidgetIR : HUDComponent
 {
 
@@ -25,6 +26,7 @@ public class HUDWidgetIR : HUDComponent
 
     private void Update()
     {
+        // Si une cible est acquise par le detecteur infrarouge, modifie le pitch de la sonnerie IR, et place l'indicateur de ciblage IR sur la cible. Reduit aussi sa taille a 30%
         if (IrDetectorComponent.acquiredTarget)
         {
             ToneRtpc.SetValue(IrDetectorComponent.gameObject, 100);
@@ -33,6 +35,7 @@ public class HUDWidgetIR : HUDComponent
         }
         else
         {
+            // Sinon le remet dans sa position de recherche
             ToneRtpc.SetValue(IrDetectorComponent.gameObject, 0);
             transform.localPosition = HUD.WorldDirectionToScreenPosition(Plane.transform.forward);
             transform.localScale = Vector3.one;

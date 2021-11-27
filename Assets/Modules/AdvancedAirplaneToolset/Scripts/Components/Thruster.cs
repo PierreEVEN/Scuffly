@@ -18,6 +18,7 @@ public class Thruster : PlaneComponent, IPowerProvider
     // Courbe de force de poussee maximale en fonction de la vitesse
     public AnimationCurve ThrustForceCurve = new AnimationCurve(new Keyframe[]{new Keyframe(0, 3000000.0f), new Keyframe(300, 8000000.0f)});
 
+    // Duree de mise en route et d'extinction du reacteur
     public float engineStartupDuration = 39;
     public float engineShutdownDuration = 39;
     [HideInInspector]
@@ -33,10 +34,12 @@ public class Thruster : PlaneComponent, IPowerProvider
         get { return throttleCurrentPercent * 100; }
     }
 
+    // Parametres du son du moteur
     public RTPC EngineStartupRTPC;
     public RTPC EngineStatusRTPC;
     public RTPC CameraDistanceRPC;
 
+    // Son du moteur
     AudioEngine audioEngine;
 
     void OnEnable()

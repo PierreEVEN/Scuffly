@@ -10,11 +10,14 @@ public enum WeaponMode
     Pod_Ground,
 }
 
+// Gestion de l'armement de l'avion. La sécurité d'armement doit etre levée pour pouvoir l'utiliser.
 public class WeaponManager : PlaneComponent
 {
     bool toggleWeaponOn = false;
+    // Mode d'armement selectionnes (air / sol / type de pod etc...)
     WeaponMode weaponMode = WeaponMode.None;
     PodItemType currentPodType = PodItemType.Missile_IR;
+    // Getter : l'armement n'est pas active s'il n'y a pas d'energie dans l'avion
     public bool IsEnabled
     {
         get { return Plane.MainPower && toggleWeaponOn; }
@@ -23,6 +26,7 @@ public class WeaponManager : PlaneComponent
     public WeaponMode CurrentWeaponMode { get { return weaponMode; } }
     public PodItemType CurrentSelectedWeaponType { get { return currentPodType; } }
 
+    // Etat de la securite d'armement
     public bool IsToggledOn
     {
         get { return toggleWeaponOn; }
@@ -31,6 +35,7 @@ public class WeaponManager : PlaneComponent
         }
     }
 
+    // @TODO improve weapon systeme
     [HideInInspector]
     public UnityEvent OnSwitchWeaponMode = new UnityEvent();
     [HideInInspector]

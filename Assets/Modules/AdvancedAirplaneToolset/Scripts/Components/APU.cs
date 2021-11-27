@@ -8,13 +8,13 @@ using UnityEngine;
 [RequireComponent(typeof(AudioEngine))]
 public class APU : PlaneComponent, IPowerProvider
 {
+    // Durees de mise en route et d'extinction
     public float StartupDuration = 14;
     public float ShutdownDuration = 12;
 
+    // Etat du demarrage (0 - 1)
     float currentStartupPercent = 0.0f;
-
     bool apuEnabled = false;
-
     float enoughPowerTimer = 0;
 
     AudioEngine audioEngine;
@@ -37,7 +37,7 @@ public class APU : PlaneComponent, IPowerProvider
     {
         Plane.OnApuChange.RemoveListener(UpdateState);
         Plane.OnPowerSwitchChanged.RemoveListener(UpdateState);
-        StopApu();
+        apuEnabled = false;
     }
 
     private void OnGUI()
@@ -51,32 +51,20 @@ public class APU : PlaneComponent, IPowerProvider
         GUILayout.EndArea();
     }
 
+    // Met a jour l'etat de l'APU : desactive si l'energie est trop basse, ou qu'elle est suffisante pour ne plus necessiter d'apoint (
     void UpdateState()
     {
         // requiere 5 KVA pour demarrer / produit 40 kva
         if (Plane.EnableAPU && Plane.GetCurrentPower() > 5 && enoughPowerTimer < 10) // si le moteur de l'avion fournit assez d'energie, couper l'APU car inutile
-            StartApu();
+            apuEnabled = true;
         else
         {
             enoughPowerTimer = 0;
-            StopApu();
+            apuEnabled = false;
             Plane.EnableAPU = false;
         }
     }
 
-    public void StartApu()
-    {
-        if (apuEnabled) return;
-
-        apuEnabled = true;
-    }
-
-    public void StopApu()
-    {
-        // Coupe l'APU : Joue le son d'etteinte.
-        if (!apuEnabled) return;
-        apuEnabled = false;
-    }
 
     void Update()
     {
@@ -97,6 +85,7 @@ public class APU : PlaneComponent, IPowerProvider
 
     }
 
+    // Interface IPowerProvider : energie produite par l'APU
     public float GetPower()
     {
         return currentStartupPercent * 40;

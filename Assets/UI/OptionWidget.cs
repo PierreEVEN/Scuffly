@@ -3,45 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.HighDefinition;
+using UnityEngine.Rendering;
 
 public class OptionWidget : MonoBehaviour
 {
     public HDRenderPipelineAsset hdrpAsset;
 
-    Text fpsText;
     // Start is called before the first frame update
     void Start()
     {
-        foreach (var text in GetComponentsInChildren<Text>())
-        {
-            if (text.text == "fps")
-                fpsText = text;
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (fpsText)
-        {
-            fpsText.text = 1 / Time.deltaTime + " fps";
-        }
-    }
-
-    public void SetShadows(Toggle enable)
-    {
-        if (enable.isOn)
-            QualitySettings.SetQualityLevel(0);
-        else
-            QualitySettings.SetQualityLevel(2);
-    }
-
-    public void SetVolumetricClouds(bool enable)
-    {
     }
 
     public void SetGraphicsMax()
     {
+        GameObject.Find("Directional Light Sun").GetComponent<Light>().shadows = LightShadows.Hard;
         GameObject landscape = GameObject.FindGameObjectWithTag("GPULandscape");
         GPULandscape terrain = landscape.GetComponent<GPULandscape>();
         ProceduralFolliageSpawner folliage = landscape.GetComponent<ProceduralFolliageSpawner>();
@@ -54,6 +34,7 @@ public class OptionWidget : MonoBehaviour
     }
     public void SetGraphicsHigh()
     {
+        GameObject.Find("Directional Light Sun").GetComponent<Light>().shadows = LightShadows.Hard;
         GameObject landscape = GameObject.FindGameObjectWithTag("GPULandscape");
         GPULandscape terrain = landscape.GetComponent<GPULandscape>();
         ProceduralFolliageSpawner folliage = landscape.GetComponent<ProceduralFolliageSpawner>();
@@ -67,6 +48,7 @@ public class OptionWidget : MonoBehaviour
 
     public void SetGraphicsMedium()
     {
+        GameObject.Find("Directional Light Sun").GetComponent<Light>().shadows = LightShadows.Hard;
         GameObject landscape = GameObject.FindGameObjectWithTag("GPULandscape");
         GPULandscape terrain = landscape.GetComponent<GPULandscape>();
         ProceduralFolliageSpawner folliage = landscape.GetComponent<ProceduralFolliageSpawner>();
@@ -80,6 +62,7 @@ public class OptionWidget : MonoBehaviour
 
     public void SetGraphicsMinimum()
     {
+        GameObject.Find("Directional Light Sun").GetComponent<Light>().shadows = LightShadows.None;
         GameObject landscape = GameObject.FindGameObjectWithTag("GPULandscape");
         GPULandscape terrain = landscape.GetComponent<GPULandscape>();
         ProceduralFolliageSpawner folliage = landscape.GetComponent<ProceduralFolliageSpawner>();
@@ -90,9 +73,6 @@ public class OptionWidget : MonoBehaviour
         terrain.Reset = true;
         folliage.Reset = true;
     }
-
-
-
 
     public void Quit()
     {

@@ -8,7 +8,7 @@ enum RotatingSwitchStates
 
 }
 
-//@TODO
+//@TODO AJOUTER LES POTENTIOMETRES
 public class RotatingSwitch : SwitchBase
 {
     RotatingSwitchStates modifiedProperty;
@@ -16,12 +16,6 @@ public class RotatingSwitch : SwitchBase
     public List<float> PerStateRotation;
 
     public AK.Wwise.Event SwitchAudio;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     private void OnValidate()
     {

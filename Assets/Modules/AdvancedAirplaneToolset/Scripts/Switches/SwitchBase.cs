@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
+// Interface d'un bouton simple sur lequel on peut faire une action au clic
 public abstract class SwitchBase : PlaneComponent
 {
-    public string Description = "";
+    // Texte de description du bouton
+    public string Desc = "";
 
+    // Appuis sur le bouton
     public abstract void Switch();
 
+    // Highligh du bouton quand on passe la souris dessus
     public void StartOver()
     {
         gameObject.layer = 3;

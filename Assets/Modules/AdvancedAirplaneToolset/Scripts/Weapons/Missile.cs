@@ -2,12 +2,10 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 /*
- * @Autor : Leo
  * 
  * Armement de type missile attachable a un pod d'armement
  * 
  */
-
 public class Missile : PodItem
 {
     public float ThrustPower = 100;

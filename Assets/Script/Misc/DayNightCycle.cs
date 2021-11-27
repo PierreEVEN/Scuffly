@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Cycle jour - nuit
+// La rotation se fait par cran pour eviter une mise a jour du lighting a chaque frame
 [ExecuteInEditMode]
 public class DayNightCycle : MonoBehaviour
 {
@@ -24,7 +24,6 @@ public class DayNightCycle : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!Application.isPlaying)

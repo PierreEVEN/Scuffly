@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Class parent d'un component attaché au HUD. Contient notament des getter vers differents composants de l'avion
 public class HUDComponent : MonoBehaviour
 {
     HUDManager _hud;

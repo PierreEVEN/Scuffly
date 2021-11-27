@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
+//@TODO fix and improve velocity widget
 [RequireComponent(typeof(Text))]
 public class UIVelocityManager : HUDComponent
 {

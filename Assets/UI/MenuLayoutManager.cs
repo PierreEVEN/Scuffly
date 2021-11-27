@@ -47,17 +47,11 @@ public class MenuLayoutManager : MonoBehaviour
 
     public void PressBackButton()
     {
-        SetDisplayedWidget(null);
+        PlayerManager.LocalPlayer.GetComponent<UiInputs>().OnPause();
     }
-    // Start is called before the first frame update
-    void Start()
+    public void PressQuitButton()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("quit");
+        Application.Quit();
     }
 }

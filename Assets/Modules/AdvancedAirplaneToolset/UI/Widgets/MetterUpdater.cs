@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// Type de propriétée utilisée
 public enum MetterType
 {
     Altitude,
@@ -12,17 +13,18 @@ public enum MetterType
     HydrolicPressure
 }
 
+// Component chargé de mettre a jour les aiguilles et autres indicateurs dans le cockpit de l'avion
 [ExecuteInEditMode]
 public class MetterUpdater : PlaneComponent
 {
+    // Texte indiquant la valeur (optionnel)
     public GameObject metterText;
-
+    // Aiguille
     public GameObject metterNeedle;
-
+    // Type d'indicateur
     public MetterType metterType = MetterType.Altitude;
-
+    // Multiplicateur de rotation par rapport à la valeur de base
     public float needleScale = 0.0001f;
-
     public float currentValue = 0;
 
     void Update()
@@ -34,6 +36,7 @@ public class MetterUpdater : PlaneComponent
     }
 
 
+    // Retourne la valeur correspondante au type de l'indicateur
     float getValue()
     {
         if (!Plane)
