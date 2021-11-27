@@ -84,7 +84,7 @@ public class PlaneActor : NetworkBehaviour
 
     public bool EnableDebug
     {
-        get { return true; }
+        get { return false; }
     }
 
     // Getter et setter sur l'etat de l'avion. Appelle des events sur lesquels se bind les differents composants
@@ -187,6 +187,7 @@ public class PlaneActor : NetworkBehaviour
     }
     private void OnDisable()
     {
+        OnDestroyed.Invoke();
         PlaneList.Remove(this);
     }
 
@@ -414,7 +415,7 @@ public class PlaneActor : NetworkBehaviour
     {
         if (thrusterList.Count <= thrusterIndex)
             return 0;
-        return thrusterList[thrusterIndex].ThrottlePercent;
+        return thrusterList[thrusterIndex].ThrottlePercent * 0.8f + thrusterList[thrusterIndex].engineStartupPercent * 20f;
     }
 
     public float GetNozeOpenning()

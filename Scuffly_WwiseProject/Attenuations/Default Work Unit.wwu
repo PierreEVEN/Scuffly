@@ -15,19 +15,19 @@
 								<Value>2</Value>
 							</ValueList>
 						</Property>
-						<Property Name="ConeInnerAngle" Type="int32" Value="80"/>
+						<Property Name="ConeInnerAngle" Type="int32" Value="185"/>
 						<Property Name="ConeLowPassFilterValue" Type="int32">
 							<ValueList>
 								<Value>32</Value>
 							</ValueList>
 						</Property>
-						<Property Name="ConeOuterAngle" Type="int32" Value="250"/>
+						<Property Name="ConeOuterAngle" Type="int32" Value="340"/>
 						<Property Name="ConeUse" Type="bool">
 							<ValueList>
 								<Value>True</Value>
 							</ValueList>
 						</Property>
-						<Property Name="RadiusMax" Type="Real64" Value="1000"/>
+						<Property Name="RadiusMax" Type="Real64" Value="3000"/>
 					</PropertyList>
 					<CurveUsageInfoList>
 						<VolumeDryUsage>
@@ -43,32 +43,32 @@
 											<Flags>5</Flags>
 										</Point>
 										<Point>
-											<XPos>3.22665</XPos>
+											<XPos>9.67995</XPos>
 											<YPos>-0.03495</YPos>
 											<Flags>0</Flags>
 										</Point>
 										<Point>
-											<XPos>123.87253</XPos>
+											<XPos>371.61759</XPos>
 											<YPos>-1.86324</YPos>
 											<Flags>0</Flags>
 										</Point>
 										<Point>
-											<XPos>332.53156</XPos>
+											<XPos>997.59468</XPos>
 											<YPos>-6.81854</YPos>
 											<Flags>0</Flags>
 										</Point>
 										<Point>
-											<XPos>606.1335</XPos>
-											<YPos>-10.27581</YPos>
+											<XPos>1789.537</XPos>
+											<YPos>-12.10299</YPos>
 											<Flags>0</Flags>
 										</Point>
 										<Point>
-											<XPos>769.09201</XPos>
-											<YPos>-14.56855</YPos>
+											<XPos>2343.3554</XPos>
+											<YPos>-17.53761</YPos>
 											<Flags>0</Flags>
 										</Point>
 										<Point>
-											<XPos>1000</XPos>
+											<XPos>3000</XPos>
 											<YPos>-200</YPos>
 											<Flags>37</Flags>
 										</Point>
@@ -95,7 +95,7 @@
 											<Flags>5</Flags>
 										</Point>
 										<Point>
-											<XPos>1000</XPos>
+											<XPos>3000</XPos>
 											<YPos>100</YPos>
 											<Flags>37</Flags>
 										</Point>
@@ -119,7 +119,7 @@
 											<Flags>5</Flags>
 										</Point>
 										<Point>
-											<XPos>1000</XPos>
+											<XPos>3000</XPos>
 											<YPos>0</YPos>
 											<Flags>37</Flags>
 										</Point>
@@ -140,7 +140,7 @@
 											<Flags>5</Flags>
 										</Point>
 										<Point>
-											<XPos>1000</XPos>
+											<XPos>3000</XPos>
 											<YPos>0</YPos>
 											<Flags>37</Flags>
 										</Point>
@@ -171,6 +171,67 @@
 										</Point>
 										<Point>
 											<XPos>100</XPos>
+											<YPos>-200</YPos>
+											<Flags>37</Flags>
+										</Point>
+									</PointList>
+								</Curve>
+							</CurveUsageInfo>
+						</VolumeDryUsage>
+						<VolumeWetGameUsage>
+							<CurveUsageInfo Platform="Linked" CurveToUse="UseVolumeDry"/>
+						</VolumeWetGameUsage>
+						<VolumeWetUserUsage>
+							<CurveUsageInfo Platform="Linked" CurveToUse="UseVolumeDry"/>
+						</VolumeWetUserUsage>
+						<LowPassFilterUsage>
+							<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
+						</LowPassFilterUsage>
+						<HighPassFilterUsage>
+							<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
+						</HighPassFilterUsage>
+						<SpreadUsage>
+							<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
+						</SpreadUsage>
+						<FocusUsage>
+							<CurveUsageInfo Platform="Linked" CurveToUse="None"/>
+						</FocusUsage>
+					</CurveUsageInfoList>
+				</Attenuation>
+				<Attenuation Name="APUAttenuation" ID="{B0DB7409-2CFC-4DF5-B0B5-7181C09AFB65}" ShortID="677096130">
+					<PropertyList>
+						<Property Name="ConeAttenuation" Type="Real64">
+							<ValueList>
+								<Value>-2</Value>
+							</ValueList>
+						</Property>
+						<Property Name="ConeLowPassFilterValue" Type="int32">
+							<ValueList>
+								<Value>26</Value>
+							</ValueList>
+						</Property>
+						<Property Name="ConeUse" Type="bool">
+							<ValueList>
+								<Value>True</Value>
+							</ValueList>
+						</Property>
+						<Property Name="RadiusMax" Type="Real64" Value="400"/>
+					</PropertyList>
+					<CurveUsageInfoList>
+						<VolumeDryUsage>
+							<CurveUsageInfo Platform="Linked" CurveToUse="Custom">
+								<Curve Name="VolumeDry" ID="{14494E11-AD33-42CA-B889-4EAC99BD8793}">
+									<PropertyList>
+										<Property Name="Flags" Type="int32" Value="3"/>
+									</PropertyList>
+									<PointList>
+										<Point>
+											<XPos>0</XPos>
+											<YPos>0</YPos>
+											<Flags>5</Flags>
+										</Point>
+										<Point>
+											<XPos>400</XPos>
 											<YPos>-200</YPos>
 											<Flags>37</Flags>
 										</Point>

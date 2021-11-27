@@ -19,7 +19,8 @@ public class HUDWidgetIR : HUDComponent
 
     private void OnDisable()
     {
-        StopTone.Post(IrDetectorComponent.gameObject);
+        if (IrDetectorComponent)
+            StopTone.Post(IrDetectorComponent.gameObject);
     }
 
     private void Update()

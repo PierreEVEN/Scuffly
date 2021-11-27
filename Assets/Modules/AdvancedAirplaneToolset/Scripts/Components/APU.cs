@@ -5,21 +5,11 @@ using UnityEngine;
  *  L'APU d'un avion est une generatrice electrique. Son fonctionnement est necessaire pour la mise en route du moteur
  *  
  */
+[RequireComponent(typeof(AudioEngine))]
 public class APU : PlaneComponent, IPowerProvider
 {
     public float StartupDuration = 14;
     public float ShutdownDuration = 12;
-
-    public AudioClip StartupAudio;
-    public AudioClip IdleAudio;
-    public AudioClip ShutdownAudio;
-
-    private AudioSource apuStartAudioSource;
-    private AudioSource apuIdleAudioSource;
-    private AudioSource apuShutdownAudioSource;
-
-    private GameObject startupContainer;
-    private GameObject shutdownContainer;
 
     float currentStartupPercent = 0.0f;
 
@@ -27,50 +17,9 @@ public class APU : PlaneComponent, IPowerProvider
 
     float enoughPowerTimer = 0;
 
-
+    AudioEngine audioEngine;
     void OnEnable()
     {
-        if (!startupContainer)
-        {
-            startupContainer = new GameObject("Startup container");
-            startupContainer.transform.parent = gameObject.transform;
-            startupContainer.transform.position = gameObject.transform.position;
-        }
-        if (!shutdownContainer)
-        {
-            shutdownContainer = new GameObject("Shutdown container");
-            shutdownContainer.transform.parent = gameObject.transform;
-            shutdownContainer.transform.position = gameObject.transform.position;
-        }
-        if (!apuIdleAudioSource)
-        {
-            apuIdleAudioSource = gameObject.AddComponent<AudioSource>();
-            apuIdleAudioSource.spatialBlend = 1.0f;
-            apuIdleAudioSource.dopplerLevel = 0;
-            apuIdleAudioSource.minDistance = 20;
-            apuIdleAudioSource.clip = IdleAudio;
-            apuIdleAudioSource.loop = true;
-            apuIdleAudioSource.volume = 0.5f;
-        }
-        if (!apuStartAudioSource)
-        {
-            apuStartAudioSource = startupContainer.AddComponent<AudioSource>();
-            apuStartAudioSource.spatialBlend = 1.0f;
-            apuStartAudioSource.minDistance = 20;
-            apuStartAudioSource.dopplerLevel = 0;
-            apuStartAudioSource.clip = StartupAudio;
-            apuStartAudioSource.volume = 0.5f;
-        }
-        if (!apuShutdownAudioSource)
-        {
-            apuShutdownAudioSource = shutdownContainer.AddComponent<AudioSource>();
-            apuShutdownAudioSource.spatialBlend = 1.0f;
-            apuShutdownAudioSource.dopplerLevel = 0;
-            apuShutdownAudioSource.minDistance = 20;
-            apuShutdownAudioSource.clip = ShutdownAudio;
-            apuShutdownAudioSource.volume = 0.5f;
-        }
-
         Plane.OnApuChange.AddListener(UpdateState);
         Plane.OnPowerSwitchChanged.AddListener(UpdateState);
         Plane.RegisterPowerProvider(this);
@@ -80,6 +29,8 @@ public class APU : PlaneComponent, IPowerProvider
             apuEnabled = true;
         }
         UpdateState();
+
+        audioEngine = GetComponent<AudioEngine>();
     }
 
     private void OnDisable()
@@ -117,9 +68,6 @@ public class APU : PlaneComponent, IPowerProvider
     {
         if (apuEnabled) return;
 
-        // Allume l'APU. Joue le son d'allumage
-        if (apuStartAudioSource)
-            apuStartAudioSource.Play();
         apuEnabled = true;
     }
 
@@ -127,23 +75,15 @@ public class APU : PlaneComponent, IPowerProvider
     {
         // Coupe l'APU : Joue le son d'etteinte.
         if (!apuEnabled) return;
-        apuShutdownAudioSource.Play();
         apuEnabled = false;
     }
 
     void Update()
     {
-        // On fait moduler le volume du son "idle" en fonction de l'etat de fonctionnement de l'APU
-        apuIdleAudioSource.volume = Mathf.Clamp(currentStartupPercent * 0.5f - 0.1f, 0, 1);
-        if (currentStartupPercent < 0.01f && apuIdleAudioSource.enabled)
-            apuIdleAudioSource.enabled = false;
-        else if (currentStartupPercent > 0.02f && !apuIdleAudioSource.enabled)
-        {
-            apuIdleAudioSource.enabled = true;
-            apuIdleAudioSource.Play();
-        }
         // Met a jour l'etat courant de l'APU (= vitesse de rotation de l'alternateur)
         currentStartupPercent = Mathf.Clamp(currentStartupPercent + (apuEnabled ? Time.deltaTime / StartupDuration : -Time.deltaTime / ShutdownDuration), 0, 1);
+
+        audioEngine.SetStartPercent(currentStartupPercent);
 
         // verifie si l'apu peut etre eteint
         if (apuEnabled)

@@ -22,9 +22,11 @@ public class UiInputs : MonoBehaviour
             Destroy(spawnedIngameUI);
     }
 
-    void OnPause()
+    public void OnPause()
     {
+
         isPaused = !isPaused;
+        gameObject.GetComponent<PlayerManager>().disableInputs = isPaused;
         if (isPaused)
         {
             Cursor.visible = true;

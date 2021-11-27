@@ -32,7 +32,7 @@ public class Missile : PodItem
             if (!target)
                 return;
 
-            if (Vector3.Distance(owner.transform.position, transform.position) < 10)
+            if (owner && Vector3.Distance(owner.transform.position, transform.position) < 10)
                 return;
 
             // Rotate toward target

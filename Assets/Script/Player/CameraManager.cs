@@ -60,6 +60,10 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     {
         transform.parent = null;
         transform.position = transform.position + transform.forward * -10 + transform.up * 5;
+        if (focusedPlane == possessedPlane)
+        {
+            GetComponent<UiInputs>().OnPause();
+        }
         SetFocusedPlane(null);
     }
 
@@ -88,6 +92,9 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     // Update is called once per frame
     void Update()
     {
+        if (gameObject.GetComponent<PlayerManager>().disableInputs)
+            return;
+
         if (focusedPlane)
         {
             if (!fpsViewPoint)
@@ -127,6 +134,8 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
     public void OnLook(InputValue input)
     {
+        if (gameObject.GetComponent<PlayerManager>().disableInputs)
+            return;
         if (Indoor && focusedPlane)
             indoorLookVector = new Vector2(Mathf.Clamp(input.Get<Vector2>().x * 0.5f + indoorLookVector.x, -170, 170), Mathf.Clamp(input.Get<Vector2>().y * 0.5f + indoorLookVector.y, -90, 90));
         else
@@ -134,6 +143,8 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     }
     public void OnZoom(InputValue input)
     {
+        if (gameObject.GetComponent<PlayerManager>().disableInputs)
+            return;
         if (Indoor)
             fov = Mathf.Clamp(fov + input.Get<float>(), FovBounds.x, FovBounds.y);
         else
@@ -230,7 +241,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     float free_forwardinput = 0;
     float free_rightInput = 0;
     float free_upInput = 0;
-    float free_speed = 10;
+    float free_speed = 100;
     void OnFreeCam_Forward(InputValue input)
     {
         free_forwardinput = Mathf.Clamp(input.Get<float>(), -1, 1);

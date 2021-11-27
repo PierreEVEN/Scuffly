@@ -9,6 +9,7 @@ using UnityEngine;
  *  Propulseur physique de l'avion.
  *  Ne peut pas etre demarre sans APU ou source d'allimentation exterieure.
  */
+[RequireComponent(typeof(AudioEngine))]
 public class Thruster : PlaneComponent, IPowerProvider
 {
     // Courbe du pourcentage d'acceleration du moteur en fonction de l'input
@@ -17,8 +18,10 @@ public class Thruster : PlaneComponent, IPowerProvider
     // Courbe de force de poussee maximale en fonction de la vitesse
     public AnimationCurve ThrustForceCurve = new AnimationCurve(new Keyframe[]{new Keyframe(0, 3000000.0f), new Keyframe(300, 8000000.0f)});
 
-    public float engineStartupPercentPerSeconds = 0.1f;
-    private float engineStartupPercent = 0; // pourcentage de rotation de la turbine - par simplification, vaut 1 une fois le moteur en marche
+    public float engineStartupDuration = 39;
+    public float engineShutdownDuration = 39;
+    [HideInInspector]
+    public float engineStartupPercent = 0; // pourcentage de rotation de la turbine - par simplification, vaut 1 une fois le moteur en marche
     public float idleEngineThrustPercent = 0.001f;
 
     public float thrustPercentAcceleration = 0.4f; // vitesse d'acceleration du moteur
@@ -30,14 +33,11 @@ public class Thruster : PlaneComponent, IPowerProvider
         get { return throttleCurrentPercent * 100; }
     }
 
+    public RTPC EngineStartupRTPC;
     public RTPC EngineStatusRTPC;
     public RTPC CameraDistanceRPC;
-    public AK.Wwise.Event PlayEvent;
-    public AK.Wwise.Event StopEvent;
-    public AK.Wwise.Event PlayStartEvent;
-    public AK.Wwise.Event PlayStopEvent;
-    public bool isSoundPlaying = false;
-    public bool hasStarted = false;
+
+    AudioEngine audioEngine;
 
     void OnEnable()
     {
@@ -46,19 +46,23 @@ public class Thruster : PlaneComponent, IPowerProvider
             engineStartupPercent = 1;
 
         Plane.RegisterThruster(this);
+
+        audioEngine = GetComponent<AudioEngine>();
     }
 
 
     private void OnDisable()
     {
-        StopEvent.Post(gameObject);
         Plane.UnRegisterThruster(this);
     }
 
     void FixedUpdate()
     {
         // Met a jour la rotation du moteur en fonction de son etat d'activation et de la puissance d'allimentation de l'avion
-        engineStartupPercent = Mathf.Clamp01(engineStartupPercent + (Plane.ThrottleNotch && Plane.GetCurrentPower() > 55 ? Time.fixedDeltaTime * engineStartupPercentPerSeconds : -Time.fixedDeltaTime * engineStartupPercentPerSeconds));
+        engineStartupPercent = Mathf.Clamp01(engineStartupPercent + (Plane.ThrottleNotch && Plane.GetCurrentPower() > 55 ? Time.fixedDeltaTime / engineStartupDuration : -Time.fixedDeltaTime / engineShutdownDuration));
+
+        EngineStartupRTPC.SetValue(gameObject, engineStartupPercent * 100);
+        audioEngine.SetStartPercent(engineStartupPercent);
 
         // Tant que le moteur n'est pas demarre, on ne fait rien
         float targetInput = engineStartupPercent < 1 ? 0 : throttleDesiredPercent;
@@ -68,28 +72,6 @@ public class Thruster : PlaneComponent, IPowerProvider
         float totalInputPercent = throttleCurrentPercent + engineStartupPercent * idleEngineThrustPercent;
         float forwardVelocity = transform.InverseTransformDirection(Physics.velocity).z;
         Physics.AddForceAtPosition(-transform.forward * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
-
-        if (engineStartupPercent > 0 && engineStartupPercent < 0.5f && !hasStarted)
-        {
-            PlayStartEvent.Post(gameObject);
-            hasStarted = true;
-        }
-        if (engineStartupPercent == 0)
-        {
-            hasStarted = false;
-        }
-
-        if (engineStartupPercent < 1 && isSoundPlaying)
-        {
-            isSoundPlaying = false;
-            StopEvent.Post(gameObject);
-            PlayStopEvent.Post(gameObject);
-        }
-        if (engineStartupPercent >= 1 && !isSoundPlaying)
-        {
-            isSoundPlaying = true;
-            PlayEvent.Post(gameObject);
-        }
 
         EngineStatusRTPC.SetValue(gameObject, totalInputPercent * 100);
         if (Camera.main) 

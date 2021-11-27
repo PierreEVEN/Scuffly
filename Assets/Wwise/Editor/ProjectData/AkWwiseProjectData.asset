@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 30fd23938bdd0f4d92e863f4145c1acc
     GuidInternal: 
-    m_lastTime: -8585635832271942271
+    m_lastTime: -8585635657192546422
     List:
     - name: TestSB
       guid: 4ffeca94bd54074a8e5063309778da14
@@ -83,6 +83,155 @@ MonoBehaviour:
         guid: 4ffeca94bd54074a8e5063309778da14
       Path: SoundBanks\Default Work Unit\TestSB
   EventWwu:
+  - PhysicalPath: Events\APU.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: APU
+      ObjectType: 12
+      guid: 4c3cea1c324a154da08a51cb6172b873
+    ParentPath: Events\APU
+    guid: 4c3cea1c324a154da08a51cb6172b873
+    GuidInternal: 
+    m_lastTime: -8585635674736181814
+    List:
+    - name: PlayIdleAPU
+      guid: 01e56037e91cf44f932e1d77cd218ee4
+      id: 2696387503
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: PlayIdleAPU
+        ObjectType: 3
+        guid: 01e56037e91cf44f932e1d77cd218ee4
+      Path: Events\APU\PlayIdleAPU
+      maxAttenuation: 400
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayStartAPU
+      guid: 9e1b3016d9776f46be1536b3e829bf5d
+      id: 3342624803
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: PlayStartAPU
+        ObjectType: 3
+        guid: 9e1b3016d9776f46be1536b3e829bf5d
+      Path: Events\APU\PlayStartAPU
+      maxAttenuation: 400
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayStopAPU
+      guid: 9d3e73456f6272409c1bba6129e6d4d4
+      id: 3298093305
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: PlayStopAPU
+        ObjectType: 3
+        guid: 9d3e73456f6272409c1bba6129e6d4d4
+      Path: Events\APU\PlayStopAPU
+      maxAttenuation: 400
+      maxDuration: -1
+      minDuration: -1
+    - name: SeekStartAPU
+      guid: d8d2ef3120941c428d0742b95c25adf8
+      id: 998656301
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: SeekStartAPU
+        ObjectType: 3
+        guid: d8d2ef3120941c428d0742b95c25adf8
+      Path: Events\APU\SeekStartAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: SeekStopAPU
+      guid: 7acb8b4417274345bd294252913af92f
+      id: 3766535255
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: SeekStopAPU
+        ObjectType: 3
+        guid: 7acb8b4417274345bd294252913af92f
+      Path: Events\APU\SeekStopAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopIdleAPU
+      guid: 8d982f4f1700fa408ee73d4234bff15c
+      id: 3503700753
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: StopIdleAPU
+        ObjectType: 3
+        guid: 8d982f4f1700fa408ee73d4234bff15c
+      Path: Events\APU\StopIdleAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopStartAPU
+      guid: a03630c4f4c1b849af68c4da45fdd95c
+      id: 4294679785
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: StopStartAPU
+        ObjectType: 3
+        guid: a03630c4f4c1b849af68c4da45fdd95c
+      Path: Events\APU\StopStartAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopStopAPU
+      guid: dfe0bbfee0ac634ca3b20386f6034abb
+      id: 938323147
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: StopStopAPU
+        ObjectType: 3
+        guid: dfe0bbfee0ac634ca3b20386f6034abb
+      Path: Events\APU\StopStopAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   - PhysicalPath: Events\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Events
@@ -94,74 +243,36 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: d670788d2bdfe249bb965a44b8b1ea61
     GuidInternal: 
-    m_lastTime: -8585635833311351332
+    m_lastTime: -8585635691101579257
+    List: []
+  - PhysicalPath: Events\F110Engine.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: F110Engine
+      ObjectType: 12
+      guid: 341505ec8364bb479c7efc60dd5ee35c
+    ParentPath: Events\F110Engine
+    guid: 341505ec8364bb479c7efc60dd5ee35c
+    GuidInternal: 
+    m_lastTime: -8585635656875041843
     List:
-    - name: PlaneExplosion
-      guid: 2ae09b84f994a74c8457c812f4dee887
-      id: 3974827210
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: d670788d2bdfe249bb965a44b8b1ea61
-      - ElementName: PlaneExplosion
-        ObjectType: 3
-        guid: 2ae09b84f994a74c8457c812f4dee887
-      Path: Events\Default Work Unit\PlaneExplosion
-      maxAttenuation: 1000
-      maxDuration: -1
-      minDuration: -1
-    - name: PlayEngine
+    - name: PlayIdleEngine
       guid: c0b8c8d4b4bd6648b816f8e97bdc1489
-      id: 737062081
+      id: 1974938279
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
+      - ElementName: F110Engine
         ObjectType: 12
-        guid: d670788d2bdfe249bb965a44b8b1ea61
-      - ElementName: PlayEngine
+        guid: 341505ec8364bb479c7efc60dd5ee35c
+      - ElementName: PlayIdleEngine
         ObjectType: 3
         guid: c0b8c8d4b4bd6648b816f8e97bdc1489
-      Path: Events\Default Work Unit\PlayEngine
-      maxAttenuation: 1000
-      maxDuration: -1
-      minDuration: -1
-    - name: PlayIRtone
-      guid: 4bbb9ab9fc16834598db43d22dbe506d
-      id: 2282830790
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: d670788d2bdfe249bb965a44b8b1ea61
-      - ElementName: PlayIRtone
-        ObjectType: 3
-        guid: 4bbb9ab9fc16834598db43d22dbe506d
-      Path: Events\Default Work Unit\PlayIRtone
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: PlayStartAPU
-      guid: 9e1b3016d9776f46be1536b3e829bf5d
-      id: 3342624803
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: d670788d2bdfe249bb965a44b8b1ea61
-      - ElementName: PlayStartAPU
-        ObjectType: 3
-        guid: 9e1b3016d9776f46be1536b3e829bf5d
-      Path: Events\Default Work Unit\PlayStartAPU
-      maxAttenuation: 0
+      Path: Events\F110Engine\PlayIdleEngine
+      maxAttenuation: 3000
       maxDuration: -1
       minDuration: -1
     - name: PlayStartEngine
@@ -171,31 +282,14 @@ MonoBehaviour:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
+      - ElementName: F110Engine
         ObjectType: 12
-        guid: d670788d2bdfe249bb965a44b8b1ea61
+        guid: 341505ec8364bb479c7efc60dd5ee35c
       - ElementName: PlayStartEngine
         ObjectType: 3
         guid: f896c22dc695a44fa720ceb9bbb25057
-      Path: Events\Default Work Unit\PlayStartEngine
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
-    - name: PlayStopAPU
-      guid: 9d3e73456f6272409c1bba6129e6d4d4
-      id: 3298093305
-      PathAndIcons:
-      - ElementName: Events
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: d670788d2bdfe249bb965a44b8b1ea61
-      - ElementName: PlayStopAPU
-        ObjectType: 3
-        guid: 9d3e73456f6272409c1bba6129e6d4d4
-      Path: Events\Default Work Unit\PlayStopAPU
-      maxAttenuation: 0
+      Path: Events\F110Engine\PlayStartEngine
+      maxAttenuation: 3000
       maxDuration: -1
       minDuration: -1
     - name: PlayStopEngine
@@ -205,30 +299,111 @@ MonoBehaviour:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
+      - ElementName: F110Engine
         ObjectType: 12
-        guid: d670788d2bdfe249bb965a44b8b1ea61
+        guid: 341505ec8364bb479c7efc60dd5ee35c
       - ElementName: PlayStopEngine
         ObjectType: 3
         guid: b1dd96586038d544aa549c77bf10b534
-      Path: Events\Default Work Unit\PlayStopEngine
-      maxAttenuation: 1000
+      Path: Events\F110Engine\PlayStopEngine
+      maxAttenuation: 3000
       maxDuration: -1
       minDuration: -1
-    - name: StopEngine
+    - name: StopIdleEngine
       guid: 24175d51fc93744e8986f1c165c9dffc
-      id: 3762828835
+      id: 3110430665
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
+      - ElementName: F110Engine
         ObjectType: 12
-        guid: d670788d2bdfe249bb965a44b8b1ea61
-      - ElementName: StopEngine
+        guid: 341505ec8364bb479c7efc60dd5ee35c
+      - ElementName: StopIdleEngine
         ObjectType: 3
         guid: 24175d51fc93744e8986f1c165c9dffc
-      Path: Events\Default Work Unit\StopEngine
+      Path: Events\F110Engine\StopIdleEngine
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopStartEngine
+      guid: e4b47c871971154ba9e54de8e97a8128
+      id: 442666337
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: F110Engine
+        ObjectType: 12
+        guid: 341505ec8364bb479c7efc60dd5ee35c
+      - ElementName: StopStartEngine
+        ObjectType: 3
+        guid: e4b47c871971154ba9e54de8e97a8128
+      Path: Events\F110Engine\StopStartEngine
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopStopEngine
+      guid: db0a201e8d582d45bc8180adea8396ac
+      id: 2945760987
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: F110Engine
+        ObjectType: 12
+        guid: 341505ec8364bb479c7efc60dd5ee35c
+      - ElementName: StopStopEngine
+        ObjectType: 3
+        guid: db0a201e8d582d45bc8180adea8396ac
+      Path: Events\F110Engine\StopStopEngine
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+  - PhysicalPath: Events\Misc.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Misc
+      ObjectType: 12
+      guid: b9659cfef8d6a543827379191f5718ec
+    ParentPath: Events\Misc
+    guid: b9659cfef8d6a543827379191f5718ec
+    GuidInternal: 
+    m_lastTime: -8585635691101499242
+    List:
+    - name: PlaneExplosion
+      guid: 2ae09b84f994a74c8457c812f4dee887
+      id: 3974827210
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: PlaneExplosion
+        ObjectType: 3
+        guid: 2ae09b84f994a74c8457c812f4dee887
+      Path: Events\Misc\PlaneExplosion
+      maxAttenuation: 3000
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayIRtone
+      guid: 4bbb9ab9fc16834598db43d22dbe506d
+      id: 2282830790
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: PlayIRtone
+        ObjectType: 3
+        guid: 4bbb9ab9fc16834598db43d22dbe506d
+      Path: Events\Misc\PlayIRtone
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -239,13 +414,13 @@ MonoBehaviour:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
+      - ElementName: Misc
         ObjectType: 12
-        guid: d670788d2bdfe249bb965a44b8b1ea61
+        guid: b9659cfef8d6a543827379191f5718ec
       - ElementName: StopIRTone
         ObjectType: 3
         guid: e848bbd0e3eb2f4ba917927bb27c8a5b
-      Path: Events\Default Work Unit\StopIRTone
+      Path: Events\Misc\StopIRTone
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -256,13 +431,13 @@ MonoBehaviour:
       - ElementName: Events
         ObjectType: 5
         guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
+      - ElementName: Misc
         ObjectType: 12
-        guid: d670788d2bdfe249bb965a44b8b1ea61
+        guid: b9659cfef8d6a543827379191f5718ec
       - ElementName: ToggleSwitch
         ObjectType: 3
         guid: 71bd647a960c994fb3b280f41f27e3ad
-      Path: Events\Default Work Unit\ToggleSwitch
+      Path: Events\Misc\ToggleSwitch
       maxAttenuation: 100
       maxDuration: -1
       minDuration: -1
@@ -278,7 +453,7 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: c54fb2825993714c9d77885654107e65
     GuidInternal: 
-    m_lastTime: -8585635865656735476
+    m_lastTime: -8585635654448562391
     List:
     - name: Distance
       guid: cd636865edc3b64ab5b56d36c2afe3c7
@@ -294,6 +469,48 @@ MonoBehaviour:
         ObjectType: 13
         guid: cd636865edc3b64ab5b56d36c2afe3c7
       Path: Game Parameters\Default Work Unit\Distance
+    - name: EngineIdleVolume
+      guid: 83608d4dc5f0c54f817b11bfd229c953
+      id: 1522466203
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: EngineIdleVolume
+        ObjectType: 13
+        guid: 83608d4dc5f0c54f817b11bfd229c953
+      Path: Game Parameters\Default Work Unit\EngineIdleVolume
+    - name: EngineStartupPercent
+      guid: 60e5a6004f44c7469270a9dcd955785f
+      id: 3906868357
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: EngineStartupPercent
+        ObjectType: 13
+        guid: 60e5a6004f44c7469270a9dcd955785f
+      Path: Game Parameters\Default Work Unit\EngineStartupPercent
+    - name: EngineStartVolume
+      guid: 8cbe4a4bebe60e4f9a1de776249ca0d5
+      id: 949998751
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: EngineStartVolume
+        ObjectType: 13
+        guid: 8cbe4a4bebe60e4f9a1de776249ca0d5
+      Path: Game Parameters\Default Work Unit\EngineStartVolume
     - name: EngineStatus
       guid: 5eb6f37350147e41893f143c009ac549
       id: 3156709873
@@ -308,6 +525,20 @@ MonoBehaviour:
         ObjectType: 13
         guid: 5eb6f37350147e41893f143c009ac549
       Path: Game Parameters\Default Work Unit\EngineStatus
+    - name: EngineStopVolume
+      guid: 109904e37cae124398c18ed00c3d48a9
+      id: 3060638953
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: EngineStopVolume
+        ObjectType: 13
+        guid: 109904e37cae124398c18ed00c3d48a9
+      Path: Game Parameters\Default Work Unit\EngineStopVolume
     - name: IRFoundState
       guid: 1820f002e0bf9a48a7094cc6c421de67
       id: 634056083
@@ -365,7 +596,7 @@ MonoBehaviour:
     m_lastTime: -8585641672885406505
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0500000006000000070000000e0000000f000000130000001400000015000000160000001700000018000000
+  ExpandedWaapiItemIds: 010000000500000006000000070000000e0000000f00000010000000110000001300000014000000150000001600000017000000180000001d0000001e00000023000000240000002500000026000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

@@ -11,17 +11,17 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="768366544">
+		<SoundBank Id="1355168291" Language="SFX" Hash="2163511205">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="3331313354" Language="SFX" Hash="181872528">
+		<SoundBank Id="3331313354" Language="SFX" Hash="1847959444">
 			<ObjectPath>\SoundBanks\Default Work Unit\TestSB</ObjectPath>
 			<ShortName>TestSB</ShortName>
 			<Path>TestSB.bnk</Path>
 			<IncludedEvents>
-				<Event Id="3974827210" Name="PlaneExplosion" ObjectPath="\Events\Default Work Unit\PlaneExplosion" MaxAttenuation="1000.000000">
+				<Event Id="3974827210" Name="PlaneExplosion" ObjectPath="\Events\Misc\PlaneExplosion" MaxAttenuation="3000.000000">
 					<IncludedMemoryFiles>
 						<File Id="484202815" Language="SFX">
 							<ShortName>PlaneExplode.wav</ShortName>
@@ -29,7 +29,15 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="737062081" Name="PlayEngine" ObjectPath="\Events\Default Work Unit\PlayEngine" MaxAttenuation="1000.000000">
+				<Event Id="2696387503" Name="PlayIdleAPU" ObjectPath="\Events\APU\PlayIdleAPU" MaxAttenuation="400.000000">
+					<IncludedMemoryFiles>
+						<File Id="533190637" Language="SFX">
+							<ShortName>F16APUIdle.wav</ShortName>
+							<Path>SFX\F16APUIdle_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1974938279" Name="PlayIdleEngine" ObjectPath="\Events\F110Engine\PlayIdleEngine" MaxAttenuation="3000.000000">
 					<IncludedMemoryFiles>
 						<File Id="205787666" Language="SFX">
 							<ShortName>f110Acceleration_1.wav</ShortName>
@@ -73,7 +81,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2282830790" Name="PlayIRtone" ObjectPath="\Events\Default Work Unit\PlayIRtone">
+				<Event Id="2282830790" Name="PlayIRtone" ObjectPath="\Events\Misc\PlayIRtone">
 					<IncludedMemoryFiles>
 						<File Id="680286370" Language="SFX">
 							<ShortName>aim9SearchTone.wav</ShortName>
@@ -81,27 +89,56 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="3342624803" Name="PlayStartAPU" ObjectPath="\Events\Default Work Unit\PlayStartAPU" MaxAttenuation="0.000000"/>
-				<Event Id="867514771" Name="PlayStartEngine" ObjectPath="\Events\Default Work Unit\PlayStartEngine">
+				<Event Id="3342624803" Name="PlayStartAPU" ObjectPath="\Events\APU\PlayStartAPU" MaxAttenuation="400.000000">
 					<IncludedMemoryFiles>
+						<File Id="1055176387" Language="SFX">
+							<ShortName>F16APUAcceleration.wav</ShortName>
+							<Path>SFX\F16APUAcceleration_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="867514771" Name="PlayStartEngine" ObjectPath="\Events\F110Engine\PlayStartEngine" MaxAttenuation="3000.000000">
+					<IncludedMemoryFiles>
+						<File Id="319507435" Language="SFX">
+							<ShortName>F16-IdleOutside.wav</ShortName>
+							<Path>SFX\F16-IdleOutside_D79FB2B7.wem</Path>
+						</File>
 						<File Id="820349579" Language="SFX">
 							<ShortName>f110Startup.wav</ShortName>
 							<Path>SFX\f110Startup_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="3298093305" Name="PlayStopAPU" ObjectPath="\Events\Default Work Unit\PlayStopAPU" MaxAttenuation="0.000000"/>
-				<Event Id="951709393" Name="PlayStopEngine" ObjectPath="\Events\Default Work Unit\PlayStopEngine" MaxAttenuation="1000.000000">
+				<Event Id="3298093305" Name="PlayStopAPU" ObjectPath="\Events\APU\PlayStopAPU" MaxAttenuation="400.000000">
 					<IncludedMemoryFiles>
+						<File Id="574803911" Language="SFX">
+							<ShortName>F16APUDeceleration.wav</ShortName>
+							<Path>SFX\F16APUDeceleration_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="951709393" Name="PlayStopEngine" ObjectPath="\Events\F110Engine\PlayStopEngine" MaxAttenuation="3000.000000">
+					<IncludedMemoryFiles>
+						<File Id="319507435" Language="SFX">
+							<ShortName>F16-IdleOutside.wav</ShortName>
+							<Path>SFX\F16-IdleOutside_D79FB2B7.wem</Path>
+						</File>
 						<File Id="657079121" Language="SFX">
 							<ShortName>f110ShutDown.wav</ShortName>
 							<Path>SFX\f110ShutDown_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="3762828835" Name="StopEngine" ObjectPath="\Events\Default Work Unit\StopEngine" MaxAttenuation="0.000000"/>
-				<Event Id="772970040" Name="StopIRTone" ObjectPath="\Events\Default Work Unit\StopIRTone" MaxAttenuation="0.000000"/>
-				<Event Id="598009201" Name="ToggleSwitch" ObjectPath="\Events\Default Work Unit\ToggleSwitch" MaxAttenuation="100.000000">
+				<Event Id="998656301" Name="SeekStartAPU" ObjectPath="\Events\APU\SeekStartAPU" MaxAttenuation="0.000000"/>
+				<Event Id="3766535255" Name="SeekStopAPU" ObjectPath="\Events\APU\SeekStopAPU" MaxAttenuation="0.000000"/>
+				<Event Id="3503700753" Name="StopIdleAPU" ObjectPath="\Events\APU\StopIdleAPU" MaxAttenuation="0.000000"/>
+				<Event Id="3110430665" Name="StopIdleEngine" ObjectPath="\Events\F110Engine\StopIdleEngine" MaxAttenuation="0.000000"/>
+				<Event Id="772970040" Name="StopIRTone" ObjectPath="\Events\Misc\StopIRTone" MaxAttenuation="0.000000"/>
+				<Event Id="4294679785" Name="StopStartAPU" ObjectPath="\Events\APU\StopStartAPU" MaxAttenuation="0.000000"/>
+				<Event Id="442666337" Name="StopStartEngine" ObjectPath="\Events\F110Engine\StopStartEngine" MaxAttenuation="0.000000"/>
+				<Event Id="938323147" Name="StopStopAPU" ObjectPath="\Events\APU\StopStopAPU" MaxAttenuation="0.000000"/>
+				<Event Id="2945760987" Name="StopStopEngine" ObjectPath="\Events\F110Engine\StopStopEngine" MaxAttenuation="0.000000"/>
+				<Event Id="598009201" Name="ToggleSwitch" ObjectPath="\Events\Misc\ToggleSwitch" MaxAttenuation="100.000000">
 					<IncludedMemoryFiles>
 						<File Id="370917366" Language="SFX">
 							<ShortName>SwitchToggle.wav</ShortName>
@@ -139,6 +176,14 @@
 					<ShortName>PlaneExplode.wav</ShortName>
 					<Path>SFX\PlaneExplode_10C4C929.wem</Path>
 				</File>
+				<File Id="533190637" Language="SFX">
+					<ShortName>F16APUIdle.wav</ShortName>
+					<Path>SFX\F16APUIdle_D79FB2B7.wem</Path>
+				</File>
+				<File Id="574803911" Language="SFX">
+					<ShortName>F16APUDeceleration.wav</ShortName>
+					<Path>SFX\F16APUDeceleration_10C4C929.wem</Path>
+				</File>
 				<File Id="657079121" Language="SFX">
 					<ShortName>f110ShutDown.wav</ShortName>
 					<Path>SFX\f110ShutDown_10C4C929.wem</Path>
@@ -171,11 +216,19 @@
 					<ShortName>F16-Far.wav</ShortName>
 					<Path>SFX\F16-Far_D79FB2B7.wem</Path>
 				</File>
+				<File Id="1055176387" Language="SFX">
+					<ShortName>F16APUAcceleration.wav</ShortName>
+					<Path>SFX\F16APUAcceleration_10C4C929.wem</Path>
+				</File>
 			</IncludedMemoryFiles>
 			<GameParameters>
 				<GameParameter Id="634056083" Name="IRFoundState" ObjectPath="\Game Parameters\Default Work Unit\IRFoundState"/>
+				<GameParameter Id="949998751" Name="EngineStartVolume" ObjectPath="\Game Parameters\Default Work Unit\EngineStartVolume"/>
 				<GameParameter Id="1240670792" Name="Distance" ObjectPath="\Game Parameters\Default Work Unit\Distance"/>
+				<GameParameter Id="1522466203" Name="EngineIdleVolume" ObjectPath="\Game Parameters\Default Work Unit\EngineIdleVolume"/>
+				<GameParameter Id="3060638953" Name="EngineStopVolume" ObjectPath="\Game Parameters\Default Work Unit\EngineStopVolume"/>
 				<GameParameter Id="3156709873" Name="EngineStatus" ObjectPath="\Game Parameters\Default Work Unit\EngineStatus"/>
+				<GameParameter Id="3906868357" Name="EngineStartupPercent" ObjectPath="\Game Parameters\Default Work Unit\EngineStartupPercent"/>
 			</GameParameters>
 		</SoundBank>
 	</SoundBanks>

@@ -12,8 +12,8 @@ public class PlayerManager : NetworkBehaviour
 {
     public GameObject DefaultPlane;
 
-    private static GameObject localPlayer;
-    public static GameObject LocalPlayer
+    private static PlayerManager localPlayer;
+    public static PlayerManager LocalPlayer
     {
         get { return localPlayer; }
     }
@@ -21,11 +21,12 @@ public class PlayerManager : NetworkBehaviour
     [HideInInspector]
     public PlaneActor controlledPlane;
 
-    NetworkVariable<string> playerName = new NetworkVariable<string>("toto ");
+    [HideInInspector]
+    public bool disableInputs = false;
 
     private void OnEnable()
     {
-        localPlayer = gameObject;
+        localPlayer = this;
     }
     private void OnDisable()
     {
@@ -52,13 +53,8 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     [ServerRpc]
-    void RequestPlaneServerRpc()
+    public void RequestPlaneServerRpc()
     {
         AirportActor foundAirport = AirportActor.GetClosestAirport(PlaneTeam.Blue, new Vector3(0, 0, 0));
         if (!foundAirport)
@@ -66,7 +62,9 @@ public class PlayerManager : NetworkBehaviour
 
         foreach (var spawnpoint in foundAirport.GatherSpawnpoints())
         {
-            GameObject plane = spawnpoint.SpawnPlane(OwnerClientId);
+            if (spawnpoint.useForAI)
+                continue;
+            GameObject plane = spawnpoint.SpawnPlane(false, OwnerClientId);
             if (!plane) return;
             NetworkObject planeNet = plane.GetComponent<NetworkObject>();
             OnPlaneSpawnedClientRpc(planeNet.NetworkObjectId);

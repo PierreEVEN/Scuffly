@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6802d18c04a66d24b9405deb51e70479, type: 3}
   m_Name: 515D1724-93FC-4E74-8986-F1C165C9DFFC
   m_EditorClassIdentifier: 
-  objectName: StopEngine
-  id: 3762828835
+  objectName: StopIdleEngine
+  id: 3110430665
   guid: 515D1724-93FC-4E74-8986-F1C165C9DFFC

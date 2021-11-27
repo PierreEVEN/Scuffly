@@ -5,38 +5,49 @@
 			<ChildrenList>
 				<SoundBank Name="TestSB" ID="{94CAFE4F-54BD-4A07-8E50-63309778DA14}">
 					<ObjectInclusionList>
-						<ObjectRef Name="PlayStopAPU" ID="{45733E9D-626F-4072-9C1B-BA6129E6D4D4}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="APUEngine" ID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlayStopAPU" ID="{45733E9D-626F-4072-9C1B-BA6129E6D4D4}" WorkUnitID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_5" ID="{53F41E3D-10FF-4078-8ECA-D4B7A674F17D}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="F16APUAcceleration" ID="{925478C8-EEA0-40D0-8A83-412CF4DC3F9D}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="StopIdleAPU" ID="{4F2F988D-0017-40FA-8EE7-3D4234BFF15C}" WorkUnitID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="F110Thrust" ID="{2E7DB56C-036F-414B-AAB7-CA1819A1D517}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="aim9SearchTone" ID="{8A2546AD-2FA0-415E-B0A2-0E7B8641F46C}" WorkUnitID="{E9C0CC2D-CB50-4384-93FB-D4F89A8CBDA4}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="SeekStartAPU" ID="{31EFD2D8-9420-421C-8D07-42B95C25ADF8}" WorkUnitID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="F16APUIdle" ID="{62076863-22BC-4277-A631-8C93DAEB98F3}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="F110JetEngine" ID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="F16Close" ID="{7E76C5AB-982A-4304-881D-4FD5231D6B41}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Aim9SearchTone" ID="{E9C0CC2D-CB50-4384-93FB-D4F89A8CBDA4}" WorkUnitID="{E9C0CC2D-CB50-4384-93FB-D4F89A8CBDA4}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Misc" ID="{FE9C65B9-D6F8-43A5-8273-79191F5718EC}" WorkUnitID="{FE9C65B9-D6F8-43A5-8273-79191F5718EC}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_0" ID="{C85F8D3B-34FF-43C6-99B7-35A5CFF607F3}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_3" ID="{8D7FD443-DFC0-4410-A9CB-028F4220D90C}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Default Work Unit" ID="{EAAEA86F-5541-44A4-BA3F-DB12D96D5095}" WorkUnitID="{EAAEA86F-5541-44A4-BA3F-DB12D96D5095}" Origin="Manual" Filter="7"/>
-						<ObjectRef Name="PlayStopEngine" ID="{5896DDB1-3860-44D5-AA54-9C77BF10B534}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
-						<ObjectRef Name="PlayIRtone" ID="{B99ABB4B-16FC-4583-98DB-43D22DBE506D}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlayStopEngine" ID="{5896DDB1-3860-44D5-AA54-9C77BF10B534}" WorkUnitID="{EC051534-6483-47BB-9C7E-FC60DD5EE35C}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="SeekStopAPU" ID="{448BCB7A-2717-4543-BD29-4252913AF92F}" WorkUnitID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlayIRtone" ID="{B99ABB4B-16FC-4583-98DB-43D22DBE506D}" WorkUnitID="{FE9C65B9-D6F8-43A5-8273-79191F5718EC}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Switch" ID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" WorkUnitID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110ShutDown" ID="{19E0A642-CFA4-45F8-81A8-9700B84D0C90}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
-						<ObjectRef Name="PlayStartAPU" ID="{16301B9E-77D9-466F-BE15-36B3E829BF5D}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlayStartAPU" ID="{16301B9E-77D9-466F-BE15-36B3E829BF5D}" WorkUnitID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="PlaneExplode" ID="{00017ECB-7F64-4713-834D-380905993579}" WorkUnitID="{03D33B87-717D-4963-B2D1-4B78870918FE}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_2" ID="{1F0D9612-3BD7-4752-B714-AA8295E4064D}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="F16-Far" ID="{FCC38E9D-28A3-47B0-A95C-A9DEC2B4FFB3}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_4" ID="{EDFC12D3-A30B-4802-89E7-BCA0EBC5510F}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="F16APUDeceleration" ID="{9DDA927D-86AE-482E-8766-8568B331A654}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="SwitchToggle" ID="{562E5173-8935-484E-986D-9511F4EA622D}" WorkUnitID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" Origin="Manual" Filter="7"/>
-						<ObjectRef Name="PlayEngine" ID="{D4C8B8C0-BDB4-4866-B816-F8E97BDC1489}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlayIdleEngine" ID="{D4C8B8C0-BDB4-4866-B816-F8E97BDC1489}" WorkUnitID="{EC051534-6483-47BB-9C7E-FC60DD5EE35C}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="PlaneExplosion" ID="{03D33B87-717D-4963-B2D1-4B78870918FE}" WorkUnitID="{03D33B87-717D-4963-B2D1-4B78870918FE}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="F16-IdleOutside" ID="{8111A94C-22F1-497C-ABB1-17FDDA8A74D8}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="StopStartAPU" ID="{C43036A0-C1F4-49B8-AF68-C4DA45FDD95C}" WorkUnitID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Startup" ID="{F1FBFAAA-A5E3-4A02-A2E4-0FC61944A944}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_1" ID="{5A002CDB-1FC9-4A38-B17A-19021C9759BB}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
-						<ObjectRef Name="StopIRTone" ID="{D0BB48E8-EBE3-4B2F-A917-927BB27C8A5B}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
-						<ObjectRef Name="PlaneExplosion" ID="{849BE02A-94F9-4CA7-8457-C812F4DEE887}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="StopIRTone" ID="{D0BB48E8-EBE3-4B2F-A917-927BB27C8A5B}" WorkUnitID="{FE9C65B9-D6F8-43A5-8273-79191F5718EC}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="StopStopAPU" ID="{FEBBE0DF-ACE0-4C63-A3B2-0386F6034ABB}" WorkUnitID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlaneExplosion" ID="{849BE02A-94F9-4CA7-8457-C812F4DEE887}" WorkUnitID="{FE9C65B9-D6F8-43A5-8273-79191F5718EC}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="WindTunnel" ID="{89AFE3A9-FBDA-4D66-BC7B-63056204BEB0}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
-						<ObjectRef Name="StopEngine" ID="{515D1724-93FC-4E74-8986-F1C165C9DFFC}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="StopIdleEngine" ID="{515D1724-93FC-4E74-8986-F1C165C9DFFC}" WorkUnitID="{EC051534-6483-47BB-9C7E-FC60DD5EE35C}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="F16-OutsideMax" ID="{9C529B7C-A2FC-4EAE-B21E-2C46B728C0F1}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
-						<ObjectRef Name="ToggleSwitch" ID="{7A64BD71-0C96-4F99-B3B2-80F41F27E3AD}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
-						<ObjectRef Name="PlayStartEngine" ID="{2DC296F8-95C6-4FA4-A720-CEB9BBB25057}" WorkUnitID="{8D7870D6-DF2B-49E2-BB96-5A44B8B1EA61}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="ToggleSwitch" ID="{7A64BD71-0C96-4F99-B3B2-80F41F27E3AD}" WorkUnitID="{FE9C65B9-D6F8-43A5-8273-79191F5718EC}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlayStartEngine" ID="{2DC296F8-95C6-4FA4-A720-CEB9BBB25057}" WorkUnitID="{EC051534-6483-47BB-9C7E-FC60DD5EE35C}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlayIdleAPU" ID="{3760E501-1CE9-4FF4-932E-1D77CD218EE4}" WorkUnitID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>

@@ -1,19 +1,31 @@
 Event	ID	Name			Wwise Object Path	Notes
-	598009201	ToggleSwitch			\Default Work Unit\ToggleSwitch	
-	737062081	PlayEngine			\Default Work Unit\PlayEngine	
-	772970040	StopIRTone			\Default Work Unit\StopIRTone	
-	867514771	PlayStartEngine			\Default Work Unit\PlayStartEngine	
-	951709393	PlayStopEngine			\Default Work Unit\PlayStopEngine	
-	2282830790	PlayIRtone			\Default Work Unit\PlayIRtone	
-	3298093305	PlayStopAPU			\Default Work Unit\PlayStopAPU	
-	3342624803	PlayStartAPU			\Default Work Unit\PlayStartAPU	
-	3762828835	StopEngine			\Default Work Unit\StopEngine	
-	3974827210	PlaneExplosion			\Default Work Unit\PlaneExplosion	
+	442666337	StopStartEngine			\F110Engine\StopStartEngine	
+	598009201	ToggleSwitch			\Misc\ToggleSwitch	
+	772970040	StopIRTone			\Misc\StopIRTone	
+	867514771	PlayStartEngine			\F110Engine\PlayStartEngine	
+	938323147	StopStopAPU			\APU\StopStopAPU	
+	951709393	PlayStopEngine			\F110Engine\PlayStopEngine	
+	998656301	SeekStartAPU			\APU\SeekStartAPU	
+	1974938279	PlayIdleEngine			\F110Engine\PlayIdleEngine	
+	2282830790	PlayIRtone			\Misc\PlayIRtone	
+	2696387503	PlayIdleAPU			\APU\PlayIdleAPU	
+	2945760987	StopStopEngine			\F110Engine\StopStopEngine	
+	3110430665	StopIdleEngine			\F110Engine\StopIdleEngine	
+	3298093305	PlayStopAPU			\APU\PlayStopAPU	
+	3342624803	PlayStartAPU			\APU\PlayStartAPU	
+	3503700753	StopIdleAPU			\APU\StopIdleAPU	
+	3766535255	SeekStopAPU			\APU\SeekStopAPU	
+	3974827210	PlaneExplosion			\Misc\PlaneExplosion	
+	4294679785	StopStartAPU			\APU\StopStartAPU	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
 	634056083	IRFoundState			\Default Work Unit\IRFoundState	
+	949998751	EngineStartVolume			\Default Work Unit\EngineStartVolume	
 	1240670792	Distance			\Default Work Unit\Distance	
+	1522466203	EngineIdleVolume			\Default Work Unit\EngineIdleVolume	
+	3060638953	EngineStopVolume			\Default Work Unit\EngineStopVolume	
 	3156709873	EngineStatus			\Default Work Unit\EngineStatus	
+	3906868357	EngineStartupPercent			\Default Work Unit\EngineStartupPercent	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	205787666	f110Acceleration_1	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Acceleration_1_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_1		1063790
@@ -23,12 +35,15 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	370917366	SwitchToggle	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\SwitchToggle_10C4C929.wem		\Actor-Mixer Hierarchy\Switch\SwitchToggle		12864
 	446192538	f110Acceleration_3	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Acceleration_3_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_3		1043412
 	484202815	PlaneExplode	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\PlaneExplode_10C4C929.wem		\Actor-Mixer Hierarchy\PlaneExplosion\PlaneExplode		2591280
-	657079121	f110ShutDown	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110ShutDown_10C4C929.wem		\Actor-Mixer Hierarchy\F110JetEngine\f110ShutDown		7774268
+	533190637	F16APUIdle	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\F16APUIdle_D79FB2B7.wem		\Actor-Mixer Hierarchy\APUEngine\F16APUIdle		718912
+	574803911	F16APUDeceleration	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\F16APUDeceleration_10C4C929.wem		\Actor-Mixer Hierarchy\APUEngine\F16APUDeceleration		844864
+	657079121	f110ShutDown	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110ShutDown_10C4C929.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Stop\f110ShutDown		7774268
 	658027025	WindTunnel	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\WindTunnel_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\WindTunnel		4464704
 	660309497	f110Acceleration_5	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Acceleration_5_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_5		835642
 	680286370	aim9SearchTone	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\aim9SearchTone_D79FB2B7.wem		\Actor-Mixer Hierarchy\Aim9SearchTone\aim9SearchTone		2182448
 	770591842	f110Acceleration_4	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Acceleration_4_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_4		1035260
-	820349579	f110Startup	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Startup_10C4C929.wem		\Actor-Mixer Hierarchy\F110JetEngine\f110Startup		8142912
+	820349579	f110Startup	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Startup_10C4C929.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Start\f110Startup		8142912
 	875417865	F16-OutsideMax	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\F16-OutsideMax_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16-OutsideMax		1114176
 	996229628	F16-Far	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\F16-Far_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16-Far		3457088
+	1055176387	F16APUAcceleration	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\F16APUAcceleration_10C4C929.wem		\Actor-Mixer Hierarchy\APUEngine\F16APUAcceleration		1495104
 

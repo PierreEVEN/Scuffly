@@ -1,10 +1,11 @@
 using UnityEngine;
 
 
-enum EAiMode {
+enum EAiMode
+{
     Unknown,
     TakeOff,
-    Flying,    
+    Flying,
 }
 
 public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
@@ -25,6 +26,8 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
     }
 
     AirportActor targetAirport;
+    Vector3 TargetOffset = Vector3.zero;
+    float targetDelay = 0;
 
     EAiMode AICurrentMode = EAiMode.Unknown;
 
@@ -35,6 +38,15 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
     // Update is called once per frame
     void Update()
     {
+        Plane.Brakes = false;
+        Plane.MainPower = true;
+        if (Plane.GetCurrentPower() < 100)
+            Plane.EnableAPU = true;
+        Plane.ThrottleNotch = true;
+        WeaponSystem.IsToggledOn = true;
+        if (WeaponSystem.CurrentWeaponMode != WeaponMode.Pod_Air)
+            WeaponSystem.AirAirMode();
+
         UpdateAIMode();
         aiTargetDirection = SelectTargetDirection();
         pathDirection = AvoidGround(aiTargetDirection);
@@ -43,7 +55,8 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
 
     void UpdateAIMode()
     {
-        if (AICurrentMode == EAiMode.Unknown) {
+        if (AICurrentMode == EAiMode.Unknown)
+        {
             AICurrentMode = Physics.velocity.magnitude < 20 ? EAiMode.TakeOff : EAiMode.Flying;
             return;
         }
@@ -72,7 +85,7 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
                 break;
             case EAiMode.TakeOff:
 
-                direction = new Vector3(-1, 0.5f, 0).normalized; 
+                direction = new Vector3(-1, 0.5f, 0).normalized;
 
                 break;
             case EAiMode.Flying:
@@ -99,13 +112,23 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
                 }
                 if (!found)
                 {
-                    targetAirport = AirportActor.GetClosestAirport(Plane.planeTeam, transform.position);
+                    if (!targetAirport)
+                    {
+                        targetAirport = AirportActor.GetClosestAirport(Plane.planeTeam, transform.position);
+                    }
                     if (targetAirport)
-                        direction = targetAirport.transform.position - transform.position;
+                        direction = (targetAirport.transform.position + TargetOffset) - transform.position;
+
+                    if (targetDelay <= 0)
+                    {
+                        targetDelay = 60;
+                        TargetOffset = new Vector3(Random.Range(-10000, 10000), Random.Range(200, 1200), Random.Range(-10000, 10000));
+                    }
                 }
 
                 break;
         }
+        targetDelay -= Time.deltaTime;
         shootTimer += Time.deltaTime;
 
         return direction.normalized;

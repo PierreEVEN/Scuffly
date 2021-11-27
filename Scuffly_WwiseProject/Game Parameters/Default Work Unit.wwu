@@ -10,6 +10,10 @@
 				</GameParameter>
 				<GameParameter Name="Distance" ID="{656863CD-C3ED-4AB6-B5B5-6D36C2AFE3C7}"/>
 				<GameParameter Name="IRFoundState" ID="{02F02018-BFE0-489A-A709-4CC6C421DE67}"/>
+				<GameParameter Name="EngineStartVolume" ID="{4B4ABE8C-E6EB-4F0E-9A1D-E776249CA0D5}"/>
+				<GameParameter Name="EngineStopVolume" ID="{E3049910-AE7C-4312-98C1-8ED00C3D48A9}"/>
+				<GameParameter Name="EngineIdleVolume" ID="{4D8D6083-F0C5-4FC5-817B-11BFD229C953}"/>
+				<GameParameter Name="EngineStartupPercent" ID="{00A6E560-444F-46C7-9270-A9DCD955785F}"/>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>

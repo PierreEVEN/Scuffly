@@ -25,7 +25,6 @@ public class MenuLayoutManager : MonoBehaviour
 
     public void PressHomeButton()
     {
-        Debug.Log("fazfazf");
         if (isInLobby)
         {
             SetDisplayedWidget(null);

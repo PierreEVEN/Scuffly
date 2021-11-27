@@ -30,7 +30,7 @@ public class PlanePlayerInputs : MonoBehaviour
         }
         get
         {
-            return enableInputs && playerManager && playerManager.controlledPlane;
+            return enableInputs && playerManager && playerManager.controlledPlane && !playerManager.disableInputs;
         }
     }
 

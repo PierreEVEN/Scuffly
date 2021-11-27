@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}" SchemaVersion="103">
+	<AudioObjects>
+		<WorkUnit Name="APUEngine" ID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="F16APUAcceleration" ID="{925478C8-EEA0-40D0-8A83-412CF4DC3F9D}" ShortID="666528965">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="MakeUpGain" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{616B3AB7-8905-485A-90CA-63BFFDF6A276}" ShortID="306902420">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="EngineStartVolume" ID="{4B4ABE8C-E6EB-4F0E-9A1D-E776249CA0D5}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{A03576CB-8986-4B7D-B073-906C3D1AEB7E}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-96</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-5</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="APUAttenuation" ID="{B0DB7409-2CFC-4DF5-B0B5-7181C09AFB65}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="F16APUAcceleration" ID="{3F971E33-B274-44AE-82E4-BB5F3B9D7DE5}">
+							<Language>SFX</Language>
+							<AudioFile>F16APUAcceleration.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1055176387"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="F16APUAcceleration" ID="{3F971E33-B274-44AE-82E4-BB5F3B9D7DE5}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="F16APUDeceleration" ID="{9DDA927D-86AE-482E-8766-8568B331A654}" ShortID="520587491">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="MakeUpGain" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{08CFA8DE-1C2E-4F8B-9EEB-E98E9A979DF8}" ShortID="245076953">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="EngineStopVolume" ID="{E3049910-AE7C-4312-98C1-8ED00C3D48A9}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{1ECB0960-DCDD-44B6-A4C6-EAB439024722}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-96</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-5</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="APUAttenuation" ID="{B0DB7409-2CFC-4DF5-B0B5-7181C09AFB65}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="F16APUDeceleration" ID="{E02A26BE-0E5F-46F5-ACCB-B89C2675967C}">
+							<Language>SFX</Language>
+							<AudioFile>F16APUDeceleration.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="574803911"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="F16APUDeceleration" ID="{E02A26BE-0E5F-46F5-ACCB-B89C2675967C}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="F16APUIdle" ID="{62076863-22BC-4277-A631-8C93DAEB98F3}" ShortID="251349009">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="MakeUpGain" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{1CD0D4EF-FB73-4E11-B9F0-0AD4EB427F5D}" ShortID="10005445">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="EngineIdleVolume" ID="{4D8D6083-F0C5-4FC5-817B-11BFD229C953}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{81B90927-F408-487E-BDA8-A8022CC18A18}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-96</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-5</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="APUAttenuation" ID="{B0DB7409-2CFC-4DF5-B0B5-7181C09AFB65}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+						</Reference>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="F16APUIdle" ID="{E5ABCEE8-893B-4AAD-9882-04B6AA1BADE8}">
+							<Language>SFX</Language>
+							<AudioFile>F16APUIdle.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="533190637"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="F16APUIdle" ID="{E5ABCEE8-893B-4AAD-9882-04B6AA1BADE8}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>
