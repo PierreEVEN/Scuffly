@@ -49,7 +49,7 @@ public class MobilePart : PlaneComponent
     void Update()
     {
         // Necessite de la puissance pour fonctionner
-        if (RequirePlanePower && Plane.GetCurrentPower() < 95)
+        if (!Plane || (RequirePlanePower && Plane.GetCurrentPower() < 95))
             return;
 
         // Deplace la partie mobile vers la position desiree

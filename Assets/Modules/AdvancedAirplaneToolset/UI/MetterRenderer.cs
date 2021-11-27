@@ -89,7 +89,10 @@ public class MetterRenderer : MonoBehaviour
         SceneView.duringSceneGui -= DrawInEditor;
 #endif
         foreach (var item in graduations)
-            DestroyImmediate(item);
+            if (Application.isPlaying)
+                Destroy(item);
+            else
+                DestroyImmediate(item);
         graduations.Clear();
     }
 

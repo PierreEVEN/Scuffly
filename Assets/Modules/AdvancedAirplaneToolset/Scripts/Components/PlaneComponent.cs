@@ -5,22 +5,22 @@ using UnityEngine;
  */
 public class PlaneComponent : MonoBehaviour
 {
-    PlaneActor plane;
-
-    Rigidbody physics;
-
-    WeaponManager weaponSystem;
+    PlaneActor _plane;
+    Rigidbody _physics;
+    WeaponManager _weaponSystem;
+    Radar _radar;
+    IRDetector _irDetector;
 
     public Rigidbody Physics
     {
         get
         {
-            if (!physics)
+            if (!_physics)
             {
-                physics = GetComponentInParent<Rigidbody>();
-                if (!physics && Application.isPlaying) Debug.LogError("failed to find RigidBody in parents");
+                _physics = GetComponentInParent<Rigidbody>();
+                if (!_physics && Application.isPlaying) Debug.LogError("failed to find RigidBody in parents");
             }
-            return physics;
+            return _physics;
         }
     }
 
@@ -28,12 +28,12 @@ public class PlaneComponent : MonoBehaviour
     {
         get
         {
-            if (!plane)
+            if (!_plane)
             {
-                plane = GetComponentInParent<PlaneActor>();
-                if (!plane && Application.isPlaying) Debug.LogError("failed to find PlaneManager in parents");
+                _plane = GetComponentInParent<PlaneActor>();
+                if (!_plane && Application.isPlaying) Debug.LogError("failed to find PlaneManager in parents");
             }
-            return plane;
+            return _plane;
         }
     }
 
@@ -41,12 +41,39 @@ public class PlaneComponent : MonoBehaviour
     {
         get
         {
-            if (!weaponSystem)
+            if (!_weaponSystem)
             {
-                weaponSystem = GetComponentInParent<WeaponManager>();
-                if (!plane && Application.isPlaying) Debug.LogError("failed to find WeaponManager in parents");
+                _weaponSystem = GetComponentInParent<WeaponManager>();
+                if (!_weaponSystem && Application.isPlaying) Debug.LogError("failed to find WeaponManager in parents");
             }
-            return weaponSystem;
+            return _weaponSystem;
+        }
+    }
+    public Radar RadarComponent
+    {
+        get
+        {
+            if (!_radar)
+            {
+                _radar = Plane.GetComponentInChildren<Radar>();
+                if (!_radar)
+                    Debug.LogError("failed to find radar on plane");
+            }
+            return _radar;
+        }
+    }
+
+    public IRDetector IrDetectorComponent
+    {
+        get
+        {
+            if (!_irDetector)
+            {
+                _irDetector = Plane.GetComponentInChildren<IRDetector>();
+                if (!_irDetector)
+                    Debug.LogError("failed to find irDetector on plane");
+            }
+            return _irDetector;
         }
     }
 }

@@ -18,7 +18,6 @@ public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
 {
     public static List<PodItem> PodItems = new List<PodItem>();
 
-
     public float mass = 100;
     public Mesh AerodynamicMesh;
 
@@ -31,6 +30,9 @@ public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
 
     [HideInInspector]
     public Rigidbody physics;
+
+    [HideInInspector]
+    public GameObject owner;
 
 
     private void OnEnable()
@@ -45,8 +47,9 @@ public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
         GPULandscapePhysic.Singleton.RemoveListener(this);
     }
 
-    public virtual void Shoot(Vector3 initialSpeed, Vector3 upVector, GameObject target)
+    public virtual void Shoot(GameObject objectOwner, Vector3 initialSpeed, Vector3 upVector, GameObject target)
     {
+        this.owner = objectOwner;
         this.target = target;
         // detach from parent
         transform.parent = null;

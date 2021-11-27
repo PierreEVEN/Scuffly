@@ -56,17 +56,28 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         SetFocusedPlane(inPlane);
     }
 
+    void OnFocusedPlaneDestroyed()
+    {
+        transform.parent = null;
+        transform.position = transform.position + transform.forward * -10 + transform.up * 5;
+        SetFocusedPlane(null);
+    }
+
     void SetFocusedPlane(PlaneActor inPlane)
     {
         if (inPlane == focusedPlane)
             return;
 
         if (focusedPlane)
+        {
+            focusedPlane.OnDestroyed.RemoveListener(OnFocusedPlaneDestroyed);
             focusedPlane.EnableIndoor(false);
+        }
         fpsViewPoint = null;
         focusedPlane = inPlane;
         if (focusedPlane)
         {
+            focusedPlane.OnDestroyed.AddListener(OnFocusedPlaneDestroyed);
             gameObject.transform.parent = focusedPlane.transform;
             focusedPlane.EnableIndoor(true);
         }
@@ -97,8 +108,6 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
                 focusedPlane.transform.up * indoorLookVector.y * -0.002f +
                 focusedPlane.transform.right * indoorLookVector.x * 0.0017f;
 
-            if (gameObject.transform.position.y < groundAltitude + 1)
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x, groundAltitude + 1, gameObject.transform.position.z);
             controlledCamera.fieldOfView = Indoor ? fov : 60;
 
             GForcePostProcessEffect.GForceIntensity = Indoor ? fpsViewPoint.GetGforceEffect() * 10 : 0;
@@ -111,6 +120,9 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             GForcePostProcessEffect.GForceIntensity = 0;
             FreeCamMovements();
         }
+
+        if (gameObject.transform.position.y < groundAltitude + 1)
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, groundAltitude + 1, gameObject.transform.position.z);
     }
 
     public void OnLook(InputValue input)

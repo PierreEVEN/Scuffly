@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 30fd23938bdd0f4d92e863f4145c1acc
     GuidInternal: 
-    m_lastTime: -8585641182674928912
+    m_lastTime: -8585635832271942271
     List:
     - name: TestSB
       guid: 4ffeca94bd54074a8e5063309778da14
@@ -94,7 +94,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: d670788d2bdfe249bb965a44b8b1ea61
     GuidInternal: 
-    m_lastTime: -8585641182680588787
+    m_lastTime: -8585635833311351332
     List:
     - name: PlaneExplosion
       guid: 2ae09b84f994a74c8457c812f4dee887
@@ -127,6 +127,125 @@ MonoBehaviour:
         ObjectType: 3
         guid: c0b8c8d4b4bd6648b816f8e97bdc1489
       Path: Events\Default Work Unit\PlayEngine
+      maxAttenuation: 1000
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayIRtone
+      guid: 4bbb9ab9fc16834598db43d22dbe506d
+      id: 2282830790
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: d670788d2bdfe249bb965a44b8b1ea61
+      - ElementName: PlayIRtone
+        ObjectType: 3
+        guid: 4bbb9ab9fc16834598db43d22dbe506d
+      Path: Events\Default Work Unit\PlayIRtone
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayStartAPU
+      guid: 9e1b3016d9776f46be1536b3e829bf5d
+      id: 3342624803
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: d670788d2bdfe249bb965a44b8b1ea61
+      - ElementName: PlayStartAPU
+        ObjectType: 3
+        guid: 9e1b3016d9776f46be1536b3e829bf5d
+      Path: Events\Default Work Unit\PlayStartAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayStartEngine
+      guid: f896c22dc695a44fa720ceb9bbb25057
+      id: 867514771
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: d670788d2bdfe249bb965a44b8b1ea61
+      - ElementName: PlayStartEngine
+        ObjectType: 3
+        guid: f896c22dc695a44fa720ceb9bbb25057
+      Path: Events\Default Work Unit\PlayStartEngine
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayStopAPU
+      guid: 9d3e73456f6272409c1bba6129e6d4d4
+      id: 3298093305
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: d670788d2bdfe249bb965a44b8b1ea61
+      - ElementName: PlayStopAPU
+        ObjectType: 3
+        guid: 9d3e73456f6272409c1bba6129e6d4d4
+      Path: Events\Default Work Unit\PlayStopAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayStopEngine
+      guid: b1dd96586038d544aa549c77bf10b534
+      id: 951709393
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: d670788d2bdfe249bb965a44b8b1ea61
+      - ElementName: PlayStopEngine
+        ObjectType: 3
+        guid: b1dd96586038d544aa549c77bf10b534
+      Path: Events\Default Work Unit\PlayStopEngine
+      maxAttenuation: 1000
+      maxDuration: -1
+      minDuration: -1
+    - name: StopEngine
+      guid: 24175d51fc93744e8986f1c165c9dffc
+      id: 3762828835
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: d670788d2bdfe249bb965a44b8b1ea61
+      - ElementName: StopEngine
+        ObjectType: 3
+        guid: 24175d51fc93744e8986f1c165c9dffc
+      Path: Events\Default Work Unit\StopEngine
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopIRTone
+      guid: e848bbd0e3eb2f4ba917927bb27c8a5b
+      id: 772970040
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: d670788d2bdfe249bb965a44b8b1ea61
+      - ElementName: StopIRTone
+        ObjectType: 3
+        guid: e848bbd0e3eb2f4ba917927bb27c8a5b
+      Path: Events\Default Work Unit\StopIRTone
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -159,7 +278,7 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: c54fb2825993714c9d77885654107e65
     GuidInternal: 
-    m_lastTime: -8585641672888697754
+    m_lastTime: -8585635865656735476
     List:
     - name: Distance
       guid: cd636865edc3b64ab5b56d36c2afe3c7
@@ -189,6 +308,20 @@ MonoBehaviour:
         ObjectType: 13
         guid: 5eb6f37350147e41893f143c009ac549
       Path: Game Parameters\Default Work Unit\EngineStatus
+    - name: IRFoundState
+      guid: 1820f002e0bf9a48a7094cc6c421de67
+      id: 634056083
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: IRFoundState
+        ObjectType: 13
+        guid: 1820f002e0bf9a48a7094cc6c421de67
+      Path: Game Parameters\Default Work Unit\IRFoundState
   StateWwu:
   - PhysicalPath: States\Default Work Unit.wwu
     PathAndIcons:
@@ -232,7 +365,7 @@ MonoBehaviour:
     m_lastTime: -8585641672885406505
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0600000007000000
+  ExpandedWaapiItemIds: 0500000006000000070000000e0000000f000000130000001400000015000000160000001700000018000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

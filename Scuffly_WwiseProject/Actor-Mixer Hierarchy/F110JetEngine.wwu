@@ -5,7 +5,11 @@
 			<ChildrenList>
 				<Sound Name="f110Startup" ID="{F1FBFAAA-A5E3-4A02-A2E4-0FC61944A944}" ShortID="192629363">
 					<PropertyList>
-						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-5</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -31,9 +35,16 @@
 				</Sound>
 				<Sound Name="f110ShutDown" ID="{19E0A642-CFA4-45F8-81A8-9700B84D0C90}" ShortID="828511013">
 					<PropertyList>
-						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-5</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+						</Reference>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
 						</Reference>
@@ -58,8 +69,16 @@
 				<BlendContainer Name="F110Thrust" ID="{2E7DB56C-036F-414B-AAB7-CA1819A1D517}" ShortID="743615865">
 					<PropertyList>
 						<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-5</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
+						<Reference Name="Attenuation">
+							<ObjectRef Name="F110Attenuation" ID="{3E54387D-8364-4ED5-BDB2-E35D61505137}" WorkUnitID="{956E8340-B227-4395-92ED-A7B97BD3245E}"/>
+						</Reference>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
 						</Reference>

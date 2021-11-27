@@ -15,6 +15,13 @@ namespace AK
     {
         static const AkUniqueID PLANEEXPLOSION = 3974827210U;
         static const AkUniqueID PLAYENGINE = 737062081U;
+        static const AkUniqueID PLAYIRTONE = 2282830790U;
+        static const AkUniqueID PLAYSTARTAPU = 3342624803U;
+        static const AkUniqueID PLAYSTARTENGINE = 867514771U;
+        static const AkUniqueID PLAYSTOPAPU = 3298093305U;
+        static const AkUniqueID PLAYSTOPENGINE = 951709393U;
+        static const AkUniqueID STOPENGINE = 3762828835U;
+        static const AkUniqueID STOPIRTONE = 772970040U;
         static const AkUniqueID TOGGLESWITCH = 598009201U;
     } // namespace EVENTS
 
@@ -22,6 +29,7 @@ namespace AK
     {
         static const AkUniqueID DISTANCE = 1240670792U;
         static const AkUniqueID ENGINESTATUS = 3156709873U;
+        static const AkUniqueID IRFOUNDSTATE = 634056083U;
     } // namespace GAME_PARAMETERS
 
     namespace BANKS

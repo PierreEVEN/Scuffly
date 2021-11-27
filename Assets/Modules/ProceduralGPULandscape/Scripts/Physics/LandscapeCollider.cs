@@ -26,7 +26,10 @@ public class LandscapeCollider : MonoBehaviour, GPULandscapePhysicInterface
         GPULandscapePhysic.Singleton.RemoveListener(this);
 
         if (collisionPrefab)
-            DestroyImmediate(collisionPrefab);
+            if (Application.isPlaying)
+                Destroy(collisionPrefab);
+            else
+                DestroyImmediate(collisionPrefab);
     }
     void CreateMesh()
     {

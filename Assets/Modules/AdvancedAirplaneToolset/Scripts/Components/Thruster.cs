@@ -32,7 +32,12 @@ public class Thruster : PlaneComponent, IPowerProvider
 
     public RTPC EngineStatusRTPC;
     public RTPC CameraDistanceRPC;
-
+    public AK.Wwise.Event PlayEvent;
+    public AK.Wwise.Event StopEvent;
+    public AK.Wwise.Event PlayStartEvent;
+    public AK.Wwise.Event PlayStopEvent;
+    public bool isSoundPlaying = false;
+    public bool hasStarted = false;
 
     void OnEnable()
     {
@@ -43,8 +48,10 @@ public class Thruster : PlaneComponent, IPowerProvider
         Plane.RegisterThruster(this);
     }
 
+
     private void OnDisable()
     {
+        StopEvent.Post(gameObject);
         Plane.UnRegisterThruster(this);
     }
 
@@ -61,6 +68,28 @@ public class Thruster : PlaneComponent, IPowerProvider
         float totalInputPercent = throttleCurrentPercent + engineStartupPercent * idleEngineThrustPercent;
         float forwardVelocity = transform.InverseTransformDirection(Physics.velocity).z;
         Physics.AddForceAtPosition(-transform.forward * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
+
+        if (engineStartupPercent > 0 && engineStartupPercent < 0.5f && !hasStarted)
+        {
+            PlayStartEvent.Post(gameObject);
+            hasStarted = true;
+        }
+        if (engineStartupPercent == 0)
+        {
+            hasStarted = false;
+        }
+
+        if (engineStartupPercent < 1 && isSoundPlaying)
+        {
+            isSoundPlaying = false;
+            StopEvent.Post(gameObject);
+            PlayStopEvent.Post(gameObject);
+        }
+        if (engineStartupPercent >= 1 && !isSoundPlaying)
+        {
+            isSoundPlaying = true;
+            PlayEvent.Post(gameObject);
+        }
 
         EngineStatusRTPC.SetValue(gameObject, totalInputPercent * 100);
         if (Camera.main) 

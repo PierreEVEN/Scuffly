@@ -199,7 +199,7 @@ public class PlanePlayerInputs : MonoBehaviour
         if (!weaponManager)
             return;
 
-        weaponManager.SwitchToAirGround();
+        weaponManager.AirGroundMode();
     }
     public void OnSwitchAirAir()
     {
@@ -210,7 +210,7 @@ public class PlanePlayerInputs : MonoBehaviour
         if (!weaponManager)
             return;
 
-        weaponManager.SwitchToAirAir();
+        weaponManager.AirAirMode();
     }
     public void OnEnableWeapons()
     {

@@ -91,7 +91,9 @@ public class DamageableComponent : MonoBehaviour
                 {
                     aeroComp.enabled = false;
                 }
+
                 OnDestroyed.Invoke();
+                Destroy(gameObject, 60);
             }
         }
     }

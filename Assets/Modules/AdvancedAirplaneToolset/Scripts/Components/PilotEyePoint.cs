@@ -27,7 +27,7 @@ public class PilotEyePoint : MonoBehaviour
 
     private void Update()
     {
-        float inputForce = physics.GForce.y / 2;
+        float inputForce = physics.GForce.y / 2.5f;
 
 
 

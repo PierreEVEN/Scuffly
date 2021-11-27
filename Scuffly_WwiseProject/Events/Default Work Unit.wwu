@@ -36,6 +36,77 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="PlayIRtone" ID="{B99ABB4B-16FC-4583-98DB-43D22DBE506D}">
+					<ChildrenList>
+						<Action Name="" ID="{3EA29FCF-4073-4BF5-B99C-91FDF3DB47FC}" ShortID="535816720">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="aim9SearchTone" ID="{8A2546AD-2FA0-415E-B0A2-0E7B8641F46C}" WorkUnitID="{E9C0CC2D-CB50-4384-93FB-D4F89A8CBDA4}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopIRTone" ID="{D0BB48E8-EBE3-4B2F-A917-927BB27C8A5B}">
+					<ChildrenList>
+						<Action Name="" ID="{278E943F-CCAA-415B-ADA5-B4D5A0385B57}" ShortID="758603823">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="aim9SearchTone" ID="{8A2546AD-2FA0-415E-B0A2-0E7B8641F46C}" WorkUnitID="{E9C0CC2D-CB50-4384-93FB-D4F89A8CBDA4}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopEngine" ID="{515D1724-93FC-4E74-8986-F1C165C9DFFC}">
+					<ChildrenList>
+						<Action Name="" ID="{03E8238B-3C45-406E-86F4-98BE5BF9042F}" ShortID="516229413">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F110Thrust" ID="{2E7DB56C-036F-414B-AAB7-CA1819A1D517}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="PlayStartEngine" ID="{2DC296F8-95C6-4FA4-A720-CEB9BBB25057}">
+					<ChildrenList>
+						<Action Name="" ID="{EBFB2807-3E32-41B7-B53A-04970C8C9C88}" ShortID="246238767">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="f110Startup" ID="{F1FBFAAA-A5E3-4A02-A2E4-0FC61944A944}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="PlayStopEngine" ID="{5896DDB1-3860-44D5-AA54-9C77BF10B534}">
+					<ChildrenList>
+						<Action Name="" ID="{ADC947F5-E6EC-44A8-8DD3-07ABEA23CA35}" ShortID="113737019">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="f110ShutDown" ID="{19E0A642-CFA4-45F8-81A8-9700B84D0C90}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="PlayStartAPU" ID="{16301B9E-77D9-466F-BE15-36B3E829BF5D}">
+					<ChildrenList>
+						<Action Name="" ID="{8DB726FE-B709-406C-A64F-EB45E953529F}" ShortID="931034788"/>
+					</ChildrenList>
+				</Event>
+				<Event Name="PlayStopAPU" ID="{45733E9D-626F-4072-9C1B-BA6129E6D4D4}">
+					<ChildrenList>
+						<Action Name="" ID="{3B68C685-99AB-414B-885D-2660AF7D801B}" ShortID="207406934"/>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

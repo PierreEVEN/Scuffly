@@ -32,6 +32,9 @@ public class Missile : PodItem
             if (!target)
                 return;
 
+            if (Vector3.Distance(owner.transform.position, transform.position) < 10)
+                return;
+
             // Rotate toward target
             Vector3 targetPosition = target.transform.position;
 
@@ -54,9 +57,9 @@ public class Missile : PodItem
         }
     }
 
-    public override void Shoot(Vector3 initialSpeed, Vector3 upVector, GameObject target)
+    public override void Shoot(GameObject objectOwner, Vector3 initialSpeed, Vector3 upVector, GameObject target)
     {
-        base.Shoot(initialSpeed, upVector, target);
+        base.Shoot(objectOwner, initialSpeed, upVector, target);
 
         thrustFx = GetComponentInChildren<VisualEffect>();
         if (thrustFx)

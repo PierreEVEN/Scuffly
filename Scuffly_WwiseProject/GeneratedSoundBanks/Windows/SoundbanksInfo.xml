@@ -11,12 +11,12 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="608868685">
+		<SoundBank Id="1355168291" Language="SFX" Hash="768366544">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="3331313354" Language="SFX" Hash="200302873">
+		<SoundBank Id="3331313354" Language="SFX" Hash="181872528">
 			<ObjectPath>\SoundBanks\Default Work Unit\TestSB</ObjectPath>
 			<ShortName>TestSB</ShortName>
 			<Path>TestSB.bnk</Path>
@@ -29,7 +29,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="737062081" Name="PlayEngine" ObjectPath="\Events\Default Work Unit\PlayEngine">
+				<Event Id="737062081" Name="PlayEngine" ObjectPath="\Events\Default Work Unit\PlayEngine" MaxAttenuation="1000.000000">
 					<IncludedMemoryFiles>
 						<File Id="205787666" Language="SFX">
 							<ShortName>f110Acceleration_1.wav</ShortName>
@@ -73,6 +73,34 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="2282830790" Name="PlayIRtone" ObjectPath="\Events\Default Work Unit\PlayIRtone">
+					<IncludedMemoryFiles>
+						<File Id="680286370" Language="SFX">
+							<ShortName>aim9SearchTone.wav</ShortName>
+							<Path>SFX\aim9SearchTone_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3342624803" Name="PlayStartAPU" ObjectPath="\Events\Default Work Unit\PlayStartAPU" MaxAttenuation="0.000000"/>
+				<Event Id="867514771" Name="PlayStartEngine" ObjectPath="\Events\Default Work Unit\PlayStartEngine">
+					<IncludedMemoryFiles>
+						<File Id="820349579" Language="SFX">
+							<ShortName>f110Startup.wav</ShortName>
+							<Path>SFX\f110Startup_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3298093305" Name="PlayStopAPU" ObjectPath="\Events\Default Work Unit\PlayStopAPU" MaxAttenuation="0.000000"/>
+				<Event Id="951709393" Name="PlayStopEngine" ObjectPath="\Events\Default Work Unit\PlayStopEngine" MaxAttenuation="1000.000000">
+					<IncludedMemoryFiles>
+						<File Id="657079121" Language="SFX">
+							<ShortName>f110ShutDown.wav</ShortName>
+							<Path>SFX\f110ShutDown_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3762828835" Name="StopEngine" ObjectPath="\Events\Default Work Unit\StopEngine" MaxAttenuation="0.000000"/>
+				<Event Id="772970040" Name="StopIRTone" ObjectPath="\Events\Default Work Unit\StopIRTone" MaxAttenuation="0.000000"/>
 				<Event Id="598009201" Name="ToggleSwitch" ObjectPath="\Events\Default Work Unit\ToggleSwitch" MaxAttenuation="100.000000">
 					<IncludedMemoryFiles>
 						<File Id="370917366" Language="SFX">
@@ -113,7 +141,7 @@
 				</File>
 				<File Id="657079121" Language="SFX">
 					<ShortName>f110ShutDown.wav</ShortName>
-					<Path>SFX\f110ShutDown_D79FB2B7.wem</Path>
+					<Path>SFX\f110ShutDown_10C4C929.wem</Path>
 				</File>
 				<File Id="658027025" Language="SFX">
 					<ShortName>WindTunnel.wav</ShortName>
@@ -123,13 +151,17 @@
 					<ShortName>f110Acceleration_5.wav</ShortName>
 					<Path>SFX\f110Acceleration_5_D79FB2B7.wem</Path>
 				</File>
+				<File Id="680286370" Language="SFX">
+					<ShortName>aim9SearchTone.wav</ShortName>
+					<Path>SFX\aim9SearchTone_D79FB2B7.wem</Path>
+				</File>
 				<File Id="770591842" Language="SFX">
 					<ShortName>f110Acceleration_4.wav</ShortName>
 					<Path>SFX\f110Acceleration_4_D79FB2B7.wem</Path>
 				</File>
 				<File Id="820349579" Language="SFX">
 					<ShortName>f110Startup.wav</ShortName>
-					<Path>SFX\f110Startup_D79FB2B7.wem</Path>
+					<Path>SFX\f110Startup_10C4C929.wem</Path>
 				</File>
 				<File Id="875417865" Language="SFX">
 					<ShortName>F16-OutsideMax.wav</ShortName>
@@ -141,6 +173,7 @@
 				</File>
 			</IncludedMemoryFiles>
 			<GameParameters>
+				<GameParameter Id="634056083" Name="IRFoundState" ObjectPath="\Game Parameters\Default Work Unit\IRFoundState"/>
 				<GameParameter Id="1240670792" Name="Distance" ObjectPath="\Game Parameters\Default Work Unit\Distance"/>
 				<GameParameter Id="3156709873" Name="EngineStatus" ObjectPath="\Game Parameters\Default Work Unit\EngineStatus"/>
 			</GameParameters>

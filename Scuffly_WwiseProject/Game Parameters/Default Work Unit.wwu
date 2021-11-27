@@ -9,6 +9,7 @@
 					</PropertyList>
 				</GameParameter>
 				<GameParameter Name="Distance" ID="{656863CD-C3ED-4AB6-B5B5-6D36C2AFE3C7}"/>
+				<GameParameter Name="IRFoundState" ID="{02F02018-BFE0-489A-A709-4CC6C421DE67}"/>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>

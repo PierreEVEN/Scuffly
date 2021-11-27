@@ -39,7 +39,7 @@ public class ThreatWarningIndicator : PlaneComponent
             float distance = (target.Value.ScannedWorldPosition - Plane.transform.position).magnitude;
             Vector3 relativeDirection = relativePosition.normalized;
             GameObject icon = displayedTargets[target.Key];
-            icon.transform.localPosition = new Vector3(relativeDirection.x, relativeDirection.z, 0) * Mathf.Min(100, distance / 500);
+            icon.transform.localPosition = new Vector3(relativeDirection.x, relativeDirection.z, 0).normalized * Mathf.Min(50, distance / 100);
         }
     }
 

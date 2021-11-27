@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public enum WeaponMode
 {
+    None,
     Canon,
     Pod_Air,
     Pod_Ground,
@@ -12,19 +13,21 @@ public enum WeaponMode
 public class WeaponManager : PlaneComponent
 {
     bool toggleWeaponOn = false;
-    WeaponMode weaponMode = WeaponMode.Pod_Air;
+    WeaponMode weaponMode = WeaponMode.None;
     PodItemType currentPodType = PodItemType.Missile_IR;
     public bool IsEnabled
     {
         get { return Plane.MainPower && toggleWeaponOn; }
     }
 
+    public WeaponMode CurrentWeaponMode { get { return weaponMode; } }
+    public PodItemType CurrentSelectedWeaponType { get { return currentPodType; } }
+
     public bool IsToggledOn
     {
         get { return toggleWeaponOn; }
         set { 
             toggleWeaponOn = value;
-            Debug.Log("set weapon to " + value);
         }
     }
 
@@ -115,43 +118,23 @@ public class WeaponManager : PlaneComponent
         OnSwitchToNextPod.Invoke();
     }
 
-    public void SwitchToAirGround()
+    public void AirGroundMode()
     {
-        Debug.Log("switch to airground ");
-        weaponMode = WeaponMode.Pod_Ground;
+        weaponMode = weaponMode == WeaponMode.Pod_Ground ? WeaponMode.None : WeaponMode.Pod_Ground;
         SwitchToNextPod();
 
         OnSwitchWeaponMode.Invoke();
     }
 
-    void UpdateWeaponMode()
+    public void AirAirMode()
     {
-        if (weaponMode == WeaponMode.Pod_Air)
-        {
-            switch (currentPodType)
-            {
-                case PodItemType.Bomb:
-                case PodItemType.Maverick:
-                    currentPodType = PodItemType.Missile_IR;
-                    break;
-            }
-        }
-        else if (weaponMode == WeaponMode.Pod_Ground)
-        {
-
-        }
-
-    public void SwitchToAirAir()
-    {
-        Debug.Log("switch to airair ");
-        weaponMode = WeaponMode.Pod_Air;
+        weaponMode = weaponMode == WeaponMode.Pod_Air ? WeaponMode.None : WeaponMode.Pod_Air;
         SwitchToNextPod();
         OnSwitchWeaponMode.Invoke();
     }
     public void SwitchToCanon()
     {
-        Debug.Log("switch to canon ");
-        weaponMode = WeaponMode.Canon;
+        weaponMode = weaponMode == WeaponMode.Canon ? WeaponMode.None : WeaponMode.Canon;
         OnSwitchWeaponMode.Invoke();
     }
 }

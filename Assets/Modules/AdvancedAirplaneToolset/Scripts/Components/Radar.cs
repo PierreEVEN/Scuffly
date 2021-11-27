@@ -104,4 +104,5 @@ public class Radar : PlaneComponent
             scannedTargets.Remove(item);
         }
     }
+
 }

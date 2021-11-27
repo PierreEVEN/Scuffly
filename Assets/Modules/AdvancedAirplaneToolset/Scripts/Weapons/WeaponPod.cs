@@ -5,7 +5,7 @@ using UnityEngine;
 /*
  * Point d'attache d'armements. Se place sous chaque aile.
  */
-public class WeaponPod : MonoBehaviour
+public class WeaponPod : PlaneComponent
 {
     public List<GameObject> spawnableWeapons = new List<GameObject>();
 
@@ -28,15 +28,12 @@ public class WeaponPod : MonoBehaviour
 
     public void Shoot(GameObject target)
     {
-        if (!GetComponentInParent<PlaneActor>())
-            return;
-
         // On regarde si un arme est attachee au pod, si c'est le cas on l'active.
         if (!attachedPodItem)
             return;
         PodItem comp = attachedPodItem.GetComponent<PodItem>();
         if (comp)
-            comp.Shoot(GetComponentInParent<Rigidbody>().velocity, transform.up, target);
+            comp.Shoot(Plane.gameObject, GetComponentInParent<Rigidbody>().velocity, transform.up, target);
         attachedPodItem = null; // l'arme a ete tiree
     }
 }

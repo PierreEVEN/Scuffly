@@ -10,12 +10,14 @@ public abstract class SwitchBase : PlaneComponent
 
     public void StartOver()
     {
+        gameObject.layer = 3;
         for (int i = 0; i < transform.childCount; ++i)
             transform.GetChild(i).gameObject.layer = 3;
     }
 
     public void StopOver()
     {
+        gameObject.layer = 0;
         for (int i = 0; i < transform.childCount; ++i)
             transform.GetChild(i).gameObject.layer = 0;
     }

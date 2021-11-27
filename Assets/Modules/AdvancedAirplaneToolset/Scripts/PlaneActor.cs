@@ -68,9 +68,10 @@ public class PlaneActor : NetworkBehaviour
 
     public static List<PlaneActor> PlaneList = new List<PlaneActor>();
 
+    [HideInInspector]
+    public UnityEvent OnDestroyed = new UnityEvent();
 
-    public VisualEffectAsset explosionFx;
-    public AK.Wwise.Event explosionAudio;
+    public GameObject explosionObject;
 
     public GameObject cockpitObject;
     public PlaneTeam planeTeam = PlaneTeam.Blue;
@@ -363,17 +364,18 @@ public class PlaneActor : NetworkBehaviour
     }
 
 
-    public void OnExplode()
+    void OnExplode()
     {
         planePhysic.isKinematic = true;
         transform.position = transform.position - new Vector3(0, 8, 0);
-        VisualEffect fx = gameObject.AddComponent<VisualEffect>();
-        fx.transform.rotation = Quaternion.identity;
-        fx.transform.position = transform.position;
-        fx.visualEffectAsset = explosionFx;
-        fx.Play();
-        fx.SetVector3("Position", transform.position);
-        explosionAudio.Post(gameObject);
+        if (explosionObject)
+        {
+            GameObject fxContainer = Instantiate(explosionObject);
+            fxContainer.transform.position = transform.position;
+            Destroy(fxContainer, 50);
+        }
+        OnDestroyed.Invoke();
+        Destroy(gameObject);
     }
 
     bool? indoorEnabled = null;

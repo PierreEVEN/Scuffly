@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{E9C0CC2D-CB50-4384-93FB-D4F89A8CBDA4}" SchemaVersion="103">
+	<AudioObjects>
+		<WorkUnit Name="Aim9SearchTone" ID="{E9C0CC2D-CB50-4384-93FB-D4F89A8CBDA4}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="aim9SearchTone" ID="{8A2546AD-2FA0-415E-B0A2-0E7B8641F46C}" ShortID="92885822">
+					<PropertyList>
+						<Property Name="Highpass" Type="int16">
+							<ValueList>
+								<Value>37</Value>
+							</ValueList>
+						</Property>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Pitch" Type="int32">
+							<RTPCList>
+								<RTPC Name="" ID="{4053D438-D9C0-45DC-BF45-C990D329585D}" ShortID="180888043">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="IRFoundState" ID="{02F02018-BFE0-489A-A709-4CC6C421DE67}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{8DFE6394-1CB4-41C8-8902-8DC60C4380E4}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-1197</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="aim9SearchTone" ID="{A9AD40AB-AC18-417B-803C-87ADBEDC4034}">
+							<Language>SFX</Language>
+							<AudioFile>aim9SearchTone.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="680286370"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="aim9SearchTone" ID="{A9AD40AB-AC18-417B-803C-87ADBEDC4034}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

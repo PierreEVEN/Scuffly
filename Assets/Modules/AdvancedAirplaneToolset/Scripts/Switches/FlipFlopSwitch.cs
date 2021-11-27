@@ -8,7 +8,8 @@ public enum ESwitchTarget
     APU,
     Gear,
     Brakes,
-    ThrottleNotch
+    ThrottleNotch,
+    Weapons
 }
 
 [ExecuteInEditMode]
@@ -47,6 +48,11 @@ public class FlipFlopSwitch : SwitchBase
                 case ESwitchTarget.ThrottleNotch:
                     newOn = Plane.ThrottleNotch;
                     break;
+                case ESwitchTarget.Weapons:
+                    newOn = WeaponSystem.IsToggledOn;
+                    break;
+                case ESwitchTarget.None:
+                    break;
             }
             if (newOn != On)
             {
@@ -83,6 +89,9 @@ public class FlipFlopSwitch : SwitchBase
                 break;
             case ESwitchTarget.Brakes:
                 Plane.Brakes = On;
+                break;
+            case ESwitchTarget.Weapons:
+                WeaponSystem.IsToggledOn = On;
                 break;
             case ESwitchTarget.ThrottleNotch:
                 Plane.ThrottleNotch = On;
