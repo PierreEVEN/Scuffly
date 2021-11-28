@@ -7,6 +7,8 @@ Shader "HDRP/GpuLandscapeShader"
 		[NoScaleOffset] _RockAlbedo("Rock_Albedo", 2D) = "white" {}
 		[NoScaleOffset] _SnowAlbedo("Snow_Albedo", 2D) = "white" {}
 		[NoScaleOffset] _SandAlbedo("Sand_Albedo", 2D) = "white" {}
+		[NoScaleOffset] _GroundIntensity("Ground Intensity", float) = 1
+
 	}
 
 	SubShader
@@ -98,6 +100,8 @@ Shader "HDRP/GpuLandscapeShader"
 			sampler2D _SnowAlbedo;
 			sampler2D _SandAlbedo;
 
+			float _GroundIntensity;
+
 			void Frag(VertexOutput IN, OUTPUT_GBUFFER(outGBuffer))
 			{
 				float cameraDistance = length(_WorldSpaceCameraPos - IN.positionWS);
@@ -170,7 +174,7 @@ Shader "HDRP/GpuLandscapeShader"
 
 				SurfaceData surfaceData;
 				ZERO_INITIALIZE(SurfaceData, surfaceData);
-				surfaceData.baseColor = float3(color);
+				surfaceData.baseColor = float3(color) *_GroundIntensity;
 				surfaceData.normalWS = normal;
 				surfaceData.geomNormalWS = T2W(input, 2);
 				surfaceData.tangentWS = normalize(T2W(input, 0).xyz);

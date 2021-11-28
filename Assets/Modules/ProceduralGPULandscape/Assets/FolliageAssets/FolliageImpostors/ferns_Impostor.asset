@@ -67,7 +67,7 @@ Material:
     - _Use_Parallax: 0
     m_Colors:
     - _AI_SizeOffset: {r: 7.3222075, g: 7.561886, b: -0.00045045046, a: 0.0018018018}
-    - _AlbedoCorretion: {r: 1.7207954, g: 0.82886475, b: 0, a: 1}
+    - _AlbedoCorretion: {r: 0.5943396, g: 0.28788325, b: 0, a: 1}
     - _HueVariation: {r: 0, g: 0, b: 0, a: 0}
     - _Offset: {r: 0.096199036, g: 0.8994851, b: 0.0323236, a: -0.010810811}
   m_BuildTextureStacks: []

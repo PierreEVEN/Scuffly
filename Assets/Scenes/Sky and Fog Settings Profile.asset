@@ -196,7 +196,7 @@ MonoBehaviour:
     m_Value: 0
   cloudPreset:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 3
   cumulusMap:
     m_OverrideState: 0
     m_Value: {fileID: 0}
@@ -539,16 +539,16 @@ MonoBehaviour:
     m_Value: 55261.973
   aerosolDensity:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 0.082
   aerosolTint:
     m_OverrideState: 0
-    m_Value: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
   aerosolMaximumAltitude:
     m_OverrideState: 0
     m_Value: 8289.296
   aerosolAnisotropy:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 0.28
   numberOfBounces:
     m_OverrideState: 1
     m_Value: 6
@@ -577,10 +577,10 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: {x: -909.2, y: -94.3, z: -77}
   colorSaturation:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 0.427
   alphaSaturation:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   alphaMultiplier:
     m_OverrideState: 0
@@ -590,7 +590,7 @@ MonoBehaviour:
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   zenithTint:
     m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 1}
   horizonZenithShift:
     m_OverrideState: 0
     m_Value: 0

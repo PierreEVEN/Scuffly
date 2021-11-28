@@ -147,25 +147,25 @@ MonoBehaviour:
     m_Value: 1
   length:
     m_OverrideState: 1
-    m_Value: 0.428
+    m_Value: 0.3
   opacity:
     m_OverrideState: 0
     m_Value: 1
   distanceScaleFactor:
     m_OverrideState: 1
-    m_Value: 0.325
+    m_Value: 0.518
   maxDistance:
     m_OverrideState: 1
-    m_Value: 100
+    m_Value: 10
   minDistance:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   fadeDistance:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 1
   fadeInDistance:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 0
   rayBias:
     m_OverrideState: 0
     m_Value: 0.2
@@ -281,7 +281,7 @@ MonoBehaviour:
     m_Value: {x: 0.95, y: 1, z: 0.97583336, w: 0}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 0.9, y: 0.98333335, z: 1, w: 0.016722409}
+    m_Value: {x: 0.9, y: 0.98333335, z: 1, w: 0}
   highlights:
     m_OverrideState: 1
     m_Value: {x: 0.97, y: 0.996, z: 1, w: 0.1505017}

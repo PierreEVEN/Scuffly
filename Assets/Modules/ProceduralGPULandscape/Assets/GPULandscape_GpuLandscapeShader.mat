@@ -118,6 +118,8 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnergyConservingSpecularColor: 1
     - _Frames: 16
+    - _GrounIntensity: 1
+    - _GroundIntensity: 0.2
     - _Hemi: 0
     - _Hue: 0
     - _ImpostorSize: 1
