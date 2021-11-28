@@ -12,18 +12,18 @@ public class ThreatWarningIndicator : PlaneComponent
     Canvas container;
     private void OnEnable()
     {
-        Plane.GetRadar().OnDetectNewTarget.AddListener(AddTarget);
-        Plane.GetRadar().OnLostTarget.AddListener(RemoveTarget);
+        Plane.RadarComponent.OnDetectNewTarget.AddListener(AddTarget);
+        Plane.RadarComponent.OnLostTarget.AddListener(RemoveTarget);
 
         container = GetComponent<Canvas>();
-        foreach (var target in Plane.GetRadar().scannedTargets)
+        foreach (var target in Plane.RadarComponent.scannedTargets)
             AddTarget(target.Key);
     }
 
     private void OnDisable()
     {
-        Plane.GetRadar().OnDetectNewTarget.RemoveListener(AddTarget);
-        Plane.GetRadar().OnLostTarget.RemoveListener(RemoveTarget);
+        Plane.RadarComponent.OnDetectNewTarget.RemoveListener(AddTarget);
+        Plane.RadarComponent.OnLostTarget.RemoveListener(RemoveTarget);
 
         foreach (var target in displayedTargets)
             Destroy(target.Value);
@@ -33,7 +33,7 @@ public class ThreatWarningIndicator : PlaneComponent
     // Update is called once per frame
     void Update()
     {
-        foreach (var target in Plane.GetRadar().scannedTargets)
+        foreach (var target in Plane.RadarComponent.scannedTargets)
         {
             Vector3 relativePosition = (target.Value.ScannedWorldPosition - Plane.transform.position);
             relativePosition = Plane.transform.InverseTransformDirection(relativePosition.normalized);

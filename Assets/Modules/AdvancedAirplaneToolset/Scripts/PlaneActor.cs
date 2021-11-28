@@ -42,6 +42,9 @@ public class PlaneActor : NetworkBehaviour
     Rigidbody planePhysic;
     private float currentEnginePower;
 
+    public Rigidbody Physics { get { return planePhysic; } }
+
+
     // Etat courant de l'avion
     private bool throttleNotch = false;
     private bool apuSwitch = false;
@@ -320,11 +323,7 @@ public class PlaneActor : NetworkBehaviour
 
     public float GetRoll()
     {
-
-        Vector3 worldForward = new Vector3(transform.right.x, 0, transform.right.z).normalized;
-
-        float angle = Vector3.SignedAngle(transform.right, worldForward, new Vector3(transform.forward.x, 0, transform.forward.z).normalized);
-        return angle;
+        return (transform.rotation.eulerAngles.z % 360 + 180 + 360) % 360 - 180;
     }
 
     /// <summary>
@@ -334,6 +333,11 @@ public class PlaneActor : NetworkBehaviour
     public float GetHeading()
     {
         return transform.rotation.eulerAngles.y;
+    }
+
+    public float GetAltitudeInFoots()
+    {
+        return transform.position.y * 3.281f;
     }
 
 
@@ -431,11 +435,24 @@ public class PlaneActor : NetworkBehaviour
      */
 
     Radar planeRadar;
-
-    public Radar GetRadar()
+    public Radar RadarComponent
     {
-        if (!planeRadar)
-            planeRadar = GetComponentInChildren<Radar>();
-        return planeRadar;
+        get
+        {
+            if (!planeRadar)
+                planeRadar = GetComponentInChildren<Radar>();
+            return planeRadar;
+        }
+    }
+
+    WeaponManager weaponSystem;
+    public WeaponManager WeaponSystem
+    {
+        get
+        {
+            if (!weaponSystem)
+                weaponSystem = GetComponentInChildren<WeaponManager>();
+            return weaponSystem;
+        }
     }
 }

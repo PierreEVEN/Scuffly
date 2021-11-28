@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 // Gestion du HUD et de ses differents composants //@TODO : improve HUDManager
 public class HUDManager : MonoBehaviour
@@ -7,9 +8,21 @@ public class HUDManager : MonoBehaviour
     public float AthScale = 0.39f;
 
     public GameObject forwardVectorContainer;
+
     public GameObject velocityVectorContainer;
+
+    public GameObject VelocityScale;
+    public GameObject velocityText;
+
+    public GameObject AltitudeScale;
+    public GameObject AltitudeText;
+
     public GameObject irMissileWidget;
     public GameObject radarMissileWidget;
+    public GameObject attitudeWidget;
+
+    public GameObject HeadingScale;
+    public GameObject HeadingText;
 
     GameObject currentDisplayedWidget = null;
     PlaneActor owningPlane;
@@ -80,7 +93,56 @@ public class HUDManager : MonoBehaviour
             }
         }
 
+        if (velocityText)
+        {
+            Text velocityTextComp = velocityText.GetComponent<Text>();
+            if (velocityTextComp)
+                velocityTextComp.text = ((int)Plane.GetSpeedInNautics()).ToString();
+        }
+
+        if (VelocityScale)
+        {
+            VelocityScale.SetActive(!Plane.WeaponSystem.IsEnabled || !Plane.RetractGear);
+            VelocityScale.transform.localPosition = new Vector3(0, -Plane.GetSpeedInNautics() * 1f + 500, 0);
+        }
+
+        if (AltitudeText)
+        {
+            Text altitudeTextComp = AltitudeText.GetComponent<Text>();
+            if (altitudeTextComp)
+                altitudeTextComp.text = (((int)Plane.GetAltitudeInFoots()) / 1000.0f).ToString();
+        }
+
+        if (AltitudeScale)
+        {
+            AltitudeScale.SetActive(!Plane.WeaponSystem.IsEnabled || !Plane.RetractGear);
+            AltitudeScale.transform.localPosition = new Vector3(0, -Plane.GetAltitudeInFoots() * 0.1f + 2500, 0);
+        }
+
+        if (HeadingText)
+        {
+            Text headingtextComp = HeadingText.GetComponent<Text>();
+            if (headingtextComp)
+                headingtextComp.text = ((int)Plane.GetHeading()).ToString();
+        }
+
+        if (HeadingScale)
+        {
+            HeadingScale.SetActive(!Plane.WeaponSystem.IsEnabled || !Plane.RetractGear);
+            HeadingScale.transform.localPosition = new Vector3(-Plane.GetHeading() * 3.8f + 682, 0, 0);
+        }
+
         UpdateDisplayedWidget();
+
+
+        if (attitudeWidget)
+        {
+            attitudeWidget.transform.localRotation = Quaternion.Euler(0, 0, Plane.GetRoll() * -1);
+            float offset = Mathf.Asin(Plane.transform.forward.y) / (Mathf.PI / 2) * -2700;
+            float rot = Plane.GetRoll() / -180 * Mathf.PI;
+            attitudeWidget.transform.localPosition = new Vector2(-Mathf.Sin(rot) * offset, Mathf.Cos(rot) * offset);
+        }
+
     }
 
     void UpdateDisplayedWidget()
