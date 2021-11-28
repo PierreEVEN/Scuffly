@@ -79,7 +79,7 @@ b. Passer en mode air-air (touche 1)
    Un cercle doit être apparu sur le HUD (ainsi qu'une sonerie caractéristique)
 
 c. Quand une cible passe dans le cercle, celle-ci se centre dessus (la sonnerie change en même temps de tonalité). 
-Il ne reste plus qu'à tirer le missile avec la touche ESPACE.
+   Il ne reste plus qu'à tirer le missile avec la touche ESPACE.
 
 Et voilà :)
 ```
