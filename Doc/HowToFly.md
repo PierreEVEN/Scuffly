@@ -19,6 +19,10 @@ Déplacements de la caméra libre : z-q-s-d-espace-shift-molette
 
 ## Procédure pour le décollage
 
+![Guide1](https://user-images.githubusercontent.com/24438631/143765687-852a0068-1def-4cfe-b67b-04ac01f4ce76.png)
+
+![Guide2](https://user-images.githubusercontent.com/24438631/143765695-75942915-af54-4cb2-bf0a-0cfb8a8fe47f.png)
+
 > à faire en vue intérieur : `touche F1`
 > Toutes les interactions sont possibles depuis le cockpit 3D. Les touches de raccourcis sont précisées en cas de problème
 
