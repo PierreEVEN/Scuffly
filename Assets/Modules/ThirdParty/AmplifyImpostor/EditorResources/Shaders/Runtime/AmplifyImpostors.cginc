@@ -323,12 +323,12 @@ inline void OctaImpostorFragment( inout SurfaceOutputStandardSpecular o, out flo
 		o.Albedo = blendedAlbedo.rgb;
 
 	// Emission Occlusion
-	/* @DISABLED : temporary fix about pink issue
+	///* //@DISABLED //@TODO //@FIX : temporary fix about pink issue
 	float4 mask1 = tex2Dbias( _Emission, float4( parallax1, 0, textureBias) );
 	float4 mask2 = tex2Dbias( _Emission, float4( parallax2, 0, textureBias) );
 	float4 mask3 = tex2Dbias( _Emission, float4( parallax3, 0, textureBias) );
 	float4 blendedMask = mask1 * weights.x  + mask2 * weights.y + mask3 * weights.z;
-	*/
+	//*/
 	
 	o.Emission = float3(0, 0, 0);// blendedMask.rgb;
 	
@@ -337,9 +337,10 @@ inline void OctaImpostorFragment( inout SurfaceOutputStandardSpecular o, out flo
 	float4 spec2 = AI_SAMPLEBIAS( _Specular, sampler_Specular, parallax2, textureBias);
 	float4 spec3 = AI_SAMPLEBIAS( _Specular, sampler_Specular, parallax3, textureBias);
 	float4 blendedSpec = spec1 * weights.x  + spec2 * weights.y + spec3 * weights.z;
-	o.Specular = blendedSpec.rgb;
-	o.Smoothness = blendedSpec.a;
-
+	o.Specular =  blendedSpec.rgb;
+	o.Smoothness = 0.0;// blendedSpec.a;
+	o.Occlusion = blendedMask.a;
+	
 	// Diffusion Features
 	#if defined(AI_HD_RENDERPIPELINE) && ( AI_HDRP_VERSION >= 50702 )
 	float4 feat1 = _Features.SampleLevel( SamplerState_Point_Repeat, parallax1, 0);

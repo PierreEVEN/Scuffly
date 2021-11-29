@@ -1,13 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!21 &-5760444756787429024
+--- !u!21 &-3343551097363352189
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ferns_Impostor
+  m_Name: pine1
   m_Shader: {fileID: 4800000, guid: 56236dc63ad9b7949b63a27f0ad180b3, type: 3}
   m_ShaderKeywords: _HEMI_ON
   m_LightmapFlags: 4
@@ -20,40 +20,38 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Albedo:
-        m_Texture: {fileID: 2800000, guid: 02f5aa3aa208a7c4698be51fb3aea84a, type: 3}
+        m_Texture: {fileID: 2800000, guid: f4210682e3221c84380801b3b6882853, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emission:
-        m_Texture: {fileID: 2800000, guid: a382899a305114343a1b69748cc2d4ef, type: 3}
+        m_Texture: {fileID: 2800000, guid: 11288e0d3d5234a448871d6981a66ff7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Features:
-        m_Texture: {fileID: 2800000, guid: fc607b5867b1f254b9bc1b9546ca32cc, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7725515d6b0e2e3409aacf29ebb71304, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normals:
-        m_Texture: {fileID: 2800000, guid: 09fc680609e822647817194d987ac9bc, type: 3}
+        m_Texture: {fileID: 2800000, guid: d8c23628f04a0d442b85f3ef0defe2fa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Specular:
-        m_Texture: {fileID: 2800000, guid: 9075960297878f04b9e72e283e400850, type: 3}
+        m_Texture: {fileID: 2800000, guid: e7d7758e42a20894eb21e10499d6f2fe, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - AI_CLIP_NEIGHBOURS_FRAMES: 0
     - _AI_AlphaToCoverage: 0
-    - _AI_ShadowBias: 0.25
+    - _AI_ShadowBias: 0
     - _AI_ShadowView: 1
-    - _ClipMask: 0.5
-    - _DepthSize: 7.561886
-    - _EnergyConservingSpecularColor: 1
-    - _Frames: 6
-    - _FramesX: 6
-    - _FramesY: 6
+    - _ClipMask: 0.009
+    - _DepthSize: 23.077936
+    - _EnergyConservingSpecularColor: 0
+    - _Frames: 16
     - _Hemi: 1
     - _Hue: 0
-    - _ImpostorSize: 7.3222075
+    - _ImpostorSize: 22.96864
     - _Parallax: 1
     - _StencilDepthMask: 8
     - _StencilDepthRef: 8
@@ -64,12 +62,11 @@ Material:
     - _StencilMotionMask: 40
     - _StencilMotionRef: 40
     - _TextureBias: -1
-    - _Use_Parallax: 0
     m_Colors:
-    - _AI_SizeOffset: {r: 7.3222075, g: 7.561886, b: -0.00045045046, a: 0.0018018018}
+    - _AI_SizeOffset: {r: 22.96864, g: 23.077936, b: 0, a: -0.001571229}
     - _AlbedoCorretion: {r: 1, g: 1, b: 1, a: 1}
     - _HueVariation: {r: 0, g: 0, b: 0, a: 0}
-    - _Offset: {r: 0.096199036, g: 0.8994851, b: 0.0323236, a: -0.010810811}
+    - _Offset: {r: 0.21842813, g: 10.797011, b: 0.020019054, a: 0.025139663}
   m_BuildTextureStacks: []
 --- !u!114 &11400000
 MonoBehaviour:
@@ -81,40 +78,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7ba7a43222473d4292f91ae936fe2cc, type: 3}
-  m_Name: ferns_Impostor
+  m_Name: pine1
   m_EditorClassIdentifier: 
-  Material: {fileID: -5760444756787429024}
-  Mesh: {fileID: 7355401690364982606}
+  Material: {fileID: -3343551097363352189}
+  Mesh: {fileID: 8894264742990052613}
   Version: 9707
   ImpostorType: 2
   LockedSizes: 1
   SelectedSize: 2048
   TexSize: {x: 2048, y: 2048}
   DecoupleAxisFrames: 0
-  HorizontalFrames: 6
-  VerticalFrames: 6
+  HorizontalFrames: 16
+  VerticalFrames: 16
   PixelPadding: 32
   MaxVertices: 8
   Tolerance: 0.15
   NormalScale: 0.01
   ShapePoints:
-  - {x: 0, y: 0.8228034}
-  - {x: 0.43681392, y: 0.9837213}
-  - {x: 0.8473818, y: 0.930846}
-  - {x: 1, y: 0.65952736}
-  - {x: 1, y: 0.25052816}
-  - {x: 0.5639652, y: 0.011827111}
-  - {x: 0.16734582, y: 0.13377953}
-  - {x: 0, y: 0.43168062}
+  - {x: 0.15071997, y: 0.3746196}
+  - {x: 0.15187559, y: 0.9149813}
+  - {x: 0.38482767, y: 1}
+  - {x: 0.5953518, y: 1}
+  - {x: 0.8479562, y: 0.92381585}
+  - {x: 0.84929365, y: 0.37915087}
+  - {x: 0.54343164, y: 0}
+  - {x: 0.45816812, y: 0}
   Preset: {fileID: 11400000, guid: 47b6b3dcefe0eaf4997acf89caf8c75e, type: 2}
   OverrideOutput: []
---- !u!43 &7355401690364982606
+--- !u!43 &8894264742990052613
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ferns_Impostor
+  m_Name: pine1
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -125,8 +122,8 @@ Mesh:
     firstVertex: 0
     vertexCount: 8
     localAABB:
-      m_Center: {x: -0.019789696, y: 0.09545672, z: 0}
-      m_Extent: {x: 3.6611037, y: 3.5582056, z: 0}
+      m_Center: {x: 0.00015640259, y: -0.57742405, z: 0}
+      m_Extent: {x: 8.022643, y: 11.48432, z: 0}
   m_Shapes:
     vertices: []
     shapes: []
@@ -205,7 +202,7 @@ Mesh:
       format: 0
       dimension: 0
     m_DataSize: 256
-    _typelessdata: c2936bc0d43412c0000000000000000000000000000080bf000000000873353edc03f7bead9d5dc0000000000000000000000000000080bf13a6df3ee05a853c2186214061d644c0000000000000000000000000000080bf03ee583fa0a08d3d4a0b69402c628bbf000000000000000000000000000080bf0000803f6e52ae3e4a0b6940aff2f33f000000000000000000000000000080bf0000803f63dd3f3fd9abe53e9ad56940000000000000000000000000000080bf0660103fe6f87c3fc6271dc054af3040000000000000000000000000000080bfb45c2b3ea0c05d3fc2936bc01054143f000000000000000000000000000080bf00000000617d113f
+    _typelessdata: 1b5c00c1695a1340000000000000000000000000000080bf56561a3eee18203fc6deffc062be21c1000000000000000000000000000080bf46851b3e481eae3d714d29c0e7fc40c1000000000000000000000000000080bf2208c53e000000009f2a0c40e7fc40c1000000000000000000000000000080bffa68183f000000001fbfff4088fd24c1000000000000000000000000000080bfa813593f70069c3d635d004137b10c40000000000000000000000000000080bf4f6b593ff8ef1e3f77607f3fa5822e41000000000000000000000000000080bf561e0b3f0000803f64f875bfa5822e41000000000000000000000000000080bf0395ea3e0000803f
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -259,8 +256,8 @@ Mesh:
       m_BitSize: 0
     m_UVInfo: 0
   m_LocalAABB:
-    m_Center: {x: 0.096199036, y: 0.8994851, z: 0.0323236}
-    m_Extent: {x: 3.6292381, y: 1.4221718, z: 3.6046426}
+    m_Center: {x: 0.21842813, y: 10.797011, z: 0.020019054}
+    m_Extent: {x: 8.733898, y: 10.797011, z: 9.018517}
   m_MeshUsageFlags: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 

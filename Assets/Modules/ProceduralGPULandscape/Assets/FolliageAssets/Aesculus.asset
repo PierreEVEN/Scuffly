@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0344a066be3a8164ba2c7280ef49da81, type: 3}
-  m_Name: GrassFolliageAsset
+  m_Name: Aesculus
   m_EditorClassIdentifier: 
-  MinSpawnLevel: 3
-  MaxSpawnLevel: 4
-  DensityPerLevel: 70
-  minNormal: 0.5
+  MinSpawnLevel: 1
+  MaxSpawnLevel: 2
+  DensityPerLevel: 50
+  minNormal: 0.99
   maxNormal: 1
   minAltitude: 10
   maxAltitude: 3000
-  spawnedMesh: {fileID: 7355401690364982606, guid: 3000bd26b03869a4581218d62bb36674, type: 2}
-  usedMaterial: {fileID: -5760444756787429024, guid: 3000bd26b03869a4581218d62bb36674, type: 2}
+  spawnedMesh: {fileID: -167957832500804171, guid: 60466dc69bb253446b16851968f155d8, type: 2}
+  usedMaterial: {fileID: -4940378418814771883, guid: 60466dc69bb253446b16851968f155d8, type: 2}

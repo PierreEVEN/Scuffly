@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0344a066be3a8164ba2c7280ef49da81, type: 3}
-  m_Name: SaplinFolliageAsset
+  m_Name: Fern
   m_EditorClassIdentifier: 
-  MinSpawnLevel: 1
-  MaxSpawnLevel: 2
-  DensityPerLevel: 100
+  MinSpawnLevel: 3
+  MaxSpawnLevel: 3
+  DensityPerLevel: 200
   minNormal: 0.5
-  maxNormal: 0.9
-  minAltitude: 200
-  maxAltitude: 10000
-  spawnedMesh: {fileID: 97203141304513492, guid: 0bf26b5adc365794aaabe365e8272eed, type: 2}
-  usedMaterial: {fileID: 4992251971409798517, guid: 0bf26b5adc365794aaabe365e8272eed, type: 2}
+  maxNormal: 1
+  minAltitude: 10
+  maxAltitude: 3000
+  spawnedMesh: {fileID: -2521300281720533185, guid: 7d76d2afed8cfb04381cd9567c14ec34, type: 2}
+  usedMaterial: {fileID: -4529787315245150354, guid: 7d76d2afed8cfb04381cd9567c14ec34, type: 2}

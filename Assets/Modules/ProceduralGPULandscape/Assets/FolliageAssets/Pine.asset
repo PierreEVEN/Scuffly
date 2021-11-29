@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0344a066be3a8164ba2c7280ef49da81, type: 3}
-  m_Name: BirchFolliageAsset 1
+  m_Name: Pine
   m_EditorClassIdentifier: 
   MinSpawnLevel: 1
   MaxSpawnLevel: 2
-  DensityPerLevel: 150
-  minNormal: 0.7
-  maxNormal: 0.95
-  minAltitude: 10
-  maxAltitude: 3000
-  spawnedMesh: {fileID: -5013144756241044092, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}
-  usedMaterial: {fileID: -2826065132357868018, guid: b7284d8cfd1a79145b42e9ed81352e7d, type: 2}
+  DensityPerLevel: 200
+  minNormal: 0.5
+  maxNormal: 0.9
+  minAltitude: 30
+  maxAltitude: 10000
+  spawnedMesh: {fileID: 8894264742990052613, guid: 7a883fc333104cc43a6c67def7aa84b0, type: 2}
+  usedMaterial: {fileID: -3343551097363352189, guid: 7a883fc333104cc43a6c67def7aa84b0, type: 2}
