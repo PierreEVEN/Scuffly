@@ -85,14 +85,19 @@ void addAltitudeOverrides(float2 position, inout float altitude)
 		float2 pos = data.position;
 		float2 ext = data.halfExtent;
 		float mar = data.margins;
-
+				
 		if (
 			position.x > pos.x - ext.x &&
 			position.y > pos.y - ext.y &&
 			position.x < pos.x + ext.x &&
 			position.y < pos.y + ext.y)
 		{
-			altitude = lerp(data.altitude, altitude, clamp(0, 0, 1)) + (data.mode == 0 ? 1 : altitude);
+			float xdistance = min(abs(position.x - pos.x - ext.x), abs(position.x - pos.x + ext.x));
+			float ydistance = min(abs(position.y - pos.y - ext.y), abs(position.y - pos.y + ext.y));
+
+			float distance = pow(clamp(min(xdistance, ydistance) / mar, 0, 1), 2.f);
+			
+			altitude = lerp(data.altitude, altitude, clamp(1 - distance, 0, 1)) + (data.mode == 0 ? 1 : altitude);
 		}
 	}
 
