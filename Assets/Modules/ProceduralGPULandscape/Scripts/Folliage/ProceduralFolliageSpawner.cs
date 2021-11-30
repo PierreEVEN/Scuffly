@@ -47,7 +47,7 @@ public class ProceduralFolliageSpawner : MonoBehaviour
             Reset = false;
             ResetFolliage();
         }
-        if (FreezeGeneration)
+        if (FreezeGeneration || densityMultiplier == 0)
             return;
         UpdateCameraLocation();
 

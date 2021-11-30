@@ -71,6 +71,9 @@ public class ProceduralFolliageBatch : MonoBehaviour
         if (proceduralDrawArgs == null)
             CreateOrRecreateMatrices();
 
+        if (proceduralDrawArgs == null)
+            return;
+
         Graphics.DrawMeshInstancedIndirect(folliageAsset.spawnedMesh, 0, folliageAsset.usedMaterial, bounds, proceduralDrawArgs, 0, InstanceMaterialProperties, ShadowCastingMode.On, true, 0, camera);
     }
 
@@ -97,14 +100,20 @@ public class ProceduralFolliageBatch : MonoBehaviour
             {
                 treeMatrices.Release();
             }
-            treeMatrices = new ComputeBuffer(desiredCount, sizeof(float) * 16, ComputeBufferType.Default);
+            if (desiredCount != 0)
+                treeMatrices = new ComputeBuffer(desiredCount, sizeof(float) * 16, ComputeBufferType.Default);
             if (shouldSpawnTreeBuffer != null)
                 shouldSpawnTreeBuffer.Dispose();
-            shouldSpawnTreeBuffer = new ComputeBuffer(desiredCount, sizeof(float) * 3 + sizeof(int), ComputeBufferType.Default);
+            if (desiredCount != 0)
+                shouldSpawnTreeBuffer = new ComputeBuffer(desiredCount, sizeof(float) * 3 + sizeof(int), ComputeBufferType.Default);
         }
 
         if (proceduralDrawArgs != null) proceduralDrawArgs.Release();
-        proceduralDrawArgs = new ComputeBuffer(1, matrixArgs.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
+        if (desiredCount != 0)
+            proceduralDrawArgs = new ComputeBuffer(1, matrixArgs.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
+
+        if (desiredCount == 0)
+            return;
 
         // reset instance count;
         matrixArgs[0] = folliageAsset.spawnedMesh.GetIndexCount(0);
