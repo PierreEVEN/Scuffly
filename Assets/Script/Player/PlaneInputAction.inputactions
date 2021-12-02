@@ -292,6 +292,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchCanopy",
+                    "type": "Button",
+                    "id": "5ddc9f98-05fb-4196-9737-646d1c966f70",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -842,6 +851,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchCanon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3bc3c4cf-97b4-41d1-ab5f-6e2d2b28471e",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchCanopy",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

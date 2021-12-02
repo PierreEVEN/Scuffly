@@ -24,9 +24,6 @@ public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
 
     // Masse de l'objet
     public float mass = 100;
-    // Mesh physique utilisé pour les calculs aerodynamiques
-    public Mesh AerodynamicMesh;
-
     // Type de l'item attaché (utilisé par le systeme d'armement)
     public PodItemType podItemType = PodItemType.FuelTank;
 
@@ -56,7 +53,7 @@ public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
         PodItems.Remove(this);
         GPULandscapePhysic.Singleton.RemoveListener(this);
     }
-    
+
     // Detache l'objet du pod et met en place une physique indépendante de l'avion porteur
     public virtual void Shoot(GameObject objectOwner, Vector3 initialSpeed, Vector3 upVector, GameObject target)
     {
@@ -77,11 +74,9 @@ public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
         physics.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
         // Add aerodynamics
-        if (AerodynamicMesh)
-        {
-            AerodynamicComponent aero = gameObject.AddComponent<AerodynamicComponent>();
-            aero.meshOverride = AerodynamicMesh;
-        }
+        AerodynamicComponent aero = gameObject.GetComponent<AerodynamicComponent>();
+        if (aero)
+            aero.enabled = true;
     }
 
     // Detecte un impact avec un autre objet

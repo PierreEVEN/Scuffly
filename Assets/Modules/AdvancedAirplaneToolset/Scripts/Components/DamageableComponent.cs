@@ -18,6 +18,7 @@ public class DamageableComponent : MonoBehaviour
     VisualEffect smokeFX;
 
     // Event appelé au moment où le component est détaché de son parent (dommages critiques)
+    [HideInInspector]
     public UnityEvent OnDestroyed = new UnityEvent();
 
     // Start is called before the first frame update
