@@ -37,9 +37,6 @@ public class AerodynamicComponent : MonoBehaviour
     // Physic object
     private Rigidbody rigidBody;
 
-    // Collider containing mesh data
-    private MeshCollider meshCollider;
-
     // All the surface are precomputed and stored into this surface list.
     private List<PhysicSurface> Surfaces = new List<PhysicSurface>();
 
@@ -54,7 +51,6 @@ public class AerodynamicComponent : MonoBehaviour
     void OnEnable()
     {
         rigidBody = gameObject.GetComponentInParent<Rigidbody>();
-        meshCollider = gameObject.GetComponent<MeshCollider>();
 
         if (!rigidBody)
             Debug.LogError("Aerodynamic Component requires a rigidbody component in parents game objects" + gameObject.name);
@@ -68,18 +64,20 @@ public class AerodynamicComponent : MonoBehaviour
         Profiler.BeginSample("Recompute aerodynamic surfaces");
         Surfaces.Clear();
 
-        Mesh mesh = meshCollider ? meshCollider.sharedMesh : meshOverride;
-
-        if (!mesh) return;
-
-        for (int sectionID = 0; sectionID < mesh.subMeshCount; sectionID++)
+        if (!meshOverride)
         {
-            int[] triangles = mesh.GetTriangles(sectionID);
+            Debug.LogError("missing aerodynamic mesh on " + name);
+            return;
+        }
+                 
+        for (int sectionID = 0; sectionID < meshOverride.subMeshCount; sectionID++)
+        {
+            int[] triangles = meshOverride.GetTriangles(sectionID);
             for (int i = 0; i < triangles.Length / 3; ++i)
             {
-                Vector3 v1 = mesh.vertices[triangles[i * 3]];
-                Vector3 v2 = mesh.vertices[triangles[i * 3 + 1]];
-                Vector3 v3 = mesh.vertices[triangles[i * 3 + 2]];
+                Vector3 v1 = meshOverride.vertices[triangles[i * 3]];
+                Vector3 v2 = meshOverride.vertices[triangles[i * 3 + 1]];
+                Vector3 v3 = meshOverride.vertices[triangles[i * 3 + 2]];
                 Surfaces.Add(ComputePhysicSurface(v1, v2, v3));
             }
         }

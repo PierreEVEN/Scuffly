@@ -38,6 +38,7 @@ public class PlaneActor : NetworkBehaviour
     public bool initialBrakes = true;
     public float initialSpeed = 0;
     public bool initialPower = false;
+    public bool initialOpenCanopy = true;
 
     Rigidbody planePhysic;
     private float currentEnginePower;
@@ -51,6 +52,7 @@ public class PlaneActor : NetworkBehaviour
     private bool retractGear = false;
     private bool brakes = true;
     private bool power = false;
+    private bool canopy = true;
 
     // Active ou desactive des fonctionnalites de l'avion
     [HideInInspector]
@@ -61,6 +63,8 @@ public class PlaneActor : NetworkBehaviour
     public UnityEvent OnApuChange = new UnityEvent(); // apu active / bloque
     [HideInInspector]
     public UnityEvent OnBrakesChange = new UnityEvent(); // freins actives / relaches
+    [HideInInspector]
+    public UnityEvent OnCanopyChange = new UnityEvent(); // ouvrir / fermer le cockpit
     [HideInInspector]
     public UnityEvent OnPowerSwitchChanged = new UnityEvent(); // alimentation principale on / off
     [HideInInspector]
@@ -156,6 +160,18 @@ public class PlaneActor : NetworkBehaviour
             }
         }
     }
+    public bool OpenCanopy
+    {
+        get { return canopy; }
+        set
+        {
+            if (value != canopy)
+            {
+                canopy = value;
+                OnCanopyChange.Invoke();
+            }
+        }
+    }
 
     // Calcule l'apport en electricite (en KVA) des differents sous - composants
     public float GetCurrentPower()
@@ -240,12 +256,23 @@ public class PlaneActor : NetworkBehaviour
         GUILayout.Label("PowerSwitch : " + MainPower);
         GUILayout.Label("Gear : " + !RetractGear);
         GUILayout.Label("Brakes : " + Brakes);
+        GUILayout.Label("Canopy : " + OpenCanopy);
         GUILayout.EndArea();
     }
 
     /**
      * Axis and input controll
      */
+
+    [HideInInspector]
+    public float ThrustInput = 0;
+    [HideInInspector]
+    public float PitchInput = 0;
+    [HideInInspector]
+    public float YawInput = 0;
+    [HideInInspector]
+    public float RollInput = 0;
+
     public void SetThrustInput(float input)
     {
         foreach (var thruster in GetComponentsInChildren<Thruster>())
@@ -253,42 +280,26 @@ public class PlaneActor : NetworkBehaviour
             thruster.setThrustInput(input);
         }
 
-        foreach (var part in GetComponentsInChildren<MobilePart>())
-            if (part.tag == "Thrust")
-                part.setInput(input);
+        ThrustInput = input;
     }
 
     public void SetPitchInput(float input)
     {
-        input = Mathf.Clamp(input, -1, 1);
-
-        if (!gameObject)
-            return;
-
-        foreach (var part in GetComponentsInChildren<MobilePart>())
-            if (part.tag == "Pitch")
-                part.setInput(input * -1);
+        PitchInput = Mathf.Clamp(input, -1, 1);
     }
 
     public void SetYawInput(float input)
     {
-        input = Mathf.Clamp(input, -1, 1);
+        YawInput = Mathf.Clamp(input, -1, 1);
 
         foreach (var part in GetComponentsInChildren<WheelCollider>())
             if (part.tag == "Yaw")
                 part.steerAngle = Mathf.Pow(input, 3) * 65;
-
-        foreach (var part in GetComponentsInChildren<MobilePart>())
-            if (part.tag == "Yaw")
-                part.setInput(input);
     }
+
     public void SetRollInput(float input)
     {
-        input = Mathf.Clamp(input, -1, 1);
-
-        foreach (var part in GetComponentsInChildren<MobilePart>())
-            if (part.tag == "Roll")
-                part.setInput(input);
+        RollInput = Mathf.Clamp(input, -1, 1);
     }
     public void Shoot(GameObject target)
     {

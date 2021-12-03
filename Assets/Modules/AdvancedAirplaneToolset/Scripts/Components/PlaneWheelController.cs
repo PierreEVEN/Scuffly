@@ -11,10 +11,15 @@ public class PlaneWheelController : PlaneComponent
     //@TODO : improve the wheel system to be more reliable
 
     WheelCollider wheelPhysic;
-    private Transform wheelAxisBone;
     float WheelRotation;
-    Animation gearAnim;
     bool Deployed = true;
+    Animation gearAnim;
+
+    public GameObject wheelObject;
+    public GameObject animatedObject;
+    public GameObject colliderObject;
+    public bool UseSteering = false;
+    public float SteeringRotationSpeed = 100;
 
     // Parametre l'utilisation des freins sur cette roue
     public bool UseBrakes = true;
@@ -23,11 +28,23 @@ public class PlaneWheelController : PlaneComponent
     {
         get
         {
-            if (!wheelPhysic)
-                wheelPhysic = gameObject.GetComponentInParent<WheelCollider>();
+            if (!wheelPhysic && colliderObject)
+                wheelPhysic = colliderObject.GetComponent<WheelCollider>();
             if (!wheelPhysic)
                 Debug.LogError("failed to get wheel collider");
             return wheelPhysic;
+        }
+    }
+
+    private Animation AnimationComponent
+    {
+        get
+        {
+            if (!gearAnim && animatedObject)
+                gearAnim = animatedObject.GetComponent<Animation>();
+            if (!gearAnim)
+                Debug.LogError("failed to get wheel animation");
+            return gearAnim;
         }
     }
 
@@ -35,30 +52,7 @@ public class PlaneWheelController : PlaneComponent
     // Start is called before the first frame update
     void Start()
     {
-        WheelPhysic.motorTorque = 0.001f; // Evite de bloquer les roues
-        if (!WheelPhysic)
-            Debug.LogError("failed to find wheel collider");
-        gearAnim = GetComponentInParent<Animation>();
-        var skeletalMesh = GetComponentInParent<SkinnedMeshRenderer>();
-        if (skeletalMesh)
-        {
-            // Cherche parmis tous les bones du squelette un bone nommé "*axis*". Le bone sur lequel sera attaché la roue sera le point de fin de ce bone.
-            foreach (var bone in skeletalMesh.bones)
-            {
-                if (bone.name.Contains("_end") && bone.parent.name.ToLower().Contains("axis"))
-                {
-                    wheelAxisBone = bone;
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("failed to get wheel skeleton");
-        }
-
-        if (wheelAxisBone)
-            gameObject.transform.parent = wheelAxisBone;
-
+        WheelPhysic.motorTorque = 0.00001f; // Evite de bloquer les roues
     }
 
     private void OnEnable()
@@ -98,30 +92,38 @@ public class PlaneWheelController : PlaneComponent
     // Update is called once per frame
     void Update()
     {
-        if (!wheelAxisBone)
-            return;
-        WheelRotation = (WheelRotation + WheelPhysic.rpm * 6 * Time.deltaTime) % 360.0f;
-        gameObject.transform.rotation = transform.parent.rotation * Quaternion.FromToRotation(wheelAxisBone.position, wheelAxisBone.parent.position) * Quaternion.Euler(0, 0, WheelPhysic.steerAngle) * Quaternion.Euler(0, -WheelRotation, 90);
+        if (UseSteering)
+        {
+            float desiredRotation = Plane.RetractGear ? 0 : Plane.YawInput * 70;
+            WheelPhysic.steerAngle = WheelPhysic.steerAngle + Mathf.Clamp(desiredRotation - WheelPhysic.steerAngle, -Time.deltaTime * SteeringRotationSpeed, Time.deltaTime * SteeringRotationSpeed);
+        }
+        float rps = WheelPhysic.rpm / 60.0f;
+        WheelRotation = (WheelRotation + rps * 360 * Time.deltaTime) % 360.0f;
+        wheelObject.transform.localRotation = Quaternion.Euler(WheelRotation, WheelPhysic.steerAngle, 0);
     }
 
     // Rentre ou sort le train d'aterissage
     void Retract(bool retract)
     {
-        if (!gearAnim || retract != Deployed) return;
+        if (retract != Deployed) return;
+
+        if (!AnimationComponent.clip)
+            Debug.LogError("missing wheel animation clip for " + name);
+
         if (Deployed)
         {
-            gearAnim[gearAnim.clip.name].speed = 1;
-            gearAnim[gearAnim.clip.name].time = Mathf.Max(gearAnim[gearAnim.clip.name].time, 0);
-            gearAnim.Play(gearAnim.clip.name);
+            AnimationComponent[AnimationComponent.clip.name].speed = 1;
+            AnimationComponent[AnimationComponent.clip.name].time = Mathf.Max(AnimationComponent[AnimationComponent.clip.name].time, 0);
+            AnimationComponent.Play(AnimationComponent.clip.name);
             Deployed = false;
         }
         else
         {
             // Pour rentrer le train : on joue l'animation dans le sens inverse en partant de la fin
-            gearAnim[gearAnim.clip.name].speed = -1;
-            if (gearAnim[gearAnim.clip.name].time < 0.01)
-                gearAnim[gearAnim.clip.name].time = gearAnim.clip.length - Time.deltaTime;
-            gearAnim.Play(gearAnim.clip.name);
+            AnimationComponent[AnimationComponent.clip.name].speed = -1;
+            if (AnimationComponent[AnimationComponent.clip.name].time < 0.01)
+                AnimationComponent[AnimationComponent.clip.name].time = AnimationComponent.clip.length - Time.deltaTime;
+            AnimationComponent.Play(AnimationComponent.clip.name);
             Deployed = true;
         }
     }

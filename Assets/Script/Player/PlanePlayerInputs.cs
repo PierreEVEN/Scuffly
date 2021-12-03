@@ -223,4 +223,11 @@ public class PlanePlayerInputs : MonoBehaviour
 
         weaponManager.IsToggledOn = !weaponManager.IsToggledOn;
     }
+
+    public void OnSwitchCanopy()
+    {
+        if (!EnableInputs)
+            return;
+        playerManager.controlledPlane.OpenCanopy = !playerManager.controlledPlane.OpenCanopy;
+    }
 }

@@ -41,6 +41,7 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
     {
         Plane.Brakes = false;
         Plane.MainPower = true;
+        Plane.OpenCanopy = false;
         if (Plane.GetCurrentPower() < 100)
             Plane.EnableAPU = true;
         Plane.ThrottleNotch = true;
