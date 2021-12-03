@@ -4,11 +4,18 @@ Shader "HDRP/GpuLandscapeShader"
 	{
 		[NoScaleOffset] _GrassAlbedo("Grass_Albedo", 2D) = "white" {}
 		[NoScaleOffset] _Grass2Albedo("Grass2_Albedo", 2D) = "white" {}
-		[NoScaleOffset] _RockAlbedo("Rock_Albedo", 2D) = "white" {}
-		[NoScaleOffset] _SnowAlbedo("Snow_Albedo", 2D) = "white" {}
-		[NoScaleOffset] _SandAlbedo("Sand_Albedo", 2D) = "white" {}
-		[NoScaleOffset] _GroundIntensity("Ground Intensity", float) = 1
+		[NoScaleOffset] _GrassIntensity("Grass Intensity", float) = 1
 
+		[NoScaleOffset] _RockAlbedo("Rock_Albedo", 2D) = "white" {}
+		[NoScaleOffset] _RockIntensity("Rock Intensity", float) = 1
+
+		[NoScaleOffset] _SnowAlbedo("Snow_Albedo", 2D) = "white" {}
+		[NoScaleOffset] _SnowIntensity("Snow Intensity", float) = 1
+
+		[NoScaleOffset] _SandAlbedo("Sand_Albedo", 2D) = "white" {}
+		[NoScaleOffset] _SandIntensity("Sand Intensity", float) = 1
+
+		[Toggle(_PER_PIXEL_NORMAL)] _PerPixelNormal("Per pixel normal", Float) = 0
 	}
 
 	SubShader
@@ -19,6 +26,10 @@ Shader "HDRP/GpuLandscapeShader"
 			"Queue" = "Geometry+255"
 			"DisableBatching" = "True"
 		}
+
+		HLSLINCLUDE
+		#pragma shader_feature _PER_PIXEL_NORMAL
+		ENDHLSL
 
 		Pass
 		{
@@ -100,7 +111,10 @@ Shader "HDRP/GpuLandscapeShader"
 			sampler2D _SnowAlbedo;
 			sampler2D _SandAlbedo;
 
-			float _GroundIntensity;
+			float _GrassIntensity;
+			float _RockIntensity;
+			float _SnowIntensity;
+			float _SandIntensity;
 
 
 
@@ -110,14 +124,14 @@ Shader "HDRP/GpuLandscapeShader"
 
 				float normalFetchDistance = clamp(cameraDistance / 100, 1, 200);
 
-				// Per pixel normal
-				/*
+#ifdef _PER_PIXEL_NORMAL
 				float altX = max(0, GetAltitudeAtLocation(IN.positionWS.xz + float2(normalFetchDistance, 0)));
 				float altZero = max(0, GetAltitudeAtLocation(IN.positionWS.xz));
 				float altZ = max(0, GetAltitudeAtLocation(IN.positionWS.xz + float2(0, normalFetchDistance)));
-				*/
-				float3 normalWS = float3(0, 1, 0);// normalize(cross(float3(-normalFetchDistance, altX - altZero, 0), float3(0, altZ - altZero, normalFetchDistance)));
-
+				float3 normalWS = normalize(cross(float3(-normalFetchDistance, altX - altZero, 0), float3(0, altZ - altZero, normalFetchDistance)));
+#else
+				float3 normalWS = IN.normalWS;
+#endif
 				FragInputs input;
 				ZERO_INITIALIZE(FragInputs, input);
 				input.positionSS = IN.positionCS;
@@ -131,16 +145,17 @@ Shader "HDRP/GpuLandscapeShader"
 				float metalness = 0;
 
 
-				float3 color = tex2D(_GrassAlbedo, IN.positionWS.xz * 0.1);
-				color = lerp(tex2D(_Grass2Albedo, IN.positionWS.xz * 0.1), color, (snoise(IN.positionWS * 0.003) * snoise(IN.positionWS * 0.001)) * 0.5 + 0.5);
+				float3 color = tex2D(_GrassAlbedo, IN.positionWS.xz * 0.1) * _GrassIntensity;
+				color = lerp(tex2D(_Grass2Albedo, IN.positionWS.xz * 0.1) * _GrassIntensity, color, (snoise(IN.positionWS * 0.003) * snoise(IN.positionWS * 0.001)) * 0.5 + 0.5);
+
 				// add snow
-				color = lerp(color, tex2D(_SnowAlbedo, IN.positionWS.xz * 0.1), clamp((IN.positionWS.y - 1000 + snoise(IN.positionWS.xz * 0.001) * 100) * 0.001, 0, 1));
+				color = lerp(color, tex2D(_SnowAlbedo, IN.positionWS.xz * 0.1) * _SnowIntensity, clamp((IN.positionWS.y - 1000 + snoise(IN.positionWS.xz * 0.001) * 100) * 0.001, 0, 1));
 
 				// add rock
-				color = lerp(tex2D(_RockAlbedo, IN.positionWS.xz * 0.1), color, max(pow(dot(normalWS, float3(0, 1, 0)), 15), 0));;
+				color = lerp(tex2D(_RockAlbedo, IN.positionWS.xz * 0.1) * _RockIntensity, color, max(pow(dot(normalWS, float3(0, 1, 0)), 15), 0));;
 
 				// add beach
-				color = lerp(tex2D(_SandAlbedo, IN.positionWS.xz * 0.1), color, clamp(IN.positionWS.y * 0.2 - 2, 0, 1));
+				color = lerp(tex2D(_SandAlbedo, IN.positionWS.xz * 0.1) * _SandIntensity, color, clamp(IN.positionWS.y * 0.2 - 2, 0, 1));
 
 				float3 normal = normalWS;
 
@@ -178,7 +193,7 @@ Shader "HDRP/GpuLandscapeShader"
 
 				SurfaceData surfaceData;
 				ZERO_INITIALIZE(SurfaceData, surfaceData);
-				surfaceData.baseColor = float3(color) *_GroundIntensity;
+				surfaceData.baseColor = float3(color);
 				surfaceData.normalWS = normal;
 				surfaceData.geomNormalWS = T2W(input, 2);
 				surfaceData.tangentWS = normalize(T2W(input, 0).xyz);

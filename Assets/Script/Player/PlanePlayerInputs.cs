@@ -149,14 +149,14 @@ public class PlanePlayerInputs : MonoBehaviour
     {
         if (!EnableInputs)
             return;
-        playerManager.controlledPlane.Brakes = !playerManager.controlledPlane.Brakes;
+        playerManager.controlledPlane.ParkingBrakes = !playerManager.controlledPlane.ParkingBrakes;
     }
 
     public void OnSetBrake(InputValue input)
     {
         if (!EnableInputs)
             return;
-        playerManager.controlledPlane.Brakes = input.isPressed;
+        playerManager.controlledPlane.ParkingBrakes = input.isPressed;
     }
 
     public void OnShoot()
@@ -229,5 +229,13 @@ public class PlanePlayerInputs : MonoBehaviour
         if (!EnableInputs)
             return;
         playerManager.controlledPlane.OpenCanopy = !playerManager.controlledPlane.OpenCanopy;
+    }
+
+
+    public void OnBrakes(InputValue input)
+    {
+        if (!EnableInputs)
+            return;
+        playerManager.controlledPlane.Brakes = input.Get<float>() > 0.5f;
     }
 }

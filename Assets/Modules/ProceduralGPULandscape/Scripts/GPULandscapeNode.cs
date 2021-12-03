@@ -25,10 +25,7 @@ public class GPULandscapeNode
     private int[] indirectArgs = { 0, 1, 0, 0, 0 };
     private ComputeBuffer indirectArgsBuffer;
 
-    private ComputeBuffer indirectIndirectArgsBuffer;
-    private ComputeBuffer nodeGeneratedLayers;
-
-    RenderTexture rt;
+    RenderTexture backedDataRT;
 
     public GPULandscapeNode(GPULandscape owner, int quadtreeLevel, Vector3 worldPosition, float width)
     {
@@ -41,23 +38,19 @@ public class GPULandscapeNode
 
         int totalVerticeWidth = owner.meshDensity + 2;
         indirectArgsBuffer = new ComputeBuffer(5, sizeof(int), ComputeBufferType.IndirectArguments);
-        nodeGeneratedLayers = new ComputeBuffer(totalVerticeWidth * totalVerticeWidth, sizeof(float) * 3, ComputeBufferType.Default);
-        indirectIndirectArgsBuffer = new ComputeBuffer(3, sizeof(int), ComputeBufferType.IndirectArguments);
-
-        indirectIndirectArgsBuffer.SetData(new int[] { owner.meshDensity, owner.meshDensity, 1 });
         int kernel = owner.HeightMaskCompute.FindKernel("CSMain");
 
-        rt = new RenderTexture(totalVerticeWidth, totalVerticeWidth, 0, RenderTextureFormat.RFloat);
-        rt.enableRandomWrite = true;
-        rt.Create();
+        int rtRes = owner.meshDensity;
+        backedDataRT = new RenderTexture(rtRes, rtRes, 0, RenderTextureFormat.ARGBHalf);
+        backedDataRT.enableRandomWrite = true;
+        backedDataRT.Create();
 
-        owner.HeightMaskCompute.SetTexture(kernel, "_Altitude", rt);
-        owner.HeightMaskCompute.SetInt("_Subdivision", totalVerticeWidth);
-        owner.HeightMaskCompute.SetFloat("_Width", width / owner.meshDensity);
+        owner.HeightMaskCompute.SetTexture(kernel, "_AltitudeSet", backedDataRT);
+        owner.HeightMaskCompute.SetInt("_TextureResolution", rtRes);
+        owner.HeightMaskCompute.SetFloat("_Width", width);
         owner.HeightMaskCompute.SetVector("_Offset", worldPosition);
-
         IModifierGPUArray.UpdateCompute(owner.HeightMaskCompute, kernel);
-        owner.HeightMaskCompute.Dispatch(kernel, totalVerticeWidth, totalVerticeWidth, 1);
+        owner.HeightMaskCompute.Dispatch(kernel, rtRes, rtRes, 1);
 
 
 #if UNITY_EDITOR
@@ -69,8 +62,6 @@ public class GPULandscapeNode
     {
         MPB = null;
         indirectArgsBuffer.Release();
-        nodeGeneratedLayers.Release();
-        indirectIndirectArgsBuffer.Release();
         ShowCurrentNode();
 
 #if UNITY_EDITOR
@@ -87,7 +78,7 @@ public class GPULandscapeNode
 
             MPB.SetFloat("_Width", width);
             MPB.SetVector("_Offset", worldPosition);
-            MPB.SetTexture("_Altitude", rt);
+            MPB.SetTexture("_AltitudeGet", backedDataRT);
 
             if (indirectArgs[0] != totalVerticeWidth * totalVerticeWidth * 6)
             {

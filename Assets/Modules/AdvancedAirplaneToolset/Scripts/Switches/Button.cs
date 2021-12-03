@@ -6,6 +6,7 @@ public enum EButtonType
     None,
     AirAir,
     AirGround,
+    Cockpit,
 }
 
 // Bouton sur lequel on peut appuyer, a placer dans le cockpit
@@ -49,6 +50,11 @@ public class Button : SwitchBase
                 break;
             case EButtonType.AirGround:
                 WeaponSystem.AirGroundMode();
+                break;
+            case EButtonType.None:
+                break;
+            case EButtonType.Cockpit:
+                Plane.OpenCanopy = !Plane.OpenCanopy;
                 break;
             default:
                 break;

@@ -60,6 +60,8 @@ public class TextureModifier : GPULandscapeModifier
     }
     public override void OnUpdateData()
     {
+        if (GPULandscape.Singleton)
+            GPULandscape.Singleton.Reset = true;
         data.position = transform.position;
         data.scale = transform.localScale;
         data.zOffset = zOffset;

@@ -39,7 +39,7 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
     // Update is called once per frame
     void Update()
     {
-        Plane.Brakes = false;
+        Plane.ParkingBrakes = false;
         Plane.MainPower = true;
         Plane.OpenCanopy = false;
         if (Plane.GetCurrentPower() < 100)

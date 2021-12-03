@@ -50,7 +50,7 @@ public class FlipFlopSwitch : SwitchBase
                     newOn = Plane.RetractGear;
                     break;
                 case ESwitchTarget.Brakes:
-                    newOn = Plane.Brakes;
+                    newOn = Plane.ParkingBrakes;
                     break;
                 case ESwitchTarget.ThrottleNotch:
                     newOn = Plane.ThrottleNotch;
@@ -99,7 +99,7 @@ public class FlipFlopSwitch : SwitchBase
                 Plane.RetractGear = On;
                 break;
             case ESwitchTarget.Brakes:
-                Plane.Brakes = On;
+                Plane.ParkingBrakes = On;
                 break;
             case ESwitchTarget.Weapons:
                 WeaponSystem.IsToggledOn = On;

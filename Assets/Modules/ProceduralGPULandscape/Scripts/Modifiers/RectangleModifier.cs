@@ -38,6 +38,8 @@ public class RectangleModifier : GPULandscapeModifier
 
     public override void OnUpdateData()
     {
+        if (GPULandscape.Singleton)
+            GPULandscape.Singleton.Reset = true;
         data.position = new Vector2(transform.position.x, transform.position.z);
         data.margins = margins;
         data.halfExtent = new Vector2(transform.localScale.x, transform.localScale.z);

@@ -2,6 +2,7 @@ using AK.Wwise;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 /**
  *  @Author : Pierre EVEN
@@ -16,7 +17,7 @@ public class Thruster : PlaneComponent, IPowerProvider
     public AnimationCurve ThrustPercentCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(0.7f, 0.6f), new Keyframe(1, 1.1f) });
 
     // Courbe de force de poussee maximale en fonction de la vitesse
-    public AnimationCurve ThrustForceCurve = new AnimationCurve(new Keyframe[]{new Keyframe(0, 3000000.0f), new Keyframe(300, 8000000.0f)});
+    public AnimationCurve ThrustForceCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 3000000.0f), new Keyframe(300, 8000000.0f) });
 
     // Duree de mise en route et d'extinction du reacteur
     public float engineStartupDuration = 39;
@@ -28,6 +29,10 @@ public class Thruster : PlaneComponent, IPowerProvider
     public float thrustPercentAcceleration = 0.4f; // vitesse d'acceleration du moteur
     private float throttleDesiredPercent = 0; // pourcentage de puissance du moteur desire
     private float throttleCurrentPercent = 0; // pourcentage de puissance reel du moteur
+
+    public GameObject VFXObject;
+    public GameObject LightObject;
+    public GameObject ThrustScaleObject;
 
     public float ThrottlePercent
     {
@@ -77,8 +82,27 @@ public class Thruster : PlaneComponent, IPowerProvider
         Physics.AddForceAtPosition(-transform.forward * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
 
         EngineStatusRTPC.SetValue(gameObject, totalInputPercent * 100);
-        if (Camera.main) 
+        if (Camera.main)
             CameraDistanceRPC.SetValue(gameObject, Vector3.Distance(Camera.main.transform.position, transform.position) / 4);
+
+        if (ThrustScaleObject)
+        {
+            float ExhaustScale = 1 - Mathf.Clamp(totalInputPercent * 2, 0, 0.7f) + Mathf.Clamp((totalInputPercent - 0.8f) * 4, 0, 0.7f);
+            ThrustScaleObject.transform.localScale = new Vector3(ExhaustScale, ExhaustScale, ExhaustScale);
+            if (VFXObject)
+                VFXObject.transform.localScale = ThrustScaleObject.transform.localScale;
+        }
+        if (VFXObject)
+        {
+            VisualEffect vfx = VFXObject.GetComponent<VisualEffect>();
+            vfx.SetFloat("Thrust", engineStartupPercent);
+            vfx.SetFloat("AfterBurner", (totalInputPercent - 0.8f) * 10);
+        }
+        if (LightObject)
+        {
+            Light light = LightObject.GetComponent<Light>();
+            light.intensity = (float)(600000.0 * System.Math.Clamp((totalInputPercent - 0.7) * 8.0, 0.0, 1.0));
+        }
     }
 
     private void OnGUI()

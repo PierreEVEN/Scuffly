@@ -35,7 +35,7 @@ public class PlaneActor : NetworkBehaviour
     public bool initialThrottleNotch = false;
     public bool initialApuSwitch = false;
     public bool initialRetractGear = false;
-    public bool initialBrakes = true;
+    public bool initialParkingBrakes = true;
     public float initialSpeed = 0;
     public bool initialPower = false;
     public bool initialOpenCanopy = true;
@@ -50,7 +50,8 @@ public class PlaneActor : NetworkBehaviour
     private bool throttleNotch = false;
     private bool apuSwitch = false;
     private bool retractGear = false;
-    private bool brakes = true;
+    private bool parkingBrakes = true;
+    private bool brakes = false;
     private bool power = false;
     private bool canopy = true;
 
@@ -147,6 +148,19 @@ public class PlaneActor : NetworkBehaviour
             }
         }
     }
+    public bool ParkingBrakes
+    {
+        get { return parkingBrakes; }
+        set
+        {
+            if (value != parkingBrakes)
+            {
+                UpdatePlanePower();
+                parkingBrakes = value;
+                OnBrakesChange.Invoke();
+            }
+        }
+    }
     public bool Brakes
     {
         get { return brakes; }
@@ -196,7 +210,7 @@ public class PlaneActor : NetworkBehaviour
         EnableAPU = initialApuSwitch;
         ThrottleNotch = initialThrottleNotch;
         RetractGear = initialRetractGear;
-        Brakes = initialBrakes;
+        ParkingBrakes = initialParkingBrakes;
         MainPower = initialPower;
     }
 
@@ -255,7 +269,7 @@ public class PlaneActor : NetworkBehaviour
         GUILayout.Label("PLANE POWER : " + currentEnginePower);
         GUILayout.Label("PowerSwitch : " + MainPower);
         GUILayout.Label("Gear : " + !RetractGear);
-        GUILayout.Label("Brakes : " + Brakes);
+        GUILayout.Label("Brakes : " + ParkingBrakes);
         GUILayout.Label("Canopy : " + OpenCanopy);
         GUILayout.EndArea();
     }

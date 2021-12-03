@@ -118,6 +118,7 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnergyConservingSpecularColor: 1
     - _Frames: 16
+    - _GrassIntensity: 0.2
     - _GrounIntensity: 1
     - _GroundIntensity: 0.2
     - _Hemi: 0
@@ -125,12 +126,16 @@ Material:
     - _ImpostorSize: 1
     - _OpaqueCullMode: 2
     - _Parallax: 1
+    - _PerPixelNormal: 0
     - _RayTracing: 0
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
+    - _RockIntensity: 0.2
+    - _SandIntensity: 0.2
+    - _SnowIntensity: 2
     - _SrcBlend: 1
     - _StencilDepthMask: 48
     - _StencilDepthRef: 0

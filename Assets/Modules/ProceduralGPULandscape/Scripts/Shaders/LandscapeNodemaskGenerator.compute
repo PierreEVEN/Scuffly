@@ -3,7 +3,7 @@
 #define GetCameraRelativePositionWS(var)
 #define TransformWorldToHClip(var) float4(0, 0, 0, 0)
 
-int _Subdivision;
+int _TextureResolution;
 
 #include "AltitudeGenerator.cginc"
 #include "GPULandscapeShaderLibrary.cginc"
@@ -12,8 +12,16 @@ int _Subdivision;
 [numthreads(1,1,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
-	const float2 texturePos = float2(id.x, id.y * _Subdivision);	
-	float realAltitude = 2000;// GetAltitudeAtLocation(texturePos * _Width + _Offset);
-	_Altitude[texturePos] = realAltitude;
+	const float2 texturePos = float2(id.x, id.y);
+	float spacing = 1;
+	const float altBase = GetAltitudeAtLocation((texturePos / (_TextureResolution - 1) - float2(0.5f, 0.5f)) * _Width + _Offset.xz);
+	const float altX = GetAltitudeAtLocation(((texturePos) / (_TextureResolution - 1) - float2(0.5f, 0.5f)) * _Width + _Offset.xz + float2(spacing, 0));
+	const float altZ = GetAltitudeAtLocation(((texturePos) / (_TextureResolution - 1) - float2(0.5f, 0.5f)) * _Width + _Offset.xz + float2(0, spacing));
+
+	
+	_AltitudeSet[texturePos] = half4(
+		altBase,
+		normalize(cross(float3(-spacing, altX - altBase, 0), float3(0, altZ - altBase, spacing)))
+		);
 }
 

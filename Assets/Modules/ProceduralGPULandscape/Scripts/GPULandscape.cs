@@ -20,7 +20,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
     /*
      * Le terrain est découpé en N x N sections (N = ViewDistance * 2 + 1)
      * chaque section est un quadtree indépendant subdivisé au besoin.
-     */ 
+     */
     struct LandscapeSection
     {
         public int posX;
@@ -57,6 +57,8 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
     [Header("Developper features")] // Debug
     public bool Reset = false;
 
+    public static GPULandscape Singleton;
+
     /**
      * Data
      */
@@ -76,6 +78,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
 
     public void OnEnable()
     {
+        Singleton = this;
         // Mise a jour des parametrages
         if (PlayerPrefs.HasKey("LandscapeResolution"))
             meshDensity = PlayerPrefs.GetInt("LandscapeResolution");
@@ -90,7 +93,6 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
 
     private void Start()
     {
-
         if (Application.isPlaying)
         {
             DontDestroyOnLoad(this);
@@ -175,6 +177,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
 
     public void OnDisable()
     {
+        Singleton = null;
 
         GPULandscapePhysic.Singleton.RemoveListener(this);
 
