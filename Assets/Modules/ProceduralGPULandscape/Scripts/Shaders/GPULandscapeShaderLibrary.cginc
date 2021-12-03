@@ -40,37 +40,42 @@ float3 getVertexWorldPosition(int vertexIndex) {
 	return getVertexLocalPosition(vertexIndex) * _Width - float3(reCenter, 0, reCenter) + _Offset;
 }
 
-struct VertexInput
-{
-	uint vertex_id		: SV_VertexID;
-};
-
 struct VertexOutput {
 	float4 positionCS : SV_POSITION; // Clip space position
 	float3 positionWS : TEXCOORD1; // World space position
 };
 
 
+struct VertexInput
+{
+	float4 vertex    : POSITION;
+};
+
 VertexOutput Vert(VertexInput IN)
 {
 	VertexOutput OUT;
 
 	// Compute vertex position on xz axis in world space.
-	float3 inputVertexWSPosition = getVertexWorldPosition(IN.vertex_id);
+	//float3 inputVertexWSPosition = getVertexWorldPosition(IN.vertex);
 
 	// Retrieve altitude at vertex position
-	float realAltitude = GetAltitudeAtLocation(inputVertexWSPosition.xz);
+
+	float3 worldPos = IN.vertex * _Width + _Offset;
+	
+	float realAltitude = GetAltitudeAtLocation(worldPos.xz);
 
 	// Clamp altitude to a minimum of zero
 	float waterCorrectedAltitude = max(0,  realAltitude);
 
-	float3 precomputedAltitude = _Altitude[IN.vertex_id];
+	//float3 precomputedAltitude = _Altitude[IN.vertex];
 	
 	// Transform from world position to clip space position
-	OUT.positionCS = float4(precomputedAltitude, IN.vertex_id);// TransformWorldToHClip(GetCameraRelativePositionWS(precomputedAltitude));// TransformWorldToHClip(GetCameraRelativePositionWS(float3(inputVertexWSPosition.x, inputVertexWSPosition.y + waterCorrectedAltitude, inputVertexWSPosition.z)));
+	OUT.positionCS = TransformWorldToHClip(GetCameraRelativePositionWS(worldPos + float3(0, waterCorrectedAltitude, 0)));// TransformWorldToHClip(GetCameraRelativePositionWS(precomputedAltitude));
+	//OUT.positionCS = TransformWorldToHClip(GetCameraRelativePositionWS(float3(inputVertexWSPosition.x, inputVertexWSPosition.y + waterCorrectedAltitude, inputVertexWSPosition.z)));
+	
 		
 	// Send world position to fragment stage
-	OUT.positionWS = inputVertexWSPosition + waterCorrectedAltitude;
+	OUT.positionWS = worldPos + float3(0, realAltitude, 0);
 
 	return OUT;
 }

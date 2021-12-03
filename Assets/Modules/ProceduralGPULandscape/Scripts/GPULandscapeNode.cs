@@ -42,7 +42,7 @@ public class GPULandscapeNode
         nodeGeneratedLayers = new ComputeBuffer(totalVerticeWidth * totalVerticeWidth, sizeof(float) * 3, ComputeBufferType.Default);
         indirectIndirectArgsBuffer = new ComputeBuffer(3, sizeof(int), ComputeBufferType.IndirectArguments);
 
-        indirectIndirectArgsBuffer.SetData(new int[] { owner.meshDensity, owner.meshDensity, 1});
+        indirectIndirectArgsBuffer.SetData(new int[] { owner.meshDensity, owner.meshDensity, 1 });
         int kernel = owner.HeightMaskCompute.FindKernel("CSMain");
 
         owner.HeightMaskCompute.SetBuffer(kernel, "_Altitude", nodeGeneratedLayers);
@@ -72,7 +72,6 @@ public class GPULandscapeNode
 #endif
     }
 
-
     void DrawSection(Camera camera)
     {
         if (shouldDisplay)
@@ -81,7 +80,7 @@ public class GPULandscapeNode
             int totalVerticeWidth = owner.meshDensity + 2;
 
             MPB.SetInt("_Subdivision", totalVerticeWidth);
-            MPB.SetFloat("_Width", width / owner.meshDensity);
+            MPB.SetFloat("_Width", width);
             MPB.SetVector("_Offset", worldPosition);
             MPB.SetBuffer("_Altitude", nodeGeneratedLayers);
 
@@ -91,7 +90,9 @@ public class GPULandscapeNode
                 indirectArgsBuffer.SetData(indirectArgs);
             }
 
-            Graphics.DrawProceduralIndirect(owner.landscape_material, bounds, MeshTopology.Triangles, indirectArgsBuffer, 0, camera, MPB);
+            Graphics.DrawMeshInstancedIndirect(owner.LandscapeMesh, 0, owner.landscape_material, bounds, indirectArgsBuffer, 0, MPB);
+
+            //Graphics.DrawProceduralIndirect(owner.landscape_material, bounds, MeshTopology.Triangles, indirectArgsBuffer, 0, camera, MPB);
         }
     }
 

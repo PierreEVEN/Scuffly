@@ -102,6 +102,8 @@ Shader "HDRP/GpuLandscapeShader"
 
 			float _GroundIntensity;
 
+
+
 			void Frag(VertexOutput IN, OUTPUT_GBUFFER(outGBuffer))
 			{
 				float cameraDistance = length(_WorldSpaceCameraPos - IN.positionWS);
@@ -109,10 +111,12 @@ Shader "HDRP/GpuLandscapeShader"
 				float normalFetchDistance = clamp(cameraDistance / 100, 1, 200);
 
 				// Per pixel normal
+				/*
 				float altX = max(0, GetAltitudeAtLocation(IN.positionWS.xz + float2(normalFetchDistance, 0)));
 				float altZero = max(0, GetAltitudeAtLocation(IN.positionWS.xz));
 				float altZ = max(0, GetAltitudeAtLocation(IN.positionWS.xz + float2(0, normalFetchDistance)));
-				float3 normalWS = normalize(cross(float3(-normalFetchDistance, altX - altZero, 0), float3(0, altZ - altZero, normalFetchDistance)));
+				*/
+				float3 normalWS = float3(0, 1, 0);// normalize(cross(float3(-normalFetchDistance, altX - altZero, 0), float3(0, altZ - altZero, normalFetchDistance)));
 
 				FragInputs input;
 				ZERO_INITIALIZE(FragInputs, input);

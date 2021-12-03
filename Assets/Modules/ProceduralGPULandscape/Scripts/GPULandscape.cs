@@ -34,7 +34,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
 
     [Header("Quality"), Range(0, 20)]
     public int sectionLoadDistance = 4; // Distance / nombre de sections a charger (0 = 1 section à la fois)
-    [Range(1, 100)]
+    [Range(2, 100)]
     public int meshDensity = 50; // Subdivision du maillage de chaque section
 
     [Header("LodSettings"), Range(1000, 100000)]
@@ -110,6 +110,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
     {
         // Sauvegarde les parametres du landscape dans les preferences du UnityPlayer
         PlayerPrefs.SetInt("LandscapeResolution", meshDensity);
+        generatedMesh = null;
     }
 
 
@@ -182,8 +183,64 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
         // Called on hot reload or when playing / returning back to editor ...
         ResetLandscape();
     }
-    
-    
+
+
+    Mesh generatedMesh;
+    public Mesh LandscapeMesh
+    {
+        get
+        {
+            if (generatedMesh != null)
+                return generatedMesh;
+
+            generatedMesh = new Mesh();
+
+            int verticeWidth = meshDensity + 2;
+
+            Vector3[] vertices = new Vector3[verticeWidth * verticeWidth];
+
+            int[] triangles = new int[verticeWidth * verticeWidth * 6];
+
+            for (int x = 0; x < verticeWidth; ++x)
+            {
+                for (int y = 0; y < verticeWidth; ++y)
+                {
+                    vertices[x + y * verticeWidth] = new Vector3((x - 1) / (float)(meshDensity - 1), 0, (y - 1) / (float)(meshDensity - 1)) + new Vector3(-0.5f, 0, -0.5f);
+
+                    if (x == 0)
+                        vertices[x + y * verticeWidth] += new Vector3(1 / (float)meshDensity, -1 / (float)meshDensity, 0);
+                    if (x == verticeWidth - 1)
+                        vertices[x + y * verticeWidth] += new Vector3(-1 / (float)meshDensity, -1 / (float)meshDensity, 0);
+                    if (y == 0)
+                        vertices[x + y * verticeWidth] += new Vector3(0, -1 / (float)meshDensity, 1 / (float)meshDensity);
+                    if (y == verticeWidth - 1)
+                        vertices[x + y * verticeWidth] += new Vector3(0, -1 / (float)meshDensity, -1 / (float)meshDensity);
+                }
+            }
+
+            for (int x = 0; x < verticeWidth - 1; ++x)
+            {
+                for (int y = 0; y < verticeWidth - 1; ++y)
+                {
+                    int triangleIndex = (x + y * (verticeWidth - 1)) * 6;
+
+                    triangles[triangleIndex] = (x + y * verticeWidth);
+                    triangles[triangleIndex + 2] = (x + 1 + y * verticeWidth);
+                    triangles[triangleIndex + 1] = (x + 1 + (y + 1) * verticeWidth);
+
+                    triangles[triangleIndex + 4] = (x + y * verticeWidth);
+                    triangles[triangleIndex + 3] = (x + 1 + (y + 1) * verticeWidth);
+                    triangles[triangleIndex + 5] = (x + (y + 1) * verticeWidth);
+                }
+            }
+
+            generatedMesh.vertices = vertices;
+            generatedMesh.triangles = triangles;
+            return generatedMesh;
+        }
+    }
+
+
     private void UpdateCameraLocation()
     {
         if (Application.isPlaying)
@@ -227,6 +284,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
     private void ResetLandscape()
     {
         Reset = false;
+        generatedMesh = null;
         foreach (var section in GeneratedSections)
         {
             section.root_node.destroy();

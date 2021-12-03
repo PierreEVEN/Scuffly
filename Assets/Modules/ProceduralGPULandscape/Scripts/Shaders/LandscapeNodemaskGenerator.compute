@@ -17,3 +17,4 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 	
 	_Altitude[id.x] = pos + float3(0, realAltitude, 0);
 }
+
