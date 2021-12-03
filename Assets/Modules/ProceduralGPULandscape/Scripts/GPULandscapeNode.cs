@@ -28,6 +28,8 @@ public class GPULandscapeNode
     private ComputeBuffer indirectIndirectArgsBuffer;
     private ComputeBuffer nodeGeneratedLayers;
 
+    RenderTexture rt;
+
     public GPULandscapeNode(GPULandscape owner, int quadtreeLevel, Vector3 worldPosition, float width)
     {
         this.owner = owner;
@@ -45,13 +47,17 @@ public class GPULandscapeNode
         indirectIndirectArgsBuffer.SetData(new int[] { owner.meshDensity, owner.meshDensity, 1 });
         int kernel = owner.HeightMaskCompute.FindKernel("CSMain");
 
-        owner.HeightMaskCompute.SetBuffer(kernel, "_Altitude", nodeGeneratedLayers);
+        rt = new RenderTexture(totalVerticeWidth, totalVerticeWidth, 0, RenderTextureFormat.RFloat);
+        rt.enableRandomWrite = true;
+        rt.Create();
+
+        owner.HeightMaskCompute.SetTexture(kernel, "_Altitude", rt);
         owner.HeightMaskCompute.SetInt("_Subdivision", totalVerticeWidth);
         owner.HeightMaskCompute.SetFloat("_Width", width / owner.meshDensity);
         owner.HeightMaskCompute.SetVector("_Offset", worldPosition);
 
         IModifierGPUArray.UpdateCompute(owner.HeightMaskCompute, kernel);
-        owner.HeightMaskCompute.Dispatch(kernel, totalVerticeWidth * totalVerticeWidth, 1, 1);
+        owner.HeightMaskCompute.Dispatch(kernel, totalVerticeWidth, totalVerticeWidth, 1);
 
 
 #if UNITY_EDITOR
@@ -79,10 +85,9 @@ public class GPULandscapeNode
             // Draw mesh using landscape material
             int totalVerticeWidth = owner.meshDensity + 2;
 
-            MPB.SetInt("_Subdivision", totalVerticeWidth);
             MPB.SetFloat("_Width", width);
             MPB.SetVector("_Offset", worldPosition);
-            MPB.SetBuffer("_Altitude", nodeGeneratedLayers);
+            MPB.SetTexture("_Altitude", rt);
 
             if (indirectArgs[0] != totalVerticeWidth * totalVerticeWidth * 6)
             {
@@ -91,8 +96,6 @@ public class GPULandscapeNode
             }
 
             Graphics.DrawMeshInstancedIndirect(owner.LandscapeMesh, 0, owner.landscape_material, bounds, indirectArgsBuffer, 0, MPB);
-
-            //Graphics.DrawProceduralIndirect(owner.landscape_material, bounds, MeshTopology.Triangles, indirectArgsBuffer, 0, camera, MPB);
         }
     }
 
