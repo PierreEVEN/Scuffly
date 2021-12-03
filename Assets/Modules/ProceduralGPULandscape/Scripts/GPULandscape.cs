@@ -48,6 +48,8 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
     // Material du terrain (full GPU : doit generer les vertices)
     public Material landscape_material;
 
+    public ComputeShader HeightMaskCompute;
+
     [Header("Physics")]
     public ComputeShader landscapePhysicGetter;
     public bool enablePhysicUpdates = true;

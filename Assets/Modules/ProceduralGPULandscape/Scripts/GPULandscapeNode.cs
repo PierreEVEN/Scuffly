@@ -25,6 +25,9 @@ public class GPULandscapeNode
     private int[] indirectArgs = { 0, 1, 0, 0, 0 };
     private ComputeBuffer indirectArgsBuffer;
 
+    private ComputeBuffer indirectIndirectArgsBuffer;
+    private ComputeBuffer nodeGeneratedLayers;
+
     public GPULandscapeNode(GPULandscape owner, int quadtreeLevel, Vector3 worldPosition, float width)
     {
         this.owner = owner;
@@ -34,7 +37,22 @@ public class GPULandscapeNode
         MPB = new MaterialPropertyBlock();
         bounds = new Bounds(worldPosition, new Vector3(this.width, 100000, this.width));
 
+        int totalVerticeWidth = owner.meshDensity + 2;
         indirectArgsBuffer = new ComputeBuffer(5, sizeof(int), ComputeBufferType.IndirectArguments);
+        nodeGeneratedLayers = new ComputeBuffer(totalVerticeWidth * totalVerticeWidth, sizeof(float) * 3, ComputeBufferType.Default);
+        indirectIndirectArgsBuffer = new ComputeBuffer(3, sizeof(int), ComputeBufferType.IndirectArguments);
+
+        indirectIndirectArgsBuffer.SetData(new int[] { owner.meshDensity, owner.meshDensity, 1});
+        int kernel = owner.HeightMaskCompute.FindKernel("CSMain");
+
+        owner.HeightMaskCompute.SetBuffer(kernel, "_Altitude", nodeGeneratedLayers);
+        owner.HeightMaskCompute.SetInt("_Subdivision", totalVerticeWidth);
+        owner.HeightMaskCompute.SetFloat("_Width", width / owner.meshDensity);
+        owner.HeightMaskCompute.SetVector("_Offset", worldPosition);
+
+        IModifierGPUArray.UpdateCompute(owner.HeightMaskCompute, kernel);
+        owner.HeightMaskCompute.Dispatch(kernel, totalVerticeWidth * totalVerticeWidth, 1, 1);
+
 
 #if UNITY_EDITOR
         SceneView.beforeSceneGui += DrawInEditor;
@@ -45,6 +63,8 @@ public class GPULandscapeNode
     {
         MPB = null;
         indirectArgsBuffer.Release();
+        nodeGeneratedLayers.Release();
+        indirectIndirectArgsBuffer.Release();
         ShowCurrentNode();
 
 #if UNITY_EDITOR
@@ -63,6 +83,7 @@ public class GPULandscapeNode
             MPB.SetInt("_Subdivision", totalVerticeWidth);
             MPB.SetFloat("_Width", width / owner.meshDensity);
             MPB.SetVector("_Offset", worldPosition);
+            MPB.SetBuffer("_Altitude", nodeGeneratedLayers);
 
             if (indirectArgs[0] != totalVerticeWidth * totalVerticeWidth * 6)
             {

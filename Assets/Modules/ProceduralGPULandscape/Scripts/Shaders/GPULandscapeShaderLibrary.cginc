@@ -2,13 +2,13 @@
 int _Subdivision;
 float _Width;
 float3 _Offset;
-
+RWStructuredBuffer<float3> _Altitude;
 
 
 float3 getVertexLocalPosition(int vertexIndex)
 {
-	int quadId = vertexIndex / 6;
-	int vertId = vertexIndex % 6;
+	const uint quadId = (uint)vertexIndex / 6;
+	const uint vertId = (uint)vertexIndex % 6;
 
 	float posX = (quadId % _Subdivision) + (vertId == 2 || vertId == 4 || vertId == 5 ? 1 : 0);
 	float posY = (quadId / _Subdivision) + (vertId == 1 || vertId == 2 || vertId == 4 ? 1 : 0);
@@ -50,6 +50,7 @@ struct VertexOutput {
 	float3 positionWS : TEXCOORD1; // World space position
 };
 
+
 VertexOutput Vert(VertexInput IN)
 {
 	VertexOutput OUT;
@@ -61,13 +62,15 @@ VertexOutput Vert(VertexInput IN)
 	float realAltitude = GetAltitudeAtLocation(inputVertexWSPosition.xz);
 
 	// Clamp altitude to a minimum of zero
-	float waterCorrectedAltitude = max(0, realAltitude);
+	float waterCorrectedAltitude = max(0,  realAltitude);
 
+	float3 precomputedAltitude = _Altitude[IN.vertex_id];
+	
 	// Transform from world position to clip space position
-	OUT.positionCS = TransformWorldToHClip(GetCameraRelativePositionWS(inputVertexWSPosition + float3(0, waterCorrectedAltitude, 0)));
-
+	OUT.positionCS = float4(precomputedAltitude, IN.vertex_id);// TransformWorldToHClip(GetCameraRelativePositionWS(precomputedAltitude));// TransformWorldToHClip(GetCameraRelativePositionWS(float3(inputVertexWSPosition.x, inputVertexWSPosition.y + waterCorrectedAltitude, inputVertexWSPosition.z)));
+		
 	// Send world position to fragment stage
-	OUT.positionWS = inputVertexWSPosition + float3(0, realAltitude, 0);
+	OUT.positionWS = inputVertexWSPosition + waterCorrectedAltitude;
 
 	return OUT;
 }
