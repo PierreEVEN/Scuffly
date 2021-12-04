@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GrassNormal:
-        m_Texture: {fileID: 2800000, guid: bf4d6fd9083877c41b1333cb4aee5085, type: 3}
+        m_Texture: {fileID: 2800000, guid: b3859769f42f2504694423c6e261fb5e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normals:
@@ -133,9 +133,9 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
-    - _RockIntensity: 0.2
+    - _RockIntensity: 0.6
     - _SandIntensity: 0.2
-    - _SnowIntensity: 2
+    - _SnowIntensity: 1
     - _SrcBlend: 1
     - _StencilDepthMask: 48
     - _StencilDepthRef: 0

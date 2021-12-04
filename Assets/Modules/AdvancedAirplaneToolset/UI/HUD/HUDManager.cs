@@ -75,7 +75,7 @@ public class HUDManager : MonoBehaviour
 
         canvas.enabled = Plane.MainPower;
         alpha = Mathf.Clamp01(alpha + (Plane.MainPower ? 0.5f * Time.deltaTime : -4f * Time.deltaTime));
-        canvasGroup.alpha = Mathf.Clamp01((Plane.GetCurrentPower() - 80) / 30);
+        canvasGroup.alpha = Mathf.Min(Plane.HudLightLevel, Mathf.Clamp01((Plane.GetCurrentPower() - 80) / 30));
 
         if (Plane.MainPower)
         {

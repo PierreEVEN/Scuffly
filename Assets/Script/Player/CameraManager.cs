@@ -162,11 +162,16 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         groundAltitude = processedPoints[0];
     }
 
+    private bool pressed = false;
     private bool hasClicked = false;
+    private SwitchBase waitingReleaseSwitch;
     [HideInInspector]
     public SwitchBase selectedSwitch;
     public void RaycastSwitchs()
     {
+        if (waitingReleaseSwitch)
+            return;
+
         if (selectedSwitch)
             selectedSwitch.StopOver();
         selectedSwitch = null;
@@ -182,7 +187,10 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
                 selectedSwitch = sw;
                 selectedSwitch.StartOver();
                 if (hasClicked)
+                {
                     selectedSwitch.Switch();
+                    waitingReleaseSwitch = selectedSwitch;
+                }
             }
         }
         hasClicked = false;
@@ -233,9 +241,22 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         SetFocusedPlane(null);
     }
 
-    private void OnClickButton()
+    private void OnClickButton(InputValue input)
     {
-        hasClicked = true;
+        bool newPressed = Mathf.Clamp(input.Get<float>(), 0, 1) > 0.5f;
+        if (!pressed && newPressed)
+        {
+            pressed = newPressed;
+            hasClicked = true;
+        }
+        else if (pressed && !newPressed)
+        {
+            pressed = newPressed;
+            hasClicked = false;
+            if (waitingReleaseSwitch)
+                waitingReleaseSwitch.Release();
+            waitingReleaseSwitch = null;
+        }
     }
 
 

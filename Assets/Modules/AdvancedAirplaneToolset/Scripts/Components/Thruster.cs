@@ -78,8 +78,7 @@ public class Thruster : PlaneComponent, IPowerProvider
         throttleCurrentPercent = Mathf.Clamp01(throttleCurrentPercent + Mathf.Clamp(targetInput - throttleCurrentPercent, -thrustPercentAcceleration, thrustPercentAcceleration) * Time.fixedDeltaTime);
         // Meme a l'arret, le moteur produit une legere poussee
         float totalInputPercent = throttleCurrentPercent + engineStartupPercent * idleEngineThrustPercent;
-        float forwardVelocity = transform.InverseTransformDirection(Physics.velocity).z;
-        Physics.AddForceAtPosition(-transform.forward * totalInputPercent * ThrustForceCurve.Evaluate(forwardVelocity), transform.position);
+        Physics.AddForceAtPosition(-transform.forward * totalInputPercent * ThrustForceCurve.Evaluate(Plane.GetSpeedInNautics()), transform.position);
 
         EngineStatusRTPC.SetValue(gameObject, totalInputPercent * 100);
         if (Camera.main)
@@ -101,7 +100,7 @@ public class Thruster : PlaneComponent, IPowerProvider
         if (LightObject)
         {
             Light light = LightObject.GetComponent<Light>();
-            light.intensity = (float)(600000.0 * System.Math.Clamp((totalInputPercent - 0.7) * 8.0, 0.0, 1.0));
+            light.intensity = (float)(6000.0 * System.Math.Clamp((totalInputPercent - 0.7) * 8.0, 0.0, 1.0));
         }
     }
 

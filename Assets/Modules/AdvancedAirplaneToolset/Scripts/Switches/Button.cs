@@ -62,4 +62,8 @@ public class Button : SwitchBase
         // Joue la timeline depuis le debut
         Timeline = 1;
     }
+
+    public override void Release()
+    {
+    }
 }

@@ -128,7 +128,7 @@ Shader "HDRP/GpuLandscapeShader"
 				float altX = max(0, GetAltitudeAtLocation(IN.positionWS.xz + float2(normalFetchDistance, 0)));
 				float altZero = max(0, GetAltitudeAtLocation(IN.positionWS.xz));
 				float altZ = max(0, GetAltitudeAtLocation(IN.positionWS.xz + float2(0, normalFetchDistance)));
-				float3 normalWS = normalize(cross(float3(-normalFetchDistance, altX - altZero, 0), float3(0, altZ - altZero, normalFetchDistance)));
+				float3 normalWS = normalize(cross(float3(-normalFetchDistance, altX - altZero, 0), float3(0, altZ - altZero, -normalFetchDistance))) * float3(1, -1, 1);
 #else
 				float3 normalWS = IN.normalWS;
 #endif
@@ -160,7 +160,7 @@ Shader "HDRP/GpuLandscapeShader"
 				float3 normal = normalWS;
 
 				// Darker wide pos
-				color = pow(color, max(1, min(2, pow(cameraDistance / 5000, 0.5))));
+				//color = pow(color, max(1, min(2, pow(cameraDistance / 5000, 0.5))));
 
 
 				if (IN.positionWS.y < 0) {

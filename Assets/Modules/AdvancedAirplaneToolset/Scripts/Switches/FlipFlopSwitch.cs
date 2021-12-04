@@ -10,7 +10,8 @@ public enum ESwitchTarget
     Gear,
     Brakes,
     ThrottleNotch,
-    Weapons
+    Weapons,
+    LandingLights
 }
 
 // Interrupteur a deux positions ON/OFF, a placer dans le cockpit de l'avion
@@ -60,6 +61,9 @@ public class FlipFlopSwitch : SwitchBase
                     break;
                 case ESwitchTarget.None:
                     break;
+                case ESwitchTarget.LandingLights:
+                    newOn = Plane.LandingLights;
+                    break;
             }
             // Met a jour l'etat bouton
             if (newOn != On)
@@ -107,6 +111,13 @@ public class FlipFlopSwitch : SwitchBase
             case ESwitchTarget.ThrottleNotch:
                 Plane.ThrottleNotch = On;
                 break;
+            case ESwitchTarget.LandingLights:
+                Plane.LandingLights = On;
+                break;
         }
+    }
+
+    public override void Release()
+    {
     }
 }

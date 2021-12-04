@@ -8,6 +8,8 @@ public abstract class SwitchBase : PlaneComponent
     // Appuis sur le bouton
     public abstract void Switch();
 
+    public abstract void Release();
+
     // Highligh du bouton quand on passe la souris dessus
     public void StartOver()
     {

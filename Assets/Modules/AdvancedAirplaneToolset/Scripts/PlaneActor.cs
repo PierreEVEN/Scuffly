@@ -39,12 +39,13 @@ public class PlaneActor : NetworkBehaviour
     public float initialSpeed = 0;
     public bool initialPower = false;
     public bool initialOpenCanopy = true;
+    public float initialHudLightLevel = 0;
+    public float initialPositionLight = 0;
 
     Rigidbody planePhysic;
     private float currentEnginePower;
 
     public Rigidbody Physics { get { return planePhysic; } }
-
 
     // Etat courant de l'avion
     private bool throttleNotch = false;
@@ -54,6 +55,10 @@ public class PlaneActor : NetworkBehaviour
     private bool brakes = false;
     private bool power = false;
     private bool canopy = true;
+    private bool landingLights = false;
+    private float floodLight = 0.1f;
+    private float positionLight = 0;
+    private float hudLight = 0;
 
     // Active ou desactive des fonctionnalites de l'avion
     [HideInInspector]
@@ -67,9 +72,17 @@ public class PlaneActor : NetworkBehaviour
     [HideInInspector]
     public UnityEvent OnCanopyChange = new UnityEvent(); // ouvrir / fermer le cockpit
     [HideInInspector]
+    public UnityEvent OnCockpitFloodlightChanged = new UnityEvent(); // ouvrir / fermer le cockpit
+    [HideInInspector]
+    public UnityEvent OnPositionLightChanged = new UnityEvent(); // ouvrir / fermer le cockpit
+    [HideInInspector]
+    public UnityEvent OnHudLightChanged = new UnityEvent(); // ouvrir / fermer le cockpit
+    [HideInInspector]
     public UnityEvent OnPowerSwitchChanged = new UnityEvent(); // alimentation principale on / off
     [HideInInspector]
     public UnityEvent OnGlobalPowerChanged = new UnityEvent(); // alimentation principale on / off
+    [HideInInspector]
+    public UnityEvent OnLandingLightsChanged = new UnityEvent(); // alimentation principale on / off
 
     // Liste des composants fournissant de l'energie
     private List<IPowerProvider> powerProviders = new List<IPowerProvider>();
@@ -135,6 +148,18 @@ public class PlaneActor : NetworkBehaviour
             }
         }
     }
+    public bool LandingLights
+    {
+        get { return landingLights; }
+        set
+        {
+            if (value != landingLights)
+            {
+                landingLights = value;
+                OnLandingLightsChanged.Invoke();
+            }
+        }
+    }
     public bool RetractGear
     {
         get { return retractGear; }
@@ -185,6 +210,42 @@ public class PlaneActor : NetworkBehaviour
                 OnCanopyChange.Invoke();
             }
         }
+    }    
+    public float CockpitFloodLights
+    {
+        get { return floodLight; }
+        set
+        {
+            if (value != floodLight)
+            {
+                floodLight = Mathf.Clamp01(value);
+                OnCockpitFloodlightChanged.Invoke();
+            }
+        }
+    }
+    public float PositionLight
+    {
+        get { return positionLight; }
+        set
+        {
+            if (value != positionLight)
+            {
+                positionLight = Mathf.Clamp01(value);
+                OnPositionLightChanged.Invoke();
+            }
+        }
+    }
+    public float HudLightLevel
+    {
+        get { return hudLight; }
+        set
+        {
+            if (value != hudLight)
+            {
+                hudLight = Mathf.Clamp01(value);
+                OnHudLightChanged.Invoke();
+            }
+        }
     }
 
     // Calcule l'apport en electricite (en KVA) des differents sous - composants
@@ -212,6 +273,9 @@ public class PlaneActor : NetworkBehaviour
         RetractGear = initialRetractGear;
         ParkingBrakes = initialParkingBrakes;
         MainPower = initialPower;
+        OpenCanopy = initialOpenCanopy;
+        HudLightLevel = initialHudLightLevel;
+        PositionLight = initialPositionLight;
     }
 
     private void OnEnable()
@@ -256,8 +320,8 @@ public class PlaneActor : NetworkBehaviour
         }
         if (newPower != currentEnginePower)
         {
-            OnGlobalPowerChanged.Invoke();
             currentEnginePower = newPower;
+            OnGlobalPowerChanged.Invoke();
         }
     }
 

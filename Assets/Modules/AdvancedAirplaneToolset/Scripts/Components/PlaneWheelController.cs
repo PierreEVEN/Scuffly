@@ -86,7 +86,7 @@ public class PlaneWheelController : PlaneComponent
     // Mise a jour de l'etat des freins
     void UpdateBrakes()
     {
-        WheelPhysic.brakeTorque = UseBrakes && Plane.ParkingBrakes ||Plane.Brakes ? 3000 : 0;
+        WheelPhysic.brakeTorque = UseBrakes && (Plane.ParkingBrakes || Plane.Brakes) ? 3000 : 0;
     }
 
     // Update is called once per frame

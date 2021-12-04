@@ -21,7 +21,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 	
 	_AltitudeSet[texturePos] = half4(
 		altBase,
-		normalize(cross(float3(-spacing, altX - altBase, 0), float3(0, altZ - altBase, spacing)))
+		normalize(cross(float3(-spacing, altX - altBase, 0), float3(0, altZ - altBase, -spacing))) * float3(1, -1, 1)
 		);
 }
 

@@ -42,6 +42,9 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
         Plane.ParkingBrakes = false;
         Plane.MainPower = true;
         Plane.OpenCanopy = false;
+        Plane.LandingLights = true;
+        Plane.PositionLight = 1;
+        Plane.CockpitFloodLights = 1;
         if (Plane.GetCurrentPower() < 100)
             Plane.EnableAPU = true;
         Plane.ThrottleNotch = true;

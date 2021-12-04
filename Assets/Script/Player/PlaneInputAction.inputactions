@@ -33,6 +33,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "ClickButton",
+                    "type": "Value",
+                    "id": "7e4b43cf-2e48-43e3-827d-34df5a8e11df",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "IncreaseThrottle",
                     "type": "Value",
                     "id": "d20ff9db-813b-479f-9e1b-daa6b11ad8fc",
@@ -189,15 +198,6 @@
                     "name": "SwitchPower",
                     "type": "Button",
                     "id": "76f736c7-f0d6-40a4-b168-16638eb6d714",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ClickButton",
-                    "type": "Button",
-                    "id": "63d11152-c4b2-4458-92ce-40e20293ac9f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -374,6 +374,28 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "Scale",
+                    "groups": "",
+                    "action": "SetYaw",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "e693122a-6f31-4741-9514-998d93088086",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "Scale",
+                    "groups": "",
+                    "action": "SetYaw",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "be57c4f1-b9c6-4bd4-a07f-57f8bc727d95",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "Scale(factor=-1)",
                     "groups": "",
                     "action": "SetYaw",
                     "isComposite": false,
@@ -667,17 +689,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a5f848b6-8443-4314-91f6-a8ca49bfac06",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ClickButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9b8498d2-bf16-4cbe-9841-0e9a3442fc5f",
                     "path": "<Keyboard>/f1",
                     "interactions": "",
@@ -893,6 +904,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Brakes",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Keyboard",
+                    "id": "e58c8b01-fb4a-487a-8fed-bb7120bb78ca",
+                    "path": "1DAxis(minValue=0)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClickButton",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "9ba30bf0-4a44-4de7-ae14-5230ee6e8334",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClickButton",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

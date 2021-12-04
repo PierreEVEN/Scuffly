@@ -106,7 +106,7 @@ MonoBehaviour:
     m_Value: 0
   cloudPreset:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 0
   cumulusMap:
     m_OverrideState: 0
     m_Value: {fileID: 0}
