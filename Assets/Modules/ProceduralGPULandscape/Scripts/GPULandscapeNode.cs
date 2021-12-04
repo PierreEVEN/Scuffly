@@ -49,7 +49,7 @@ public class GPULandscapeNode
         owner.HeightMaskCompute.SetInt("_TextureResolution", rtRes);
         owner.HeightMaskCompute.SetFloat("_Width", width);
         owner.HeightMaskCompute.SetVector("_Offset", worldPosition);
-        IModifierGPUArray.UpdateCompute(owner.HeightMaskCompute, kernel);
+        IModifierGPUArray.ApplyToComputeBuffer(owner.HeightMaskCompute, kernel);
         owner.HeightMaskCompute.Dispatch(kernel, rtRes, rtRes, 1);
 
 

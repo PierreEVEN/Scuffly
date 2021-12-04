@@ -128,7 +128,7 @@ public class GPULandscape : MonoBehaviour, GPULandscapePhysicInterface
 
         Profiler.BeginSample("Update camera and materials");
         UpdateCameraLocation();
-        IModifierGPUArray.UpdateMaterial(landscape_material);
+        IModifierGPUArray.ApplyToMaterial(landscape_material);
         Profiler.EndSample();
 
 

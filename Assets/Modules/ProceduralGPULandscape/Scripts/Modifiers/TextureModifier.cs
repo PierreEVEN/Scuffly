@@ -7,12 +7,8 @@ public class TextureModifier : GPULandscapeModifier
 {
     public struct TextureModifierData
     {
-        public int priority;
-        public int mode;
         public int textureID;
         public float zOffset;
-        public Vector3 position;
-        public Vector3 scale;
     }
 
     [System.NonSerialized]
@@ -39,7 +35,6 @@ public class TextureModifier : GPULandscapeModifier
             }
         }
         GPULandscapeTextureMask.OnRebuildAtlas.AddListener(OnRebuildAtlas);
-        OnUpdateData();
     }
 
     private void OnRebuildAtlas()
@@ -60,10 +55,24 @@ public class TextureModifier : GPULandscapeModifier
     }
     public override void OnUpdateData()
     {
-        if (GPULandscape.Singleton)
-            GPULandscape.Singleton.Reset = true;
-        data.position = transform.position;
-        data.scale = transform.localScale;
+        gpuData.UpdateValue(this);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(affectAltitude ? 1 : 0.5f, affectFoliage ? 1 : 0.5f, affectGrass ? 1 : 0.5f, UnityEditor.Selection.activeGameObject == this.gameObject ? 0.5f : 0.1f);
+        Gizmos.DrawCube(transform.position + new Vector3(0, transform.localScale.y / 2, 0), transform.localScale);
+    }
+    
+    // Update is called once per frame
+    public override void InternalUpdate()
+    {
+        if (internalTextureMask != textureMask)
+           UpdateData();
+    }
+
+    public override byte[] GetCustomData()
+    {
         data.zOffset = zOffset;
         if (internalTextureMask != textureMask)
         {
@@ -88,20 +97,6 @@ public class TextureModifier : GPULandscapeModifier
                 }
             }
         }
-
-        gpuData.UpdateValue(this, data);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(0.5f, 0.5f, 0, 0.2f);
-        Gizmos.DrawCube(data.position + new Vector3(0, data.scale.y / 2, 0), data.scale);
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        if (data.scale != transform.localScale || data.position != transform.position || internalTextureMask != textureMask)
-            OnUpdateData();
+        return StructToBytes(data);
     }
 }

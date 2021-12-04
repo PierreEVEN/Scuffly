@@ -2,7 +2,7 @@
 #pragma kernel CSMain
 
 #include "AltitudeGenerator.cginc"
-
+#include "simplexNoiseGPU.cginc"
 
 struct ShouldSpawnTreeStruct
 {
@@ -35,8 +35,17 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 {
 		float3 pos = float3(origin.x + id.x * scale / width, 0, origin.z + id.y * scale / width);
 
-		pos.xz += rand_2_0004(pos.xz) * scale / width * 2;
+		pos.xz += float2(snoise(pos.xz), snoise(-pos.xz * 8.897 + float2(489,878465))) * scale / width * 2;
+	
+		float foliageWeight = 1;
+	
+		ApplyModifierAtPosition(pos.xz, foliageWeight, MODE_FOLIAGE_MASK);
 
+		if (foliageWeight < 0.5)
+		{
+			shouldSpawnTreeBuffer[id.x + id.y * width].shouldSpawn = 0;
+			return;
+		}
 	
 		pos.y = GetAltitudeAtLocation(pos.xz);
 
@@ -46,13 +55,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 			shouldSpawnTreeBuffer[id.x + id.y * width].shouldSpawn = 0;
 			return;
 		}
-
-		if ((pos.z > -150 && pos.z < 450 && pos.x > -1800 && pos.x < 1550) || pos.y < 10)
-		{
-			shouldSpawnTreeBuffer[id.x + id.y * width].shouldSpawn = 0;
-			return;
-		}
-
+		
 		// Per vertex normal
 		float altX = max(0, GetAltitudeAtLocation(pos.xz + float2(1, 0)));
 		float altZ = max(0, GetAltitudeAtLocation(pos.xz + float2(0, 1)));

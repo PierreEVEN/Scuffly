@@ -16,11 +16,6 @@ public class ProceduralFolliageBatch : MonoBehaviour
     ComputeBuffer shouldSpawnTreeBuffer = null;
     private uint[] matrixArgs = new uint[5] { 0, 0, 0, 0, 0 };
     MaterialPropertyBlock InstanceMaterialProperties;
-    struct ShouldSpawnTreeStruct
-    {
-        Vector3 spawnPosition;
-        int shouldSpawn;
-    };
 
     private void OnEnable()
     {
@@ -141,7 +136,7 @@ public class ProceduralFolliageBatch : MonoBehaviour
         generationCS.SetFloat("minAltitude", folliageAsset.minAltitude);
         generationCS.SetFloat("maxAltitude", folliageAsset.maxAltitude);
 
-        IModifierGPUArray.UpdateCompute(generationCS, kernelIndex);
+        IModifierGPUArray.ApplyToComputeBuffer(generationCS, kernelIndex);
         // Run compute shader
         generationCS.Dispatch(kernelIndex, finalDensity, finalDensity, 1);
 

@@ -1,34 +1,38 @@
+#ifndef __LANDSCAPE_MASK_CGINC__
+#define __LANDSCAPE_MASK_CGINC__
 
-/*
- * Rectangle modifiers
- */
-struct LandscapeMask_Rectangle
-{
-	int priority;
-	int mode;
-	float2 position;
-	float2 halfExtent;
-	float margins;
-	float altitude;
-};
-StructuredBuffer<LandscapeMask_Rectangle> RectangleModifier;
-int RectangleModifier_Count = 0;
+#define MODE_OVERRIDE 1
+#define MODE_ALTITUDE_MASK 2
+#define MODE_FOLIAGE_MASK 4
+#define MODE_TREE_MASK 8
+#define MODE_NOISE_MASK 16
+
+#define DECLARE_MASK(MASK_NAME) \
+struct MASK_NAME##_type \
+{ \
+	int priority; \
+	int mode; \
+	float3 position; \
+	float3 scale; \
+}; \
+struct MASK_NAME##_CustomData_type \
+{ \
 
 
-/*
- * Texture modifiers
- */
-struct LandscapeMask_Texture
-{
-	int priority;
-	int mode;
-	int maskId;
-	float zOffset;
-	float3 position;
-	float3 scale;
-};
-StructuredBuffer<LandscapeMask_Texture> TextureModifier;
-int TextureModifier_Count = 0;
+#define END_MASK_DECLARATION(MASK_NAME) \
+}; \
+StructuredBuffer<MASK_NAME##_type> MASK_NAME; \
+StructuredBuffer< MASK_NAME##_CustomData_type> MASK_NAME##_CustomData; \
+int MASK_NAME##_Count = 0;
+
+DECLARE_MASK(RectangleModifier)
+float margins;
+END_MASK_DECLARATION(RectangleModifier)
+
+DECLARE_MASK(TextureModifier)
+int textureId;
+float zOffset;
+END_MASK_DECLARATION(TextureModifier)
 
 /*
  * Mask atlas
@@ -39,6 +43,7 @@ struct LandscapeTextureRefs
 	float2 to;
 };
 sampler2D LandscapeMaskAtlas;
+
 
 StructuredBuffer<LandscapeTextureRefs> TextureMasksRefs;
 int TextureMasksRefs_Count = 0;
@@ -55,50 +60,57 @@ float2 uvToAtlasMask(float2 uv, int textureID)
 	return float2(lerp(from.x, from.x + to.x, uv.x), lerp(from.y, from.y + to.y, uv.y));
 }
 
-
-void addAltitudeOverrides(float2 position, inout float altitude)
+void ApplyModifierAtPosition(float2 position, inout float modifiedWeight, int mask)
 {
 	for (int i = 0; i < TextureModifier_Count; ++i)
 	{
-		LandscapeMask_Texture data = TextureModifier[i];
-		float2 pos = data.position.xz;
-		float2 ext = data.scale.xz / 2;
+		const TextureModifier_type data = TextureModifier[i];
+		if (!(data.mode & mask))
+			continue;
 
+		const float2 pos = data.position.xz;
+		const float2 ext = data.scale.xz / 2;
+
+		
 		if (
 			position.x > pos.x - ext.x &&
 			position.y > pos.y - ext.y &&
 			position.x < pos.x + ext.x &&
 			position.y < pos.y + ext.y)
 		{
+			const TextureModifier_CustomData_type customData = TextureModifier_CustomData[i];
 
-			float2 uvPos = (position - data.position.xz) / data.scale.xz + float2(0.5, 0.5);
+			const float2 uvPos = (position - data.position.xz) / data.scale.xz + float2(0.5, 0.5);
 
-			float4 color = clamp(tex2Dlod(LandscapeMaskAtlas, float4(uvToAtlasMask(uvPos, data.maskId), 0, 0)) - data.zOffset, 0, 1);
+			const float4 color = clamp(tex2Dlod(LandscapeMaskAtlas, float4(uvToAtlasMask(uvPos, customData.textureId), 0, 0)) - customData.zOffset, 0, 1);
 
-			altitude = data.position.y + color.r * data.scale.y + (data.mode == 1 ? 0 : altitude);
+			modifiedWeight = data.position.y + color.r * data.scale.y + (data.mode & MODE_OVERRIDE ? 0 : modifiedWeight);
 		}
 	}
-	
+
 	for (int j = 0; j < RectangleModifier_Count; ++j)
 	{
-		LandscapeMask_Rectangle data = RectangleModifier[j];
-		float2 pos = data.position;
-		float2 ext = data.halfExtent;
-		float mar = data.margins;
-				
+		const RectangleModifier_type data = RectangleModifier[j];
+		if (!(data.mode & mask))
+			continue;
+		
+		const float3 pos = data.position;
+		const float3 ext = data.scale;
+
 		if (
 			position.x > pos.x - ext.x &&
-			position.y > pos.y - ext.y &&
+			position.y > pos.z - ext.z &&
 			position.x < pos.x + ext.x &&
-			position.y < pos.y + ext.y)
+			position.y < pos.z + ext.z)
 		{
-			float xdistance = min(abs(position.x - pos.x - ext.x), abs(position.x - pos.x + ext.x));
-			float ydistance = min(abs(position.y - pos.y - ext.y), abs(position.y - pos.y + ext.y));
+			const RectangleModifier_CustomData_type customData = RectangleModifier_CustomData[j];
 
-			float distance = pow(clamp(min(xdistance, ydistance) / mar, 0, 1), 2.f);
-			
-			altitude = lerp(data.altitude, altitude, clamp(1 - distance, 0, 1)) + (data.mode == 0 ? 1 : altitude);
+			const float xdistance = min(abs(position.x - pos.x - ext.x), abs(position.x - pos.x + ext.x));
+			const float ydistance = min(abs(position.y - pos.z - ext.z), abs(position.y - pos.z + ext.z));
+			const float distance = pow(clamp(min(xdistance, ydistance) / customData.margins, 0, 1), 2.f);
+
+			modifiedWeight = lerp(data.position.y, modifiedWeight, clamp(1 - distance, 0, 1)) + (data.mode & MODE_OVERRIDE ? 1 : modifiedWeight);
 		}
 	}
-
 }
+#endif

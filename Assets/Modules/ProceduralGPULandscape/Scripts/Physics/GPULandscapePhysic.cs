@@ -139,7 +139,7 @@ public class GPULandscapePhysic
 
         // Traitement des donnees
         int kernelIndex = CSdataProcess.FindKernel("CSMain");
-        IModifierGPUArray.UpdateCompute(CSdataProcess, kernelIndex);
+        IModifierGPUArray.ApplyToComputeBuffer(CSdataProcess, kernelIndex);
         CSdataProcess.SetBuffer(kernelIndex, "Input", sendDataBuffer);
         CSdataProcess.SetBuffer(kernelIndex, "Output", receiveDataBuffer);
         CSdataProcess.Dispatch(kernelIndex, points.Count, 1, 1);

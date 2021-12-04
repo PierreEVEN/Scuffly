@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -7,12 +8,7 @@ public class RectangleModifier : GPULandscapeModifier
 
     public struct RectangleModifierData
     {
-        public int priority;
-        public int mode;
-        public Vector2 position;
-        public Vector2 halfExtent;
         public float margins;
-        public float altitude;
     }
 
     private static ModifierGPUArray<RectangleModifier, RectangleModifierData> gpuData = new ModifierGPUArray<RectangleModifier, RectangleModifierData>("RectangleModifier");
@@ -22,7 +18,6 @@ public class RectangleModifier : GPULandscapeModifier
     private void OnEnable()
     {
         gpuData.TrackModifier(this);
-        OnUpdateData();
     }
 
     private void OnDisable()
@@ -32,25 +27,18 @@ public class RectangleModifier : GPULandscapeModifier
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = new Color(0.5f, 0.5f, 0, 0.2f);
-        Gizmos.DrawCube(new Vector3(data.position.x, data.altitude, data.position.y), new Vector3(data.halfExtent.x * 2, 10, data.halfExtent.y * 2));
+        Gizmos.color = new Color(affectAltitude ? 1 : 0.5f, affectFoliage ? 1 : 0.5f, affectGrass ? 1 : 0.5f, UnityEditor.Selection.activeGameObject == this.gameObject ? 0.5f : 0.1f);
+        Gizmos.DrawCube(new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3(transform.localScale.x * 2, 10, transform.localScale.z * 2));
     }
 
     public override void OnUpdateData()
     {
-        if (GPULandscape.Singleton)
-            GPULandscape.Singleton.Reset = true;
-        data.position = new Vector2(transform.position.x, transform.position.z);
-        data.margins = margins;
-        data.halfExtent = new Vector2(transform.localScale.x, transform.localScale.z);
-        data.altitude = transform.position.y;
-
-        gpuData.UpdateValue(this, data);
+        gpuData.UpdateValue(this);
     }
 
-    private void Update()
+    public override byte[] GetCustomData()
     {
-        if (transform.position.x != data.position.x || transform.position.y != data.altitude || transform.position.z != data.position.y || transform.localScale.x != data.halfExtent.x || transform.localScale.z != data.halfExtent.y)
-            OnUpdateData();
+        data.margins = margins;
+        return StructToBytes(data);
     }
 }
