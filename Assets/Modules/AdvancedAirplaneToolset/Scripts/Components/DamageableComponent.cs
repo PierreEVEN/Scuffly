@@ -29,7 +29,7 @@ public class DamageableComponent : MonoBehaviour
     }
 
     // Applique des dommages a partir de points d'impacts. Les degars seront calcules en fonction du point d'impact, et du rayon.
-    public void ApplyDamageAtLocation(Vector3[] impactLocations, float radius, float damage)
+    public void ApplyDamageAtLocation(Vector3[] impactLocations, float radius, float damage, GameObject instigator)
     {
         if (destroyed)
             return;
@@ -53,6 +53,13 @@ public class DamageableComponent : MonoBehaviour
         if (health < 50 && healthBefore >= 50)
             BeginSmoke(closestPoint);
         UpdateHealth();
+
+        if (instigator)
+        {
+            PlaneActor owningPlane = GetComponentInParent<PlaneActor>();
+            if (owningPlane)
+                owningPlane.LastDamageInstigator = instigator;
+        }
     }
 
     // Debut d'un incendis

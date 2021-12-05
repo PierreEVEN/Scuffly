@@ -27,6 +27,8 @@ public class AntiColLightManager : PlaneComponent
 
     void Update()
     {
+        if (!Plane)
+            return;
         for (int i = 0; i < lights.Length; ++i)
         {
             lights[i].intensity = Plane.PositionLight * initialIntensities[i] * Mathf.Clamp01(Plane.GetCurrentPower());

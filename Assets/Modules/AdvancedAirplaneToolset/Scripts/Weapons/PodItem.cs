@@ -55,7 +55,7 @@ public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
     }
 
     // Detache l'objet du pod et met en place une physique indépendante de l'avion porteur
-    public virtual void Shoot(GameObject objectOwner, Vector3 initialSpeed, Vector3 upVector, GameObject target)
+    public virtual void Shoot(GameObject objectOwner, Vector3 initialSpeed, GameObject target)
     {
         this.owner = objectOwner;
         this.target = target;
@@ -63,15 +63,15 @@ public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
         transform.parent = null;
 
         // add physics
-        physics = gameObject.AddComponent<Rigidbody>();
-        physics.mass = mass;
-        physics.freezeRotation = true;
+        if (!physics)
+        {
+            physics = gameObject.AddComponent<Rigidbody>();
+            physics.mass = mass;
+            physics.freezeRotation = true;
 
-        // Avoid eventual collision with root
-        transform.position += upVector * -GetComponent<BoxCollider>().bounds.size.y / 4;
-
-        physics.velocity = initialSpeed;
-        physics.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            physics.velocity = initialSpeed;
+            physics.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+        }
 
         // Add aerodynamics
         AerodynamicComponent aero = gameObject.GetComponent<AerodynamicComponent>();
@@ -89,13 +89,21 @@ public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
             Explode(Vector3.zero);
 
         foreach (var comp in collision.gameObject.GetComponentsInChildren<DamageableComponent>())
-            comp.ApplyDamageAtLocation(new Vector3[] { collision.contacts[0].point }, 2, 1000);
+            comp.ApplyDamageAtLocation(new Vector3[] { collision.contacts[0].point }, 2, 1000, owner);
     }
 
     public Vector2[] Collectpoints()
     {
         // Un seul point est utilisé pour la detection de collision avec le landscape (pas besoin de plus)
         return new Vector2[1] { new Vector2(transform.position.x, transform.position.z) };
+    }
+
+    float disabledColliderDelay;
+
+    private void Update()
+    {
+        // Empeche le missile d'exploser au moment du tir
+        GetComponent<BoxCollider>().enabled = !owner || Vector3.Distance(owner.transform.position, transform.position) > 15;
     }
 
     public void OnPointsProcessed(float[] processedPoints)

@@ -60,8 +60,10 @@ public class TextureModifier : GPULandscapeModifier
 
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
         Gizmos.color = new Color(affectAltitude ? 1 : 0.5f, affectFoliage ? 1 : 0.5f, affectGrass ? 1 : 0.5f, UnityEditor.Selection.activeGameObject == this.gameObject ? 0.5f : 0.1f);
         Gizmos.DrawCube(transform.position + new Vector3(0, transform.localScale.y / 2, 0), transform.localScale);
+#endif
     }
     
     // Update is called once per frame

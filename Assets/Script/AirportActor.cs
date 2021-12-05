@@ -7,6 +7,8 @@ public class AirportActor : MonoBehaviour
 {
     public PlaneTeam AirportTeam = PlaneTeam.Blue;
 
+    public string AirportName = "No name";
+
     // Liste des aeroports activés
     public static List<AirportActor> AirportList = new List<AirportActor>();
 

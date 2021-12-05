@@ -95,7 +95,7 @@ public class MobilePart : PlaneComponent
                     desiredInput = Plane.YawInput;
                     break;
                 case MobilePartBinding.Thrust:
-                    desiredInput = Plane.ThrustInput;
+                    desiredInput = Plane.ThrottleNotch ? Plane.ThrustInput : 0;
                     break;
                 case MobilePartBinding.Canopy:
                     desiredInput = Plane.OpenCanopy ? 1 : 0;

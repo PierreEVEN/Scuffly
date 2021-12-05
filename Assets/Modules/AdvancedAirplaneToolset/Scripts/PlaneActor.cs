@@ -90,9 +90,11 @@ public class PlaneActor : NetworkBehaviour
     public static List<PlaneActor> PlaneList = new List<PlaneActor>();
 
     [HideInInspector]
-    public UnityEvent OnDestroyed = new UnityEvent();
+    public UnityEvent<PlaneActor> OnDestroyed = new UnityEvent<PlaneActor>();
 
     public GameObject explosionObject;
+
+    public GameObject LastDamageInstigator;
 
     public GameObject cockpitObject;
     public PlaneTeam planeTeam = PlaneTeam.Blue;
@@ -284,7 +286,7 @@ public class PlaneActor : NetworkBehaviour
     }
     private void OnDisable()
     {
-        OnDestroyed.Invoke();
+        OnDestroyed.Invoke(this);
         PlaneList.Remove(this);
     }
 
@@ -432,6 +434,18 @@ public class PlaneActor : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
+        GameObject newDamageInstigator = null;
+        PlaneActor contactPlane = collision.gameObject.GetComponentInParent<PlaneActor>();
+        PodItem contactPodItem = collision.gameObject.GetComponentInParent<PodItem>();
+        if (contactPlane)
+            newDamageInstigator = contactPlane.gameObject;
+        else if (contactPodItem && contactPodItem.owner)
+            newDamageInstigator = contactPodItem.owner;
+
+        if (newDamageInstigator)
+            LastDamageInstigator = newDamageInstigator;
+
         foreach (var component in GetComponentsInChildren<DamageableComponent>())
         {
             Vector3[] points = new Vector3[collision.contactCount];
@@ -441,7 +455,8 @@ public class PlaneActor : NetworkBehaviour
                 points[i] = collision.contacts[i].point;
             }
 
-            component.ApplyDamageAtLocation(points, 0.5f, collision.impulse.magnitude / 200);
+
+            component.ApplyDamageAtLocation(points, 0.5f, collision.impulse.magnitude / 200, null);
         }
 
         for (int i = 0; i < collision.contactCount; ++i)
@@ -468,7 +483,7 @@ public class PlaneActor : NetworkBehaviour
             fxContainer.transform.position = transform.position;
             Destroy(fxContainer, 50);
         }
-        OnDestroyed.Invoke();
+        OnDestroyed.Invoke(this);
         Destroy(gameObject);
     }
 

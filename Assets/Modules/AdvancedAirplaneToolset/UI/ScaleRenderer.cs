@@ -114,11 +114,13 @@ public class ScaleRenderer : MaskableGraphic
     }
 
     bool shouldUpdate = false;
+#if UNITY_EDITOR
     protected override void OnValidate()
     {
         base.OnValidate();
         shouldUpdate = true;
     }
+#endif
 
     private void Update()
     {

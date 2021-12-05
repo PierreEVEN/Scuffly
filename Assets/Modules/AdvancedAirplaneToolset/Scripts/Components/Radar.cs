@@ -86,7 +86,6 @@ public class Radar : PlaneComponent
                 UpdateTarget(plane.gameObject);
             }
         }
-
     }
 
     void UpdateTargets()

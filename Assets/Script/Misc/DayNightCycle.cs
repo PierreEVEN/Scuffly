@@ -24,6 +24,11 @@ public class DayNightCycle : MonoBehaviour
         }
     }
 
+    public void SetRotation(float rotation)
+    {
+        orientation = rotation;
+    }
+
     void Update()
     {
         if (!Application.isPlaying)
@@ -31,7 +36,7 @@ public class DayNightCycle : MonoBehaviour
 
         orientation += rotationSpeed * Time.deltaTime;
 
-        if (Mathf.Abs(orientation - lastOrientation) > step)
+        if (Mathf.Abs(orientation - lastOrientation) > step || true)
         {
             lastOrientation = orientation;
             transform.rotation = Quaternion.Euler(lastOrientation, azimut, 0);

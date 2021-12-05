@@ -27,8 +27,10 @@ public class RectangleModifier : GPULandscapeModifier
 
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
         Gizmos.color = new Color(affectAltitude ? 1 : 0.5f, affectFoliage ? 1 : 0.5f, affectGrass ? 1 : 0.5f, UnityEditor.Selection.activeGameObject == this.gameObject ? 0.5f : 0.1f);
         Gizmos.DrawCube(new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3(transform.localScale.x * 2, 10, transform.localScale.z * 2));
+#endif
     }
 
     public override void OnUpdateData()

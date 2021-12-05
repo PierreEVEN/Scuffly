@@ -1,12 +1,10 @@
 using MLAPI;
 using MLAPI.Messaging;
-using MLAPI.NetworkVariable;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
-using UnityEngine.Rendering.HighDefinition;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -41,7 +39,12 @@ public class PlayerManager : NetworkBehaviour
     {
         if (IsLocalPlayer)
         {
-            RequestPlaneServerRpc();
+            disableInputs = GameplayManager.Singleton.Menu;
+            if (disableInputs)
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
         else
         {
@@ -53,6 +56,7 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    /*
     [ServerRpc]
     public void RequestPlaneServerRpc()
     {
@@ -83,6 +87,13 @@ public class PlayerManager : NetworkBehaviour
             return;
         }
         controlledPlane = viewPlaneNet.GetComponent<PlaneActor>();
+        OnPossessPlane.Invoke(controlledPlane);
+    }
+    */
+
+    public void PossessPlane(PlaneActor plane)
+    {
+        controlledPlane = plane;
         OnPossessPlane.Invoke(controlledPlane);
     }
 }

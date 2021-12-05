@@ -51,6 +51,8 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
         WeaponSystem.IsToggledOn = true;
         if (WeaponSystem.CurrentWeaponMode != WeaponMode.Pod_Air)
             WeaponSystem.AirAirMode();
+        if (AICurrentMode == EAiMode.Flying)
+            Plane.RetractGear = true;
 
         UpdateAIMode();
         aiTargetDirection = SelectTargetDirection();
@@ -103,7 +105,7 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
                         direction = plane.transform.position - transform.position;
                         found = true;
 
-                        if (Vector3.Distance(plane.transform.position, transform.position) < 1500 && Vector3.Dot(transform.forward, direction.normalized) > 0.98f)
+                        if (Vector3.Distance(plane.transform.position, transform.position) < 1500 && Vector3.Dot(transform.forward, direction.normalized) > 0.98f && IrDetectorComponent.acquiredTarget && IrDetectorComponent.acquiredTarget.GetComponent<PlaneActor>().planeTeam != Plane.planeTeam)
                         {
                             if (shootTimer > 10)
                             {

@@ -1,7 +1,4 @@
 using MLAPI;
-using MLAPI.Messaging;
-using MLAPI.NetworkVariable;
-using System.Collections.Generic;
 using UnityEngine;
 
 public struct SpawnPointInfos
@@ -52,5 +49,10 @@ public class GameManager : NetworkBehaviour
                 Destroy(this);
             }
         }
+    }
+
+    public void GoToMenu()
+    {
+
     }
 }

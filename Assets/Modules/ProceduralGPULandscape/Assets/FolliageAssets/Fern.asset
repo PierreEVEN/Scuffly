@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0344a066be3a8164ba2c7280ef49da81, type: 3}
   m_Name: Fern
   m_EditorClassIdentifier: 
-  MinSpawnLevel: 3
-  MaxSpawnLevel: 3
-  DensityPerLevel: 200
+  MinSpawnLevel: 4
+  MaxSpawnLevel: 5
+  DensityPerLevel: 100
   minNormal: 0.5
   maxNormal: 1
   minAltitude: 10

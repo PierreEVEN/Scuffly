@@ -34,7 +34,7 @@ public class WeaponPod : PlaneComponent
             return;
         PodItem comp = attachedPodItem.GetComponent<PodItem>();
         if (comp)
-            comp.Shoot(Plane.gameObject, GetComponentInParent<Rigidbody>().velocity, transform.up, target);
+            comp.Shoot(Plane.gameObject, GetComponentInParent<Rigidbody>().velocity - transform.up * 10, target);
         attachedPodItem = null; // l'arme a ete tiree
     }
 }

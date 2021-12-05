@@ -64,7 +64,7 @@ Material:
     - _TextureBias: -1
     m_Colors:
     - _AI_SizeOffset: {r: 2.2198508, g: 2.2552092, b: 0, a: -0.0010302198}
-    - _AlbedoCorretion: {r: 1, g: 1, b: 1, a: 1}
+    - _AlbedoCorretion: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
     - _HueVariation: {r: 0, g: 0, b: 0, a: 0}
     - _Offset: {r: 0.028859712, g: 0.26984555, b: 0.00969708, a: 0.016483517}
   m_BuildTextureStacks: []

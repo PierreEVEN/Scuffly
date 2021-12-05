@@ -11,6 +11,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Camera), typeof(PlayerManager))]
 public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 {
+    public GameObject playerUI;
+    private GameObject instanciedPlayerUI;
+
     public Vector2 ZoomBounds = new Vector2(5, 1000);
     public Vector2 FovBounds = new Vector2(30, 120);
     public bool Indoor = true;
@@ -42,12 +45,17 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
         controlledCamera = gameObject.GetComponent<Camera>();
         GPULandscapePhysic.Singleton.AddListener(this);
+
+        instanciedPlayerUI = Instantiate(playerUI);
     }
 
     private void OnDisable()
     {
         GPULandscapePhysic.Singleton.RemoveListener(this);
         gameObject.GetComponent<PlayerManager>().OnPossessPlane.RemoveListener(PossessPlane);
+
+        if (instanciedPlayerUI)
+            Destroy(instanciedPlayerUI);
     }
 
     void PossessPlane(PlaneActor inPlane)
@@ -56,14 +64,10 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         SetFocusedPlane(inPlane);
     }
 
-    void OnFocusedPlaneDestroyed()
+    void OnFocusedPlaneDestroyed(PlaneActor destroyedPlane)
     {
         transform.parent = null;
         transform.position = transform.position + transform.forward * -10 + transform.up * 5;
-        if (focusedPlane == possessedPlane)
-        {
-            GetComponent<UiInputs>().OnPause();
-        }
         SetFocusedPlane(null);
     }
 
@@ -92,9 +96,6 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.GetComponent<PlayerManager>().disableInputs)
-            return;
-
         if (focusedPlane)
         {
             if (!fpsViewPoint)
@@ -150,7 +151,15 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         else
             zoomInput = Mathf.Clamp(zoomInput + input.Get<float>() * 5, ZoomBounds.x, ZoomBounds.y);
     }
-    public void OnSwitchView() => Indoor = !Indoor;
+    public void OnSwitchView()
+    {
+        if (GameplayManager.Singleton.NextSettings.Difficulty == Difficulty.Realistic)
+        {
+            Indoor = true;
+            return;
+        }
+        Indoor = !Indoor;
+    }
 
     public Vector2[] Collectpoints()
     {
@@ -208,6 +217,9 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     }
     void OnSwitchPlanes()
     {
+        if (GameplayManager.Singleton.NextSettings.Difficulty == Difficulty.Realistic)
+            return;
+
         if (focusedPlane || !possessedPlane)
         {
             if (Indoor && focusedPlane)
@@ -216,12 +228,15 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             }
             else
             {
-                for (int i = 0; i < PlaneActor.PlaneList.Count; ++i)
+                if (GameplayManager.Singleton.NextSettings.Difficulty == Difficulty.Casual)
                 {
-                    if (PlaneActor.PlaneList[i] == focusedPlane || !focusedPlane)
+                    for (int i = 0; i < PlaneActor.PlaneList.Count; ++i)
                     {
-                        SetFocusedPlane(PlaneActor.PlaneList[(i + 1) % PlaneActor.PlaneList.Count]);
-                        return;
+                        if (PlaneActor.PlaneList[i] == focusedPlane || !focusedPlane)
+                        {
+                            SetFocusedPlane(PlaneActor.PlaneList[(i + 1) % PlaneActor.PlaneList.Count]);
+                            return;
+                        }
                     }
                 }
             }
@@ -235,6 +250,9 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
     void OnFreeCam()
     {
+        if (GameplayManager.Singleton.NextSettings.Difficulty == Difficulty.Realistic)
+            return;
+
         if (!focusedPlane)
             transform.parent = null;
 
@@ -290,5 +308,10 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         Quaternion horiz = Quaternion.AngleAxis(lookVector.x, Vector3.up);
         Quaternion vert = Quaternion.AngleAxis(lookVector.y, Vector3.right);
         transform.rotation = horiz * vert;
+    }
+
+    public void OnPause()
+    {
+        GameplayManager.Singleton.Menu = !GameplayManager.Singleton.Menu;
     }
 }
