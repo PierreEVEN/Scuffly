@@ -14,6 +14,7 @@
 				<GameParameter Name="EngineStopVolume" ID="{E3049910-AE7C-4312-98C1-8ED00C3D48A9}"/>
 				<GameParameter Name="EngineIdleVolume" ID="{4D8D6083-F0C5-4FC5-817B-11BFD229C953}"/>
 				<GameParameter Name="EngineStartupPercent" ID="{00A6E560-444F-46C7-9270-A9DCD955785F}"/>
+				<GameParameter Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}"/>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>

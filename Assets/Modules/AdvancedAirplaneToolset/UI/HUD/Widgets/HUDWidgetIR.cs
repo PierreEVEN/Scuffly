@@ -29,14 +29,14 @@ public class HUDWidgetIR : HUDComponent
         // Si une cible est acquise par le detecteur infrarouge, modifie le pitch de la sonnerie IR, et place l'indicateur de ciblage IR sur la cible. Reduit aussi sa taille a 30%
         if (IrDetectorComponent.acquiredTarget)
         {
-            ToneRtpc.SetValue(IrDetectorComponent.gameObject, 100);
+            ToneRtpc.SetGlobalValue(100);
             transform.localPosition = HUD.WorldDirectionToScreenPosition((IrDetectorComponent.acquiredTarget.transform.position + new Vector3(Random.Range(-2, 2), Random.Range(-2, 2), Random.Range(-2, 2))) - Plane.transform.position);
             transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         }
         else
         {
             // Sinon le remet dans sa position de recherche
-            ToneRtpc.SetValue(IrDetectorComponent.gameObject, 0);
+            ToneRtpc.SetGlobalValue(0);
             transform.localPosition = HUD.WorldDirectionToScreenPosition(Plane.transform.forward);
             transform.localScale = Vector3.one;
         }

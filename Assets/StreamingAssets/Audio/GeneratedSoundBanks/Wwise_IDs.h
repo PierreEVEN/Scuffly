@@ -35,6 +35,7 @@ namespace AK
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID COCKPITLEVEL = 4188011570U;
         static const AkUniqueID DISTANCE = 1240670792U;
         static const AkUniqueID ENGINEIDLEVOLUME = 1522466203U;
         static const AkUniqueID ENGINESTARTUPPERCENT = 3906868357U;

@@ -29,7 +29,9 @@ public class AerodynamicComponent : MonoBehaviour
         public float worldArea; // World space surface area
     }
 
+#if UNITY_EDITOR
     static bool drawSurfaceInfluence = true;
+#endif
     static bool drawPerSurfaceForce = true;
 
     public Mesh meshOverride;

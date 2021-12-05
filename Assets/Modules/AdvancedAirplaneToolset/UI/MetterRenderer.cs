@@ -42,7 +42,9 @@ public class MetterRenderer : MonoBehaviour
 
     List<GameObject> graduations = new List<GameObject>();
 
+#if UNITY_EDITOR
     bool shouldUpdate = false;
+#endif
 
     // Start is called before the first frame update
     void OnEnable()
@@ -98,7 +100,9 @@ public class MetterRenderer : MonoBehaviour
 
     public void SpawnGraduations()
     {
+#if UNITY_EDITOR
         shouldUpdate = false;
+#endif
         foreach (var item in graduations)
             DestroyImmediate(item);
         graduations.Clear();
@@ -140,11 +144,13 @@ public class MetterRenderer : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     private void OnValidate()
     {
         UpdateMaterialProperties();
         shouldUpdate = true;
     }
+#endif
 
     public void UpdateMaterialProperties()
     {

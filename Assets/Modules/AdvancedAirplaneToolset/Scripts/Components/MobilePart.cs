@@ -37,7 +37,8 @@ public class MobilePart : PlaneComponent
     // La rotation est progressive pour simuler le temps de latence des systemes hydrauliques et electroniques.
     [Range(-1, 1)]
     public float desiredInput = 0; // Valeur par defaut au demarrage
-    private float currentInput = 0;
+    [HideInInspector]
+    public float currentInput = 0;
     public float InterpolationSpeed = 2;
 
     // Assignation automatique de la valeur a une composante de l'avion
@@ -55,7 +56,7 @@ public class MobilePart : PlaneComponent
 
         if (Application.isPlaying && binding == MobilePartBinding.Custom)
             desiredInput = 0;
-
+        
         currentInput = desiredInput;
     }
 

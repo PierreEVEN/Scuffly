@@ -31,6 +31,11 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     private PlaneActor focusedPlane;
     private PlaneActor possessedPlane;
 
+    public bool IsFreeCamera()
+    {
+        return !focusedPlane;
+    }
+
     private void Start()
     {
         if (!IsLocalPlayer)

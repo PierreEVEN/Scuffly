@@ -7,8 +7,60 @@
 					<PropertyList>
 						<Property Name="3DSpatialization" Type="int16" Value="2"/>
 						<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+						<Property Name="Highpass" Type="int16">
+							<RTPCList>
+								<RTPC Name="" ID="{84AF713B-A41E-437F-9D41-69F1168D03B4}" ShortID="879770430">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{FE17B636-064E-4304-9222-A6F2A5700BD7}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>21</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
 						<Property Name="MakeUpGain" Type="Real64">
 							<RTPCList>
+								<RTPC Name="" ID="{83059E65-7D08-472D-B3F3-215EB16ABDF2}" ShortID="738276130">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{4E58DCEF-D776-4410-A6E2-5A850B441FC5}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>-14.07559</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
 								<RTPC Name="" ID="{5A3DA5B7-EAA3-45FC-8C5F-68EE9C34969D}" ShortID="16322409">
 									<ReferenceList>
 										<Reference Name="ControlInput">
@@ -81,6 +133,30 @@
 												</PointList>
 											</Curve>
 										</RTPC>
+										<RTPC Name="" ID="{7F26BF8A-EEBB-4379-AB2B-0AB3B80E348F}" ShortID="160354570">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{CFD06768-A6BF-485E-8C7C-73C545DD210B}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="65537"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>0</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>86</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
 									</RTPCList>
 								</Property>
 								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
@@ -139,6 +215,30 @@
 												</PointList>
 											</Curve>
 										</RTPC>
+										<RTPC Name="" ID="{E5ACE1C4-6CA7-4B96-9C31-8EC9237DBE80}" ShortID="60393971">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{1C7DD3B4-05C7-402D-BCAC-202F7F413588}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>0</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>-7.04365</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
 									</RTPCList>
 								</Property>
 								<Property Name="Volume" Type="Real64">
@@ -187,7 +287,7 @@
 												<PointList>
 													<Point>
 														<XPos>0</XPos>
-														<YPos>-15.5622</YPos>
+														<YPos>-2.93179</YPos>
 														<Flags>5</Flags>
 													</Point>
 													<Point>
@@ -342,6 +442,30 @@
 										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 										<Property Name="MakeUpGain" Type="Real64">
 											<RTPCList>
+												<RTPC Name="" ID="{0E482D82-E0A9-49CA-A6F6-79E71114A080}" ShortID="199591898">
+													<ReferenceList>
+														<Reference Name="ControlInput">
+															<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+														</Reference>
+													</ReferenceList>
+													<Curve Name="" ID="{638D172A-CCEC-463C-8487-F74688794471}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-4.47728</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</RTPC>
 												<RTPC Name="" ID="{45AAD2C8-4A38-463C-AE52-F619D1A3975D}" ShortID="259264494">
 													<ReferenceList>
 														<Reference Name="ControlInput">
@@ -1346,6 +1470,91 @@
 				<BlendContainer Name="F110Start" ID="{EE1A007E-FFA7-4A83-8EF0-717F42B3F912}" ShortID="824948005">
 					<PropertyList>
 						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="Highpass" Type="int16">
+							<RTPCList>
+								<RTPC Name="" ID="{A1E6AF94-A1C2-4892-80EE-F03EB67C7F71}" ShortID="161505878">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{5A2F19CB-A157-49C0-908F-34899E99AB61}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>21</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="MakeUpGain" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{5F725C1E-0E39-48CD-BB30-F2F758D93ED8}" ShortID="1064194765">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Distance" ID="{656863CD-C3ED-4AB6-B5B5-6D36C2AFE3C7}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{9E074AAF-2861-461B-B48C-7C8B55240AE8}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>38.63815</XPos>
+												<YPos>-10.56548</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>-192</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+								<RTPC Name="" ID="{3A3AB6FB-8A68-4D16-BCE0-3B9197E26DCF}" ShortID="118821874">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{06956889-EAE6-4486-9760-C86DBFD0CA3D}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>-14.07559</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
 								<Value>-5</Value>
@@ -1460,6 +1669,30 @@
 								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 								<Property Name="MakeUpGain" Type="Real64">
 									<RTPCList>
+										<RTPC Name="" ID="{37C61841-FE89-4DE9-B972-C819C5CEA1DF}" ShortID="937383490">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="EngineStartVolume" ID="{4B4ABE8C-E6EB-4F0E-9A1D-E776249CA0D5}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{C17EC156-4C72-4256-BD92-E48E3CD0AF33}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-96</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>0</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
 										<RTPC Name="" ID="{248C6879-4BD0-4F34-96AA-AE93A1408D35}" ShortID="548270794">
 											<ReferenceList>
 												<Reference Name="ControlInput">
@@ -1558,6 +1791,91 @@
 				<BlendContainer Name="F110Stop" ID="{FC43C201-4356-4E7F-9AC0-6E6CABC431F7}" ShortID="304789155">
 					<PropertyList>
 						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="Highpass" Type="int16">
+							<RTPCList>
+								<RTPC Name="" ID="{176942DE-9C9C-4E5F-A2DB-6AABCD891EA5}" ShortID="634059072">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{BDDDD6EC-5CD8-4433-9186-9CFF8FFB652B}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>21</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="MakeUpGain" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{596B1597-0ED5-42DC-9ED6-3B9FC49F758E}" ShortID="360835320">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Distance" ID="{656863CD-C3ED-4AB6-B5B5-6D36C2AFE3C7}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{F2B532DD-0ED6-4F38-ACF7-07E5B0F88ECC}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>38.63815</XPos>
+												<YPos>-10.56548</YPos>
+												<Flags>0</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>-192</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+								<RTPC Name="" ID="{BF8ED1FA-E0E8-4EC1-8807-50F0D754E5E4}" ShortID="210225105">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{886E1C34-E70C-4EF8-B7AE-E312D75AB0D9}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>-14.07559</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
 								<Value>-5</Value>
@@ -1638,6 +1956,30 @@
 								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 								<Property Name="MakeUpGain" Type="Real64">
 									<RTPCList>
+										<RTPC Name="" ID="{D7914371-6547-4615-AA08-B8F8792D915B}" ShortID="631412002">
+											<ReferenceList>
+												<Reference Name="ControlInput">
+													<ObjectRef Name="EngineStopVolume" ID="{E3049910-AE7C-4312-98C1-8ED00C3D48A9}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+												</Reference>
+											</ReferenceList>
+											<Curve Name="" ID="{67BE6190-75C5-4F70-86EE-38A1A568E690}">
+												<PropertyList>
+													<Property Name="Flags" Type="int32" Value="3"/>
+												</PropertyList>
+												<PointList>
+													<Point>
+														<XPos>0</XPos>
+														<YPos>-96</YPos>
+														<Flags>5</Flags>
+													</Point>
+													<Point>
+														<XPos>100</XPos>
+														<YPos>0</YPos>
+														<Flags>37</Flags>
+													</Point>
+												</PointList>
+											</Curve>
+										</RTPC>
 										<RTPC Name="" ID="{DC21D0C4-53C4-401F-B7B4-62FB3F0F4245}" ShortID="863386921">
 											<ReferenceList>
 												<Reference Name="ControlInput">

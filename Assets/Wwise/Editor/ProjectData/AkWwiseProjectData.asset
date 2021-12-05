@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 30fd23938bdd0f4d92e863f4145c1acc
     GuidInternal: 
-    m_lastTime: -8585635657192546422
+    m_lastTime: -8585628771821699525
     List:
     - name: TestSB
       guid: 4ffeca94bd54074a8e5063309778da14
@@ -453,8 +453,22 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: c54fb2825993714c9d77885654107e65
     GuidInternal: 
-    m_lastTime: -8585635654448562391
+    m_lastTime: -8585628790899783305
     List:
+    - name: CockpitLevel
+      guid: c99dff1cfdc218438556f61d5bf5fa5b
+      id: 4188011570
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: CockpitLevel
+        ObjectType: 13
+        guid: c99dff1cfdc218438556f61d5bf5fa5b
+      Path: Game Parameters\Default Work Unit\CockpitLevel
     - name: Distance
       guid: cd636865edc3b64ab5b56d36c2afe3c7
       id: 1240670792
@@ -596,7 +610,7 @@ MonoBehaviour:
     m_lastTime: -8585641926414328807
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 1e0000001f000000250000002600000027000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

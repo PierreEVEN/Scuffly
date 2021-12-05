@@ -11,12 +11,12 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="2163511205">
+		<SoundBank Id="1355168291" Language="SFX" Hash="3344100611">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="3331313354" Language="SFX" Hash="1847959444">
+		<SoundBank Id="3331313354" Language="SFX" Hash="2917338362">
 			<ObjectPath>\SoundBanks\Default Work Unit\TestSB</ObjectPath>
 			<ShortName>TestSB</ShortName>
 			<Path>TestSB.bnk</Path>
@@ -229,6 +229,7 @@
 				<GameParameter Id="3060638953" Name="EngineStopVolume" ObjectPath="\Game Parameters\Default Work Unit\EngineStopVolume"/>
 				<GameParameter Id="3156709873" Name="EngineStatus" ObjectPath="\Game Parameters\Default Work Unit\EngineStatus"/>
 				<GameParameter Id="3906868357" Name="EngineStartupPercent" ObjectPath="\Game Parameters\Default Work Unit\EngineStartupPercent"/>
+				<GameParameter Id="4188011570" Name="CockpitLevel" ObjectPath="\Game Parameters\Default Work Unit\CockpitLevel"/>
 			</GameParameters>
 		</SoundBank>
 	</SoundBanks>

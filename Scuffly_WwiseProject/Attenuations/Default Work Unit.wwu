@@ -7,18 +7,18 @@
 					<PropertyList>
 						<Property Name="ConeAttenuation" Type="Real64">
 							<ValueList>
-								<Value>-3</Value>
+								<Value>-4</Value>
 							</ValueList>
 						</Property>
 						<Property Name="ConeHighPassFilterValue" Type="int32">
 							<ValueList>
-								<Value>2</Value>
+								<Value>8</Value>
 							</ValueList>
 						</Property>
-						<Property Name="ConeInnerAngle" Type="int32" Value="185"/>
+						<Property Name="ConeInnerAngle" Type="int32" Value="180"/>
 						<Property Name="ConeLowPassFilterValue" Type="int32">
 							<ValueList>
-								<Value>32</Value>
+								<Value>16</Value>
 							</ValueList>
 						</Property>
 						<Property Name="ConeOuterAngle" Type="int32" Value="340"/>

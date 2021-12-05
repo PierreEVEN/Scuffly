@@ -6,6 +6,65 @@
 				<Sound Name="PlaneExplode" ID="{00017ECB-7F64-4713-834D-380905993579}" ShortID="706289199">
 					<PropertyList>
 						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="Highpass" Type="int16">
+							<ValueList>
+								<Value>16</Value>
+							</ValueList>
+							<RTPCList>
+								<RTPC Name="" ID="{84767361-716C-4763-BE3D-118AC3786B32}" ShortID="754821067">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{E5B4213E-C878-4463-B34B-7D7191BC3D9B}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="65537"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>12</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+						<Property Name="MakeUpGain" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{02248C8D-0F4C-448D-BB1A-7F201FAA7FA6}" ShortID="887423687">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="CockpitLevel" ID="{1CFF9DC9-C2FD-4318-8556-F61D5BF5FA5B}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{618AC897-0AE3-4AB5-BF9A-AFB653520FA6}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>0.00014</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>-9.36333</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Attenuation">

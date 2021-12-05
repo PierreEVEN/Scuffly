@@ -26,6 +26,7 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 	3060638953	EngineStopVolume			\Default Work Unit\EngineStopVolume	
 	3156709873	EngineStatus			\Default Work Unit\EngineStatus	
 	3906868357	EngineStartupPercent			\Default Work Unit\EngineStartupPercent	
+	4188011570	CockpitLevel			\Default Work Unit\CockpitLevel	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	205787666	f110Acceleration_1	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Acceleration_1_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_1		1063790
