@@ -17,14 +17,6 @@ https://youtu.be/mo5any4fGz0
 
 https://youtu.be/tEoloqOIR44
 
-### Objectifs techniques et gameplay
-- Pouvoir faire décoller un avion et atterrir sur plusieurs aéroports.
-- Physique de vol réaliste et dynamique (influencée par l'état de l'avion).
-- Possibilité d'utiliser un armement basique (missiles / canon).
-- Terrain pseudo-infini généré procéduralement.
-- Permettre la possibilité de jouer à plusieurs.
-- Interactions dans le cockpit.
-
 ## Licence
 
 You can do whatever you want for personal use.
