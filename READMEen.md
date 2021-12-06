@@ -7,7 +7,13 @@
 - **Objectives** : Learn how to use Unity (It was the first time I installed Unity).
 
 
+## Demo
 
+Check the release tab to get the latest build !
+
+Here is some videos
+https://youtu.be/mo5any4fGz0
+https://youtu.be/tEoloqOIR44
 
 ### Objectifs techniques et gameplay
 - Pouvoir faire décoller un avion et atterrir sur plusieurs aéroports.
@@ -17,22 +23,12 @@
 - Permettre la possibilité de jouer à plusieurs.
 - Interactions dans le cockpit.
 
-# Documentation
+## Licence
 
-Réalisé avec Unity 2021 version 2.0f1 *(nécessaire pour avoir certaines fonctions de la pipeline hdrp manquantes dans les précédentes versions d'unity, et les nuages volumétriques)*
+You can do whatever you want for personal use.
+However I do not authorize any use of all the content of the project for commercial purposes.
 
-**Notice d'utilisation :**
-
-Le fonctionnement d'un avion n'est pas simple, il est donc recommandé, au moins la première fois, de suivre [ce petit guide](Doc/HowToFly.md).
-
-**Documentation développeur**
-
-La documentation technique du projet est disponible [ici](Doc/Doc.md) *(en cours de rédaction)*
-
-## Auteurs
-
-- Pierre EVEN
-- Léo GOSSELIN
+I keep this github repository public for all of those who would like to see how it's done :)
 
 ## Credits
 
