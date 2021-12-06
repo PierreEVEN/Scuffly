@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// A foliage quadtree node
+/// </summary>
 public class ProceduralFolliageNode
 {
     ProceduralFolliageNode[] children = new ProceduralFolliageNode[0];

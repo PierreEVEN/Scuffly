@@ -13,52 +13,59 @@ public enum PodItemType
     FuelTank
 }
 
-/**
- * Objet attacheable à un pod d'armement (placé sous les ailes d'un avion)
- */
+/// <summary>
+/// A pod item can be attached to a weapon pod (under the wing) and can be used for missile, fuel tanks aso...
+/// </summary>
 [RequireComponent(typeof(BoxCollider))]
 public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
 {
-    // Liste des items pouvant etre attaches (//@TODO : faire un menu pour selectioner l'armement / pour l'instant spawn automatiquement le premier de la liste)
-    public static List<PodItem> PodItems = new List<PodItem>();
-
-    // Masse de l'objet
+    /// <summary>
+    /// The mass in kg of the object
+    /// </summary>
     public float mass = 100;
-    // Type de l'item attaché (utilisé par le systeme d'armement)
+
+    /// <summary>
+    /// The kind of item (used by the weapon system)
+    /// </summary>
     public PodItemType podItemType = PodItemType.FuelTank;
 
-    // VFX a l'impact
+    /// <summary>
+    /// Item destruction VFX
+    /// </summary>
     public VisualEffectAsset explosionFx;
 
-    // Cible enregistrée (uniquement pour les missiles et certaines bombes)
+    /// <summary>
+    /// The designed target (for missiles)
+    /// </summary>
     [HideInInspector]
     public GameObject target;
 
+    /// <summary>
+    /// The rigidbody of the item (only available when detached)
+    /// </summary>
     [HideInInspector]
     public Rigidbody physics;
 
-    // Auteur du tir
+    /// <summary>
+    /// The object that was owning this pod item
+    /// </summary>
     [HideInInspector]
     public GameObject owner;
 
+    private void OnEnable() { GPULandscapePhysic.Singleton.AddListener(this); }
+    private void OnDisable() { GPULandscapePhysic.Singleton.RemoveListener(this); }
 
-    private void OnEnable()
-    {
-        PodItems.Add(this);
-        GPULandscapePhysic.Singleton.AddListener(this);
-    }
-
-    private void OnDisable()
-    {
-        PodItems.Remove(this);
-        GPULandscapePhysic.Singleton.RemoveListener(this);
-    }
-
-    // Detache l'objet du pod et met en place une physique indépendante de l'avion porteur
+    /// <summary>
+    /// Deach the item from the pod, and enable it independant physic
+    /// </summary>
+    /// <param name="objectOwner"></param>
+    /// <param name="initialSpeed"></param>
+    /// <param name="target"></param>
     public virtual void Shoot(GameObject objectOwner, Vector3 initialSpeed, GameObject target)
     {
         this.owner = objectOwner;
         this.target = target;
+
         // detach from parent
         transform.parent = null;
 
@@ -69,55 +76,65 @@ public class PodItem : MonoBehaviour, GPULandscapePhysicInterface
             physics.mass = mass;
             physics.freezeRotation = true;
 
+            // Transmit owner's velocity
             physics.velocity = initialSpeed;
             physics.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         }
 
-        // Add aerodynamics
+        // Enable the aerodynamic simulation
         AerodynamicComponent aero = gameObject.GetComponent<AerodynamicComponent>();
         if (aero)
             aero.enabled = true;
     }
 
-    // Detecte un impact avec un autre objet
+    /// <summary>
+    /// Detect when the missile hit an other physic object
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
+        // Destroy : if the contact object has a physic, make the vfx velocity match the target's one
         Rigidbody hitObjectPhysic = collision.gameObject.GetComponentInParent<Rigidbody>();
         if (hitObjectPhysic)
             Explode(hitObjectPhysic.velocity);
         else
             Explode(Vector3.zero);
 
+        // Apply damage to target
         foreach (var comp in collision.gameObject.GetComponentsInChildren<DamageableComponent>())
             comp.ApplyDamageAtLocation(new Vector3[] { collision.contacts[0].point }, 2, 1000, owner);
     }
 
     public Vector2[] Collectpoints()
     {
-        // Un seul point est utilisé pour la detection de collision avec le landscape (pas besoin de plus)
+        // Only one collision point is required (we don't need more)
         return new Vector2[1] { new Vector2(transform.position.x, transform.position.z) };
     }
 
-    float disabledColliderDelay;
-
     private void Update()
     {
-        // Empeche le missile d'exploser au moment du tir
+        // Avoid the missile to explode on the plane that just fired it by disabling collision
         GetComponent<BoxCollider>().enabled = !owner || Vector3.Distance(owner.transform.position, transform.position) > 15;
     }
 
     public void OnPointsProcessed(float[] processedPoints)
     {
+        // Explode if we hit the ground
         if (transform.position.y < processedPoints[0])
         {
-            // Si l'objet est passé sous le sol, le detruit instantanément
             transform.position = new Vector3(transform.position.x, processedPoints[0], transform.position.z);
             Explode(Vector3.zero);
         }
     }
-    // Detruit l'objet, et declanche les VFX d'explosions
+
+    /// <summary>
+    /// Destruction of the item
+    /// </summary>
+    /// <param name="contactObjectVelocity"></param>
     public virtual void Explode(Vector3 contactObjectVelocity)
     {
+        // Spawn an object containing the explosion FX, then destroy this one.
+        // The vfx object is automatically destroyed after 20 seconds
         if (explosionFx)
         {
             GameObject fx = new GameObject("explosion_FX");

@@ -5,16 +5,41 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+/// <summary>
+/// For each foliage node, a foliage batch is created for each foliage asset used by the foliage system
+/// </summary>
 [ExecuteInEditMode]
 public class ProceduralFolliageBatch : MonoBehaviour
 {
+    /// <summary>
+    /// Foliage asset used
+    /// </summary>
     public ProceduralFolliageAsset folliageAsset;
+
+    /// <summary>
+    /// Parent foliage node that is owning this batch
+    /// </summary>
     public ProceduralFolliageNode folliageParent;
 
+    /// <summary>
+    /// Compute buffer containing the matrices of each instances
+    /// </summary>
     ComputeBuffer treeMatrices = null;
+
+    /// <summary>
+    /// Compute buffer containing the number of instance to spawn
+    /// </summary>
     ComputeBuffer proceduralDrawArgs = null;
-    ComputeBuffer shouldSpawnTreeBuffer = null;
     private uint[] matrixArgs = new uint[5] { 0, 0, 0, 0, 0 };
+
+    /// <summary>
+    /// Compute buffer containing the result of the tree generation
+    /// </summary>
+    ComputeBuffer shouldSpawnTreeBuffer = null;
+
+    /// <summary>
+    /// Current batch material custom data
+    /// </summary>
     MaterialPropertyBlock InstanceMaterialProperties;
 
     private void OnEnable()
@@ -52,6 +77,7 @@ public class ProceduralFolliageBatch : MonoBehaviour
 
     void DrawSection(Camera camera)
     {
+        // Ensure there is no configuration error
         if (folliageAsset == null || folliageAsset.spawnedMesh == null || folliageAsset.usedMaterial == null)
             return;
 
@@ -61,14 +87,17 @@ public class ProceduralFolliageBatch : MonoBehaviour
         if (folliageParent == null)
             return;
 
+        // The bound height is approximative because all the data is generated on the GPU
         Bounds bounds = new Bounds(folliageParent.nodePosition, new Vector3(folliageParent.nodeWidth, folliageParent.nodeWidth * 100f, folliageParent.nodeWidth));
 
+        // Create the tree matrices
         if (proceduralDrawArgs == null)
             CreateOrRecreateMatrices();
 
         if (proceduralDrawArgs == null)
             return;
 
+        // If everything is ok, draw the foliage batch
         Graphics.DrawMeshInstancedIndirect(folliageAsset.spawnedMesh, 0, folliageAsset.usedMaterial, bounds, proceduralDrawArgs, 0, InstanceMaterialProperties, ShadowCastingMode.On, true, 0, camera);
     }
 
@@ -82,12 +111,13 @@ public class ProceduralFolliageBatch : MonoBehaviour
 #endif
 
 
-
+    /// <summary>
+    /// Generate the tree and build the matrice array
+    /// </summary>
     void CreateOrRecreateMatrices()
     {
         // Recreate matrice buffer if needed
         int finalDensity = (int)(folliageAsset.DensityPerLevel * folliageParent.folliageSpawner.densityMultiplier);
-
         int desiredCount = finalDensity * finalDensity;
         if (treeMatrices == null || treeMatrices.count != desiredCount)
         {
@@ -125,6 +155,7 @@ public class ProceduralFolliageBatch : MonoBehaviour
             return;
         }
 
+        // Step 1 : for each tree, we check if he can spawn, if it is the cas we store it's position into a buffer
         int kernelIndex = generationCS.FindKernel("CSMain");
         generationCS.SetBuffer(kernelIndex, "shouldSpawnTreeBuffer", shouldSpawnTreeBuffer);
         generationCS.SetVector("origin", folliageParent.nodePosition - new Vector3(folliageParent.nodeWidth / 2, 0, folliageParent.nodeWidth / 2));
@@ -140,6 +171,9 @@ public class ProceduralFolliageBatch : MonoBehaviour
         // Run compute shader
         generationCS.Dispatch(kernelIndex, finalDensity, finalDensity, 1);
 
+
+        // Step 2 : we collect the previous generation data, and we generate a matrice for each tree that has spawned
+        //@TODO : make it work in parallel !!!!!
         int kernel2Index = matrixbuildShader.FindKernel("CSMain");
         matrixbuildShader.SetBuffer(kernel2Index, "treeMatrices", treeMatrices);
         matrixbuildShader.SetBuffer(kernel2Index, "proceduralDrawArgs", proceduralDrawArgs);

@@ -6,33 +6,76 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script osed for dial rendering
+/// It use a shader material to render graduation, and optionnaly
+/// add text values
+/// </summary>
 [ExecuteInEditMode]
 public class MetterRenderer : MonoBehaviour
 {
+    // The material used
     public Material metterMaterial;
 
+    /// <summary>
+    /// Custom per instance material parameters
+    /// </summary>
     MaterialPropertyBlock mpb;
 
+    //@TODO : use face primitive instead
     public static Mesh sharedMesh;
 
+    /// <summary>
+    /// The number of graduations
+    /// </summary>
     [Header("Parameters")]
     public float SubdivisionCount = 20;
+
+    /// <summary>
+    /// Min
+    /// </summary>
     [Range(0, 360)]
     public float FromDegrees = 0;
+
+    /// <summary>
+    /// and Max angles
+    /// </summary>
     [Range(0, 360)]
     public float ToDegrees = 360;
+
+    /// <summary>
+    /// Width of each graduation (from 0 to 1)
+    /// </summary>
     [Range(0, 1)]
     public float Width = 0.1f;
+
+    /// <summary>
+    /// Min
+    /// </summary>
     [Range(0, 0.5f)]
     public float MinDistance = 0.4f;
+
+    /// <summary>
+    /// And max length of each graduation
+    /// </summary>
     [Range(0, 0.5f)]
     public float MaxDistance = 0.5f;
+
+    /// <summary>
+    /// Global rotation of the dial
+    /// </summary>
     [Range(0, 360)]
     public float AngleOffset = 360;
 
+    /// <summary>
+    /// Dial graduation color
+    /// </summary>
     [ColorUsage(true, true)]
     public Color LineColor = Color.white;
 
+    /// <summary>
+    /// optionnaly, you can display values for each graduation
+    /// </summary>
     [Header("graduations")]
     public bool RenderGraduations;
     public float initialValue = 0;
@@ -40,6 +83,9 @@ public class MetterRenderer : MonoBehaviour
     public float TextDistance = 30;
     public float TextScale = 1;
 
+    /// <summary>
+    /// One gameObject per graduation text
+    /// </summary>
     List<GameObject> graduations = new List<GameObject>();
 
 #if UNITY_EDITOR
@@ -51,6 +97,7 @@ public class MetterRenderer : MonoBehaviour
     {
         if (!sharedMesh)
         {
+            // Generate the mesh where the material is rendered on
             sharedMesh = new Mesh();
 
             sharedMesh.vertices = new Vector3[]
@@ -90,6 +137,7 @@ public class MetterRenderer : MonoBehaviour
 #if UNITY_EDITOR
         SceneView.duringSceneGui -= DrawInEditor;
 #endif
+        // Clean graduations
         foreach (var item in graduations)
             if (Application.isPlaying)
                 Destroy(item);
@@ -98,18 +146,26 @@ public class MetterRenderer : MonoBehaviour
         graduations.Clear();
     }
 
+    /// <summary>
+    /// Create the text graduations
+    /// </summary>
     public void SpawnGraduations()
     {
 #if UNITY_EDITOR
         shouldUpdate = false;
 #endif
+        // Destroy the current one
         foreach (var item in graduations)
             DestroyImmediate(item);
         graduations.Clear();
+
         if (!RenderGraduations)
             return;
+
         Canvas canvas = GetComponentInChildren<Canvas>();
         if (!canvas) return;
+
+        // Add one text per graduation
         float step = initialValue;
         for (int i = 0; i < SubdivisionCount; ++i)
         {
@@ -152,6 +208,9 @@ public class MetterRenderer : MonoBehaviour
     }
 #endif
 
+    /// <summary>
+    /// Update the material properties (just copy this component's parameter to the material)
+    /// </summary>
     public void UpdateMaterialProperties()
     {
         if (mpb == null)
@@ -181,6 +240,7 @@ public class MetterRenderer : MonoBehaviour
         if (!metterMaterial)
         {
 #if UNITY_EDITOR
+            // Automatically load the material if not set
             foreach (var asset in AssetDatabase.FindAssets("MetterMaterial"))
             {
                 metterMaterial = (Material)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(asset), typeof(Material));
@@ -196,6 +256,7 @@ public class MetterRenderer : MonoBehaviour
 #else
         if (Application.isPlaying)
         {
+            // Draw mesh manually to use custom material data per instance
             Graphics.DrawMesh(sharedMesh, transform.localToWorldMatrix, metterMaterial, 0, null, 0, mpb);
         }
         if (shouldUpdate)

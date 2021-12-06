@@ -59,6 +59,11 @@ interface IModifierGPUArray
     }
 }
 
+/// <summary>
+/// Basically a GPU array
+/// </summary>
+/// <typeparam name="Modifier_T"></typeparam>
+/// <typeparam name="CustomData_T"></typeparam>
 class ModifierGPUArray<Modifier_T, CustomData_T> : IModifierGPUArray where Modifier_T : GPULandscapeModifier where CustomData_T : struct
 {
     List<Modifier_T> trackedModifiers = new List<Modifier_T>();

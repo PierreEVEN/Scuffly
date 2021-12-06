@@ -1,11 +1,14 @@
 using UnityEngine;
 
-/*
- * Instancie l'UI du HUD de l'avion. Le gameObject contenant l'UI sera rendu dans une texture via une camera dediee, la texture sera ensuite affichee sur le HUD de l'avion via un material simulant l'effet holographique
- */ 
+/// <summary>
+/// The HUD of the aircraft is rendered at the origin of the world in a texture through a HUD renderer component
+/// </summary>
 [ExecuteInEditMode]
 public class HUDRenderer : PlaneComponent
 {
+    /// <summary>
+    /// The ui that will be instanced and rendered into a texture
+    /// </summary>
     public GameObject HUDClass;
     GameObject instancedHUD;
 
@@ -13,6 +16,7 @@ public class HUDRenderer : PlaneComponent
     {
         if (!instancedHUD && HUDClass)
         {
+            // Create the UI to render
             instancedHUD = Instantiate(HUDClass, transform);
             instancedHUD.hideFlags = HideFlags.DontSave;
             HUDManager hudManager = instancedHUD.GetComponent<HUDManager>();
@@ -28,6 +32,7 @@ public class HUDRenderer : PlaneComponent
 
     private void OnDisable()
     {
+        // Destroy the spawned UI
         if (instancedHUD)
             if (Application.isPlaying)
                 Destroy(instancedHUD);

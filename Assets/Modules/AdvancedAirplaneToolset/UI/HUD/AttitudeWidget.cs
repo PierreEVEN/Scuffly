@@ -1,11 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// Spawn graduation and move it on the HUD to tell the current inclination of the aircraft
+/// All the graduations are a mesh that is generated in the current script and displayed on the UI layer
+/// </summary>
 public class AttitudeWidget : MaskableGraphic
 {
+    /// <summary>
+    /// Not used : the background texture
+    /// </summary>
     [SerializeField]
     Texture m_Texture;
 
+    /// <summary>
+    /// The object containing the graduations
+    /// </summary>
     GameObject graduationContainer;
 
     protected override void OnEnable()
@@ -28,10 +39,7 @@ public class AttitudeWidget : MaskableGraphic
 
     public Texture texture
     {
-        get
-        {
-            return m_Texture;
-        }
+        get { return m_Texture; }
         set
         {
             if (m_Texture == value)
@@ -50,6 +58,7 @@ public class AttitudeWidget : MaskableGraphic
         }
     }
 
+    // Add a mesh rectangle to the vertex factory
     void AddRectangle(VertexHelper vh, Vector2 posA, Vector2 posB, Vector2 PosC, Vector2 posD)
     {
         int triangle = vh.currentVertCount;
@@ -77,10 +86,18 @@ public class AttitudeWidget : MaskableGraphic
         vh.AddTriangle(triangle + 3, triangle + 2, triangle + 0);
     }
 
+    /// <summary>
+    /// The graduation generator parameters
+    /// </summary>
     const float innerWidth = 30;
     const float outterWidth = 75;
     const float bottomOffset = -30;
     const float spacing = 150;
+
+    /// <summary>
+    /// Generate the graduation mesh
+    /// </summary>
+    /// <param name="vh"></param>
     protected override void OnPopulateMesh(VertexHelper vh)
     {
         // Clear vertex helper to reset vertices, indices etc.
@@ -89,6 +106,7 @@ public class AttitudeWidget : MaskableGraphic
         AddRectangle(vh, new Vector2(-1000, 1), new Vector2(-innerWidth, 1), new Vector2(-innerWidth, -1), new Vector2(-1000, -1));
         AddRectangle(vh, new Vector2(1000, 1), new Vector2(innerWidth, 1), new Vector2(innerWidth, -1), new Vector2(1000, -1));
 
+        // add positive grads
         for (int i = 1; i < 18; ++i)
         {
             float y = i * spacing;
@@ -99,6 +117,7 @@ public class AttitudeWidget : MaskableGraphic
             AddRectangle(vh, new Vector2(innerWidth + 2, -1 + y), new Vector2(innerWidth, -1 + y), new Vector2(innerWidth, -6 + y), new Vector2(innerWidth + 2, -6 + y));
         }
 
+        // add negative grads
         for (int i = 1; i < 18; ++i)
         {
             float y = i * -spacing;
@@ -112,6 +131,7 @@ public class AttitudeWidget : MaskableGraphic
         }
     }
 
+    // Generate graduation texts
     void PopulateTexts()
     {
         if (graduationContainer)
@@ -128,6 +148,7 @@ public class AttitudeWidget : MaskableGraphic
         graduationContainer.transform.localRotation = Quaternion.identity;
         graduationContainer.transform.localScale = Vector3.one;
         
+        // Positive grads
         for (int i = 1; i < 18; ++i)
         {
             int value = i * 5;
@@ -162,7 +183,7 @@ public class AttitudeWidget : MaskableGraphic
             gradTextRight.alignment = TextAnchor.MiddleCenter;
         }
 
-
+        // Negative grads
         for (int i = 1; i < 18; ++i)
         {
             int value = i * 5;
