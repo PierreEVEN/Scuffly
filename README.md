@@ -32,4 +32,3 @@ La documentation technique du projet est disponible [ici](Doc/Doc.md) *(en cours
 
 - [Unity3D](https://unity3d.com/)
 - [Amplifyimpostor](http://amplify.pt/unity/amplify-impostors/)
-- [The music for the menu](https://soundcloud.com/theendofprimes/epic-orchestra-22)
