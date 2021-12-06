@@ -1,16 +1,20 @@
 using UnityEngine;
 
-// Capteur infrarouge d'un avion de chasse (a placer dans la heirarchie de l'avion si necessaire)
+/// <summary>
+/// Infra-Red detector of the fighter jet (it is required to use aim-9 missiles)
+/// </summary>
 public class IRDetector : PlaneComponent
 {
-    // Le capteur detecte toute source d'energie dans un rayon alpha en face de lui.
+    /// <summary>
+    /// The detector will check every plane that is in front of it, in a cone radius of max length "DetectionRange"
+    /// </summary>
     public float DetectionAngle = 2.5f;
-    // Angle maximal au dela duquel la cible est perdue
-    public float LoseAngle = 6;
-    // Distance de detection (m)
+    public float LoseAngle = 6; // The target is lost only if it leave a cone of "LoseAngle" radius
     public float DetectionRange = 10000;
 
-    // Cible accrochee
+    /// <summary>
+    /// The target currently tracced by the component
+    /// </summary>
     [HideInInspector]
     public GameObject acquiredTarget;
 
@@ -18,15 +22,13 @@ public class IRDetector : PlaneComponent
     {
         if (acquiredTarget)
         {
-            // Si une cible est acquise, verifie qu'elle est toujours a portee du capteur
+            // Ensure the acquired target is not out of range
             if (!IsTargetInForwardCone(LoseAngle, DetectionRange, acquiredTarget))
-            {
                 acquiredTarget = null;
-            }
         }
         else
         {
-            // Sinon on cherche une nouvelle cible a portee
+            // Else : search for a new target in range
             foreach (var plane in PlaneActor.PlaneList)
             {
                 if (plane == Plane)
@@ -38,22 +40,29 @@ public class IRDetector : PlaneComponent
                 }
             }
         }
+
+        // Transmit the acquired target to the weapon system of the plane.
+        //@TODO : make the target system of weapon more realistic to simplify the system
         if (WeaponSystem.CurrentSelectedWeaponType == PodItemType.Missile_IR)
         {
             if (WeaponSystem.isActiveAndEnabled)
                 if (WeaponSystem.CurrentWeaponMode == WeaponMode.Pod_Air)
                     if (WeaponSystem.CurrentSelectedWeaponType == PodItemType.Missile_IR)
                     {
-                        // Transmet la cible au systeme d'armement
                         WeaponSystem.acquiredTarget = acquiredTarget;
                         return;
                     }
-            // Uniquement si on a selectionné le bon mode 
             WeaponSystem.acquiredTarget = null;
         }
     }
 
-    // Verifie si une cible est dans un cone d'angle 'angle' en face du capteur
+    /// <summary>
+    /// Check if a target is in a forward cone of angle radius, and maxDistance length
+    /// </summary>
+    /// <param name="angle"></param>
+    /// <param name="maxDistance"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
     bool IsTargetInForwardCone(float angle, float maxDistance, GameObject target)
     {
         Vector3 dirToTarget = target.transform.position - Plane.transform.position;

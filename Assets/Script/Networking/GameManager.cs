@@ -1,15 +1,10 @@
 using MLAPI;
 using UnityEngine;
 
-public struct SpawnPointInfos
-{
-    public int id;
-    public Vector3 position;
-    public Quaternion rotation;
-    public bool isRedTeam;
-}
-
-//@TODO improve multiplayer system
+/// <summary>
+/// Wip multiplayer manager
+/// //@TODO MULTIPLAYER !!!
+/// </summary>
 public class GameManager : NetworkBehaviour
 {
     private static GameManager _singleton;

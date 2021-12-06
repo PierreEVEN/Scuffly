@@ -1,28 +1,38 @@
 using UnityEngine;
-/**
- *  @Author : Pierre EVEN
- *  
- *  L'APU d'un avion est une generatrice electrique. Son fonctionnement est necessaire pour la mise en route du moteur
- *  
- */
+
+/// <summary>
+/// An APU is an intermediate power generator that is required to start the engine, and to have a minimum of power when the main engine is not enabled
+/// </summary>
 [RequireComponent(typeof(AudioEngine))]
 public class APU : PlaneComponent, IPowerProvider
 {
-    // Durees de mise en route et d'extinction
+    /// <summary>
+    /// Startup and shutdown duration of the APU in seconds
+    /// </summary>
     public float StartupDuration = 14;
     public float ShutdownDuration = 12;
 
-    // Etat du demarrage (0 - 1)
-    float currentStartupPercent = 0.0f;
-    bool apuEnabled = false;
-    float enoughPowerTimer = 0;
+    /// <summary>
+    /// State of the APU : 
+    /// If the main engine is generating more power than the current APU for 10 seconds, it shut down itself automatically
+    /// </summary>
+    private float currentStartupPercent = 0.0f;
+    private bool apuEnabled = false;
+    private float enoughPowerTimer = 0;
 
+    /// <summary>
+    /// Audio system of the APU
+    /// </summary>
     AudioEngine audioEngine;
+
     void OnEnable()
     {
+        // Detect power changes
         Plane.OnApuChange.AddListener(UpdateState);
         Plane.OnPowerSwitchChanged.AddListener(UpdateState);
         Plane.RegisterPowerProvider(this);
+
+        // If the plane is started with APU ON : make it fully started
         if (Plane.initialApuSwitch)
         {
             currentStartupPercent = 1;
@@ -42,6 +52,7 @@ public class APU : PlaneComponent, IPowerProvider
 
     private void OnGUI()
     {
+        // Debug
         if (!Plane.EnableDebug)
             return;
         GUILayout.BeginArea(new Rect(200, 0, 200, 100));
@@ -51,11 +62,13 @@ public class APU : PlaneComponent, IPowerProvider
         GUILayout.EndArea();
     }
 
-    // Met a jour l'etat de l'APU : desactive si l'energie est trop basse, ou qu'elle est suffisante pour ne plus necessiter d'apoint (
+    /// <summary>
+    /// Update the APU State.
+    /// The APU require a minimum of 5 Kva to start, and is automatically stopped when the total power exceend 880 Kva
+    /// </summary>
     void UpdateState()
     {
-        // requiere 5 KVA pour demarrer / produit 40 kva
-        if (Plane.EnableAPU && Plane.GetCurrentPower() > 5 && enoughPowerTimer < 10) // si le moteur de l'avion fournit assez d'energie, couper l'APU car inutile
+        if (Plane.EnableAPU && Plane.GetCurrentPower() > 5 && enoughPowerTimer < 10) // If the main engine provide enough power for 10s : stop the APU
             apuEnabled = true;
         else
         {
@@ -68,12 +81,12 @@ public class APU : PlaneComponent, IPowerProvider
 
     void Update()
     {
-        // Met a jour l'etat courant de l'APU (= vitesse de rotation de l'alternateur)
+        // Handle the progressive startup of the APU (Constant interpolation)
         currentStartupPercent = Mathf.Clamp(currentStartupPercent + (apuEnabled ? Time.deltaTime / StartupDuration : -Time.deltaTime / ShutdownDuration), 0, 1);
 
         audioEngine.SetStartPercent(currentStartupPercent);
 
-        // verifie si l'apu peut etre eteint
+        // Check if the APU should be stopped
         if (apuEnabled)
         {
             if (Plane.GetCurrentPower() > 80)
@@ -85,7 +98,9 @@ public class APU : PlaneComponent, IPowerProvider
 
     }
 
-    // Interface IPowerProvider : energie produite par l'APU
+    /// <summary>
+    /// Interface IPowerProvider : Send the produced energy to the plane
+    /// </summary>
     public float GetPower()
     {
         return currentStartupPercent * 40;

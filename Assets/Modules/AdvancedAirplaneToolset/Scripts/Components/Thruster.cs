@@ -1,37 +1,60 @@
 using AK.Wwise;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-/**
- *  @Author : Pierre EVEN
- *  
- *  Propulseur physique de l'avion.
- *  Ne peut pas etre demarre sans APU ou source d'allimentation exterieure.
- */
+/// <summary>
+/// Physic thruster of the plane.
+/// </summary>
 [RequireComponent(typeof(AudioEngine))]
 public class Thruster : PlaneComponent, IPowerProvider
 {
-    // Courbe du pourcentage d'acceleration du moteur en fonction de l'input
+    /// <summary>
+    /// Curve of acceleration (in percent). It make the force provided not follow the input linearly
+    /// </summary>
     public AnimationCurve ThrustPercentCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(0.7f, 0.6f), new Keyframe(1, 1.1f) });
 
-    // Courbe de force de poussee maximale en fonction de la vitesse
+    /// <summary>
+    /// Thrust force in Newtons provided by the thruster. The thrust is not linear and is influenced by the current intake air speed
+    /// </summary>
     public AnimationCurve ThrustForceCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 3000000.0f), new Keyframe(300, 8000000.0f) });
 
-    // Duree de mise en route et d'extinction du reacteur
+    /// <summary>
+    /// Duration of startup and shutdown
+    /// </summary>
     public float engineStartupDuration = 39;
     public float engineShutdownDuration = 39;
+
+    /// <summary>
+    /// Current startup state (between 0 and 1)
+    /// </summary>
     [HideInInspector]
-    public float engineStartupPercent = 0; // pourcentage de rotation de la turbine - par simplification, vaut 1 une fois le moteur en marche
+    public float engineStartupPercent = 0;
+
+    /// <summary>
+    /// The force (in input level) provided at iddle
+    /// </summary>
     public float idleEngineThrustPercent = 0.001f;
 
-    public float thrustPercentAcceleration = 0.4f; // vitesse d'acceleration du moteur
-    private float throttleDesiredPercent = 0; // pourcentage de puissance du moteur desire
-    private float throttleCurrentPercent = 0; // pourcentage de puissance reel du moteur
+    /// <summary>
+    /// The acceleration speed of the engine (when fully started)
+    /// </summary>
+    public float thrustPercentAcceleration = 0.4f;
+    private float throttleDesiredPercent = 0;
+    private float throttleCurrentPercent = 0;
 
+    /// <summary>
+    /// The object containing the thrust particle
+    /// </summary>
     public GameObject VFXObject;
+
+    /// <summary>
+    /// The object containing the light emitter
+    /// </summary>
     public GameObject LightObject;
+
+    /// <summary>
+    /// The bone controlling the radius of the exhaust cone.
+    /// </summary>
     public GameObject ThrustScaleObject;
 
     public float ThrottlePercent
@@ -39,12 +62,16 @@ public class Thruster : PlaneComponent, IPowerProvider
         get { return throttleCurrentPercent * 100; }
     }
 
-    // Parametres du son du moteur
+    /// <summary>
+    /// Audio parameters of the engine
+    /// </summary>
     public RTPC EngineStartupRTPC;
     public RTPC EngineStatusRTPC;
     public RTPC CameraDistanceRPC;
 
-    // Son du moteur
+    /// <summary>
+    /// Startup / stop audio handling
+    /// </summary>
     AudioEngine audioEngine;
 
     void OnEnable()
@@ -58,7 +85,6 @@ public class Thruster : PlaneComponent, IPowerProvider
         audioEngine = GetComponent<AudioEngine>();
     }
 
-
     private void OnDisable()
     {
         Plane.UnRegisterThruster(this);
@@ -66,24 +92,27 @@ public class Thruster : PlaneComponent, IPowerProvider
 
     void FixedUpdate()
     {
-        // Met a jour la rotation du moteur en fonction de son etat d'activation et de la puissance d'allimentation de l'avion
+        // Update the start level of the engine (from 0 to 1). It require some power to start
         engineStartupPercent = Mathf.Clamp01(engineStartupPercent + (Plane.ThrottleNotch && Plane.GetCurrentPower() > 55 ? Time.fixedDeltaTime / engineStartupDuration : -Time.fixedDeltaTime / engineShutdownDuration));
 
+        // Send startup informations to the engine audio
         EngineStartupRTPC.SetValue(gameObject, engineStartupPercent * 100);
         audioEngine.SetStartPercent(engineStartupPercent);
 
-        // Tant que le moteur n'est pas demarre, on ne fait rien
+        // Force the input too zero while the engine is not fully started
         float targetInput = engineStartupPercent < 1 ? 0 : throttleDesiredPercent;
-
         throttleCurrentPercent = Mathf.Clamp01(throttleCurrentPercent + Mathf.Clamp(targetInput - throttleCurrentPercent, -thrustPercentAcceleration, thrustPercentAcceleration) * Time.fixedDeltaTime);
-        // Meme a l'arret, le moteur produit une legere poussee
+
+        // even at iddle, the engine provide a little thrust
         float totalInputPercent = throttleCurrentPercent + engineStartupPercent * idleEngineThrustPercent;
         Physics.AddForceAtPosition(-transform.forward * totalInputPercent * ThrustForceCurve.Evaluate(Plane.GetSpeedInNautics()), transform.position);
 
+        // Update started engine audio value
         EngineStatusRTPC.SetValue(gameObject, totalInputPercent * 100);
         if (Camera.main)
             CameraDistanceRPC.SetValue(gameObject, Vector3.Distance(Camera.main.transform.position, transform.position) / 4);
 
+        /// Update the visual of the thruster
         if (ThrustScaleObject)
         {
             float ExhaustScale = 1 - Mathf.Clamp(totalInputPercent * 2, 0, 0.7f) + Mathf.Clamp((totalInputPercent - 0.8f) * 4, 0, 0.7f);
@@ -106,6 +135,7 @@ public class Thruster : PlaneComponent, IPowerProvider
 
     private void OnGUI()
     {
+        // Debug
         if (!Plane.EnableDebug)
             return;
         GUILayout.BeginArea(new Rect(400, 0, 300, 200));
@@ -117,6 +147,10 @@ public class Thruster : PlaneComponent, IPowerProvider
         GUILayout.EndArea();
     }
 
+    /// <summary>
+    /// Set the desired thrust input value
+    /// </summary>
+    /// <param name="thrust_value"></param>
     public void setThrustInput(float thrust_value)
     {
         throttleDesiredPercent = Mathf.Clamp(thrust_value, 0, 1);
@@ -124,7 +158,7 @@ public class Thruster : PlaneComponent, IPowerProvider
 
     public float GetPower()
     {
-        // produit 200 Kva a pleine puissance une fois demarre
+        // The thruster also provide power to the plane, and replace the APU when started
         return engineStartupPercent * 120.0f;
     }
 }

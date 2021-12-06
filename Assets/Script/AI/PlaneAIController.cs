@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 enum EAiMode
 {
     Unknown,
@@ -8,10 +7,17 @@ enum EAiMode
     Flying,
 }
 
-// WIP : AI controller => joueur IA a attacher a un avion pour le rendre autonome (l'avion n'est plus controllable par la suite)
+/// <summary>
+/// An AI component that can controll a plane it is attached to.
+/// Basically it's like a simulated player that will act on the plane inputs.
+/// At the moment, it can take off, navigate, and use the aim9 weapons
+/// 
+/// The AI Will automatically attack planes that are not in it's team
+/// 
+/// //@TODO : use splines and curves to get better paths prediction
+/// </summary>
 public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
 {
-    // Start is called before the first frame update
     void Start()
     {
         Plane.SetThrustInput(1.0f);
@@ -26,19 +32,36 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
         GPULandscapePhysic.Singleton.RemoveListener(this);
     }
 
+    /// <summary>
+    /// The airport the AI is going to
+    /// </summary>
     AirportActor targetAirport;
+
+    /// <summary>
+    /// If going to an airport, it will move around to a random point
+    /// </summary>
     Vector3 TargetOffset = Vector3.zero;
+
+    /// <summary>
+    /// And change target position every x seconds
+    /// </summary>
     float targetDelay = 0;
 
     EAiMode AICurrentMode = EAiMode.Unknown;
 
+    /// <summary>
+    /// The altitude of the point the plane is supposed to go to (used to avoid landscape)
+    /// </summary>
     float[] nextAltitudes;
     Vector3 aiTargetDirection;
     Vector3 pathDirection;
     Vector3 groundAzimuthPosition;
+
+
     // Update is called once per frame
     void Update()
     {
+        // Force the input of the plane
         Plane.ParkingBrakes = false;
         Plane.MainPower = true;
         Plane.OpenCanopy = false;
@@ -54,19 +77,25 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
         if (AICurrentMode == EAiMode.Flying)
             Plane.RetractGear = true;
 
+        // Update AI state
         UpdateAIMode();
+        // Select the target direction depending on the state
         aiTargetDirection = SelectTargetDirection();
+        // Ensure we will not hit the ground
         pathDirection = AvoidGround(aiTargetDirection);
+        // The make the input match the desired direction
         MoveTowardDirection(pathDirection);
     }
 
     void UpdateAIMode()
     {
+        // If the velocity is bellow 20, we can considere we are alligned on a runway and we can take off
         if (AICurrentMode == EAiMode.Unknown)
         {
             AICurrentMode = Physics.velocity.magnitude < 20 ? EAiMode.TakeOff : EAiMode.Flying;
             return;
         }
+        // Else we are in flight, so we can retract gear and start the mission
         if (AICurrentMode == EAiMode.TakeOff && nextAltitudes != null)
         {
             if (nextAltitudes[0] < transform.position.y - 500)
@@ -77,12 +106,20 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
         }
     }
 
-    public static Vector3 OverrideYAxis(Vector3 inVector, float yAxis)
+    static Vector3 OverrideYAxis(Vector3 inVector, float yAxis)
     {
         return new Vector3(inVector.x, yAxis, inVector.z);
     }
 
+    /// <summary>
+    /// Timer used to avoid a missile spam
+    /// </summary>
     float shootTimer = 0;
+
+    /// <summary>
+    /// Find the direction to take depending on the mode
+    /// </summary>
+    /// <returns></returns>
     Vector3 SelectTargetDirection()
     {
         Vector3 direction = OverrideYAxis(transform.forward, 0).normalized;
@@ -91,20 +128,20 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
             case EAiMode.Unknown:
                 break;
             case EAiMode.TakeOff:
-
                 direction = new Vector3(-1, 0.5f, 0).normalized;
-
                 break;
             case EAiMode.Flying:
-
+                // Search the nearest available enemy
+                //@TODO use radar instead
                 bool found = false;
                 foreach (var plane in PlaneActor.PlaneList)
                 {
                     if (plane.planeTeam != Plane.planeTeam)
                     {
+                        // Make the desired position match the target position
                         direction = plane.transform.position - transform.position;
                         found = true;
-
+                        // If the target is locked and in range, Fire !
                         if (Vector3.Distance(plane.transform.position, transform.position) < 1500 && Vector3.Dot(transform.forward, direction.normalized) > 0.98f && IrDetectorComponent.acquiredTarget && IrDetectorComponent.acquiredTarget.GetComponent<PlaneActor>().planeTeam != Plane.planeTeam)
                         {
                             if (shootTimer > 10)
@@ -117,12 +154,11 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
                         break;
                     }
                 }
+                // If no target is found, go to the nearest airport
                 if (!found)
                 {
                     if (!targetAirport)
-                    {
                         targetAirport = AirportActor.GetClosestAirport(Plane.planeTeam, transform.position);
-                    }
                     if (targetAirport)
                         direction = (targetAirport.transform.position + TargetOffset) - transform.position;
 
@@ -132,7 +168,6 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
                         TargetOffset = new Vector3(Random.Range(-10000, 10000), Random.Range(200, 1200), Random.Range(-10000, 10000));
                     }
                 }
-
                 break;
         }
         targetDelay -= Time.deltaTime;
@@ -169,10 +204,27 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
         Gizmos.DrawLine(transform.position, groundAzimuthPosition);
     }
 
+    /// <summary>
+    /// Predicted points
+    /// </summary>
     int pointCount = 10;
+    /// <summary>
+    /// Spacing of the next predicted points in m
+    /// </summary>
     float pointSpacing = 120;
+    /// <summary>
+    /// Max estimmed rotation per step
+    /// </summary>
     float degree = 12;
+    /// <summary>
+    /// Min allowed altitude
+    /// </summary>
     float safeAltitude = 200;
+
+    /// <summary>
+    /// Compute the coordinate of the next predicted passage points of the plane
+    /// </summary>
+    /// <returns></returns>
     public Vector3[] GetNextPoints()
     {
         Vector3 currentDirection = Physics.velocity.normalized;
@@ -191,6 +243,11 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
         return points;
     }
 
+    /// <summary>
+    /// From a givent direction, return the direction, or a corrected direction that will make the plane avoid obstacles
+    /// </summary>
+    /// <param name="aiPathDirection"></param>
+    /// <returns></returns>
     public Vector3 AvoidGround(Vector3 aiPathDirection)
     {
         var nextPoints = GetNextPoints();
@@ -221,7 +278,7 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
 
     void MoveTowardDirection(Vector3 worldDirectionToPath)
     {
-        // Si la cible est "devant" : applique une correction qui compense la gravité (applique un effet miroir sur la vitesse par rapport a la direction de la cible, et l'ajoute a la direction courrante)
+        // If the target is in front of the plane, compensate the gravity effect by overshooting a bit the target
         if (transform.InverseTransformDirection(worldDirectionToPath).z > 0)
         {
             float differentialAngle = Vector3.Angle(Physics.velocity, worldDirectionToPath);
@@ -237,6 +294,7 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
         Plane.SetPitchInput(relativeDirectionToTarget.y * -10 - RelativeAngularVelocity.x * 5.0f);
     }
 
+    // Landscape Physics
     public Vector2[] Collectpoints()
     {
         Vector3[] points3D = GetNextPoints();
@@ -246,6 +304,7 @@ public class PlaneAIController : PlaneComponent, GPULandscapePhysicInterface
         return points2D;
     }
 
+    // Landscape Physics
     public void OnPointsProcessed(float[] processedPoints)
     {
         nextAltitudes = processedPoints;

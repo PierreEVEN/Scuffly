@@ -10,44 +10,57 @@ public enum MobilePartBinding
     Canopy
 }
 
-/**
- *  @Author : Pierre EVEN
- *  
- *  Une partie mobile correspond par exemple aux gouvernes d'un avion. Utilisable pour n'importe quelle composant lie aux gouvernes.
- *  
- *  @TODO rendre le fonctionnement des parties mobiles dependantes a l'etat des systemes hydraulique de l'avion
- */
+/// <summary>
+/// A mobile part is a component of the plane that will move following a desired input.
+/// It can optionnaly require power to move
+/// //@TODO : implement the hydraulics of the airplane
+/// </summary>
 [ExecuteInEditMode]
 public class MobilePart : PlaneComponent
 {
-    // Note : les rotations sont parametrees en angle d'euler pour simplifier le parametrage
-
-    // Rotation en position zero
+    /// <summary>
+    /// The rotation of the part in neutral (0), negative (-1), and positive (1) position. The rotation is interpolated between these 3 values
+    /// The rotation is in euler angles for the user
+    /// </summary>
     public Vector3 neutralRotation = new Vector3(0, 0, 0);
-    // Rotation en position negative maximale
     public Vector3 minRotation = new Vector3(0, 0, 0);
-    // Rotation en position positive maximale
     public Vector3 maxRotation = new Vector3(0, 0, 0);
 
-    // Rotations en Quaternions
+    /// <summary>
+    /// Internally, the rotation is internally in quaternion
+    /// </summary>
     private Quaternion intNeutralRotation = Quaternion.identity;
     private Quaternion intMinRotation = Quaternion.identity;
     private Quaternion intMaxRotation = Quaternion.identity;
 
-    // La rotation est progressive pour simuler le temps de latence des systemes hydrauliques et electroniques.
+    /// <summary>
+    /// The input rotation the component should try to follow
+    /// </summary>
     [Range(-1, 1)]
-    public float desiredInput = 0; // Valeur par defaut au demarrage
+    public float desiredInput = 0;
+
+    /// <summary>
+    /// The current rotation of the component
+    /// </summary>
     [HideInInspector]
     public float currentInput = 0;
+
+    /// <summary>
+    /// The rotation is smoothed depending on this parameter //@TODO : make the smoothing linear
+    /// </summary>
     public float InterpolationSpeed = 2;
 
-    // Assignation automatique de la valeur a une composante de l'avion
+    /// <summary>
+    /// Some predefined values are available like pitch / roll / yaw ....
+    /// If not set to Custom, the part will automatically retrieve the correct input
+    /// </summary>
     public MobilePartBinding binding = MobilePartBinding.Custom;
 
-    // Est ce que le mouvement necessite de l'energie
+    /// <summary>
+    /// Does this part require power to move
+    /// </summary>
     public bool RequirePlanePower = true;
 
-    // Start is called before the first frame update
     void Start()
     {
         intNeutralRotation.eulerAngles = neutralRotation;
@@ -60,13 +73,16 @@ public class MobilePart : PlaneComponent
         currentInput = desiredInput;
     }
 
-    // Met a jour l'input manuellement si le mode "Custom" est actif
+    /// <summary>
+    /// Set the rotation (between -1 and 1) of the part.
+    /// Not required if not using the Custom binding value
+    /// </summary>
+    /// <param name="input"></param>
     public void setInput(float input)
     {
         desiredInput = Mathf.Clamp(input, -1, 1);
     }
 
-    // Update is called once per frame
     void Update()
     {
 #if UNITY_EDITOR
@@ -78,10 +94,10 @@ public class MobilePart : PlaneComponent
         }
 #endif
 
-        // Verifie si on a assez de puissance pour fonctionner
+        // Ensure we have enough power
         if (Plane && (!RequirePlanePower || Plane.GetCurrentPower() > 95))
         {
-            // Recupere la valeur
+            // Retrieve the predefined inputs
             switch (binding)
             {
                 case MobilePartBinding.Custom:
@@ -106,17 +122,21 @@ public class MobilePart : PlaneComponent
 
         SetRotationValue(desiredInput);
     }
-
-    // Applique la rotation en fonction d'une valeur entre 0 et 1
+    
+    /// <summary>
+    /// Apply the rotation between -1 and 1.
+    /// The fonction will smooth and interpolate the rotation
+    /// </summary>
+    /// <param name="value"></param>
     void SetRotationValue(float value)
     {
-        // Deplace la partie mobile vers la position desiree de façon lissee
+        // Smoothing
         float delta = Time.deltaTime * InterpolationSpeed;
         currentInput = Mathf.Clamp(currentInput + Mathf.Clamp(value - currentInput, -delta, delta), -1, 1);
 
         Quaternion finalRotation = Quaternion.identity;
 
-        // Applique la rotation UP ou DOWN selon la valeur de currentInput
+        // Interpolate between the 3 predefined positions
         if (currentInput > 0.0f)
             finalRotation = Quaternion.Lerp(intNeutralRotation, intMaxRotation, currentInput);
         else

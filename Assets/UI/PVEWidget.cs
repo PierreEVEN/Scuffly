@@ -13,7 +13,7 @@ public class PVEWidget : MonoBehaviour
     public void Setup(GamemodePVE owner)
     {
         this.owner = owner;
-        owner.OnLost.AddListener(OnLost);
+        owner.OnDefeat.AddListener(OnLost);
         owner.OnKill.AddListener(OnKill);
         OnKill();
         EndContainer.SetActive(false);

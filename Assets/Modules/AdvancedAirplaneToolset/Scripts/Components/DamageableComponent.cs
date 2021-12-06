@@ -2,38 +2,53 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-/**
- * Un DamageableComponent est un element de l'avion qui pourra potentiellement etre détaché de celui-ci en cas de choc ou autre.
- */
+
+/// <summary>
+/// A damageable component is a part of the plain that can be detached in case of damage
+/// </summary>
 [RequireComponent(typeof(MeshCollider))]
 public class DamageableComponent : MonoBehaviour
 {
-    // Niveau de vie actuel du component
+    /// <summary>
+    /// Current health of the part
+    /// </summary>
     public float health = 100;
-    // VFX d'incendis
+
+    /// <summary>
+    /// Fire effects
+    /// </summary>
     public VisualEffectAsset smokeFXAsset;
 
     bool destroyed = false;
     MeshCollider meshCollider;
     VisualEffect smokeFX;
 
-    // Event appelé au moment où le component est détaché de son parent (dommages critiques)
+    /// <summary>
+    /// Event called when the component is destroyed
+    /// </summary>
     [HideInInspector]
     public UnityEvent OnDestroyed = new UnityEvent();
 
-    // Start is called before the first frame update
     void Start()
     {
         meshCollider = GetComponent<MeshCollider>();
         UpdateHealth();
     }
 
-    // Applique des dommages a partir de points d'impacts. Les degars seront calcules en fonction du point d'impact, et du rayon.
+    /// <summary>
+    /// Apply damages depending on the relative position of the explosion, and it's radius.
+    /// The damage are decreased the further the impact location is far for the object
+    /// </summary>
+    /// <param name="impactLocations"></param>
+    /// <param name="radius"></param>
+    /// <param name="damage"></param>
+    /// <param name="instigator"></param>
     public void ApplyDamageAtLocation(Vector3[] impactLocations, float radius, float damage, GameObject instigator)
     {
         if (destroyed)
             return;
 
+        // 1 Get the closest impact point
         float distance = radius * 2;
         Vector3 closestPoint = new Vector3(0, 0, 0);
         foreach (var point in impactLocations)
@@ -46,23 +61,31 @@ public class DamageableComponent : MonoBehaviour
         if (distance > radius)
             return;
 
+
+        // Compute the damages
         float damagePercent = 1 - (distance / radius);
         float healthBefore = health;
         health -= Mathf.Clamp01(damagePercent) * damage;
-        // Commence les effets de fumee dès qu'on passe en dessous des 50 de vie
+
+        // If health dropped bellow 50, begin fire effect
         if (health < 50 && healthBefore >= 50)
             BeginSmoke(closestPoint);
+
         UpdateHealth();
 
         if (instigator)
         {
+            // Tell the owning plane which was the instigator of the dammage (for exemple an ennemy)
             PlaneActor owningPlane = GetComponentInParent<PlaneActor>();
             if (owningPlane)
                 owningPlane.LastDamageInstigator = instigator;
         }
     }
 
-    // Debut d'un incendis
+    /// <summary>
+    /// Activate fire effect
+    /// </summary>
+    /// <param name="location"></param>
     void BeginSmoke(Vector3 location)
     {
         GameObject smokeContainer = new GameObject("SmokeContainer");
@@ -80,34 +103,41 @@ public class DamageableComponent : MonoBehaviour
         smokeContainerParent.AddComponent<RocketBurstHandler>();
     }
 
-    // A appeler en cas de changement d'etat de la vie de l'avion
+    /// <summary>
+    /// Notify the health have been changed
+    /// </summary>
     void UpdateHealth()
     {
         if (health <= 0)
         {
-            // Si le component n'est pas encore détaché, on le detache.
+            // If the component is not already detached, detach it
             if (!destroyed)
             {
                 destroyed = true;
 
+                // Make the speed of the component match it's parent velocity
                 Rigidbody parentRB = GetComponentInParent<Rigidbody>();
                 Vector3 currentVelocity = new Vector3(0, 0, 0);
                 if (parentRB)
                     currentVelocity = parentRB.velocity;
 
+                // Disable aerodynamics because we don't need it anymore.
+                foreach (var aeroComp in GetComponentsInChildren<AerodynamicComponent>())
+                    aeroComp.enabled = false;
+
+                // Detach from parent
                 transform.parent = null;
 
+                // Add a landscape collider to make the object interract with the ground
                 gameObject.AddComponent<LandscapeCollider>();
 
+                // Retrieve the rigidbody of the part, or create a new one
                 Rigidbody rb = gameObject.GetComponent<Rigidbody>();
                 if (!rb)
                     rb = gameObject.AddComponent<Rigidbody>();
                 rb.velocity = currentVelocity;
-                foreach (var aeroComp in GetComponentsInChildren<AerodynamicComponent>())
-                {
-                    aeroComp.enabled = false;
-                }
 
+                // Destroy this object in 60 seconds
                 OnDestroyed.Invoke();
                 Destroy(gameObject, 60);
             }

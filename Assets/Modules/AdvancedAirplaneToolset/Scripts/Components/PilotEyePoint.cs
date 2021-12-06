@@ -1,21 +1,30 @@
 using UnityEngine;
 
-// Point de vue du pilot / emplacement que prend la camera en vue à la premiere personne
+/// <summary>
+/// View point of the pilot. Simulate camera shakes and acceleration effects
+/// </summary>
 [RequireComponent(typeof(PhysicsFeedbackAtPoint))]
 public class PilotEyePoint : MonoBehaviour
 {    
     PhysicsFeedbackAtPoint physics;
+
+    /// <summary>
+    /// The camera is slighty moved in 3 dimensions depending on the perceived accelerations 
+    /// </summary>
     float GOffsetIntensity = 0.0004f;
     float GForceValue = 0;
 
 
-    // Start is called before the first frame update
     void OnEnable()
     {
         physics = GetComponent<PhysicsFeedbackAtPoint>();
     }
 
-    // Calcule la position de la camera en appliquant un offset en fonction de l'acceleration que subit le pilote pour un effet sympas :)
+    /// <summary>
+    /// Compute the camera location
+    /// //@TODO add camera shakes
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetCameraLocation()
     {
         return transform.position +
@@ -25,16 +34,20 @@ public class PilotEyePoint : MonoBehaviour
 
     private void Update()
     {
-        // En fonction de la force de G perçue par le pilote, met a jour la variable GForceValue indiquant le niveau de voil sur les yeux du pilote (positif ou negatif)
-        float inputForce = physics.GForce.y / 2.5f; // Resistance du pilote. Plus le coefficient est grand, moins il est soumis aux facteurs de charges
+        float inputForce = physics.GForce.y / 2.5f;
         float newForce = Mathf.Max(0,Mathf.Abs(inputForce) - 1);
-        GForceValue = GForceValue + Mathf.Clamp(newForce * Mathf.Sign(inputForce) - GForceValue, -Time.deltaTime * 0.2f, Time.deltaTime * 0.2f); // Facteur de charge lissé
+        GForceValue = GForceValue + Mathf.Clamp(newForce * Mathf.Sign(inputForce) - GForceValue, -Time.deltaTime * 0.2f, Time.deltaTime * 0.2f);
         if (newForce > Mathf.Abs(GForceValue))
             GForceValue = newForce * Mathf.Sign(inputForce);
         if (Mathf.Abs(GForceValue) > 1 && Mathf.Abs(GForceValue) <= 1)
             GForceValue *= 2;
     }
 
+    /// <summary>
+    /// Get gforce effect level
+    /// (between -10 and 10) for negative and positive effect. Mainly used for post processing
+    /// </summary>
+    /// <returns></returns>
     public float GetGforceEffect()
     {
         return GForceValue;

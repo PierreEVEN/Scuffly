@@ -1,9 +1,9 @@
-using AK.Wwise;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// Systeme de gestion du cockpit : gere notament l'intensite des lumieres
+/// <summary>
+/// Main class of the cockpit.
+/// Also handle all the interior lights
+/// </summary>
 public class CockpitManager : PlaneComponent
 {
     private void OnEnable()
@@ -12,32 +12,45 @@ public class CockpitManager : PlaneComponent
         OnGlobalPowerChanged();
     }
 
+    /// <summary>
+    /// The main power switch enable some ventilators, so we play some noise :)
+    /// </summary>
     public AK.Wwise.Event PlayCockpitSound;
     public AK.Wwise.Event StopCockpitSound;
-    bool isPLayingAudio = false;
+    bool isPlayingAudio = false;
 
     private void OnDisable()
     {
         Plane.OnGlobalPowerChanged.RemoveListener(OnGlobalPowerChanged);
     }
 
+    /// <summary>
+    /// Update components that require plane power
+    /// </summary>
     void OnGlobalPowerChanged()
     {
-        SetGlobalIntensity(Plane.GetCurrentPower() > 10 ? Mathf.Clamp01((Plane.GetCurrentPower() - 10) / 50) + 0.2f : 0.2f);
-        if (Plane.MainPower && !isPLayingAudio)
+        // Update metter intensity
+        SetAllMeterIntensity(Plane.GetCurrentPower() > 10 ? Mathf.Clamp01((Plane.GetCurrentPower() - 10) / 50) + 0.2f : 0.2f);
+
+        // Update ventilator sound
+        if (Plane.MainPower && !isPlayingAudio)
         {
-            isPLayingAudio = true;
+            isPlayingAudio = true;
             PlayCockpitSound.Post(gameObject);
         }
-        if (!Plane.MainPower && isPLayingAudio)
+        if (!Plane.MainPower && isPlayingAudio)
         {
-            isPLayingAudio = false;
+            isPlayingAudio = false;
             StopCockpitSound.Post(gameObject);
         }
     }
 
-    // Met a jour les lumieres interieurs (en cas de changement de puissance electrique)
-    void SetGlobalIntensity(float intensity)
+    /// <summary>
+    /// Update the lights level of metters
+    /// //@TODO : improve the interior light system to use an emissive map instead
+    /// </summary>
+    /// <param name="intensity"></param>
+    void SetAllMeterIntensity(float intensity)
     {
         Color color = new Color(intensity, Mathf.Pow(intensity, 1.2f), intensity, 1);
         foreach (var metter in GetComponentsInChildren<MetterRenderer>())

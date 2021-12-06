@@ -1,18 +1,31 @@
 using UnityEngine;
 
-// Cycle jour - nuit
-// La rotation se fait par cran pour eviter une mise a jour du lighting a chaque frame
+/// <summary>
+/// Day night cycle system
+/// </summary>
 [ExecuteInEditMode]
 public class DayNightCycle : MonoBehaviour
 {
+    /// <summary>
+    /// The inclinaison of the sun
+    /// </summary>
     public float azimut = 0;
-    public Vector2 initialRotationBounds = new Vector2(0, 180);
-    float orientation;
 
+    /// <summary>
+    /// Initially, the rotation of the sun is randomized between these 2 values
+    /// </summary>
+    public Vector2 initialRotationBounds = new Vector2(0, 180);
+
+    /// <summary>
+    /// Current sun rotation in degrees
+    /// </summary>
+    float orientation;
     float lastOrientation = 0;
 
+    /// <summary>
+    /// Rotation speed
+    /// </summary>
     public float rotationSpeed = 0.1f;
-    public float step = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -34,12 +47,9 @@ public class DayNightCycle : MonoBehaviour
         if (!Application.isPlaying)
             return;
 
+        // Rotate the sun
         orientation += rotationSpeed * Time.deltaTime;
-
-        if (Mathf.Abs(orientation - lastOrientation) > step || true)
-        {
-            lastOrientation = orientation;
-            transform.rotation = Quaternion.Euler(lastOrientation, azimut, 0);
-        }
+        lastOrientation = orientation;
+        transform.rotation = Quaternion.Euler(lastOrientation, azimut, 0);
     }
 }

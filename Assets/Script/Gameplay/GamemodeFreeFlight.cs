@@ -1,13 +1,16 @@
 using UnityEngine;
 
+/// <summary>
+/// A gamemode where there is nothing to do especially, other than flying and chillin
+/// </summary>
 public class GamemodeFreeFlight : MonoBehaviour
 {
     GameObject PlayerPlane;
-
     bool Spawned = false;
 
     void Update()
     {
+        // If the plane is not spawned, create a new one
         if (!PlayerPlane && !Spawned)
         {
             AirportActor Airport = GameplayManager.Singleton.CurrentSettings.Airport;

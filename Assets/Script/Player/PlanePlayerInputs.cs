@@ -1,10 +1,11 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-/**
-*  @Author : Pierre EVEN
-*/
 
+
+/// <summary>
+/// Interface between the player keyboard and the current controlled plane
+/// </summary>
 [RequireComponent(typeof(PlayerManager))]
 public class PlanePlayerInputs : MonoBehaviour
 {
@@ -15,13 +16,27 @@ public class PlanePlayerInputs : MonoBehaviour
         playerManager = gameObject.GetComponent<PlayerManager>();
     }
 
+    /// <summary>
+    /// The pitch input from keyboard act like a trim
+    /// </summary>
     float pitchInput = 0;
     float pitchTrim = 0;
+
+    /// <summary>
+    /// Current keyboard input state
+    /// </summary>
+    float currentKeyboardThrottle = 0;
+    float trimIncreaseInput = 0;
+    float currentKeyboardYaw = 0;
+    float currentKeyboardRoll = 0;
 
     public Vector3 MassCenter = new Vector3(0, 0, 0);
 
     bool enableInputs = false;
 
+    /// <summary>
+    /// Are input enabled
+    /// </summary>
     public bool EnableInputs
     {
         set
@@ -40,14 +55,14 @@ public class PlanePlayerInputs : MonoBehaviour
         if (!EnableInputs)
             return;
 
+        // Update the pitch of the plane
         pitchTrim += trimIncreaseInput * Time.deltaTime * 1.5f;
         pitchTrim = Mathf.Clamp(pitchTrim, -1, 1);
-
         playerManager.controlledPlane.SetPitchInput(Mathf.Clamp(pitchInput + pitchTrim, -1, 1));
     }
 
     /**
-     * Direct axis
+     * Direct axis : joystick / analogic controls
      */
 
     public void OnAxisThrottle(InputValue input)
@@ -85,10 +100,6 @@ public class PlanePlayerInputs : MonoBehaviour
      * Button and keyboard axis
      */
 
-    float currentKeyboardThrottle = 0;
-    float trimIncreaseInput = 0;
-    float currentKeyboardYaw = 0;
-    float currentKeyboardRoll = 0;
     public void OnIncreaseThrottle(InputValue input)
     {
         currentKeyboardThrottle = Mathf.Clamp(currentKeyboardThrottle + input.Get<float>(), 0, 1);
@@ -201,6 +212,7 @@ public class PlanePlayerInputs : MonoBehaviour
 
         weaponManager.AirGroundMode();
     }
+
     public void OnSwitchAirAir()
     {
         if (!EnableInputs)
@@ -212,6 +224,7 @@ public class PlanePlayerInputs : MonoBehaviour
 
         weaponManager.AirAirMode();
     }
+
     public void OnEnableWeapons()
     {
         if (!EnableInputs)
@@ -230,7 +243,6 @@ public class PlanePlayerInputs : MonoBehaviour
             return;
         playerManager.controlledPlane.OpenCanopy = !playerManager.controlledPlane.OpenCanopy;
     }
-
 
     public void OnBrakes(InputValue input)
     {

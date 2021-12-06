@@ -1,29 +1,44 @@
 using UnityEngine;
 
-/**
- *  @Author : Pierre EVEN
- *  
- *  Fait tourner les roues selons l'etat actuel de leur component physique / gere les animations de sortie / rentree des trains
- *  Le skeletal mesh doit contenir un bone contenant le mot cle "axis". Ce bone sert à determiner la position de la roue.
- */
+/// <summary>
+/// This component controll a retracting gear
+/// </summary>
 public class PlaneWheelController : PlaneComponent
 {
-    //@TODO : improve the wheel system to be more reliable
-
-    WheelCollider wheelPhysic;
-    float WheelRotation;
-    bool Deployed = true;
-    Animation gearAnim;
-
+    /// <summary>
+    /// The wheel mesh (normally attached to the wheel collider)
+    /// </summary>
     public GameObject wheelObject;
+
+    /// <summary>
+    /// The component containing the retract animation of the gear
+    /// </summary>
     public GameObject animatedObject;
+
+    /// <summary>
+    /// The object containing the wheel collider
+    /// </summary>
     public GameObject colliderObject;
+
+    /// <summary>
+    /// Does this wheel use the yaw axis of the plane to steer
+    /// </summary>
     public bool UseSteering = false;
+
+    /// <summary>
+    /// Smooth the wheel rotation
+    /// </summary>
     public float SteeringRotationSpeed = 100;
 
-    // Parametre l'utilisation des freins sur cette roue
+    /// <summary>
+    /// Does this wheel is brakes
+    /// </summary>
     public bool UseBrakes = true;
 
+    private WheelCollider wheelPhysic;
+    private float WheelRotation;
+    private bool Deployed = true;
+    private Animation gearAnim;
     private WheelCollider WheelPhysic
     {
         get
@@ -35,7 +50,6 @@ public class PlaneWheelController : PlaneComponent
             return wheelPhysic;
         }
     }
-
     private Animation AnimationComponent
     {
         get
@@ -49,16 +63,17 @@ public class PlaneWheelController : PlaneComponent
     }
 
 
-    // Start is called before the first frame update
     void Start()
     {
-        WheelPhysic.motorTorque = 0.00001f; // Evite de bloquer les roues
+        // Alway wake up the wheel, else it will be stuck at startup :/
+        WheelPhysic.motorTorque = 0.00001f;
     }
 
     private void OnEnable()
     {
         Plane.OnBrakesChange.AddListener(UpdateBrakes);
         Plane.OnGearChange.AddListener(UpdateGear);
+        Plane.OnGlobalPowerChanged.AddListener(UpdateGear);
         UpdateBrakes();
         UpdateGear();
     }
@@ -67,12 +82,14 @@ public class PlaneWheelController : PlaneComponent
     {
         Plane.OnBrakesChange.RemoveListener(UpdateBrakes);
         Plane.OnGearChange.RemoveListener(UpdateGear);
+        Plane.OnGlobalPowerChanged.RemoveListener(UpdateGear);
     }
 
-    // Appelé quand un changement d'etat est detecté. La rentree du train necessite un minimum d'energie
+    /// <summary>
+    /// The gear require a minimum power to retract.
+    /// </summary>
     void UpdateGear()
     {
-        // On ne peut pas rentrer le train si pas assez d'energie
         if (Plane.GetCurrentPower() > 90)
         {
             if (Plane.RetractGear && Deployed)
@@ -83,17 +100,18 @@ public class PlaneWheelController : PlaneComponent
             Retract(false);
     }
 
-    // Mise a jour de l'etat des freins
     void UpdateBrakes()
     {
+        // Set the brake level of the wheel collider
         WheelPhysic.brakeTorque = UseBrakes && (Plane.ParkingBrakes || Plane.Brakes) ? 3000 : 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Make the rotation of the mesh match the physics
         if (UseSteering)
         {
+            // Set the angular rotation of the wheel collider
             float desiredRotation = Plane.RetractGear ? 0 : Plane.YawInput * 70;
             WheelPhysic.steerAngle = WheelPhysic.steerAngle + Mathf.Clamp(desiredRotation - WheelPhysic.steerAngle, -Time.deltaTime * SteeringRotationSpeed, Time.deltaTime * SteeringRotationSpeed);
         }
@@ -102,7 +120,10 @@ public class PlaneWheelController : PlaneComponent
         wheelObject.transform.localRotation = Quaternion.Euler(WheelRotation, WheelPhysic.steerAngle, 0);
     }
 
-    // Rentre ou sort le train d'aterissage
+    /// <summary>
+    /// Gear animation
+    /// </summary>
+    /// <param name="retract"></param>
     void Retract(bool retract)
     {
         if (retract != Deployed) return;
@@ -119,7 +140,7 @@ public class PlaneWheelController : PlaneComponent
         }
         else
         {
-            // Pour rentrer le train : on joue l'animation dans le sens inverse en partant de la fin
+            // To retract the gear, we play the same animation, but in reversed speed
             AnimationComponent[AnimationComponent.clip.name].speed = -1;
             if (AnimationComponent[AnimationComponent.clip.name].time < 0.01)
                 AnimationComponent[AnimationComponent.clip.name].time = AnimationComponent.clip.length - Time.deltaTime;

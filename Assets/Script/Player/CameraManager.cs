@@ -2,42 +2,66 @@ using MLAPI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/**
- * 
- * The camera manager need to be attached to the GameObject containing the camera
- * 
- */
-
+/// <summary>
+/// Handle the movements of the player's camera
+/// The camera manager need to be attached to the GameObject containing the camera
+/// 
+/// Some input and points of view may not be available depending on the difficulty (for exemple following enemies airplane is not allowed in advanced difficulty)
+/// </summary>
 [RequireComponent(typeof(Camera), typeof(PlayerManager))]
 public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 {
+    /// <summary>
+    /// The game UI (containing crosshair aso...)
+    /// </summary>
     public GameObject playerUI;
     private GameObject instanciedPlayerUI;
 
+    /// <summary>
+    /// Fov / zoom min / max values
+    /// </summary>
     public Vector2 ZoomBounds = new Vector2(5, 1000);
     public Vector2 FovBounds = new Vector2(30, 120);
+    /// <summary>
+    /// Is currently in FPS or TPS
+    /// </summary>
     public bool Indoor = true;
 
+    /// <summary>
+    /// Current inputs
+    /// </summary>
     private float zoomInput = 50;
     private float fov = 60;
     private Vector2 lookVector = new Vector2();
     private Vector2 indoorLookVector = new Vector2();
-    private Camera controlledCamera;
 
+
+    /// <summary>
+    /// The actual distance from the ground
+    /// </summary>
     float groundAltitude = 0;
 
+    /// <summary>
+    /// The point of view in first person mode
+    /// </summary>
     private PilotEyePoint fpsViewPoint;
+    private Camera controlledCamera;
 
+    /// <summary>
+    /// The plane we are currently following
+    /// </summary>
     private PlaneActor focusedPlane;
+
+    /// <summary>
+    /// The plane we are controlling
+    /// </summary>
     private PlaneActor possessedPlane;
 
-    public bool IsFreeCamera()
-    {
-        return !focusedPlane;
-    }
+    public bool IsFreeCamera() { return !focusedPlane; }
 
     private void Start()
     {
+        // Remove camera for other players
         if (!IsLocalPlayer)
             Destroy(this);
     }
@@ -63,12 +87,21 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             Destroy(instanciedPlayerUI);
     }
 
+    /// <summary>
+    /// Take the controls of the given plane
+    /// and automatically focuse it
+    /// </summary>
+    /// <param name="inPlane"></param>
     void PossessPlane(PlaneActor inPlane)
     {
         possessedPlane = inPlane;
         SetFocusedPlane(inPlane);
     }
 
+    /// <summary>
+    /// Detach the camera from the followed plane before it get destroyed
+    /// </summary>
+    /// <param name="destroyedPlane"></param>
     void OnFocusedPlaneDestroyed(PlaneActor destroyedPlane)
     {
         transform.parent = null;
@@ -76,6 +109,11 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         SetFocusedPlane(null);
     }
 
+    /// <summary>
+    /// Set the plane we are following
+    /// Set to null to switch to free camera
+    /// </summary>
+    /// <param name="inPlane"></param>
     void SetFocusedPlane(PlaneActor inPlane)
     {
         if (inPlane == focusedPlane)
@@ -83,6 +121,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
         if (focusedPlane)
         {
+            // Destroy interior of the last viewed plane
             focusedPlane.OnDestroyed.RemoveListener(OnFocusedPlaneDestroyed);
             focusedPlane.EnableIndoor(false);
         }
@@ -90,6 +129,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         focusedPlane = inPlane;
         if (focusedPlane)
         {
+            // Spawn the interior of the newly followed plane if valid
             focusedPlane.OnDestroyed.AddListener(OnFocusedPlaneDestroyed);
             gameObject.transform.parent = focusedPlane.transform;
             focusedPlane.EnableIndoor(true);
@@ -98,9 +138,9 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         GetComponent<PlanePlayerInputs>().EnableInputs = focusedPlane && focusedPlane == possessedPlane ? true : false;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // If we are attached to a plane
         if (focusedPlane)
         {
             if (!fpsViewPoint)
@@ -111,33 +151,42 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
                     Debug.LogError("bah zut");
             }
 
+            // Compute the camera rotation
             Quaternion horiz = Quaternion.AngleAxis(Indoor ? indoorLookVector.x : lookVector.x, Vector3.up);
             Quaternion vert = Quaternion.AngleAxis(Indoor ? indoorLookVector.y : lookVector.y, Vector3.right);
             gameObject.transform.rotation = Indoor ? focusedPlane.transform.rotation * horiz * vert : horiz * vert;
 
+            // Compute the camera position
             gameObject.transform.position =
                 gameObject.transform.forward * (Indoor ? 0 : -zoomInput) +
                 fpsViewPoint.GetCameraLocation() +
                 focusedPlane.transform.up * indoorLookVector.y * -0.002f +
                 focusedPlane.transform.right * indoorLookVector.x * 0.0017f;
 
+            // Update the internal FOV
             controlledCamera.fieldOfView = Indoor ? fov : 60;
 
+            // Update the GForce effects
             GForcePostProcessEffect.GForceIntensity = Indoor ? fpsViewPoint.GetGforceEffect() * 10 : 0;
 
             if (Indoor)
                 RaycastSwitchs();
         }
-        else // free cam movements
+        else // else free cam movements
         {
             GForcePostProcessEffect.GForceIntensity = 0;
             FreeCamMovements();
         }
 
+        // Alway move the camera above the ground
         if (gameObject.transform.position.y < groundAltitude + 1)
             gameObject.transform.position = new Vector3(gameObject.transform.position.x, groundAltitude + 1, gameObject.transform.position.z);
     }
 
+    /// <summary>
+    /// Mouse rotation
+    /// </summary>
+    /// <param name="input"></param>
     public void OnLook(InputValue input)
     {
         if (gameObject.GetComponent<PlayerManager>().disableInputs)
@@ -147,15 +196,26 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         else
             lookVector = new Vector2(input.Get<Vector2>().x * 0.5f + lookVector.x, Mathf.Clamp(input.Get<Vector2>().y * 0.5f + lookVector.y, -90, 90));
     }
+
+    /// <summary>
+    /// Zoom / FOV input
+    /// </summary>
+    /// <param name="input"></param>
     public void OnZoom(InputValue input)
     {
         if (gameObject.GetComponent<PlayerManager>().disableInputs)
+            return;
+        if (GameplayManager.Singleton.Menu)
             return;
         if (Indoor)
             fov = Mathf.Clamp(fov + input.Get<float>(), FovBounds.x, FovBounds.y);
         else
             zoomInput = Mathf.Clamp(zoomInput + input.Get<float>() * 5, ZoomBounds.x, ZoomBounds.y);
     }
+
+    /// <summary>
+    /// Switch between fps and tps view
+    /// </summary>
     public void OnSwitchView()
     {
         if (GameplayManager.Singleton.NextSettings.Difficulty == Difficulty.Realistic)
@@ -166,50 +226,9 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         Indoor = !Indoor;
     }
 
-    public Vector2[] Collectpoints()
-    {
-        return new Vector2[] { new Vector2(transform.position.x, transform.position.z) };
-    }
-
-    public void OnPointsProcessed(float[] processedPoints)
-    {
-        groundAltitude = processedPoints[0];
-    }
-
-    private bool pressed = false;
-    private bool hasClicked = false;
-    private SwitchBase waitingReleaseSwitch;
-    [HideInInspector]
-    public SwitchBase selectedSwitch;
-    public void RaycastSwitchs()
-    {
-        if (waitingReleaseSwitch)
-            return;
-
-        if (selectedSwitch)
-            selectedSwitch.StopOver();
-        selectedSwitch = null;
-
-        Ray rayTarget = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        RaycastHit hit;
-        Debug.DrawRay(rayTarget.origin, rayTarget.direction);
-        if (Physics.Raycast(rayTarget, out hit, 10))
-        {
-            SwitchBase sw = hit.collider.GetComponent<SwitchBase>();
-            if (sw)
-            {
-                selectedSwitch = sw;
-                selectedSwitch.StartOver();
-                if (hasClicked)
-                {
-                    selectedSwitch.Switch();
-                    waitingReleaseSwitch = selectedSwitch;
-                }
-            }
-        }
-        hasClicked = false;
-    }
-
+    /// <summary>
+    /// Focus the plane we are controlling, and enter in first person view
+    /// </summary>
     void OnFocusMyPlane()
     {
         if (!possessedPlane)
@@ -220,6 +239,10 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         Indoor = true;
         SetFocusedPlane(possessedPlane);
     }
+
+    /// <summary>
+    /// Switch between available planes. If in first person, firstly switch to third person view
+    /// </summary>
     void OnSwitchPlanes()
     {
         if (GameplayManager.Singleton.NextSettings.Difficulty == Difficulty.Realistic)
@@ -233,6 +256,7 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
             }
             else
             {
+                // Switch to the next plane in the list
                 if (GameplayManager.Singleton.NextSettings.Difficulty == Difficulty.Casual)
                 {
                     for (int i = 0; i < PlaneActor.PlaneList.Count; ++i)
@@ -253,6 +277,9 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         }
     }
 
+    /// <summary>
+    /// Switch to free cam mode
+    /// </summary>
     void OnFreeCam()
     {
         if (GameplayManager.Singleton.NextSettings.Difficulty == Difficulty.Realistic)
@@ -264,59 +291,60 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         SetFocusedPlane(null);
     }
 
-    private void OnClickButton(InputValue input)
-    {
-        if (gameObject.GetComponent<PlayerManager>().disableInputs)
-            return;
-        bool newPressed = Mathf.Clamp(input.Get<float>(), 0, 1) > 0.5f;
-        if (!pressed && newPressed)
-        {
-            pressed = newPressed;
-            hasClicked = true;
-        }
-        else if (pressed && !newPressed)
-        {
-            pressed = newPressed;
-            hasClicked = false;
-            if (waitingReleaseSwitch)
-                waitingReleaseSwitch.Release();
-            waitingReleaseSwitch = null;
-        }
-    }
-
-
+    /// <summary>
+    /// Free cam current inputs
+    /// </summary>
     float free_forwardinput = 0;
     float free_rightInput = 0;
     float free_upInput = 0;
     float free_speed = 100;
+
+    /// <summary>
+    /// Move forward
+    /// </summary>
+    /// <param name="input"></param>
     void OnFreeCam_Forward(InputValue input)
     {
-        if (gameObject.GetComponent<PlayerManager>().disableInputs)
-            return;
         free_forwardinput = Mathf.Clamp(input.Get<float>(), -1, 1);
     }
+
+    /// <summary>
+    /// Move right
+    /// </summary>
+    /// <param name="input"></param>
     void OnFreeCam_Right(InputValue input)
     {
-        if (gameObject.GetComponent<PlayerManager>().disableInputs)
-            return;
         free_rightInput = Mathf.Clamp(input.Get<float>(), -1, 1);
     }
+
+    /// <summary>
+    /// Move up
+    /// </summary>
+    /// <param name="input"></param>
     void OnFreeCam_Up(InputValue input)
     {
-        if (gameObject.GetComponent<PlayerManager>().disableInputs)
-            return;
         free_upInput = Mathf.Clamp(input.Get<float>(), -1, 1);
     }
+
+    /// <summary>
+    /// Movement speed
+    /// </summary>
+    /// <param name="input"></param>
     void OnFreeCam_Speed(InputValue input)
     {
-        if (gameObject.GetComponent<PlayerManager>().disableInputs)
+        if (GameplayManager.Singleton.Menu)
             return;
         if (IsFreeCamera())
-        free_speed *= Mathf.Clamp(input.Get<float>() + 1, 0.5f, 1.5f);
+            free_speed *= Mathf.Clamp(input.Get<float>() + 1, 0.5f, 1.5f);
     }
 
+    /// <summary>
+    /// handle the movements for the free camera
+    /// </summary>
     void FreeCamMovements()
     {
+        if (GameplayManager.Singleton.Menu)
+            return;
         transform.position += transform.forward * free_forwardinput * free_speed * Time.deltaTime;
         transform.position += transform.right * free_rightInput * free_speed * Time.deltaTime;
         transform.position += transform.up * free_upInput * free_speed * Time.deltaTime;
@@ -330,4 +358,113 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     {
         GameplayManager.Singleton.Menu = !GameplayManager.Singleton.Menu;
     }
+
+
+
+    /************** 
+     * CLICKABLE COCKPIT SYSTEM
+     **************/
+
+    /// <summary>
+    /// is click pressed
+    /// </summary>
+    private bool pressed = false;
+
+    /// <summary>
+    /// Was click just pressed
+    /// </summary>
+    private bool hasClicked = false;
+
+    /// <summary>
+    /// The switch we are currently pressing
+    /// </summary>
+    private SwitchBase waitingReleaseSwitch;
+
+    /// <summary>
+    /// The switch we are currently seeing
+    /// </summary>
+    [HideInInspector]
+    public SwitchBase selectedSwitch;
+
+    /// <summary>
+    /// Trace a ray in front of the camera to find clickable object
+    /// </summary>
+    public void RaycastSwitchs()
+    {
+        // While we are holding the click button, we don't release the switch
+        if (waitingReleaseSwitch)
+            return;
+
+        if (selectedSwitch)
+            selectedSwitch.StopOver();
+
+        // Unselect the last switch
+        selectedSwitch = null;
+
+        Ray rayTarget = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+        Debug.DrawRay(rayTarget.origin, rayTarget.direction);
+
+        // Raycast the next switch under the cursor
+        if (Physics.Raycast(rayTarget, out hit, 10))
+        {
+            SwitchBase sw = hit.collider.GetComponent<SwitchBase>();
+            if (sw)
+            {
+                selectedSwitch = sw;
+                selectedSwitch.StartOver();
+                if (hasClicked)
+                {
+                    // If we just clicked, call Switch
+                    selectedSwitch.Switch();
+                    waitingReleaseSwitch = selectedSwitch;
+                }
+            }
+        }
+        hasClicked = false;
+    }
+
+    /// <summary>
+    /// On click on switch
+    /// </summary>
+    /// <param name="input"></param>
+    private void OnClickButton(InputValue input)
+    {
+        if (gameObject.GetComponent<PlayerManager>().disableInputs)
+            return;
+        bool newPressed = Mathf.Clamp(input.Get<float>(), 0, 1) > 0.5f;
+        if (!pressed && newPressed) // The next frame, we will tell the switch it has been clicked
+        {
+            pressed = newPressed;
+            hasClicked = true;
+        }
+        else if (pressed && !newPressed)
+        {
+            pressed = newPressed;
+            hasClicked = false;
+            if (waitingReleaseSwitch)
+                waitingReleaseSwitch.Release(); // Notify the switch it has been released
+            waitingReleaseSwitch = null;
+        }
+    }
+
+
+    /// <summary>
+    /// Get camera ground altitude
+    /// </summary>
+    /// <returns></returns>
+    public Vector2[] Collectpoints()
+    {
+        return new Vector2[] { new Vector2(transform.position.x, transform.position.z) };
+    }
+
+    /// <summary>
+    /// On camera altitude computed
+    /// </summary>
+    /// <param name="processedPoints"></param>
+    public void OnPointsProcessed(float[] processedPoints)
+    {
+        groundAltitude = processedPoints[0];
+    }
+
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Rendering.HighDefinition;
 using static UnityEngine.Rendering.HighDefinition.VolumetricClouds;
 
@@ -27,23 +26,27 @@ public struct GameSettings
     public AirportActor Airport;
 }
 
+/// <summary>
+/// Handle differnts gamemodes, difficulty, plane, airport aso... all the global game parameters
+/// </summary>
 public class GameplayManager : MonoBehaviour
 {
+    /// <summary>
+    /// The UI spawned when pausing
+    /// </summary>
     public GameObject PauseUIObject;
     GameObject spawnedPauseUIObject;
 
+    // The current enabled gamemode
     GameObject gamemode;
 
-    private static GameplayManager _singleton;
-    public static GameplayManager Singleton
-    {
-        get { return _singleton; }
-    }
+    bool isInMenu = false;
 
-    private void OnEnable()
-    {
-        _singleton = this;
-    }
+    private static GameplayManager _singleton;
+    public static GameplayManager Singleton { get { return _singleton; } }
+
+    private void OnEnable() => _singleton = this;
+    private void OnDisable() => _singleton = null;
 
     private void Start()
     {
@@ -62,14 +65,15 @@ public class GameplayManager : MonoBehaviour
         return AirportActor.AirportList.ToArray();
     }
 
+    /// <summary>
+    /// A list of enabled planes and mode
+    /// </summary>
     public List<GameObject> AvailableAirplanes = new List<GameObject>();
     public List<GameObject> AvailableGamemodes = new List<GameObject>();
 
-    private void OnDisable()
-    {
-        _singleton = null;
-    }
-
+    /// <summary>
+    /// The game config, and the next one that will be used when starting the next game
+    /// </summary>
     public GameSettings CurrentSettings;
     public GameSettings NextSettings;
 
@@ -105,6 +109,9 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stop the current game, clear planes and gamemode
+    /// </summary>
     void ClearGame()
     {
         if (gamemode)
@@ -116,7 +123,9 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    bool isInMenu = false;
+    /// <summary>
+    /// Menu handling : make the UI appear if paused and vice versa
+    /// </summary>
     public bool Menu
     {
         get
@@ -129,15 +138,19 @@ public class GameplayManager : MonoBehaviour
             {
                 isInMenu = value;
 
+                // Disable play inputs
                 if (PlayerManager.LocalPlayer)
                     PlayerManager.LocalPlayer.disableInputs = GameplayManager.Singleton.Menu;
+
                 if (isInMenu)
                 {
+                    // Hide the cursor
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
                     if (PauseUIObject && !spawnedPauseUIObject)
                         spawnedPauseUIObject = GameObject.Instantiate(PauseUIObject);
 
+                    // Open menu widget
                     if (spawnedPauseUIObject && spawnedPauseUIObject.GetComponent<MenuLayoutManager>())
                         spawnedPauseUIObject.GetComponent<MenuLayoutManager>().Open(true);
                 }

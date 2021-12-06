@@ -3,6 +3,9 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 using System;
 
+/// <summary>
+/// GForce post process effect handling (mostly a copy-past from the Unity's custom post process example for the HD render pipeline)
+/// </summary>
 [Serializable, VolumeComponentMenu("Post-processing/Custom/GForcePostProcessEffect")]
 public sealed class GForcePostProcessEffect : CustomPostProcessVolumeComponent, IPostProcessComponent
 {

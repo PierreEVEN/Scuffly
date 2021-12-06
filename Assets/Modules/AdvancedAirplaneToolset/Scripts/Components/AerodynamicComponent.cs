@@ -22,33 +22,36 @@ using UnityEngine.Profiling;
  */
 public class AerodynamicComponent : MonoBehaviour
 {
+    /// <summary>
+    /// For the aerodynamic simulations, we need the area, the normal, and the position of each face
+    /// All of this is stured in a structure list
+    /// </summary>
     private struct PhysicSurface
     {
         public Vector3 localNormal; // object space surface normal
         public Vector3 localCenter; // object space surface center
         public float worldArea; // World space surface area
     }
+    /// <summary>
+    /// All the surface are precomputed and stored into this surface list.
+    /// </summary>
+    private List<PhysicSurface> Surfaces = new List<PhysicSurface>();
+
+    /// <summary>
+    /// The mesh used to compute the aerodynamic forces (it should be a simplified version of the original model)
+    /// </summary>
+    public Mesh meshOverride;
+
+    /// <summary>
+    /// RigidBody of the object owning this component
+    /// </summary>
+    private Rigidbody rigidBody;
+
 
 #if UNITY_EDITOR
     static bool drawSurfaceInfluence = true;
-#endif
     static bool drawPerSurfaceForce = true;
-
-    public Mesh meshOverride;
-
-    // Physic object
-    private Rigidbody rigidBody;
-
-    // All the surface are precomputed and stored into this surface list.
-    private List<PhysicSurface> Surfaces = new List<PhysicSurface>();
-
-    struct DragApplication
-    {
-        public Vector3 position;
-        public Vector3 force;
-    }
-
-    DragApplication[] dragApplyVector;
+#endif
 
     void OnEnable()
     {
@@ -60,7 +63,9 @@ public class AerodynamicComponent : MonoBehaviour
         RecomputeData();
     }
 
-    // regenere les donnees et les surfaces (operation assez lourde)
+    /// <summary>
+    /// Rebuild the precomputed data for each face of the mesh (normal / area / relative position...)
+    /// </summary>
     private void RecomputeData()
     {
         Profiler.BeginSample("Recompute aerodynamic surfaces");
@@ -83,11 +88,12 @@ public class AerodynamicComponent : MonoBehaviour
                 Surfaces.Add(ComputePhysicSurface(v1, v2, v3));
             }
         }
-        dragApplyVector = new DragApplication[Surfaces.Count];
         Profiler.EndSample();
     }
 
-    // A surface is caracterized by 3 triangles. This function will compute the area, the center, and the normal of the shape of the given triangle.
+    /// <summary>
+    /// A surface is caracterized by 3 triangles.This function will compute the area, the center, and the normal of the shape of the given triangle.
+    /// </summary>
     private PhysicSurface ComputePhysicSurface(Vector3 vertice1, Vector3 vertice2, Vector3 vertice3)
     {
         PhysicSurface surface = new PhysicSurface();
@@ -150,7 +156,7 @@ public class AerodynamicComponent : MonoBehaviour
 #if UNITY_EDITOR
     private void Update()
     {
-        // Debug
+        // Only within editor : draw debug aerodynamic forces at each point
         if (drawSurfaceInfluence)
         {
             foreach (var surface in Surfaces) // Draw drag areas

@@ -1,40 +1,33 @@
 using MLAPI;
-using MLAPI.Messaging;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 
+/// <summary>
+/// The base class of a player
+/// </summary>
 public class PlayerManager : NetworkBehaviour
 {
-    public GameObject DefaultPlane;
-
     private static PlayerManager localPlayer;
-    public static PlayerManager LocalPlayer
-    {
-        get { return localPlayer; }
-    }
+    public static PlayerManager LocalPlayer { get { return localPlayer; } }
 
     [HideInInspector]
     public PlaneActor controlledPlane;
 
+    /// <summary>
+    /// Enable and disable player inputs
+    /// </summary>
     [HideInInspector]
     public bool disableInputs = false;
 
-    private void OnEnable()
-    {
-        localPlayer = this;
-    }
-    private void OnDisable()
-    {
-        localPlayer = null;
-    }
+    private void OnEnable() { localPlayer = this; }
+    private void OnDisable() { localPlayer = null; }
 
     [HideInInspector]
     public UnityEvent<PlaneActor> OnPossessPlane = new UnityEvent<PlaneActor>();
 
-    // Start is called before the first frame update
     void Start()
     {
         if (IsLocalPlayer)
@@ -48,6 +41,7 @@ public class PlayerManager : NetworkBehaviour
         }
         else
         {
+            /// Destroy useless component if not local player
             Destroy(GetComponent<PlayerInput>());
             Destroy(GetComponent<AudioListener>());
             GetComponent<Camera>().enabled = false;
@@ -91,6 +85,10 @@ public class PlayerManager : NetworkBehaviour
     }
     */
 
+    /// <summary>
+    /// Make the player possess and control the given plane
+    /// </summary>
+    /// <param name="plane"></param>
     public void PossessPlane(PlaneActor plane)
     {
         controlledPlane = plane;
