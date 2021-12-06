@@ -12,7 +12,9 @@
 Check the release tab to get the latest build !
 
 Here is some videos
+
 https://youtu.be/mo5any4fGz0
+
 https://youtu.be/tEoloqOIR44
 
 ### Objectifs techniques et gameplay
