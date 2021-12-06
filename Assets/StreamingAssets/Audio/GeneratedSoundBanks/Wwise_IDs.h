@@ -14,6 +14,8 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLANEEXPLOSION = 3974827210U;
+        static const AkUniqueID PLAYCANOPY = 3128064251U;
+        static const AkUniqueID PLAYCOCKPITSOUND = 1067507083U;
         static const AkUniqueID PLAYIDLEAPU = 2696387503U;
         static const AkUniqueID PLAYIDLEENGINE = 1974938279U;
         static const AkUniqueID PLAYIRTONE = 2282830790U;
@@ -23,6 +25,8 @@ namespace AK
         static const AkUniqueID PLAYSTOPENGINE = 951709393U;
         static const AkUniqueID SEEKSTARTAPU = 998656301U;
         static const AkUniqueID SEEKSTOPAPU = 3766535255U;
+        static const AkUniqueID STOPCANOPY = 3722299613U;
+        static const AkUniqueID STOPCOCKPITSOUND = 40605965U;
         static const AkUniqueID STOPIDLEAPU = 3503700753U;
         static const AkUniqueID STOPIDLEENGINE = 3110430665U;
         static const AkUniqueID STOPIRTONE = 772970040U;
@@ -35,6 +39,7 @@ namespace AK
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID CANOPYSPEED = 577745166U;
         static const AkUniqueID COCKPITLEVEL = 4188011570U;
         static const AkUniqueID DISTANCE = 1240670792U;
         static const AkUniqueID ENGINEIDLEVOLUME = 1522466203U;

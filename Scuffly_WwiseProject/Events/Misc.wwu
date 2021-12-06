@@ -50,6 +50,56 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="PlayCanopy" ID="{D2EDE42F-46F1-47CD-9BFA-22B83B174756}">
+					<ChildrenList>
+						<Action Name="" ID="{A71B41EC-B360-46C1-AE02-A895F9A16DBB}" ShortID="611032434">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="CanopyClose" ID="{C250FCAF-D33E-458F-BEEF-6DC6CE4863CD}" WorkUnitID="{855B521B-FD4C-4DE6-9B7B-EE6DF179D8CA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopCanopy" ID="{55A7DB08-1D41-42E2-B16E-8FE064498B75}">
+					<ChildrenList>
+						<Action Name="" ID="{E7519D4C-F8B5-4515-B326-8F38A308F93F}" ShortID="1057388142">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="CanopyClose" ID="{C250FCAF-D33E-458F-BEEF-6DC6CE4863CD}" WorkUnitID="{855B521B-FD4C-4DE6-9B7B-EE6DF179D8CA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="PlayCockpitSound" ID="{4E82E959-F06F-4F92-83A2-ECD4F7A2A5A5}">
+					<ChildrenList>
+						<Action Name="" ID="{A23B8031-9002-4D3E-A641-AF9AC78A658D}" ShortID="328218442">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PowerCockpitAudio" ID="{1FDA76B5-16B0-4D33-A5CC-3385D6889552}" WorkUnitID="{70AE72F3-5A8C-4AE1-9CA2-22210F805FFD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopCockpitSound" ID="{C005FCBB-B9F2-488A-A610-A4E4EDA3EA93}">
+					<ChildrenList>
+						<Action Name="" ID="{03B315AC-E448-4F00-AF27-EFCA6B59B3BB}" ShortID="186413870">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PowerCockpitAudio" ID="{1FDA76B5-16B0-4D33-A5CC-3385D6889552}" WorkUnitID="{70AE72F3-5A8C-4AE1-9CA2-22210F805FFD}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

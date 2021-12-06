@@ -1,29 +1,51 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GamemodePVE : MonoBehaviour
 {
     GameObject PlayerPlane;
 
     public GameObject EnnemyPlane;
+    public GameObject GamemodeUI;
+    GameObject GamemodeUIInstance;
 
     List<GameObject> Ennemies = new List<GameObject>();
 
     public float EnnemiesMinSpawnDelay = 180;
-
     public float EnnemiesSpawnDelay = 60;
-
     bool Spawned = false;
 
-    int killCount = 0;
+    public UnityEvent OnKill = new UnityEvent();
+    public UnityEvent OnLost = new UnityEvent();
+
+    public bool calledEnd = false;
+    public int killCount = 0;
+    public float timeSurvived = 0;
+
+    private void OnEnable()
+    {
+        if (!GamemodeUIInstance)
+            GamemodeUIInstance = Instantiate(GamemodeUI);
+        GamemodeUIInstance.GetComponent<PVEWidget>().Setup(this);
+    }
+
+    private void OnDisable()
+    {
+        if (GamemodeUIInstance)
+            Destroy(GamemodeUIInstance);
+    }
 
     void Update()
     {
-        EnnemiesSpawnDelay -= Time.deltaTime;
+        timeSurvived += Time.deltaTime;
+
+        if (PlayerPlane && PlayerPlane.GetComponent<Rigidbody>().velocity.magnitude > 20)
+            EnnemiesSpawnDelay -= Time.deltaTime;
         if (EnnemiesSpawnDelay <= 0 && Ennemies.Count < (GameplayManager.Singleton.CurrentSettings.Difficulty == Difficulty.Casual ? 1 : 2))
         {
             SpawnEnnemy();
-            EnnemiesSpawnDelay = EnnemiesMinSpawnDelay;
+            EnnemiesSpawnDelay = EnnemiesMinSpawnDelay * Random.Range(0.8f, 1.25f);
         }
 
         if (!PlayerPlane && !Spawned)
@@ -31,6 +53,11 @@ public class GamemodePVE : MonoBehaviour
 
         if (!PlayerPlane && Spawned)
         {
+            if (!calledEnd)
+            {
+                calledEnd = true;
+                OnLost.Invoke();
+            }
             GameplayManager.Singleton.Menu = true;
         }
     }
@@ -71,7 +98,7 @@ public class GamemodePVE : MonoBehaviour
         if (destroyedPlane.LastDamageInstigator == PlayerPlane)
         {
             killCount++;
-            Debug.Log("et paf !");
+            OnKill.Invoke();
         }
 
         Debug.Log(destroyedPlane.gameObject.name + " was destroyed. Damage instigator is " + (destroyedPlane.LastDamageInstigator ? destroyedPlane.LastDamageInstigator.name : " undefined"));
@@ -82,11 +109,14 @@ public class GamemodePVE : MonoBehaviour
     void SpawnEnnemy()
     {
         int num = (int)Random.Range(1, GameplayManager.Singleton.CurrentSettings.Difficulty == Difficulty.Casual ? 1 : 3);
-        Vector3 SpawnPosition = new Vector3(PlayerPlane.transform.position.x, Random.Range(2000, 5000), PlayerPlane.transform.position.z) + Random.Range(25000, 50000) * new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)).normalized;
+        float spawnDist = Random.Range(15000.0f, 30000.0f);
+        Vector3 Spawnoffset = new Vector3(PlayerPlane.transform.position.x, Random.Range(2000.0f, 5000.0f), PlayerPlane.transform.position.z);
+        Vector3 SpawnDir = new Vector3(Random.Range(-1.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f)).normalized;
+        Vector3 SpawnPosition = Spawnoffset + spawnDist * SpawnDir;
 
         for (int i = 0; i < num; ++i)
         {
-            Debug.Log("spawn ennemy");
+            Debug.Log("spawn ennemy " + spawnDist + " / " + Spawnoffset + " / " + SpawnDir);
             GameObject spawnedPlane = Instantiate(EnnemyPlane);
             spawnedPlane.name = "F-16 red - " + enemyNumber++;
             PlaneActor plane = spawnedPlane.GetComponent<PlaneActor>();

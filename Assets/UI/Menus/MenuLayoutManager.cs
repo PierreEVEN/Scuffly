@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuLayoutManager : MonoBehaviour
 {
     public GameObject OptionWidget;
     public GameObject PlayWidget;
     public GameObject HelpWidget;
+
+    public GameObject BlackOverlay;
 
     public GameObject backButton;
 
@@ -17,8 +20,16 @@ public class MenuLayoutManager : MonoBehaviour
 
     bool OpenMenu = false;
 
+    float overlayOpacity = 2;
+
     private void Update()
     {
+        if (overlayOpacity > 0)
+        {
+            overlayOpacity -= Time.deltaTime * 2;
+            BlackOverlay.GetComponent<RawImage>().color = new Color(0, 0, 0, overlayOpacity);
+        }
+
         float desiredScreenBorders = OpenMenu ? 45 : 0;
         screenBorders = screenBorders + Mathf.Clamp(desiredScreenBorders - screenBorders, -Time.deltaTime * 520, Time.deltaTime * 520);
         if (topBorder)

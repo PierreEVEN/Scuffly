@@ -11,12 +11,12 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="3344100611">
+		<SoundBank Id="1355168291" Language="SFX" Hash="2611605148">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="3331313354" Language="SFX" Hash="2917338362">
+		<SoundBank Id="3331313354" Language="SFX" Hash="3211497525">
 			<ObjectPath>\SoundBanks\Default Work Unit\TestSB</ObjectPath>
 			<ShortName>TestSB</ShortName>
 			<Path>TestSB.bnk</Path>
@@ -26,6 +26,22 @@
 						<File Id="484202815" Language="SFX">
 							<ShortName>PlaneExplode.wav</ShortName>
 							<Path>SFX\PlaneExplode_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3128064251" Name="PlayCanopy" ObjectPath="\Events\Misc\PlayCanopy" MaxAttenuation="100.000000">
+					<IncludedMemoryFiles>
+						<File Id="720232343" Language="SFX">
+							<ShortName>CanopyClose.wav</ShortName>
+							<Path>SFX\CanopyClose_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1067507083" Name="PlayCockpitSound" ObjectPath="\Events\Misc\PlayCockpitSound" MaxAttenuation="100.000000">
+					<IncludedMemoryFiles>
+						<File Id="610720522" Language="SFX">
+							<ShortName>PowerCockpitAudio.wav</ShortName>
+							<Path>SFX\PowerCockpitAudio_D79FB2B7.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -131,6 +147,8 @@
 				</Event>
 				<Event Id="998656301" Name="SeekStartAPU" ObjectPath="\Events\APU\SeekStartAPU" MaxAttenuation="0.000000"/>
 				<Event Id="3766535255" Name="SeekStopAPU" ObjectPath="\Events\APU\SeekStopAPU" MaxAttenuation="0.000000"/>
+				<Event Id="3722299613" Name="StopCanopy" ObjectPath="\Events\Misc\StopCanopy" MaxAttenuation="0.000000"/>
+				<Event Id="40605965" Name="StopCockpitSound" ObjectPath="\Events\Misc\StopCockpitSound" MaxAttenuation="0.000000"/>
 				<Event Id="3503700753" Name="StopIdleAPU" ObjectPath="\Events\APU\StopIdleAPU" MaxAttenuation="0.000000"/>
 				<Event Id="3110430665" Name="StopIdleEngine" ObjectPath="\Events\F110Engine\StopIdleEngine" MaxAttenuation="0.000000"/>
 				<Event Id="772970040" Name="StopIRTone" ObjectPath="\Events\Misc\StopIRTone" MaxAttenuation="0.000000"/>
@@ -184,6 +202,10 @@
 					<ShortName>F16APUDeceleration.wav</ShortName>
 					<Path>SFX\F16APUDeceleration_10C4C929.wem</Path>
 				</File>
+				<File Id="610720522" Language="SFX">
+					<ShortName>PowerCockpitAudio.wav</ShortName>
+					<Path>SFX\PowerCockpitAudio_D79FB2B7.wem</Path>
+				</File>
 				<File Id="657079121" Language="SFX">
 					<ShortName>f110ShutDown.wav</ShortName>
 					<Path>SFX\f110ShutDown_10C4C929.wem</Path>
@@ -199,6 +221,10 @@
 				<File Id="680286370" Language="SFX">
 					<ShortName>aim9SearchTone.wav</ShortName>
 					<Path>SFX\aim9SearchTone_D79FB2B7.wem</Path>
+				</File>
+				<File Id="720232343" Language="SFX">
+					<ShortName>CanopyClose.wav</ShortName>
+					<Path>SFX\CanopyClose_D79FB2B7.wem</Path>
 				</File>
 				<File Id="770591842" Language="SFX">
 					<ShortName>f110Acceleration_4.wav</ShortName>
@@ -222,6 +248,7 @@
 				</File>
 			</IncludedMemoryFiles>
 			<GameParameters>
+				<GameParameter Id="577745166" Name="CanopySpeed" ObjectPath="\Game Parameters\Default Work Unit\CanopySpeed"/>
 				<GameParameter Id="634056083" Name="IRFoundState" ObjectPath="\Game Parameters\Default Work Unit\IRFoundState"/>
 				<GameParameter Id="949998751" Name="EngineStartVolume" ObjectPath="\Game Parameters\Default Work Unit\EngineStartVolume"/>
 				<GameParameter Id="1240670792" Name="Distance" ObjectPath="\Game Parameters\Default Work Unit\Distance"/>

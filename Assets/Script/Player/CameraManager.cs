@@ -266,6 +266,8 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
 
     private void OnClickButton(InputValue input)
     {
+        if (gameObject.GetComponent<PlayerManager>().disableInputs)
+            return;
         bool newPressed = Mathf.Clamp(input.Get<float>(), 0, 1) > 0.5f;
         if (!pressed && newPressed)
         {
@@ -289,18 +291,27 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
     float free_speed = 100;
     void OnFreeCam_Forward(InputValue input)
     {
+        if (gameObject.GetComponent<PlayerManager>().disableInputs)
+            return;
         free_forwardinput = Mathf.Clamp(input.Get<float>(), -1, 1);
     }
     void OnFreeCam_Right(InputValue input)
     {
+        if (gameObject.GetComponent<PlayerManager>().disableInputs)
+            return;
         free_rightInput = Mathf.Clamp(input.Get<float>(), -1, 1);
     }
     void OnFreeCam_Up(InputValue input)
     {
+        if (gameObject.GetComponent<PlayerManager>().disableInputs)
+            return;
         free_upInput = Mathf.Clamp(input.Get<float>(), -1, 1);
     }
     void OnFreeCam_Speed(InputValue input)
     {
+        if (gameObject.GetComponent<PlayerManager>().disableInputs)
+            return;
+        if (IsFreeCamera())
         free_speed *= Mathf.Clamp(input.Get<float>() + 1, 0.5f, 1.5f);
     }
 

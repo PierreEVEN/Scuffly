@@ -12,6 +12,10 @@ public class CockpitManager : PlaneComponent
         OnGlobalPowerChanged();
     }
 
+    public AK.Wwise.Event PlayCockpitSound;
+    public AK.Wwise.Event StopCockpitSound;
+    bool isPLayingAudio = false;
+
     private void OnDisable()
     {
         Plane.OnGlobalPowerChanged.RemoveListener(OnGlobalPowerChanged);
@@ -20,6 +24,16 @@ public class CockpitManager : PlaneComponent
     void OnGlobalPowerChanged()
     {
         SetGlobalIntensity(Plane.GetCurrentPower() > 10 ? Mathf.Clamp01((Plane.GetCurrentPower() - 10) / 50) + 0.2f : 0.2f);
+        if (Plane.MainPower && !isPLayingAudio)
+        {
+            isPLayingAudio = true;
+            PlayCockpitSound.Post(gameObject);
+        }
+        if (!Plane.MainPower && isPLayingAudio)
+        {
+            isPLayingAudio = false;
+            StopCockpitSound.Post(gameObject);
+        }
     }
 
     // Met a jour les lumieres interieurs (en cas de changement de puissance electrique)

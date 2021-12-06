@@ -9,6 +9,8 @@ public class ThreatWarningIndicator : PlaneComponent
 {
     Dictionary<GameObject, GameObject> displayedTargets = new Dictionary<GameObject, GameObject>();
 
+    public GameObject RadarPointItem;
+
     Canvas container;
     private void OnEnable()
     {
@@ -35,25 +37,18 @@ public class ThreatWarningIndicator : PlaneComponent
     {
         foreach (var target in Plane.RadarComponent.scannedTargets)
         {
-            Vector3 relativePosition = (target.Value.ScannedWorldPosition - Plane.transform.position);
-            relativePosition = Plane.transform.InverseTransformDirection(relativePosition.normalized);
+            Vector3 directionToTarget = (target.Value.ScannedWorldPosition - Plane.transform.position);
+            float angle = (Vector3.SignedAngle(new Vector3(directionToTarget.x, 0, directionToTarget.z), new Vector3(Plane.transform.forward.x, 0, Plane.transform.forward.z), new Vector3(0, 1, 0)) + 90) / 180 * Mathf.PI;
             float distance = (target.Value.ScannedWorldPosition - Plane.transform.position).magnitude;
-            Vector3 relativeDirection = relativePosition.normalized;
             GameObject icon = displayedTargets[target.Key];
-            icon.transform.localPosition = new Vector3(relativeDirection.x, relativeDirection.z, 0).normalized * Mathf.Min(50, distance / 100);
+            icon.transform.localPosition = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0).normalized * Mathf.Min(40, distance / 400);
         }
     }
 
     void AddTarget(GameObject newTarget)
     {
-        GameObject icon = new GameObject("target_" + newTarget.name);
-        icon.transform.parent = container.transform;
-        icon.transform.localRotation = Quaternion.identity;
-        icon.transform.localScale = new Vector3(1, 1, 1);
-        icon.transform.localPosition = new Vector3(0, 0, 0);
-        RawImage image = icon.AddComponent<RawImage>();
-        image.color = Color.red;
-        icon.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 5);
+        GameObject icon = Instantiate(RadarPointItem, container.transform);
+        icon.transform.localScale = Vector3.one;
         displayedTargets.Add(newTarget, icon);
     }
     void RemoveTarget(GameObject removedTarget)
