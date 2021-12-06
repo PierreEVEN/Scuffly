@@ -32,4 +32,3 @@ La documentation technique du projet est disponible [ici](Doc/Doc.md) *(en cours
 
 - [Unity3D](https://unity3d.com/)
 - [Amplifyimpostor](http://amplify.pt/unity/amplify-impostors/)
-- [Music from icon8](https://icons8.com/music/track/fearless-warrior--composer-squad)
