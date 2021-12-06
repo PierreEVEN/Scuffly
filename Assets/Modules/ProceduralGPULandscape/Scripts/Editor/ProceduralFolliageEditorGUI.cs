@@ -3,25 +3,18 @@
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// Custom UI for the LOD configuration of the procedural folliage component
+/// </summary>
 [CustomEditor(typeof(ProceduralFolliageSpawner))]
 [CanEditMultipleObjects]
-
 public class ProceduralFolliageEditorGUI : Editor
 {
     SerializedProperty LodLevels;
-    SerializedProperty ShowBounds;
-    SerializedProperty SectionWidth;
-    SerializedProperty Radius;
-    SerializedProperty Reset;
-
     float maxDistance;
     void OnEnable()
     {
-        Reset = serializedObject.FindProperty("Reset");
         LodLevels = serializedObject.FindProperty("LodLevels");
-        ShowBounds = serializedObject.FindProperty("DrawDebugBounds");
-        SectionWidth = serializedObject.FindProperty("SectionWidth");
-        Radius = serializedObject.FindProperty("Radius");
         if (LodLevels.arraySize != 0)
             maxDistance = (LodLevels.GetArrayElementAtIndex(0).floatValue + 1) * 1.5f;
         else 
@@ -46,15 +39,18 @@ public class ProceduralFolliageEditorGUI : Editor
             maxDistance = EditorGUILayout.FloatField(maxDistance);
             EditorGUILayout.EndHorizontal();
 
+            // if desired array size > current array size : add a new default element to the array
             while (newSize > LodLevels.arraySize)
             {
                 LodLevels.InsertArrayElementAtIndex(LodLevels.arraySize);
                 LodLevels.GetArrayElementAtIndex(LodLevels.arraySize - 1).floatValue = 0;
             }
+            // if desired array size < current array size : revemove the last element from the array
             while (newSize < LodLevels.arraySize)
             {
                 LodLevels.DeleteArrayElementAtIndex(LodLevels.arraySize - 1);
             }
+            // Draw a slider for each LOD level
             for (int i = 0; i < LodLevels.arraySize; ++i)
             {
                 EditorGUILayout.BeginHorizontal();
@@ -63,7 +59,7 @@ public class ProceduralFolliageEditorGUI : Editor
                 EditorGUILayout.EndHorizontal();
             }
 
-
+            // ensure the next LOD level value is less than the previous one
             for (int i = 0; i < LodLevels.arraySize - 1; ++i)
             {
                 if (LodLevels.GetArrayElementAtIndex(i).floatValue < LodLevels.GetArrayElementAtIndex(i + 1).floatValue)

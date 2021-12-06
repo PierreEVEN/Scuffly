@@ -11,16 +11,39 @@ public enum RotatingSwitchStates
     AntiColLights,
 }
 
-//@TODO AJOUTER LES POTENTIOMETRES
+/// <summary>
+/// A simple spinning button
+/// </summary>
 public class RotatingSwitch : SwitchBase
 {
+    /// <summary>
+    /// The modified plane property
+    /// </summary>
     public RotatingSwitchStates modifiedProperty = RotatingSwitchStates.None;
 
+    /// <summary>
+    /// Current value
+    /// </summary>
     float value = 0;
 
+    /// <summary>
+    /// Is user currently holding the click to make the button spin
+    /// </summary>
     bool isMoving = false;
+
+    /// <summary>
+    /// The value of the button before the user started to make it spin
+    /// </summary>
     float initialValue;
+
+    /// <summary>
+    /// The max rotation
+    /// </summary>
     public float range = 300;
+
+    /// <summary>
+    /// The camera direction, when the user started dragging the button
+    /// </summary>
     Vector2 initialCameraDir;
 
     // Update is called once per frame
@@ -28,8 +51,11 @@ public class RotatingSwitch : SwitchBase
     {
         if (isMoving)
         {
+            // Retrieve the offset of the camera between the moment where the user started to drag the button and the current lock vector
             Vector2 delta = new Vector2(Camera.main.transform.localRotation.eulerAngles.x, Camera.main.transform.localRotation.eulerAngles.y) - initialCameraDir;
             value = Mathf.Clamp(initialValue + (-delta.x + delta.y) / 10, 0, 1);
+
+            // The update the property
             switch (modifiedProperty)
             {
                 case RotatingSwitchStates.None:
@@ -51,6 +77,7 @@ public class RotatingSwitch : SwitchBase
         }
         else
         {
+            // make the rotation of the button match the real plane value
             switch (modifiedProperty)
             {
                 case RotatingSwitchStates.None:
@@ -71,14 +98,14 @@ public class RotatingSwitch : SwitchBase
             }
         }
 
+        // Update mesh rotation
         for (int i = 0; i < transform.childCount; ++i)
-        {
             transform.GetChild(i).localRotation = Quaternion.Euler(0, value * range, 0);
-        }
     }
 
     public override void Switch()
     {
+        // We are starting draging the button
         isMoving = true;
         initialValue = value;
         initialCameraDir = new Vector2(Camera.main.transform.localRotation.eulerAngles.x, Camera.main.transform.localRotation.eulerAngles.y);
@@ -86,6 +113,7 @@ public class RotatingSwitch : SwitchBase
 
     public override void Release()
     {
+        // We released the button
         isMoving = false;
     }
 }

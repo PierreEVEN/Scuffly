@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+//@TODO : rewrite texture masks to be more reliable
 class GPULandscapeTextureMask
 {
     struct AtlasTextureReference

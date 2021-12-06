@@ -1,7 +1,6 @@
 
 using UnityEngine;
 
-// Action de l'interrupteur
 public enum ESwitchTarget
 {
     None,
@@ -14,28 +13,42 @@ public enum ESwitchTarget
     LandingLights
 }
 
-// Interrupteur a deux positions ON/OFF, a placer dans le cockpit de l'avion
+/// <summary>
+/// A simple switch with 2 positions ON/OFF
+/// </summary>
 [ExecuteInEditMode]
 public class FlipFlopSwitch : SwitchBase
 {
-    // Position de base
+    /// <summary>
+    /// Current switch status
+    /// </summary>
     public bool On = false;
-    // Action de l'interrupteur
-    public ESwitchTarget modifiedProperty;
 
-    // Positions et rotations de l'interupteur en position ON et OFF
+    /// <summary>
+    /// The action of the switch
+    /// </summary>
+    public ESwitchTarget modifiedProperty;
+    
+    /// <summary>
+    /// Position and rotation in On state
+    /// </summary>
     public Vector3 PositionOn = new Vector3();
     public Quaternion RotationOn = new Quaternion();
 
+    /// <summary>
+    /// Position and rotation in Off state
+    /// </summary>
     public Vector3 PositionOff = new Vector3();
     public Quaternion RotationOff = new Quaternion();
-
-    // Son a l'appuis du bouton
+    
+    /// <summary>
+    /// Switch audio effect
+    /// </summary>
     public AK.Wwise.Event PlayEvent;
 
     private void Update()
     {
-        // Detecte un eventuellement changement exterieur de la variable observee
+        //Make the button position match the real value
         if (Application.isPlaying && modifiedProperty != ESwitchTarget.None)
         {
             bool newOn = false;
@@ -65,7 +78,7 @@ public class FlipFlopSwitch : SwitchBase
                     newOn = Plane.LandingLights;
                     break;
             }
-            // Met a jour l'etat bouton
+            // Updathe the button position
             if (newOn != On)
             {
                 On = newOn;
@@ -73,7 +86,7 @@ public class FlipFlopSwitch : SwitchBase
             }
         }
 
-        // Met a jour la position graphique de l'interupteur
+        // Set the button transform
         for (int i = 0; i < transform.childCount; ++i)
         {
             Transform child = transform.GetChild(i);
@@ -82,15 +95,15 @@ public class FlipFlopSwitch : SwitchBase
         }
     }
 
-    // Change la position du bouton : On = !On
     public override void Switch()
     {
+        // Event called on press
         On = !On;
         PlayEvent.Post(gameObject);
-        if (modifiedProperty == ESwitchTarget.None)
+        if (modifiedProperty == ESwitchTarget.None) // unused button
             return;
 
-        // Applique la modification a l'avion en fonction de la propriété modifiée
+        // Modify the property bound to the button
         switch (modifiedProperty)
         {
             case ESwitchTarget.MainPower:
@@ -117,7 +130,5 @@ public class FlipFlopSwitch : SwitchBase
         }
     }
 
-    public override void Release()
-    {
-    }
+    public override void Release() {}
 }

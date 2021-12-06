@@ -1,15 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script used to render a scale
+/// Every graduation of the scale are generated using a procedural mesh
+/// Like the metterRenderer, you can spawn text for each graduation
+/// </summary>
 [RequireComponent(typeof(CanvasRenderer))]
 public class ScaleRenderer : MaskableGraphic
 {
+    /// <summary>
+    /// Number of graduations
+    /// </summary>
     [Header("Global Parameters")]
     public int SubdivisionCount = 20;
+
+    /// <summary>
+    /// Width of each graduation
+    /// </summary>
     [Range(0, 1)]
     public float Width = 0.1f;
 
-
+    /// <summary>
+    /// Does we use value text for each graduation
+    /// </summary>
     [Header("Graduations")]
     public bool useTextScale = false;
     public float GraduationStart = 0;
@@ -66,6 +80,10 @@ public class ScaleRenderer : MaskableGraphic
         }
     }
 
+    /// <summary>
+    /// Generate the graduation mesh
+    /// </summary>
+    /// <param name="vh"></param>
     protected override void OnPopulateMesh(VertexHelper vh)
     {
         // Let's make sure we don't enter infinite loops
@@ -84,6 +102,7 @@ public class ScaleRenderer : MaskableGraphic
 
         for (float i = 0; i < rectTransform.rect.height; i += rectTransform.rect.height / SubdivisionCount)
         {
+            // Add one rectangle per graduation. i is the y offset of the graduation
             Vector2 pos = basePos + new Vector2(0, i);
 
             int triangle = vh.currentVertCount;
@@ -128,6 +147,9 @@ public class ScaleRenderer : MaskableGraphic
             BuildGraduations();
     }
 
+    /// <summary>
+    /// Generate graduation value text
+    /// </summary>
     void BuildGraduations()
     {
         shouldUpdate = false;
