@@ -81,6 +81,9 @@ public class PlayWidget : MonoBehaviour
         int diffValue = difficultyDropDown.GetComponent<Dropdown>().value;
         GameplayManager.Singleton.NextSettings.Difficulty = diffValue == 0 ? Difficulty.Casual : diffValue == 1 ? Difficulty.Advanced : Difficulty.Realistic;
 
+        GetComponentInParent<MenuLayoutManager>().BlackScreen();
+
+
         GameplayManager.Singleton.StartGame();
     }
 }

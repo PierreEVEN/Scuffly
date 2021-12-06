@@ -29,7 +29,9 @@
 						<ObjectRef Name="CanopyClose" ID="{C250FCAF-D33E-458F-BEEF-6DC6CE4863CD}" WorkUnitID="{855B521B-FD4C-4DE6-9B7B-EE6DF179D8CA}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Switch" ID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" WorkUnitID="{EF6DA00E-37EA-4599-AFDE-65A542D61FF9}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110ShutDown" ID="{19E0A642-CFA4-45F8-81A8-9700B84D0C90}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="StopMenuMusic" ID="{3A3C16C3-038C-4613-AE6D-DBDE2D8FFA37}" WorkUnitID="{FE9C65B9-D6F8-43A5-8273-79191F5718EC}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="PlayStartAPU" ID="{16301B9E-77D9-466F-BE15-36B3E829BF5D}" WorkUnitID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="PlayMenuMusic" ID="{9E1BD732-A041-46C8-A696-DD2B141BB9E2}" WorkUnitID="{FE9C65B9-D6F8-43A5-8273-79191F5718EC}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="PlaneExplode" ID="{00017ECB-7F64-4713-834D-380905993579}" WorkUnitID="{03D33B87-717D-4963-B2D1-4B78870918FE}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="f110Acceleration_2" ID="{1F0D9612-3BD7-4752-B714-AA8295E4064D}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="F16-Far" ID="{FCC38E9D-28A3-47B0-A95C-A9DEC2B4FFB3}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}" Origin="Manual" Filter="7"/>

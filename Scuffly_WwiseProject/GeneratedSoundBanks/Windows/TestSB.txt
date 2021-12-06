@@ -1,5 +1,6 @@
 Event	ID	Name			Wwise Object Path	Notes
 	40605965	StopCockpitSound			\Misc\StopCockpitSound	
+	413545259	PlayMenuMusic			\Misc\PlayMenuMusic	
 	442666337	StopStartEngine			\F110Engine\StopStartEngine	
 	598009201	ToggleSwitch			\Misc\ToggleSwitch	
 	772970040	StopIRTone			\Misc\StopIRTone	
@@ -8,6 +9,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	951709393	PlayStopEngine			\F110Engine\PlayStopEngine	
 	998656301	SeekStartAPU			\APU\SeekStartAPU	
 	1067507083	PlayCockpitSound			\Misc\PlayCockpitSound	
+	1973898857	StopMenuMusic			\Misc\StopMenuMusic	
 	1974938279	PlayIdleEngine			\F110Engine\PlayIdleEngine	
 	2282830790	PlayIRtone			\Misc\PlayIRtone	
 	2696387503	PlayIdleAPU			\APU\PlayIdleAPU	
@@ -28,6 +30,7 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 	949998751	EngineStartVolume			\Default Work Unit\EngineStartVolume	
 	1240670792	Distance			\Default Work Unit\Distance	
 	1522466203	EngineIdleVolume			\Default Work Unit\EngineIdleVolume	
+	1786260118	MenuVolume			\Default Work Unit\MenuVolume	
 	3060638953	EngineStopVolume			\Default Work Unit\EngineStopVolume	
 	3156709873	EngineStatus			\Default Work Unit\EngineStatus	
 	3906868357	EngineStartupPercent			\Default Work Unit\EngineStartupPercent	
@@ -52,6 +55,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	770591842	f110Acceleration_4	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Acceleration_4_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_4		1035260
 	820349579	f110Startup	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\f110Startup_10C4C929.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Start\f110Startup		8142912
 	875417865	F16-OutsideMax	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\F16-OutsideMax_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16-OutsideMax		1114176
+	937112477	AudioMenu	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\AudioMenu_D79FB2B7.wem		\Actor-Mixer Hierarchy\MenuMusic\AudioMenu		19808064
 	996229628	F16-Far	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\F16-Far_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16-Far		3457088
 	1055176387	F16APUAcceleration	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\SFX\F16APUAcceleration_10C4C929.wem		\Actor-Mixer Hierarchy\APUEngine\F16APUAcceleration		1495104
 

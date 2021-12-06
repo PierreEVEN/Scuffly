@@ -64,6 +64,13 @@ public class CameraManager : NetworkBehaviour, GPULandscapePhysicInterface
         // Remove camera for other players
         if (!IsLocalPlayer)
             Destroy(this);
+
+        // Initially move the camera to the global spawnPoint
+        GameObject spawnpoint = GameObject.Find("CineCamSpawnPoint");
+        if (spawnpoint) {
+            transform.position = spawnpoint.transform.position;
+            transform.rotation = spawnpoint.transform.rotation;
+        }
     }
 
     private void OnEnable()

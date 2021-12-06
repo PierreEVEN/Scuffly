@@ -19,6 +19,7 @@ namespace AK
         static const AkUniqueID PLAYIDLEAPU = 2696387503U;
         static const AkUniqueID PLAYIDLEENGINE = 1974938279U;
         static const AkUniqueID PLAYIRTONE = 2282830790U;
+        static const AkUniqueID PLAYMENUMUSIC = 413545259U;
         static const AkUniqueID PLAYSTARTAPU = 3342624803U;
         static const AkUniqueID PLAYSTARTENGINE = 867514771U;
         static const AkUniqueID PLAYSTOPAPU = 3298093305U;
@@ -30,6 +31,7 @@ namespace AK
         static const AkUniqueID STOPIDLEAPU = 3503700753U;
         static const AkUniqueID STOPIDLEENGINE = 3110430665U;
         static const AkUniqueID STOPIRTONE = 772970040U;
+        static const AkUniqueID STOPMENUMUSIC = 1973898857U;
         static const AkUniqueID STOPSTARTAPU = 4294679785U;
         static const AkUniqueID STOPSTARTENGINE = 442666337U;
         static const AkUniqueID STOPSTOPAPU = 938323147U;
@@ -48,6 +50,7 @@ namespace AK
         static const AkUniqueID ENGINESTATUS = 3156709873U;
         static const AkUniqueID ENGINESTOPVOLUME = 3060638953U;
         static const AkUniqueID IRFOUNDSTATE = 634056083U;
+        static const AkUniqueID MENUVOLUME = 1786260118U;
     } // namespace GAME_PARAMETERS
 
     namespace BANKS

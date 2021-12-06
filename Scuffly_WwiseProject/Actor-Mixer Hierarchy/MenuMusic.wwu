@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{2ECB7D33-6F1A-42E7-8117-C03F2EE1EFBC}" SchemaVersion="103">
+	<AudioObjects>
+		<WorkUnit Name="MenuMusic" ID="{2ECB7D33-6F1A-42E7-8117-C03F2EE1EFBC}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="AudioMenu" ID="{02489918-4B32-42EE-9838-66B273FD81F7}" ShortID="952350053">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-11</Value>
+							</ValueList>
+							<RTPCList>
+								<RTPC Name="" ID="{8E6FE4A2-74AF-4769-9FDE-D4CD397999BE}" ShortID="1069610836">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="MenuVolume" ID="{DC524874-A3F3-4832-82D0-FA382B771D4D}" WorkUnitID="{82B24FC5-9359-4C71-9D77-885654107E65}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{57581015-2F09-4C0B-8D00-11FDCAC7F61C}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-200</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{2F4758DC-3F41-46EC-BED8-C6B4717572EB}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{168AEAFE-71F7-4E81-B40C-5F1D60D8E531}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="AudioMenu" ID="{D662773C-3054-491E-AFDB-12CB8BCA1CDB}">
+							<Language>SFX</Language>
+							<AudioFile>AudioMenu.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="937112477"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="AudioMenu" ID="{D662773C-3054-491E-AFDB-12CB8BCA1CDB}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

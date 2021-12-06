@@ -20,13 +20,18 @@ public class MenuLayoutManager : MonoBehaviour
 
     bool OpenMenu = false;
 
-    float overlayOpacity = 2;
+    float overlayOpacity = 1.2f;
+
+    public void BlackScreen()
+    {
+        overlayOpacity = 1.1f;
+    }
 
     private void Update()
     {
         if (overlayOpacity > 0)
         {
-            overlayOpacity -= Time.deltaTime * 2;
+            overlayOpacity -= Time.deltaTime * 0.2f;
             BlackOverlay.GetComponent<RawImage>().color = new Color(0, 0, 0, overlayOpacity);
         }
 

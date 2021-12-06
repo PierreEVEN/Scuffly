@@ -100,6 +100,31 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="PlayMenuMusic" ID="{9E1BD732-A041-46C8-A696-DD2B141BB9E2}">
+					<ChildrenList>
+						<Action Name="" ID="{F7C8ABE8-C921-4598-A4C2-930B505E93A2}" ShortID="243585960">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="AudioMenu" ID="{02489918-4B32-42EE-9838-66B273FD81F7}" WorkUnitID="{2ECB7D33-6F1A-42E7-8117-C03F2EE1EFBC}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopMenuMusic" ID="{3A3C16C3-038C-4613-AE6D-DBDE2D8FFA37}">
+					<ChildrenList>
+						<Action Name="" ID="{770822D9-748B-40FC-B1D8-9FD62279F51B}" ShortID="822770704">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="AudioMenu" ID="{02489918-4B32-42EE-9838-66B273FD81F7}" WorkUnitID="{2ECB7D33-6F1A-42E7-8117-C03F2EE1EFBC}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

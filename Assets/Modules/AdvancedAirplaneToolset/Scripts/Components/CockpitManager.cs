@@ -22,6 +22,9 @@ public class CockpitManager : PlaneComponent
     private void OnDisable()
     {
         Plane.OnGlobalPowerChanged.RemoveListener(OnGlobalPowerChanged);
+        if (isPlayingAudio)
+            StopCockpitSound.Post(gameObject);
+        isPlayingAudio = false;
     }
 
     /// <summary>

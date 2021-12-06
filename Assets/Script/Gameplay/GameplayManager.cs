@@ -48,6 +48,13 @@ public class GameplayManager : MonoBehaviour
     private void OnEnable() => _singleton = this;
     private void OnDisable() => _singleton = null;
 
+
+    public AK.Wwise.Event PlayMenuMusic;
+    public AK.Wwise.Event StopMenuMusic;
+    public AK.Wwise.RTPC MenuMusicLevel;
+    float AudioLevel = 0;
+    bool isMenuMusicPlaying = false;
+
     private void Start()
     {
         Menu = true;
@@ -76,6 +83,24 @@ public class GameplayManager : MonoBehaviour
     /// </summary>
     public GameSettings CurrentSettings;
     public GameSettings NextSettings;
+
+    private void Update()
+    {
+        float desiredLevel = PlayerManager.LocalPlayer.controlledPlane ? 0 : 100;
+        AudioLevel = AudioLevel + Mathf.Clamp(desiredLevel - AudioLevel, -Time.deltaTime * 50, Time.deltaTime * 50);
+
+        if (isMenuMusicPlaying && AudioLevel < 1)
+        {
+            isMenuMusicPlaying = false;
+            StopMenuMusic.Post(gameObject);
+        }
+        if (!isMenuMusicPlaying && AudioLevel > 1)
+        {
+            isMenuMusicPlaying = true;
+            PlayMenuMusic.Post(gameObject);
+        }
+        MenuMusicLevel.SetGlobalValue(AudioLevel);
+    }
 
     public void StartGame()
     {

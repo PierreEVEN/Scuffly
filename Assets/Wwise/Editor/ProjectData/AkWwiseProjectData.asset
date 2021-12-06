@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: 3d97b7924e543a41b38086837e566c2e
     GuidInternal: 
-    m_lastTime: -8585641672885401320
+    m_lastTime: -8585641926414298802
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: feea8a16f771814eb40c5f1d60d8e531
     GuidInternal: 
-    m_lastTime: -8585641672886042133
+    m_lastTime: -8585641926414438833
     List:
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 30fd23938bdd0f4d92e863f4145c1acc
     GuidInternal: 
-    m_lastTime: -8585628235405411431
+    m_lastTime: -8585628036927335640
     List:
     - name: TestSB
       guid: 4ffeca94bd54074a8e5063309778da14
@@ -94,7 +94,7 @@ MonoBehaviour:
     ParentPath: Events\APU
     guid: 4c3cea1c324a154da08a51cb6172b873
     GuidInternal: 
-    m_lastTime: -8585633502455051956
+    m_lastTime: -8585635674736181814
     List:
     - name: PlayIdleAPU
       guid: 01e56037e91cf44f932e1d77cd218ee4
@@ -243,7 +243,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: d670788d2bdfe249bb965a44b8b1ea61
     GuidInternal: 
-    m_lastTime: -8585633502455051956
+    m_lastTime: -8585635691101579257
     List: []
   - PhysicalPath: Events\F110Engine.wwu
     PathAndIcons:
@@ -256,7 +256,7 @@ MonoBehaviour:
     ParentPath: Events\F110Engine
     guid: 341505ec8364bb479c7efc60dd5ee35c
     GuidInternal: 
-    m_lastTime: -8585633502455051956
+    m_lastTime: -8585635656875041843
     List:
     - name: PlayIdleEngine
       guid: c0b8c8d4b4bd6648b816f8e97bdc1489
@@ -371,7 +371,7 @@ MonoBehaviour:
     ParentPath: Events\Misc
     guid: b9659cfef8d6a543827379191f5718ec
     GuidInternal: 
-    m_lastTime: -8585628235411052888
+    m_lastTime: -8585628036989180426
     List:
     - name: PlaneExplosion
       guid: 2ae09b84f994a74c8457c812f4dee887
@@ -441,6 +441,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: PlayMenuMusic
+      guid: 32d71b9e41a0c846a696dd2b141bb9e2
+      id: 413545259
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: PlayMenuMusic
+        ObjectType: 3
+        guid: 32d71b9e41a0c846a696dd2b141bb9e2
+      Path: Events\Misc\PlayMenuMusic
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: StopCanopy
       guid: 08dba755411de242b16e8fe064498b75
       id: 3722299613
@@ -492,6 +509,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: StopMenuMusic
+      guid: c3163c3a8c031346ae6ddbde2d8ffa37
+      id: 1973898857
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: StopMenuMusic
+        ObjectType: 3
+        guid: c3163c3a8c031346ae6ddbde2d8ffa37
+      Path: Events\Misc\StopMenuMusic
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: ToggleSwitch
       guid: 71bd647a960c994fb3b280f41f27e3ad
       id: 598009201
@@ -521,7 +555,7 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: c54fb2825993714c9d77885654107e65
     GuidInternal: 
-    m_lastTime: -8585628235411052888
+    m_lastTime: -8585628036989150407
     List:
     - name: CanopySpeed
       guid: 42eaf2227ba51c4db320003cceb8cbe6
@@ -649,6 +683,20 @@ MonoBehaviour:
         ObjectType: 13
         guid: 1820f002e0bf9a48a7094cc6c421de67
       Path: Game Parameters\Default Work Unit\IRFoundState
+    - name: MenuVolume
+      guid: 744852dcf3a3324882d0fa382b771d4d
+      id: 1786260118
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: MenuVolume
+        ObjectType: 13
+        guid: 744852dcf3a3324882d0fa382b771d4d
+      Path: Game Parameters\Default Work Unit\MenuVolume
   StateWwu:
   - PhysicalPath: States\Default Work Unit.wwu
     PathAndIcons:
@@ -661,7 +709,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: 8bf94d9c662c3b42a846975a7eed3e32
     GuidInternal: 
-    m_lastTime: -8585641182674923440
+    m_lastTime: -8585641622491670272
     List: []
   SwitchWwu:
   - PhysicalPath: Switches\Default Work Unit.wwu
@@ -675,7 +723,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: 7cd1187bdbe9d44082b18c8930647d10
     GuidInternal: 
-    m_lastTime: -8585641672885407347
+    m_lastTime: -8585641926414278793
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
@@ -689,10 +737,10 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 1a0eda168489524aa790230f5cfb4e45
     GuidInternal: 
-    m_lastTime: -8585641672885406505
+    m_lastTime: -8585641926414328807
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 05000000060000001700000018000000240000002b0000002c000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0
