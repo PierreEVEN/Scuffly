@@ -6,13 +6,21 @@
 - **Context** : This project was realized for the "3D game engine" course of my 3rd year of Licence at the university of Strasbourg.
 - **Objectives** : Learn how to use Unity (It was the first time I installed Unity).
 
+# Features
 
-## Download
+- Full GPU-side landscape mesh and foliage procedural generation.
+- Dynamic and realistic flight model with runtime drag simulation.
+- Complete clickable cockpit.
+- Localized damages.
+- Advanced AI that can pilot any plane, avoid the ground, and use the weapon system.
+- Day-night system, with playable aircraft by night.
+- Dogfight, and missile trajectory prediction
+
+# Download
 
 Check the [release](https://github.com/PierreEVEN/Scuffly/releases) tab to get the latest build !
 
-## Media
-
+# Media
 
 Dogfight
 
@@ -21,6 +29,9 @@ Dogfight
 Night flight
 
 [![comme de nuit !](https://img.youtube.com/vi/tEoloqOIR44/0.jpg)](https://youtu.be/tEoloqOIR44)
+
+
+
 
 ## Licence
 
