@@ -1,37 +1,49 @@
+# The project
+- **Description** : Scuffly is a "small" flight simulator where you can pilot a F16. A part of the weapon system is implemented, and you can fight against AIs
+- **Dev duration** : 2 months
+- **Game engine** : Unity 2021
+- **Context** : This project was realized for the "3D game engine" course of my 3rd year of Licence at the university of Strasbourg.
+- **Objectives** : Learn how to use Unity (It was the first time I tried it).
 
+# Features
 
-# Description du projet
+- Full GPU-side landscape mesh and foliage procedural generation.
+- Dynamic and realistic flight model with runtime drag simulation.
+- Complete clickable cockpit.
+- Localized damages.
+- Advanced AI that can pilot any plane, avoid the ground, and use the weapon system.
+- Day-night system, with playable aircraft by night.
+- Dogfight, and missile trajectory prediction
+- Homemade cockpit interior model and retextured F16 mesh using substance painter
 
-Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissage d'Unity3D pour les cours de moteur de jeu 3D en 3e année de cursus CMI à Strasbourg.
+# Download
 
-### Objectifs techniques et gameplay
-- Pouvoir faire décoller un avion et atterrir sur plusieurs aéroports.
-- Physique de vol réaliste et dynamique (influencée par l'état de l'avion).
-- Possibilité d'utiliser un armement basique (missiles / canon).
-- Terrain pseudo-infini généré procéduralement.
-- Permettre la possibilité de jouer à plusieurs.
-- Interactions dans le cockpit.
+Check the [release](https://github.com/PierreEVEN/Scuffly/releases) tab to get the latest build !
 
-# Demo en video
+# Media
 
 [![vol de jour](https://img.youtube.com/vi/mo5any4fGz0/0.jpg)](https://youtu.be/mo5any4fGz0)
-
-vol de jour
+> Startup and dogfight gameplay
 
 [![comme de nuit !](https://img.youtube.com/vi/tEoloqOIR44/0.jpg)](https://youtu.be/tEoloqOIR44)
+> Night flight.
 
-comme de nuit !
+[![comme de nuit !](https://img.youtube.com/vi/nXM0JXUwFlM/0.jpg)](https://youtu.be/nXM0JXUwFlM)
+> GPU-side procedural landscape generator
 
-# Informations generales
+[![comme de nuit !](https://img.youtube.com/vi/01ZYdLhIbMQ/0.jpg)](https://youtu.be/01ZYdLhIbMQ)
+> Dial generator using custom shader
+ 
 
-Réalisé avec Unity 2021 version beta 2.0f1 *(nécessaire pour avoir certaines fonctions de la pipeline hdrp manquantes dans les précédentes versions d'unity, et les nuages volumétriques)*
 
-**Notice d'utilisation :**
+## Licence
 
-Le fonctionnement d'un avion n'est pas simple, un onglet d'aide a donc été prévu à cet effet dans le menu.
+You can do whatever you want for personal use.
+However I do not authorize any use of all the content of the project for commercial purposes.
+
+I keep this github repository public for all of those who would like to see how it's done :)
 
 ## Credits
 
 - [Unity3D](https://unity3d.com/)
 - [Amplifyimpostor](http://amplify.pt/unity/amplify-impostors/)
-- [Wwise](https://www.audiokinetic.com/fr/products/wwise/)
