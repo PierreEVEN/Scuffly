@@ -14,11 +14,11 @@ Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissag
 
 # Demo en video
 
-![https://img.youtube.com/vi/mo5any4fGz0/0.jpg](https://youtu.be/mo5any4fGz0)
+[![vol de jour](https://img.youtube.com/vi/mo5any4fGz0/0.jpg)](https://youtu.be/mo5any4fGz0)
 
 vol de jour
 
-![https://img.youtube.com/vi/tEoloqOIR44/0.jpg](https://youtu.be/tEoloqOIR44)
+[![comme de nuit !](https://img.youtube.com/vi/tEoloqOIR44/0.jpg)](https://youtu.be/tEoloqOIR44)
 
 comme de nuit !
 
