@@ -4,113 +4,172 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-// Interface a ajouter a un component capable de produire de l'energie
+/// <summary>
+/// Interface allowing plane component to produce engergy
+/// </summary>
 public interface IPowerProvider
 {
-    public float GetPower(); // Energie produite en KVA
+    /// <summary>
+    ///  Produced power in Kva
+    /// </summary>
+    /// <returns></returns>
+    public float GetPower();
 }
 
-/*
- * Class definissant un avion. (a placer a la racine du GameObject correspondant)
- * 
- * Pour fonctionner, l'avion a besoin d'une source d'energie ( ex : batteries qu'il faut d'abord allumer )
- * Le moteur et les systemes hydrauliques ne pourront etre allume que si l'APU est fonctionnel.
- * 
- * //@TODO : cleanup PlaneActor
- * 
- */
 public enum PlaneTeam
 {
     Red,
     Blue,
 }
 
+/// <summary>
+/// Base class of an aircraft (must be the root of the aircraft object)
+/// 
+/// Handle the plane inputs, the power, and give some informations about the current state of the plane
+/// 
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class PlaneActor : NetworkBehaviour
 {
-    // Definis le centre de gravite physique de l'avion
+    /// <summary>
+    /// Define manually the gravity center of the aircraft
+    /// </summary>
     public Vector3 massCenter = new Vector3(0, 0, 0);
 
-    // Etat initial de l'avion a sa creation / valeurs par defaut
+    /// <summary>
+    /// Initial state of each property of the plane when spawned
+    /// </summary>
     public bool initialThrottleNotch = false;
     public bool initialApuSwitch = false;
     public bool initialRetractGear = false;
     public bool initialParkingBrakes = true;
-    public float initialSpeed = 0;
     public bool initialPower = false;
     public bool initialOpenCanopy = true;
     public float initialHudLightLevel = 0;
     public float initialPositionLight = 0;
+    /// <summary>
+    /// Initially throw the plane forward
+    /// </summary>
+    public float initialSpeed = 0;
 
-    Rigidbody planePhysic;
-    private float currentEnginePower;
-
-    public Rigidbody Physics { get { return planePhysic; } }
-
-    // Etat courant de l'avion
-    private bool throttleNotch = false;
-    private bool apuSwitch = false;
-    private bool retractGear = false;
-    private bool parkingBrakes = true;
-    private bool brakes = false;
-    private bool power = false;
-    private bool canopy = true;
-    private bool landingLights = false;
-    private float floodLight = 0.1f;
-    private float positionLight = 0;
-    private float hudLight = 0;
-
-    // Active ou desactive des fonctionnalites de l'avion
-    [HideInInspector]
-    public UnityEvent OnGearChange = new UnityEvent(); // train rentre / sortis
-    [HideInInspector]
-    public UnityEvent OnThrottleNotchChange = new UnityEvent(); // manette des gaz activee / bloquee
-    [HideInInspector]
-    public UnityEvent OnApuChange = new UnityEvent(); // apu active / bloque
-    [HideInInspector]
-    public UnityEvent OnBrakesChange = new UnityEvent(); // freins actives / relaches
-    [HideInInspector]
-    public UnityEvent OnCanopyChange = new UnityEvent(); // ouvrir / fermer le cockpit
-    [HideInInspector]
-    public UnityEvent OnCockpitFloodlightChanged = new UnityEvent(); // ouvrir / fermer le cockpit
-    [HideInInspector]
-    public UnityEvent OnPositionLightChanged = new UnityEvent(); // ouvrir / fermer le cockpit
-    [HideInInspector]
-    public UnityEvent OnHudLightChanged = new UnityEvent(); // ouvrir / fermer le cockpit
-    [HideInInspector]
-    public UnityEvent OnPowerSwitchChanged = new UnityEvent(); // alimentation principale on / off
-    [HideInInspector]
-    public UnityEvent OnGlobalPowerChanged = new UnityEvent(); // alimentation principale on / off
-    [HideInInspector]
-    public UnityEvent OnLandingLightsChanged = new UnityEvent(); // alimentation principale on / off
-
-    // Liste des composants fournissant de l'energie
-    private List<IPowerProvider> powerProviders = new List<IPowerProvider>();
-
+    /// <summary>
+    /// A list of spawned planes
+    /// </summary>
     public static List<PlaneActor> PlaneList = new List<PlaneActor>();
 
+    /// <summary>
+    /// Current states of the plane
+    /// </summary>
+    private bool throttleNotch = false; // Is throttle notch of the gaz handle set to ON
+    private bool apuSwitch = false; // Is apu switch enabled
+    private bool retractGear = false; // Is gear switch set to retract
+    private bool parkingBrakes = true; // Is parking brake switch set to ON
+    private bool brakes = false; // Is brake key pressed
+    private bool power = false; // Is main power switch set to on
+    private bool canopy = true; // Is canopy opened switch set to Open
+    private bool landingLights = false; // Is landing light set to ON
+    private float floodLight = 0.1f; // Flood light brightness
+    private float positionLight = 0; // Position light brightness
+    private float hudLight = 0; // Hud light brightness
+
+    /// <summary>
+    /// Event called when plane state is changed
+    /// </summary>
+    [HideInInspector]
+    public UnityEvent OnGearChange = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent OnThrottleNotchChange = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent OnApuChange = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent OnBrakesChange = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent OnCanopyChange = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent OnCockpitFloodlightChanged = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent OnPositionLightChanged = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent OnHudLightChanged = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent OnPowerSwitchChanged = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent OnGlobalPowerChanged = new UnityEvent();
+    [HideInInspector]
+    public UnityEvent OnLandingLightsChanged = new UnityEvent();
+
+    /// <summary>
+    /// A list of component that are providing power to the plane
+    /// </summary>
+    private List<IPowerProvider> powerProviders = new List<IPowerProvider>();
+
+    /// <summary>
+    /// The current produced power
+    /// </summary>
+    private float currentEnginePower;
+    /// <summary>
+    /// Get the currently available electric power
+    /// </summary>
+    /// <returns></returns>
+    public float GetCurrentPower()
+    {
+        return currentEnginePower;
+    }
+
+
+    /// <summary>
+    /// Rigidbody of the plane
+    /// </summary>
+    public Rigidbody Physics { get { return planePhysic; } }
+    Rigidbody planePhysic;
+
+    /// <summary>
+    /// Event called when the plane is destroyed
+    /// </summary>
     [HideInInspector]
     public UnityEvent<PlaneActor> OnDestroyed = new UnityEvent<PlaneActor>();
 
+    /// <summary>
+    /// The gameObject spawned when the aircraft is destroyed
+    /// </summary>
     public GameObject explosionObject;
 
+    /// <summary>
+    /// The last player or AI responsible for dmaging the plane
+    /// </summary>
+    [HideInInspector]
     public GameObject LastDamageInstigator;
 
+    /// <summary>
+    /// The object containing all the cockpit stuff.
+    /// The cockpit is hidden when the player leave the plane
+    /// </summary>
     public GameObject cockpitObject;
+
+    /// <summary>
+    /// The team of the plane (used for AIs behaviour)
+    /// </summary>
     public PlaneTeam planeTeam = PlaneTeam.Blue;
 
+    /// <summary>
+    /// Register a new component that will provide power to the plane
+    /// </summary>
+    /// <param name="provider"></param>
     public void RegisterPowerProvider(IPowerProvider provider)
     {
         if (!powerProviders.Contains(provider))
             powerProviders.Add(provider);
     }
 
-    public bool EnableDebug
-    {
-        get { return false; }
-    }
+    /// <summary>
+    /// Is debug mode enabled
+    /// </summary>
+    public bool EnableDebug { get { return false; } }
 
-    // Getter et setter sur l'etat de l'avion. Appelle des events sur lesquels se bind les differents composants
+    /************************
+     * Getter and setter for each parameter of the plane
+     ************************/
+
     public bool MainPower
     {
         get { return power; }
@@ -250,26 +309,12 @@ public class PlaneActor : NetworkBehaviour
         }
     }
 
-    // Calcule l'apport en electricite (en KVA) des differents sous - composants
-    public float GetCurrentPower()
-    {
-        return currentEnginePower;
-    }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.TransformPoint(massCenter), 1);
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
         planePhysic = gameObject.GetComponent<Rigidbody>();
+        // We set all the current values from the initial default values
         planePhysic.velocity = transform.forward * initialSpeed;
-
-        // On allume les batteries le temps de parametrer l'etat par defaut de l'avion
-        MainPower = true;
         EnableAPU = initialApuSwitch;
         ThrottleNotch = initialThrottleNotch;
         RetractGear = initialRetractGear;
@@ -279,7 +324,7 @@ public class PlaneActor : NetworkBehaviour
         HudLightLevel = initialHudLightLevel;
         PositionLight = initialPositionLight;
     }
-
+    
     private void OnEnable()
     {
         PlaneList.Add(this);
@@ -299,19 +344,21 @@ public class PlaneActor : NetworkBehaviour
         float liftCoef = 1f;
         float surface = 27.87f;
 
-        // Ajoute artificiellement un coefficient de portance a tout l'avion (simuler uniquement la trainée sur l'avion permet d'avoir une physique utilisable pour un gameplay "arcade",
-        // cependant il faut en réalité aussi prendre en compte l'effet de la portance (qui est beaucoup plus complexe a calculer)
+        // Artificially add a lift coefficient to compensate the lack of lift in the current aerodynamic simulation
         foreach (var part in GetComponentsInChildren<Rigidbody>())
         {
             float velocity = Mathf.Abs(transform.InverseTransformDirection(part.velocity).z);
 
-            // Calcul classique de portance
+            // Common lift calculation
             part.AddForce(transform.up * 0.5f * ro * liftCoef * surface * velocity * velocity * Time.deltaTime);
         }
 
         UpdatePlanePower();
     }
 
+    /// <summary>
+    /// Fetch all the power provided by parts attached to the plane to compute the total power
+    /// </summary>
     void UpdatePlanePower()
     {
         // Update power
@@ -340,47 +387,77 @@ public class PlaneActor : NetworkBehaviour
         GUILayout.EndArea();
     }
 
-    /**
+    /*********************************
      * Axis and input controll
-     */
+     *********************************/
 
+    /// <summary>
+    /// Current thrust input value
+    /// </summary>
     [HideInInspector]
     public float ThrustInput = 0;
+
+    /// <summary>
+    /// Current pitch input value
+    /// </summary>
     [HideInInspector]
     public float PitchInput = 0;
+
+    /// <summary>
+    /// Current yaw input value
+    /// </summary>
     [HideInInspector]
     public float YawInput = 0;
+
+    /// <summary>
+    /// Current roll input value
+    /// </summary>
     [HideInInspector]
     public float RollInput = 0;
 
+    /// <summary>
+    /// Change the current thrust input of the plane
+    /// </summary>
+    /// <param name="input"></param>
     public void SetThrustInput(float input)
     {
         foreach (var thruster in GetComponentsInChildren<Thruster>())
-        {
             thruster.setThrustInput(input);
-        }
 
         ThrustInput = input;
     }
 
+    /// <summary>
+    /// Change the current pitch input of the plane
+    /// </summary>
+    /// <param name="input"></param>
     public void SetPitchInput(float input)
     {
         PitchInput = Mathf.Clamp(input, -1, 1);
     }
 
+    /// <summary>
+    /// Change the current yaw input of the plane
+    /// </summary>
+    /// <param name="input"></param>
     public void SetYawInput(float input)
     {
         YawInput = Mathf.Clamp(input, -1, 1);
-
-        foreach (var part in GetComponentsInChildren<WheelCollider>())
-            if (part.tag == "Yaw")
-                part.steerAngle = Mathf.Pow(input, 3) * 65;
     }
 
+    /// <summary>
+    /// Change the current roll input of the plane
+    /// </summary>
+    /// <param name="input"></param>
     public void SetRollInput(float input)
     {
         RollInput = Mathf.Clamp(input, -1, 1);
     }
+
+    /// <summary>
+    /// Fire action of the plane
+    /// </summary>
+    /// <param name="target"></param>
     public void Shoot(GameObject target)
     {
         foreach (var part in GetComponentsInChildren<WeaponPod>())
@@ -393,32 +470,48 @@ public class PlaneActor : NetworkBehaviour
         }
     }
 
-    /**
-     * Helpers : Informations sur l'etat courant de l'avion
-     */
+    /***************************************
+     * Helpers : get informations about the plane
+     ***************************************/
+
+    /// <summary>
+    /// Current plane forward velocity in m/s
+    /// </summary>
+    /// <returns></returns>
     public float GetSpeedInMetters()
     {
         return transform.InverseTransformDirection(planePhysic.velocity).z;
     }
 
+    /// <summary>
+    /// Current plane forward velocity in kt
+    /// </summary>
+    /// <returns></returns>
     public float GetSpeedInNautics()
     {
         return transform.InverseTransformDirection(planePhysic.velocity).z * 1.94384519992989f;
     }
 
-    // = Pitch
+    /// <summary>
+    /// Current plane current attitude in degrees
+    /// </summary>
+    /// <returns></returns>
     public float GetAttitude()
     {
         return Mathf.Asin(transform.forward.y) / Mathf.PI * 180;
     }
 
+    /// <summary>
+    /// Current plane current roll in degrees
+    /// </summary>
+    /// <returns></returns>
     public float GetRoll()
     {
         return (transform.rotation.eulerAngles.z % 360 + 180 + 360) % 360 - 180;
     }
 
     /// <summary>
-    /// Orientation de l'avion selon l'axe magnetique (en degres)
+    /// Current heading of the aircraft in degrees
     /// </summary>
     /// <returns></returns>
     public float GetHeading()
@@ -426,15 +519,22 @@ public class PlaneActor : NetworkBehaviour
         return transform.rotation.eulerAngles.y;
     }
 
+    /// <summary>
+    /// Get altitude from the sea level in foots
+    /// </summary>
+    /// <returns></returns>
     public float GetAltitudeInFoots()
     {
         return transform.position.y * 3.281f;
     }
 
-
+    /// <summary>
+    /// When the aircraft hit an object
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
-
+        // Detect if we hit an other airplane or simply we got hit by a missile. If it is the case, set it at the last damage instigator
         GameObject newDamageInstigator = null;
         PlaneActor contactPlane = collision.gameObject.GetComponentInParent<PlaneActor>();
         PodItem contactPodItem = collision.gameObject.GetComponentInParent<PodItem>();
@@ -442,23 +542,21 @@ public class PlaneActor : NetworkBehaviour
             newDamageInstigator = contactPlane.gameObject;
         else if (contactPodItem && contactPodItem.owner)
             newDamageInstigator = contactPodItem.owner;
-
         if (newDamageInstigator)
             LastDamageInstigator = newDamageInstigator;
 
+        // Apply damages to every part of the plane
         foreach (var component in GetComponentsInChildren<DamageableComponent>())
         {
             Vector3[] points = new Vector3[collision.contactCount];
 
             for (int i = 0; i < collision.contactCount; ++i)
-            {
                 points[i] = collision.contacts[i].point;
-            }
-
 
             component.ApplyDamageAtLocation(points, 0.5f, collision.impulse.magnitude / 200, null);
         }
 
+        // If the impact was a really severe one, destroy the plane
         for (int i = 0; i < collision.contactCount; ++i)
         {
             if (collision.GetContact(i).thisCollider.gameObject == gameObject)
@@ -472,22 +570,36 @@ public class PlaneActor : NetworkBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Make the plane explode - boom
+    /// </summary>
     void OnExplode()
     {
+        // Disable physics
         planePhysic.isKinematic = true;
         transform.position = transform.position - new Vector3(0, 8, 0);
+
+        // Spawn the explosion visual (it will be destroyed in 50 seconds)
         if (explosionObject)
         {
             GameObject fxContainer = Instantiate(explosionObject);
             fxContainer.transform.position = transform.position;
             Destroy(fxContainer, 50);
         }
+        // Destroy the plane
         OnDestroyed.Invoke(this);
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Is cockpit hidden or visible
+    /// </summary>
     bool? indoorEnabled = null;
+
+    /// <summary>
+    /// Show or hide the cockpit and all the interior stuffs
+    /// </summary>
+    /// <param name="enable"></param>
     public void EnableIndoor(bool enable)
     {
         if (indoorEnabled == enable)
@@ -499,13 +611,9 @@ public class PlaneActor : NetworkBehaviour
         cockpitObject.SetActive(enable);
     }
 
-    /**
-     * 
-     * Thrusters 
-     * 
-     */
-
-
+    /// <summary>
+    /// A list of thruster available on the aircraft
+    /// </summary>
     List<Thruster> thrusterList = new List<Thruster>();
     public void RegisterThruster(Thruster thruster)
     {
@@ -515,10 +623,21 @@ public class PlaneActor : NetworkBehaviour
     {
         thrusterList.Remove(thruster);
     }
+
+    /// <summary>
+    /// Get current oil pressure (not implemented)
+    /// </summary>
+    /// <returns></returns>
     public float GetOilPressure()
     {
         return 0;
     }
+
+    /// <summary>
+    /// Get the current rotation per minute of the thruster number 'index'
+    /// </summary>
+    /// <param name="thrusterIndex"></param>
+    /// <returns></returns>
     public float GetRpmPercent(int thrusterIndex)
     {
         if (thrusterList.Count <= thrusterIndex)
@@ -526,18 +645,25 @@ public class PlaneActor : NetworkBehaviour
         return thrusterList[thrusterIndex].ThrottlePercent * 0.8f + thrusterList[thrusterIndex].engineStartupPercent * 20f;
     }
 
+    /// <summary>
+    /// Get the current openning of the intake (not implemented yet)
+    /// </summary>
+    /// <param name="thrusterIndex"></param>
+    /// <returns></returns>
     public float GetNozeOpenning()
     {
         return 0;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.TransformPoint(massCenter), 1);
+    }
 
-    /**
-     * 
-     * Radars 
-     * 
-     */
-
+    /// <summary>
+    /// The radar of the plane
+    /// </summary>
     Radar planeRadar;
     public Radar RadarComponent
     {
@@ -549,6 +675,9 @@ public class PlaneActor : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// The weapons stuffs have been moved from this class to another one to simplify the system
+    /// </summary>
     WeaponManager weaponSystem;
     public WeaponManager WeaponSystem
     {

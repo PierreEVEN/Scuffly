@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Handle the parallax effect of a UI object by moving it slighty depending on the mouse position
+/// </summary>
 public class BackgroundParallax : MonoBehaviour
 {
     private void Update()

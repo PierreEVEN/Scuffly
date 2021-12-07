@@ -10,9 +10,24 @@ public class ProceduralFolliageNode
     ProceduralFolliageNode[] children = new ProceduralFolliageNode[0];
     List<GameObject> batches = new List<GameObject>();
 
+    /// <summary>
+    /// The owning procedural foliage
+    /// </summary>
     public ProceduralFolliageSpawner folliageSpawner;
+
+    /// <summary>
+    /// The subdivision level of this node
+    /// </summary>
     int lodLevel;
+
+    /// <summary>
+    /// The world width in m
+    /// </summary>
     public float nodeWidth;
+
+    /// <summary>
+    /// The position in the world of this node
+    /// </summary>
     public Vector3 nodePosition;
     
     public ProceduralFolliageNode(ProceduralFolliageSpawner spawner, Vector3 position, int level, float width)
@@ -23,6 +38,7 @@ public class ProceduralFolliageNode
         nodePosition = position;
 
         //@TODO don't generate all kind of foliage everywhere
+        // Spawn one foliage batch for this node level (one per foliage asset)
         foreach (var asset in spawner.foliageAssets)
         {
             if (lodLevel < asset.MinSpawnLevel || lodLevel > asset.MaxSpawnLevel)
@@ -41,11 +57,14 @@ public class ProceduralFolliageNode
 
     public void UpdateInternal()
     {
+        // If we can still subdivide into sublevels
         if (lodLevel < folliageSpawner.LodLevels.Count)
         {
+            // Get the next subdivision threshold
             float subdivisionDistance = folliageSpawner.LodLevels[lodLevel]; //@TODO Use camera relative altitude
             float currentDistance = Vector3.Distance(folliageSpawner.CameraPosition, nodePosition + new Vector3(0, 0, 0)) - nodeWidth / 2;
 
+            // Check if we should subdivide this node
             if (currentDistance < subdivisionDistance)
                 Subdivide();
             else
@@ -54,12 +73,14 @@ public class ProceduralFolliageNode
         else
             Unsubdivide();
 
+        // Update children
         foreach (var child in children)
             child.UpdateInternal();
     }
 
     void Subdivide()
     {
+        // Spawn children LOD levels if not already created
         if (children.Length != 0)
             return;
 
@@ -73,6 +94,7 @@ public class ProceduralFolliageNode
 
     void Unsubdivide()
     {
+        //Destroy all the children nodes recursivly
         if (children.Length == 0)
             return;
 
@@ -93,6 +115,9 @@ public class ProceduralFolliageNode
             child.DrawDebug();
     }
 
+    /// <summary>
+    /// Destroy the current quadtree node with it's children
+    /// </summary>
 
     public void DestroyNode()
     {

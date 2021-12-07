@@ -1,13 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.Rendering;
 
+/// <summary>
+/// Handle the menyu widgets for the game settings
+/// </summary>
 public class OptionWidget : MonoBehaviour
 {
-    static Volume _globalVolume;
+    /// <summary>
+    /// Find the gameobject that contain the volume with all the HDRP settings
+    /// </summary>
     public static Volume GlobalVolume
     {
         get
@@ -21,6 +23,11 @@ public class OptionWidget : MonoBehaviour
             return _globalVolume;
         }
     }
+    static Volume _globalVolume;
+
+    /// <summary>
+    /// Different graphic presets
+    /// </summary>
 
     public void SetGraphicsMax()
     {
