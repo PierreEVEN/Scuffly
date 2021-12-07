@@ -15,12 +15,12 @@ Check the [release](https://github.com/PierreEVEN/Scuffly/releases) tab to get t
 
 
 Dogfight
+
 [![vol de jour](https://img.youtube.com/vi/mo5any4fGz0/0.jpg)](https://youtu.be/mo5any4fGz0)
 
 Night flight
-[![comme de nuit !](https://img.youtube.com/vi/tEoloqOIR44/0.jpg)](https://youtu.be/tEoloqOIR44)
 
-comme de nuit !
+[![comme de nuit !](https://img.youtube.com/vi/tEoloqOIR44/0.jpg)](https://youtu.be/tEoloqOIR44)
 
 ## Licence
 
