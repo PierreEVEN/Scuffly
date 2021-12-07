@@ -12,21 +12,13 @@ Scuffly est un petit simulateur de vol réalisé dans le cadre de l'apprentissag
 - Permettre la possibilité de jouer à plusieurs.
 - Interactions dans le cockpit.
 
-# Documentation
+# Informations generales
 
 Réalisé avec Unity 2021 version beta 2.0f1 *(nécessaire pour avoir certaines fonctions de la pipeline hdrp manquantes dans les précédentes versions d'unity, et les nuages volumétriques)*
 
 **Notice d'utilisation :**
 
-Le fonctionnement d'un avion n'est pas simple, il est donc recommandé, au moins la première fois, de suivre [ce petit guide](Doc/HowToFly.md).
-
-**Documentation développeur**
-
-La documentation technique du projet est disponible [ici](Doc/Doc.md) *(en cours de rédaction)*
-
-## Auteurs
-
-- Pierre EVEN
+Le fonctionnement d'un avion n'est pas simple, un onglet d'aide a donc été prévu à cet effet dans le menu.
 
 ## Credits
 
