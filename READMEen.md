@@ -15,6 +15,7 @@
 - Advanced AI that can pilot any plane, avoid the ground, and use the weapon system.
 - Day-night system, with playable aircraft by night.
 - Dogfight, and missile trajectory prediction
+- Homemade cockpit interior model and retextured F16 mesh using substance painter
 
 # Download
 
@@ -22,16 +23,19 @@ Check the [release](https://github.com/PierreEVEN/Scuffly/releases) tab to get t
 
 # Media
 
-Dogfight
+Startup and dogfight gameplay
 
 [![vol de jour](https://img.youtube.com/vi/mo5any4fGz0/0.jpg)](https://youtu.be/mo5any4fGz0)
 
-Night flight
+Night flight.
 
 [![comme de nuit !](https://img.youtube.com/vi/tEoloqOIR44/0.jpg)](https://youtu.be/tEoloqOIR44)
 
+GPU-side procedural landscape generator
 
 [![comme de nuit !](https://img.youtube.com/vi/nXM0JXUwFlM/0.jpg)](https://youtu.be/nXM0JXUwFlM)
+
+Dial generator using custom shader
 
 [![comme de nuit !](https://img.youtube.com/vi/01ZYdLhIbMQ/0.jpg)](https://youtu.be/01ZYdLhIbMQ)
  
