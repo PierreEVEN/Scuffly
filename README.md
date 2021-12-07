@@ -33,7 +33,6 @@ Check the [release](https://github.com/PierreEVEN/Scuffly/releases) tab to get t
 
 [![comme de nuit !](https://img.youtube.com/vi/01ZYdLhIbMQ/0.jpg)](https://youtu.be/01ZYdLhIbMQ)
 > Dial generator using custom shader
- 
 
 
 ## Licence
@@ -43,7 +42,10 @@ However I do not authorize any use of all the content of the project for commerc
 
 I keep this github repository public for all of those who would like to see how it's done :)
 
-## Credits
+## Used softwares and external tools
 
 - [Unity3D](https://unity3d.com/)
-- [Amplifyimpostor](http://amplify.pt/unity/amplify-impostors/)
+- [Blender](https://www.blender.org/)
+- [Substance painter](https://www.substance3d.com/)
+- [Wwise](https://www.audiokinetic.com/fr/products/wwise/)
+- [Amplify impostor](http://amplify.pt/unity/amplify-impostors/)
