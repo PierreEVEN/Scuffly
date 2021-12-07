@@ -1,10 +1,9 @@
 # The project
-- **Description** : Scuffly is a "basic" flight simulator where you can pilot a F16.
- You can fight agains AIs 
-- **Duration** : 2 months
+- **Description** : Scuffly is a "small" flight simulator where you can pilot a F16. A part of the weapon system is implemented, and you can fight against AIs
+- **Dev duration** : 2 months
 - **Game engine** : Unity 2021
 - **Context** : This project was realized for the "3D game engine" course of my 3rd year of Licence at the university of Strasbourg.
-- **Objectives** : Learn how to use Unity (It was the first time I installed Unity).
+- **Objectives** : Learn how to use Unity (It was the first time I tried it).
 
 # Features
 
@@ -23,20 +22,16 @@ Check the [release](https://github.com/PierreEVEN/Scuffly/releases) tab to get t
 
 # Media
 
-Startup and dogfight gameplay
-
+> Startup and dogfight gameplay
 [![vol de jour](https://img.youtube.com/vi/mo5any4fGz0/0.jpg)](https://youtu.be/mo5any4fGz0)
 
-Night flight.
-
+> Night flight.
 [![comme de nuit !](https://img.youtube.com/vi/tEoloqOIR44/0.jpg)](https://youtu.be/tEoloqOIR44)
 
-GPU-side procedural landscape generator
-
+> GPU-side procedural landscape generator
 [![comme de nuit !](https://img.youtube.com/vi/nXM0JXUwFlM/0.jpg)](https://youtu.be/nXM0JXUwFlM)
 
-Dial generator using custom shader
-
+> Dial generator using custom shader
 [![comme de nuit !](https://img.youtube.com/vi/01ZYdLhIbMQ/0.jpg)](https://youtu.be/01ZYdLhIbMQ)
  
 
