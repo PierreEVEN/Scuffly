@@ -31,8 +31,8 @@ Check the [release](https://github.com/PierreEVEN/Scuffly/releases) tab to get t
 > GPU-side procedural landscape generator
 [![comme de nuit !](https://img.youtube.com/vi/nXM0JXUwFlM/0.jpg)](https://youtu.be/nXM0JXUwFlM)
 
-> Dial generator using custom shader
 [![comme de nuit !](https://img.youtube.com/vi/01ZYdLhIbMQ/0.jpg)](https://youtu.be/01ZYdLhIbMQ)
+> Dial generator using custom shader
  
 
 
