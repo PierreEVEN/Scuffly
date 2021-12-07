@@ -9,7 +9,7 @@
 
 ## Download
 
-Check the release tab to get the latest build !
+Check the [release](https://github.com/PierreEVEN/Scuffly/releases) tab to get the latest build !
 
 ## Media
 
