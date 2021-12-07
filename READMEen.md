@@ -22,14 +22,14 @@ Check the [release](https://github.com/PierreEVEN/Scuffly/releases) tab to get t
 
 # Media
 
-> Startup and dogfight gameplay
 [![vol de jour](https://img.youtube.com/vi/mo5any4fGz0/0.jpg)](https://youtu.be/mo5any4fGz0)
+> Startup and dogfight gameplay
 
-> Night flight.
 [![comme de nuit !](https://img.youtube.com/vi/tEoloqOIR44/0.jpg)](https://youtu.be/tEoloqOIR44)
+> Night flight.
 
-> GPU-side procedural landscape generator
 [![comme de nuit !](https://img.youtube.com/vi/nXM0JXUwFlM/0.jpg)](https://youtu.be/nXM0JXUwFlM)
+> GPU-side procedural landscape generator
 
 [![comme de nuit !](https://img.youtube.com/vi/01ZYdLhIbMQ/0.jpg)](https://youtu.be/01ZYdLhIbMQ)
 > Dial generator using custom shader
