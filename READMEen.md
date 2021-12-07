@@ -7,15 +7,20 @@
 - **Objectives** : Learn how to use Unity (It was the first time I installed Unity).
 
 
-## Demo
+## Download
 
 Check the release tab to get the latest build !
 
-Here is some videos
+## Media
 
-https://youtu.be/mo5any4fGz0
 
-https://youtu.be/tEoloqOIR44
+Dogfight
+[![vol de jour](https://img.youtube.com/vi/mo5any4fGz0/0.jpg)](https://youtu.be/mo5any4fGz0)
+
+Night flight
+[![comme de nuit !](https://img.youtube.com/vi/tEoloqOIR44/0.jpg)](https://youtu.be/tEoloqOIR44)
+
+comme de nuit !
 
 ## Licence
 
