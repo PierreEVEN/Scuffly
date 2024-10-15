@@ -1,0 +1,73 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+#include "AltitudeGenerator.cginc"
+#include "simplexNoiseGPU.cginc"
+
+struct ShouldSpawnTreeStruct
+{
+	float3 spawnPosition;
+	int shouldSpawn;
+};
+
+RWStructuredBuffer<ShouldSpawnTreeStruct> shouldSpawnTreeBuffer;
+
+float3 origin;
+float scale;
+int width;
+
+float minNormal;
+float maxNormal;
+
+float minAltitude;
+float maxAltitude;
+
+float2 rand_2_0004(in float2 uv)
+{
+	float noiseX = (frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453));
+	float noiseY = (frac(sin(dot(uv, float2(12.9898, 78.233) * 2.0)) * 43758.5453));
+	return float2(noiseX, noiseY);
+}
+
+
+[numthreads(1,1,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+		float3 pos = float3(origin.x + id.x * scale / width, 0, origin.z + id.y * scale / width);
+
+		pos.xz += float2(snoise(pos.xz), snoise(-pos.xz * 8.897 + float2(489,878465))) * scale / width * 2;
+	
+		float foliageWeight = 1;
+	
+		ApplyModifierAtPosition(pos.xz, foliageWeight, MODE_FOLIAGE_MASK);
+
+		if (foliageWeight < 0.5)
+		{
+			shouldSpawnTreeBuffer[id.x + id.y * width].shouldSpawn = 0;
+			return;
+		}
+	
+		pos.y = GetAltitudeAtLocation(pos.xz);
+
+
+		if (pos.y > maxAltitude || pos.y < minAltitude)
+		{
+			shouldSpawnTreeBuffer[id.x + id.y * width].shouldSpawn = 0;
+			return;
+		}
+		
+		// Per vertex normal
+		float altX = max(0, GetAltitudeAtLocation(pos.xz + float2(1, 0)));
+		float altZ = max(0, GetAltitudeAtLocation(pos.xz + float2(0, 1)));
+		float3 normal = normalize(cross(float3(-1, altX - pos.y, 0), float3(0, altZ - pos.y, 1)));
+
+		if (normal.y > maxNormal || normal.y < minNormal)
+		{
+			shouldSpawnTreeBuffer[id.x + id.y * width].shouldSpawn = 0;
+			return;
+		}
+	
+
+		shouldSpawnTreeBuffer[id.x + id.y * width].spawnPosition = pos;
+		shouldSpawnTreeBuffer[id.x + id.y * width].shouldSpawn = true;
+}

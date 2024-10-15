@@ -1,0 +1,61 @@
+Event	ID	Name			Wwise Object Path	Notes
+	40605965	StopCockpitSound			\Misc\StopCockpitSound	
+	413545259	PlayMenuMusic			\Misc\PlayMenuMusic	
+	442666337	StopStartEngine			\F110Engine\StopStartEngine	
+	598009201	ToggleSwitch			\Misc\ToggleSwitch	
+	772970040	StopIRTone			\Misc\StopIRTone	
+	867514771	PlayStartEngine			\F110Engine\PlayStartEngine	
+	938323147	StopStopAPU			\APU\StopStopAPU	
+	951709393	PlayStopEngine			\F110Engine\PlayStopEngine	
+	998656301	SeekStartAPU			\APU\SeekStartAPU	
+	1067507083	PlayCockpitSound			\Misc\PlayCockpitSound	
+	1973898857	StopMenuMusic			\Misc\StopMenuMusic	
+	1974938279	PlayIdleEngine			\F110Engine\PlayIdleEngine	
+	2282830790	PlayIRtone			\Misc\PlayIRtone	
+	2696387503	PlayIdleAPU			\APU\PlayIdleAPU	
+	2945760987	StopStopEngine			\F110Engine\StopStopEngine	
+	3110430665	StopIdleEngine			\F110Engine\StopIdleEngine	
+	3128064251	PlayCanopy			\Misc\PlayCanopy	
+	3298093305	PlayStopAPU			\APU\PlayStopAPU	
+	3342624803	PlayStartAPU			\APU\PlayStartAPU	
+	3503700753	StopIdleAPU			\APU\StopIdleAPU	
+	3722299613	StopCanopy			\Misc\StopCanopy	
+	3766535255	SeekStopAPU			\APU\SeekStopAPU	
+	3974827210	PlaneExplosion			\Misc\PlaneExplosion	
+	4294679785	StopStartAPU			\APU\StopStartAPU	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	577745166	CanopySpeed			\Default Work Unit\CanopySpeed	
+	634056083	IRFoundState			\Default Work Unit\IRFoundState	
+	949998751	EngineStartVolume			\Default Work Unit\EngineStartVolume	
+	1240670792	Distance			\Default Work Unit\Distance	
+	1522466203	EngineIdleVolume			\Default Work Unit\EngineIdleVolume	
+	1786260118	MenuVolume			\Default Work Unit\MenuVolume	
+	3060638953	EngineStopVolume			\Default Work Unit\EngineStopVolume	
+	3156709873	EngineStatus			\Default Work Unit\EngineStatus	
+	3906868357	EngineStartupPercent			\Default Work Unit\EngineStartupPercent	
+	4188011570	CockpitLevel			\Default Work Unit\CockpitLevel	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	205787666	f110Acceleration_1	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Acceleration_1_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_1		1063790
+	261906621	f110Acceleration_0	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Acceleration_0_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_0		774206
+	272649227	f110Acceleration_2	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Acceleration_2_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_2		1067858
+	319507435	F16-IdleOutside	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\F16-IdleOutside_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\F16-IdleOutside		2097216
+	370917366	SwitchToggle	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\SwitchToggle_10C4C929.wem		\Actor-Mixer Hierarchy\Switch\SwitchToggle		12864
+	446192538	f110Acceleration_3	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Acceleration_3_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_3		1043412
+	484202815	PlaneExplode	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\PlaneExplode_10C4C929.wem		\Actor-Mixer Hierarchy\PlaneExplosion\PlaneExplode		2591280
+	533190637	F16APUIdle	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\F16APUIdle_D79FB2B7.wem		\Actor-Mixer Hierarchy\APUEngine\F16APUIdle		718912
+	574803911	F16APUDeceleration	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\F16APUDeceleration_10C4C929.wem		\Actor-Mixer Hierarchy\APUEngine\F16APUDeceleration		844864
+	610720522	PowerCockpitAudio	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\PowerCockpitAudio_D79FB2B7.wem		\Actor-Mixer Hierarchy\CockpitPower\PowerCockpitAudio		1732672
+	657079121	f110ShutDown	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110ShutDown_10C4C929.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Stop\f110ShutDown		7774268
+	658027025	WindTunnel	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\WindTunnel_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\WindTunnel		4464704
+	660309497	f110Acceleration_5	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Acceleration_5_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_5		835642
+	680286370	aim9SearchTone	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\aim9SearchTone_D79FB2B7.wem		\Actor-Mixer Hierarchy\Aim9SearchTone\aim9SearchTone		2182448
+	720232343	CanopyClose	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\CanopyClose_D79FB2B7.wem		\Actor-Mixer Hierarchy\CanopyClose\CanopyClose		1437760
+	770591842	f110Acceleration_4	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Acceleration_4_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16Close\f110Acceleration_4		1035260
+	820349579	f110Startup	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\f110Startup_10C4C929.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Start\f110Startup		8142912
+	875417865	F16-OutsideMax	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\F16-OutsideMax_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16-OutsideMax		1114176
+	937112477	AudioMenu	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\AudioMenu_D79FB2B7.wem		\Actor-Mixer Hierarchy\MenuMusic\AudioMenu		19808064
+	996229628	F16-Far	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\F16-Far_D79FB2B7.wem		\Actor-Mixer Hierarchy\F110JetEngine\F110Thrust\F16-Far		3457088
+	1055176387	F16APUAcceleration	C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Mac\SFX\F16APUAcceleration_10C4C929.wem		\Actor-Mixer Hierarchy\APUEngine\F16APUAcceleration		1495104
+

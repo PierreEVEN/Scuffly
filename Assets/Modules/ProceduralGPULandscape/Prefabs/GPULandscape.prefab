@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5051153286851261410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7846937711667370694}
+  - component: {fileID: 5935356414139861301}
+  - component: {fileID: 7591434079210785112}
+  m_Layer: 0
+  m_Name: GPULandscape
+  m_TagString: GPULandscape
+  m_Icon: {fileID: 2800000, guid: 6d952abfb4efbb942aaf86f1d0810952, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7846937711667370694
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051153286851261410}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5935356414139861301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051153286851261410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04e19d6d30d4354bb49b227de6a4d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sectionLoadDistance: 4
+  meshDensity: 91
+  SectionWidth: 15000
+  maxSubdivisionLevel: 4
+  subdivisionThreshold: 500
+  landscape_material: {fileID: 2100000, guid: 89cb3386caa9f3d418e4d0b9f526ccfc, type: 2}
+  HeightMaskCompute: {fileID: 7200000, guid: 3a302af1a714324488752295eaf005ef, type: 3}
+  landscapePhysicGetter: {fileID: 7200000, guid: 11d7c7686b16f7445b819f6e0c796ce2, type: 3}
+  enablePhysicUpdates: 1
+  Reset: 0
+  currentGroundHeight: -9.405855
+--- !u!114 &7591434079210785112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051153286851261410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90788d5ddd51134fbb23362ce62ade1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LodLevels:
+  - 8069
+  - 5199
+  foliageAssets:
+  - {fileID: 11400000, guid: c01fd3a53943b4a4ca856e243adc55c3, type: 2}
+  sectionLoadDistance: 2
+  densityMultiplier: 1
+  SectionWidth: 7565
+  generationShader: {fileID: 7200000, guid: 3fc1feccff8bb5445bd79c44d674c68c, type: 3}
+  matrixbuildShader: {fileID: 7200000, guid: a10232278c5a530459fa1002c31ffa8f, type: 3}
+  Reset: 1
+  FreezeGeneration: 0
+  DrawDebugBounds: 0
+  CameraPosition: {x: 961.19653, y: 1130.0355, z: 2151.007}

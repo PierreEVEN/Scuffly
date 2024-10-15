@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" SchemaVersion="103">
+	<Events>
+		<WorkUnit Name="APU" ID="{1CEA3C4C-4A32-4D15-A08A-51CB6172B873}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="PlayStartAPU" ID="{16301B9E-77D9-466F-BE15-36B3E829BF5D}">
+					<ChildrenList>
+						<Action Name="" ID="{8DB726FE-B709-406C-A64F-EB45E953529F}" ShortID="931034788">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F16APUAcceleration" ID="{925478C8-EEA0-40D0-8A83-412CF4DC3F9D}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="PlayStopAPU" ID="{45733E9D-626F-4072-9C1B-BA6129E6D4D4}">
+					<ChildrenList>
+						<Action Name="" ID="{3B68C685-99AB-414B-885D-2660AF7D801B}" ShortID="207406934">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F16APUDeceleration" ID="{9DDA927D-86AE-482E-8766-8568B331A654}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopStartAPU" ID="{C43036A0-C1F4-49B8-AF68-C4DA45FDD95C}">
+					<ChildrenList>
+						<Action Name="" ID="{62DB5404-7CEB-46C3-8E71-C88FBC7A5AB3}" ShortID="69070850">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F16APUAcceleration" ID="{925478C8-EEA0-40D0-8A83-412CF4DC3F9D}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopStopAPU" ID="{FEBBE0DF-ACE0-4C63-A3B2-0386F6034ABB}">
+					<ChildrenList>
+						<Action Name="" ID="{F955BF39-E67F-4B98-AD31-D451117152F5}" ShortID="705525585">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F16APUDeceleration" ID="{9DDA927D-86AE-482E-8766-8568B331A654}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="SeekStartAPU" ID="{31EFD2D8-9420-421C-8D07-42B95C25ADF8}">
+					<ChildrenList>
+						<Action Name="" ID="{018675D9-D237-4D93-8385-CEBB2AD37197}" ShortID="203495219">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="36"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F16APUAcceleration" ID="{925478C8-EEA0-40D0-8A83-412CF4DC3F9D}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="SeekStopAPU" ID="{448BCB7A-2717-4543-BD29-4252913AF92F}">
+					<ChildrenList>
+						<Action Name="" ID="{DA19679A-22DA-4B93-B067-09780E9D482B}" ShortID="600554605">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="36"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F16APUDeceleration" ID="{9DDA927D-86AE-482E-8766-8568B331A654}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="PlayIdleAPU" ID="{3760E501-1CE9-4FF4-932E-1D77CD218EE4}">
+					<ChildrenList>
+						<Action Name="" ID="{9BEF55FE-FCB1-4FF7-B0E3-342C7596311A}" ShortID="591019633">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F16APUIdle" ID="{62076863-22BC-4277-A631-8C93DAEB98F3}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopIdleAPU" ID="{4F2F988D-0017-40FA-8EE7-3D4234BFF15C}">
+					<ChildrenList>
+						<Action Name="" ID="{5E82E7BB-8295-4FB6-9FE7-0A1D4E2C3E0A}" ShortID="264690330">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F16APUIdle" ID="{62076863-22BC-4277-A631-8C93DAEB98F3}" WorkUnitID="{513286D8-B878-4044-A704-7E5BB6B3B3E0}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

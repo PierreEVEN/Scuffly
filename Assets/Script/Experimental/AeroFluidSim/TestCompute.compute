@@ -1,0 +1,46 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Debug;
+RWTexture3D<float4> From;
+RWTexture3D<float4> To;
+bool INIT;
+float Time;
+
+/*
+ * Velocity = x;
+ * Velocity = y;
+ * Velocity = z;
+ * amount = w;
+ */
+
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	if (id.x == 100 - 1 && abs(id.y - 50) <  20)
+		To[id.xyz] = float4(0, 0, 0, 100);
+	else
+	{
+		float current_value = From[id.xyz].w;
+		for (int i = -1; i <= 1; ++i) {
+			for (int j = -1; j <= 1; ++j)
+			{
+				float neighValue;
+				if (id.x + i < 0 || id.x + i >= 100 || id.y + j < 0 || id.y + j >= 100)
+					neighValue = 0;
+				else
+					neighValue = From[float3(id.x + i, id.y + j, id.z)].w;
+
+							
+				current_value += (neighValue - current_value) * 0.1;
+			}			
+		}
+		To[id.xyz] = float4(0, 0, 0, current_value);
+	}
+	
+	if (id.z == 3)
+		Debug[id.xy] = To[float3(id.x, id.y, 3)].w / 500.0;
+}

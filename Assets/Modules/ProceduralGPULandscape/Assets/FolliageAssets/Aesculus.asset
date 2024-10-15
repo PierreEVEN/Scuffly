@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0344a066be3a8164ba2c7280ef49da81, type: 3}
+  m_Name: Aesculus
+  m_EditorClassIdentifier: 
+  MinSpawnLevel: 1
+  MaxSpawnLevel: 2
+  DensityPerLevel: 50
+  minNormal: 0.99
+  maxNormal: 1
+  minAltitude: 10
+  maxAltitude: 3000
+  spawnedMesh: {fileID: -167957832500804171, guid: 60466dc69bb253446b16851968f155d8, type: 2}
+  usedMaterial: {fileID: -4940378418814771883, guid: 60466dc69bb253446b16851968f155d8, type: 2}

@@ -1,0 +1,33 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+struct ShouldSpawnTreeStruct
+{
+	float3 spawnPosition;
+	int shouldSpawn;
+};
+
+RWStructuredBuffer<float4x4> treeMatrices;
+RWStructuredBuffer<int> proceduralDrawArgs;
+RWStructuredBuffer<ShouldSpawnTreeStruct> shouldSpawnTreeBuffer;
+int elemCount;
+
+[numthreads(1, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	int index = 0;
+
+	for (int i = 0; i < elemCount; ++i)
+	{
+		if (shouldSpawnTreeBuffer[i].shouldSpawn) {
+			float3 pos = shouldSpawnTreeBuffer[i].spawnPosition;
+			treeMatrices[index++] = float4x4(
+				1, 0, 0, pos.x,
+				0, 1, 0, pos.y,
+				0, 0, 1, pos.z,
+				0, 0, 0, 1
+				);
+		}
+	}
+	proceduralDrawArgs[1] = index;
+}

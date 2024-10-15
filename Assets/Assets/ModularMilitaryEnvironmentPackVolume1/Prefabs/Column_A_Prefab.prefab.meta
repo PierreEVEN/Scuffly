@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: ed2a202b1a28ed14d9e9bd5f5210183e
+labels:
+- environment
+- industrial
+- military
+- urban
+- modular
+- building
+- pack
+- art
+- profi
+- developers
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

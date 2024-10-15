@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
+	<RootPaths>
+		<ProjectRoot>C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>C:\Users\pierre\Documents\projects\Scuffly\Scuffly_WwiseProject\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX" Hash="1025245706">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="3331313354" Language="SFX" Hash="1010780112">
+			<ObjectPath>\SoundBanks\Default Work Unit\TestSB</ObjectPath>
+			<ShortName>TestSB</ShortName>
+			<Path>TestSB.bnk</Path>
+			<IncludedEvents>
+				<Event Id="3974827210" Name="PlaneExplosion" ObjectPath="\Events\Misc\PlaneExplosion" MaxAttenuation="3000.000000">
+					<IncludedMemoryFiles>
+						<File Id="484202815" Language="SFX">
+							<ShortName>PlaneExplode.wav</ShortName>
+							<Path>SFX\PlaneExplode_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3128064251" Name="PlayCanopy" ObjectPath="\Events\Misc\PlayCanopy" MaxAttenuation="100.000000">
+					<IncludedMemoryFiles>
+						<File Id="720232343" Language="SFX">
+							<ShortName>CanopyClose.wav</ShortName>
+							<Path>SFX\CanopyClose_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1067507083" Name="PlayCockpitSound" ObjectPath="\Events\Misc\PlayCockpitSound" MaxAttenuation="100.000000">
+					<IncludedMemoryFiles>
+						<File Id="610720522" Language="SFX">
+							<ShortName>PowerCockpitAudio.wav</ShortName>
+							<Path>SFX\PowerCockpitAudio_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2696387503" Name="PlayIdleAPU" ObjectPath="\Events\APU\PlayIdleAPU" MaxAttenuation="400.000000">
+					<IncludedMemoryFiles>
+						<File Id="533190637" Language="SFX">
+							<ShortName>F16APUIdle.wav</ShortName>
+							<Path>SFX\F16APUIdle_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1974938279" Name="PlayIdleEngine" ObjectPath="\Events\F110Engine\PlayIdleEngine" MaxAttenuation="3000.000000">
+					<IncludedMemoryFiles>
+						<File Id="205787666" Language="SFX">
+							<ShortName>f110Acceleration_1.wav</ShortName>
+							<Path>SFX\f110Acceleration_1_D79FB2B7.wem</Path>
+						</File>
+						<File Id="261906621" Language="SFX">
+							<ShortName>f110Acceleration_0.wav</ShortName>
+							<Path>SFX\f110Acceleration_0_D79FB2B7.wem</Path>
+						</File>
+						<File Id="272649227" Language="SFX">
+							<ShortName>f110Acceleration_2.wav</ShortName>
+							<Path>SFX\f110Acceleration_2_D79FB2B7.wem</Path>
+						</File>
+						<File Id="319507435" Language="SFX">
+							<ShortName>F16-IdleOutside.wav</ShortName>
+							<Path>SFX\F16-IdleOutside_D79FB2B7.wem</Path>
+						</File>
+						<File Id="446192538" Language="SFX">
+							<ShortName>f110Acceleration_3.wav</ShortName>
+							<Path>SFX\f110Acceleration_3_D79FB2B7.wem</Path>
+						</File>
+						<File Id="658027025" Language="SFX">
+							<ShortName>WindTunnel.wav</ShortName>
+							<Path>SFX\WindTunnel_D79FB2B7.wem</Path>
+						</File>
+						<File Id="660309497" Language="SFX">
+							<ShortName>f110Acceleration_5.wav</ShortName>
+							<Path>SFX\f110Acceleration_5_D79FB2B7.wem</Path>
+						</File>
+						<File Id="770591842" Language="SFX">
+							<ShortName>f110Acceleration_4.wav</ShortName>
+							<Path>SFX\f110Acceleration_4_D79FB2B7.wem</Path>
+						</File>
+						<File Id="875417865" Language="SFX">
+							<ShortName>F16-OutsideMax.wav</ShortName>
+							<Path>SFX\F16-OutsideMax_D79FB2B7.wem</Path>
+						</File>
+						<File Id="996229628" Language="SFX">
+							<ShortName>F16-Far.wav</ShortName>
+							<Path>SFX\F16-Far_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2282830790" Name="PlayIRtone" ObjectPath="\Events\Misc\PlayIRtone">
+					<IncludedMemoryFiles>
+						<File Id="680286370" Language="SFX">
+							<ShortName>aim9SearchTone.wav</ShortName>
+							<Path>SFX\aim9SearchTone_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="413545259" Name="PlayMenuMusic" ObjectPath="\Events\Misc\PlayMenuMusic">
+					<IncludedMemoryFiles>
+						<File Id="937112477" Language="SFX">
+							<ShortName>AudioMenu.wav</ShortName>
+							<Path>SFX\AudioMenu_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3342624803" Name="PlayStartAPU" ObjectPath="\Events\APU\PlayStartAPU" MaxAttenuation="400.000000">
+					<IncludedMemoryFiles>
+						<File Id="1055176387" Language="SFX">
+							<ShortName>F16APUAcceleration.wav</ShortName>
+							<Path>SFX\F16APUAcceleration_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="867514771" Name="PlayStartEngine" ObjectPath="\Events\F110Engine\PlayStartEngine" MaxAttenuation="3000.000000">
+					<IncludedMemoryFiles>
+						<File Id="319507435" Language="SFX">
+							<ShortName>F16-IdleOutside.wav</ShortName>
+							<Path>SFX\F16-IdleOutside_D79FB2B7.wem</Path>
+						</File>
+						<File Id="820349579" Language="SFX">
+							<ShortName>f110Startup.wav</ShortName>
+							<Path>SFX\f110Startup_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3298093305" Name="PlayStopAPU" ObjectPath="\Events\APU\PlayStopAPU" MaxAttenuation="400.000000">
+					<IncludedMemoryFiles>
+						<File Id="574803911" Language="SFX">
+							<ShortName>F16APUDeceleration.wav</ShortName>
+							<Path>SFX\F16APUDeceleration_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="951709393" Name="PlayStopEngine" ObjectPath="\Events\F110Engine\PlayStopEngine" MaxAttenuation="3000.000000">
+					<IncludedMemoryFiles>
+						<File Id="319507435" Language="SFX">
+							<ShortName>F16-IdleOutside.wav</ShortName>
+							<Path>SFX\F16-IdleOutside_D79FB2B7.wem</Path>
+						</File>
+						<File Id="657079121" Language="SFX">
+							<ShortName>f110ShutDown.wav</ShortName>
+							<Path>SFX\f110ShutDown_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="998656301" Name="SeekStartAPU" ObjectPath="\Events\APU\SeekStartAPU" MaxAttenuation="0.000000"/>
+				<Event Id="3766535255" Name="SeekStopAPU" ObjectPath="\Events\APU\SeekStopAPU" MaxAttenuation="0.000000"/>
+				<Event Id="3722299613" Name="StopCanopy" ObjectPath="\Events\Misc\StopCanopy" MaxAttenuation="0.000000"/>
+				<Event Id="40605965" Name="StopCockpitSound" ObjectPath="\Events\Misc\StopCockpitSound" MaxAttenuation="0.000000"/>
+				<Event Id="3503700753" Name="StopIdleAPU" ObjectPath="\Events\APU\StopIdleAPU" MaxAttenuation="0.000000"/>
+				<Event Id="3110430665" Name="StopIdleEngine" ObjectPath="\Events\F110Engine\StopIdleEngine" MaxAttenuation="0.000000"/>
+				<Event Id="772970040" Name="StopIRTone" ObjectPath="\Events\Misc\StopIRTone" MaxAttenuation="0.000000"/>
+				<Event Id="1973898857" Name="StopMenuMusic" ObjectPath="\Events\Misc\StopMenuMusic" MaxAttenuation="0.000000"/>
+				<Event Id="4294679785" Name="StopStartAPU" ObjectPath="\Events\APU\StopStartAPU" MaxAttenuation="0.000000"/>
+				<Event Id="442666337" Name="StopStartEngine" ObjectPath="\Events\F110Engine\StopStartEngine" MaxAttenuation="0.000000"/>
+				<Event Id="938323147" Name="StopStopAPU" ObjectPath="\Events\APU\StopStopAPU" MaxAttenuation="0.000000"/>
+				<Event Id="2945760987" Name="StopStopEngine" ObjectPath="\Events\F110Engine\StopStopEngine" MaxAttenuation="0.000000"/>
+				<Event Id="598009201" Name="ToggleSwitch" ObjectPath="\Events\Misc\ToggleSwitch" MaxAttenuation="100.000000">
+					<IncludedMemoryFiles>
+						<File Id="370917366" Language="SFX">
+							<ShortName>SwitchToggle.wav</ShortName>
+							<Path>SFX\SwitchToggle_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="205787666" Language="SFX">
+					<ShortName>f110Acceleration_1.wav</ShortName>
+					<Path>SFX\f110Acceleration_1_D79FB2B7.wem</Path>
+				</File>
+				<File Id="261906621" Language="SFX">
+					<ShortName>f110Acceleration_0.wav</ShortName>
+					<Path>SFX\f110Acceleration_0_D79FB2B7.wem</Path>
+				</File>
+				<File Id="272649227" Language="SFX">
+					<ShortName>f110Acceleration_2.wav</ShortName>
+					<Path>SFX\f110Acceleration_2_D79FB2B7.wem</Path>
+				</File>
+				<File Id="319507435" Language="SFX">
+					<ShortName>F16-IdleOutside.wav</ShortName>
+					<Path>SFX\F16-IdleOutside_D79FB2B7.wem</Path>
+				</File>
+				<File Id="370917366" Language="SFX">
+					<ShortName>SwitchToggle.wav</ShortName>
+					<Path>SFX\SwitchToggle_10C4C929.wem</Path>
+				</File>
+				<File Id="446192538" Language="SFX">
+					<ShortName>f110Acceleration_3.wav</ShortName>
+					<Path>SFX\f110Acceleration_3_D79FB2B7.wem</Path>
+				</File>
+				<File Id="484202815" Language="SFX">
+					<ShortName>PlaneExplode.wav</ShortName>
+					<Path>SFX\PlaneExplode_10C4C929.wem</Path>
+				</File>
+				<File Id="533190637" Language="SFX">
+					<ShortName>F16APUIdle.wav</ShortName>
+					<Path>SFX\F16APUIdle_D79FB2B7.wem</Path>
+				</File>
+				<File Id="574803911" Language="SFX">
+					<ShortName>F16APUDeceleration.wav</ShortName>
+					<Path>SFX\F16APUDeceleration_10C4C929.wem</Path>
+				</File>
+				<File Id="610720522" Language="SFX">
+					<ShortName>PowerCockpitAudio.wav</ShortName>
+					<Path>SFX\PowerCockpitAudio_D79FB2B7.wem</Path>
+				</File>
+				<File Id="657079121" Language="SFX">
+					<ShortName>f110ShutDown.wav</ShortName>
+					<Path>SFX\f110ShutDown_10C4C929.wem</Path>
+				</File>
+				<File Id="658027025" Language="SFX">
+					<ShortName>WindTunnel.wav</ShortName>
+					<Path>SFX\WindTunnel_D79FB2B7.wem</Path>
+				</File>
+				<File Id="660309497" Language="SFX">
+					<ShortName>f110Acceleration_5.wav</ShortName>
+					<Path>SFX\f110Acceleration_5_D79FB2B7.wem</Path>
+				</File>
+				<File Id="680286370" Language="SFX">
+					<ShortName>aim9SearchTone.wav</ShortName>
+					<Path>SFX\aim9SearchTone_D79FB2B7.wem</Path>
+				</File>
+				<File Id="720232343" Language="SFX">
+					<ShortName>CanopyClose.wav</ShortName>
+					<Path>SFX\CanopyClose_D79FB2B7.wem</Path>
+				</File>
+				<File Id="770591842" Language="SFX">
+					<ShortName>f110Acceleration_4.wav</ShortName>
+					<Path>SFX\f110Acceleration_4_D79FB2B7.wem</Path>
+				</File>
+				<File Id="820349579" Language="SFX">
+					<ShortName>f110Startup.wav</ShortName>
+					<Path>SFX\f110Startup_10C4C929.wem</Path>
+				</File>
+				<File Id="875417865" Language="SFX">
+					<ShortName>F16-OutsideMax.wav</ShortName>
+					<Path>SFX\F16-OutsideMax_D79FB2B7.wem</Path>
+				</File>
+				<File Id="996229628" Language="SFX">
+					<ShortName>F16-Far.wav</ShortName>
+					<Path>SFX\F16-Far_D79FB2B7.wem</Path>
+				</File>
+				<File Id="1055176387" Language="SFX">
+					<ShortName>F16APUAcceleration.wav</ShortName>
+					<Path>SFX\F16APUAcceleration_10C4C929.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+			<GameParameters>
+				<GameParameter Id="577745166" Name="CanopySpeed" ObjectPath="\Game Parameters\Default Work Unit\CanopySpeed"/>
+				<GameParameter Id="634056083" Name="IRFoundState" ObjectPath="\Game Parameters\Default Work Unit\IRFoundState"/>
+				<GameParameter Id="949998751" Name="EngineStartVolume" ObjectPath="\Game Parameters\Default Work Unit\EngineStartVolume"/>
+				<GameParameter Id="1240670792" Name="Distance" ObjectPath="\Game Parameters\Default Work Unit\Distance"/>
+				<GameParameter Id="1522466203" Name="EngineIdleVolume" ObjectPath="\Game Parameters\Default Work Unit\EngineIdleVolume"/>
+				<GameParameter Id="1786260118" Name="MenuVolume" ObjectPath="\Game Parameters\Default Work Unit\MenuVolume"/>
+				<GameParameter Id="3060638953" Name="EngineStopVolume" ObjectPath="\Game Parameters\Default Work Unit\EngineStopVolume"/>
+				<GameParameter Id="3156709873" Name="EngineStatus" ObjectPath="\Game Parameters\Default Work Unit\EngineStatus"/>
+				<GameParameter Id="3906868357" Name="EngineStartupPercent" ObjectPath="\Game Parameters\Default Work Unit\EngineStartupPercent"/>
+				<GameParameter Id="4188011570" Name="CockpitLevel" ObjectPath="\Game Parameters\Default Work Unit\CockpitLevel"/>
+			</GameParameters>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

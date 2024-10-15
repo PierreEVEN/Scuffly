@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{EC051534-6483-47BB-9C7E-FC60DD5EE35C}" SchemaVersion="103">
+	<Events>
+		<WorkUnit Name="F110Engine" ID="{EC051534-6483-47BB-9C7E-FC60DD5EE35C}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="PlayIdleEngine" ID="{D4C8B8C0-BDB4-4866-B816-F8E97BDC1489}">
+					<ChildrenList>
+						<Action Name="" ID="{D369369D-4E4B-4D56-830B-2D2A75D744D4}" ShortID="822336852">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F110Thrust" ID="{2E7DB56C-036F-414B-AAB7-CA1819A1D517}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="PlayStartEngine" ID="{2DC296F8-95C6-4FA4-A720-CEB9BBB25057}">
+					<ChildrenList>
+						<Action Name="" ID="{EBFB2807-3E32-41B7-B53A-04970C8C9C88}" ShortID="246238767">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F110Start" ID="{EE1A007E-FFA7-4A83-8EF0-717F42B3F912}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="PlayStopEngine" ID="{5896DDB1-3860-44D5-AA54-9C77BF10B534}">
+					<ChildrenList>
+						<Action Name="" ID="{ADC947F5-E6EC-44A8-8DD3-07ABEA23CA35}" ShortID="113737019">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F110Stop" ID="{FC43C201-4356-4E7F-9AC0-6E6CABC431F7}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopIdleEngine" ID="{515D1724-93FC-4E74-8986-F1C165C9DFFC}">
+					<ChildrenList>
+						<Action Name="" ID="{03E8238B-3C45-406E-86F4-98BE5BF9042F}" ShortID="516229413">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F110Thrust" ID="{2E7DB56C-036F-414B-AAB7-CA1819A1D517}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopStartEngine" ID="{877CB4E4-7119-4B15-A9E5-4DE8E97A8128}">
+					<ChildrenList>
+						<Action Name="" ID="{2302101E-9012-4593-A2A1-CFB331A191EE}" ShortID="523973845">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F110Start" ID="{EE1A007E-FFA7-4A83-8EF0-717F42B3F912}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="StopStopEngine" ID="{1E200ADB-588D-452D-BC81-80ADEA8396AC}">
+					<ChildrenList>
+						<Action Name="" ID="{3B53C87D-4287-492A-9514-24734FEF9490}" ShortID="707918927">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="F110Stop" ID="{FC43C201-4356-4E7F-9AC0-6E6CABC431F7}" WorkUnitID="{07A7A3E2-BF19-42FA-9053-0F40896B1363}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

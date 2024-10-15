@@ -1,0 +1,747 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95dfd1836aab24843b68bdf38b46208a, type: 3}
+  m_Name: AkWwiseProjectData
+  m_EditorClassIdentifier: 
+  AcousticTextureWwu:
+  - PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Virtual Acoustics
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 3d97b7924e543a41b38086837e566c2e
+    ParentPath: Virtual Acoustics\Default Work Unit
+    guid: 3d97b7924e543a41b38086837e566c2e
+    GuidInternal: 
+    m_lastTime: -8584988400281551194
+    List: []
+  AuxBusWwu:
+  - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Master-Mixer Hierarchy
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: feea8a16f771814eb40c5f1d60d8e531
+    ParentPath: Master-Mixer Hierarchy\Default Work Unit
+    guid: feea8a16f771814eb40c5f1d60d8e531
+    GuidInternal: 
+    m_lastTime: -8584988400284534611
+    List:
+    - name: Master Audio Bus
+      guid: d8a41415a61d2a41a17e75ca0c2149f3
+      id: 3803692087
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: feea8a16f771814eb40c5f1d60d8e531
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus
+  BankWwu:
+  - PhysicalPath: SoundBanks\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: SoundBanks
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 30fd23938bdd0f4d92e863f4145c1acc
+    ParentPath: SoundBanks\Default Work Unit
+    guid: 30fd23938bdd0f4d92e863f4145c1acc
+    GuidInternal: 
+    m_lastTime: -8584988400281578593
+    List:
+    - name: TestSB
+      guid: 4ffeca94bd54074a8e5063309778da14
+      id: 3331313354
+      PathAndIcons:
+      - ElementName: SoundBanks
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 30fd23938bdd0f4d92e863f4145c1acc
+      - ElementName: TestSB
+        ObjectType: 7
+        guid: 4ffeca94bd54074a8e5063309778da14
+      Path: SoundBanks\Default Work Unit\TestSB
+  EventWwu:
+  - PhysicalPath: Events\APU.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: APU
+      ObjectType: 12
+      guid: 4c3cea1c324a154da08a51cb6172b873
+    ParentPath: Events\APU
+    guid: 4c3cea1c324a154da08a51cb6172b873
+    GuidInternal: 
+    m_lastTime: -8584988400292478224
+    List:
+    - name: PlayIdleAPU
+      guid: 01e56037e91cf44f932e1d77cd218ee4
+      id: 2696387503
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: PlayIdleAPU
+        ObjectType: 3
+        guid: 01e56037e91cf44f932e1d77cd218ee4
+      Path: Events\APU\PlayIdleAPU
+      maxAttenuation: 400
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayStartAPU
+      guid: 9e1b3016d9776f46be1536b3e829bf5d
+      id: 3342624803
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: PlayStartAPU
+        ObjectType: 3
+        guid: 9e1b3016d9776f46be1536b3e829bf5d
+      Path: Events\APU\PlayStartAPU
+      maxAttenuation: 400
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayStopAPU
+      guid: 9d3e73456f6272409c1bba6129e6d4d4
+      id: 3298093305
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: PlayStopAPU
+        ObjectType: 3
+        guid: 9d3e73456f6272409c1bba6129e6d4d4
+      Path: Events\APU\PlayStopAPU
+      maxAttenuation: 400
+      maxDuration: -1
+      minDuration: -1
+    - name: SeekStartAPU
+      guid: d8d2ef3120941c428d0742b95c25adf8
+      id: 998656301
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: SeekStartAPU
+        ObjectType: 3
+        guid: d8d2ef3120941c428d0742b95c25adf8
+      Path: Events\APU\SeekStartAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: SeekStopAPU
+      guid: 7acb8b4417274345bd294252913af92f
+      id: 3766535255
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: SeekStopAPU
+        ObjectType: 3
+        guid: 7acb8b4417274345bd294252913af92f
+      Path: Events\APU\SeekStopAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopIdleAPU
+      guid: 8d982f4f1700fa408ee73d4234bff15c
+      id: 3503700753
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: StopIdleAPU
+        ObjectType: 3
+        guid: 8d982f4f1700fa408ee73d4234bff15c
+      Path: Events\APU\StopIdleAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopStartAPU
+      guid: a03630c4f4c1b849af68c4da45fdd95c
+      id: 4294679785
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: StopStartAPU
+        ObjectType: 3
+        guid: a03630c4f4c1b849af68c4da45fdd95c
+      Path: Events\APU\StopStartAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopStopAPU
+      guid: dfe0bbfee0ac634ca3b20386f6034abb
+      id: 938323147
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: APU
+        ObjectType: 12
+        guid: 4c3cea1c324a154da08a51cb6172b873
+      - ElementName: StopStopAPU
+        ObjectType: 3
+        guid: dfe0bbfee0ac634ca3b20386f6034abb
+      Path: Events\APU\StopStopAPU
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+  - PhysicalPath: Events\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: d670788d2bdfe249bb965a44b8b1ea61
+    ParentPath: Events\Default Work Unit
+    guid: d670788d2bdfe249bb965a44b8b1ea61
+    GuidInternal: 
+    m_lastTime: -8584988400292478224
+    List: []
+  - PhysicalPath: Events\F110Engine.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: F110Engine
+      ObjectType: 12
+      guid: 341505ec8364bb479c7efc60dd5ee35c
+    ParentPath: Events\F110Engine
+    guid: 341505ec8364bb479c7efc60dd5ee35c
+    GuidInternal: 
+    m_lastTime: -8584988400292468446
+    List:
+    - name: PlayIdleEngine
+      guid: c0b8c8d4b4bd6648b816f8e97bdc1489
+      id: 1974938279
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: F110Engine
+        ObjectType: 12
+        guid: 341505ec8364bb479c7efc60dd5ee35c
+      - ElementName: PlayIdleEngine
+        ObjectType: 3
+        guid: c0b8c8d4b4bd6648b816f8e97bdc1489
+      Path: Events\F110Engine\PlayIdleEngine
+      maxAttenuation: 3000
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayStartEngine
+      guid: f896c22dc695a44fa720ceb9bbb25057
+      id: 867514771
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: F110Engine
+        ObjectType: 12
+        guid: 341505ec8364bb479c7efc60dd5ee35c
+      - ElementName: PlayStartEngine
+        ObjectType: 3
+        guid: f896c22dc695a44fa720ceb9bbb25057
+      Path: Events\F110Engine\PlayStartEngine
+      maxAttenuation: 3000
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayStopEngine
+      guid: b1dd96586038d544aa549c77bf10b534
+      id: 951709393
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: F110Engine
+        ObjectType: 12
+        guid: 341505ec8364bb479c7efc60dd5ee35c
+      - ElementName: PlayStopEngine
+        ObjectType: 3
+        guid: b1dd96586038d544aa549c77bf10b534
+      Path: Events\F110Engine\PlayStopEngine
+      maxAttenuation: 3000
+      maxDuration: -1
+      minDuration: -1
+    - name: StopIdleEngine
+      guid: 24175d51fc93744e8986f1c165c9dffc
+      id: 3110430665
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: F110Engine
+        ObjectType: 12
+        guid: 341505ec8364bb479c7efc60dd5ee35c
+      - ElementName: StopIdleEngine
+        ObjectType: 3
+        guid: 24175d51fc93744e8986f1c165c9dffc
+      Path: Events\F110Engine\StopIdleEngine
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopStartEngine
+      guid: e4b47c871971154ba9e54de8e97a8128
+      id: 442666337
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: F110Engine
+        ObjectType: 12
+        guid: 341505ec8364bb479c7efc60dd5ee35c
+      - ElementName: StopStartEngine
+        ObjectType: 3
+        guid: e4b47c871971154ba9e54de8e97a8128
+      Path: Events\F110Engine\StopStartEngine
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopStopEngine
+      guid: db0a201e8d582d45bc8180adea8396ac
+      id: 2945760987
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: F110Engine
+        ObjectType: 12
+        guid: 341505ec8364bb479c7efc60dd5ee35c
+      - ElementName: StopStopEngine
+        ObjectType: 3
+        guid: db0a201e8d582d45bc8180adea8396ac
+      Path: Events\F110Engine\StopStopEngine
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+  - PhysicalPath: Events\Misc.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Misc
+      ObjectType: 12
+      guid: b9659cfef8d6a543827379191f5718ec
+    ParentPath: Events\Misc
+    guid: b9659cfef8d6a543827379191f5718ec
+    GuidInternal: 
+    m_lastTime: -8584988400292468446
+    List:
+    - name: PlaneExplosion
+      guid: 2ae09b84f994a74c8457c812f4dee887
+      id: 3974827210
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: PlaneExplosion
+        ObjectType: 3
+        guid: 2ae09b84f994a74c8457c812f4dee887
+      Path: Events\Misc\PlaneExplosion
+      maxAttenuation: 3000
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayCanopy
+      guid: 2fe4edd2f146cd479bfa22b83b174756
+      id: 3128064251
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: PlayCanopy
+        ObjectType: 3
+        guid: 2fe4edd2f146cd479bfa22b83b174756
+      Path: Events\Misc\PlayCanopy
+      maxAttenuation: 100
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayCockpitSound
+      guid: 59e9824e6ff0924f83a2ecd4f7a2a5a5
+      id: 1067507083
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: PlayCockpitSound
+        ObjectType: 3
+        guid: 59e9824e6ff0924f83a2ecd4f7a2a5a5
+      Path: Events\Misc\PlayCockpitSound
+      maxAttenuation: 100
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayIRtone
+      guid: 4bbb9ab9fc16834598db43d22dbe506d
+      id: 2282830790
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: PlayIRtone
+        ObjectType: 3
+        guid: 4bbb9ab9fc16834598db43d22dbe506d
+      Path: Events\Misc\PlayIRtone
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: PlayMenuMusic
+      guid: 32d71b9e41a0c846a696dd2b141bb9e2
+      id: 413545259
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: PlayMenuMusic
+        ObjectType: 3
+        guid: 32d71b9e41a0c846a696dd2b141bb9e2
+      Path: Events\Misc\PlayMenuMusic
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopCanopy
+      guid: 08dba755411de242b16e8fe064498b75
+      id: 3722299613
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: StopCanopy
+        ObjectType: 3
+        guid: 08dba755411de242b16e8fe064498b75
+      Path: Events\Misc\StopCanopy
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopCockpitSound
+      guid: bbfc05c0f2b98a48a610a4e4eda3ea93
+      id: 40605965
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: StopCockpitSound
+        ObjectType: 3
+        guid: bbfc05c0f2b98a48a610a4e4eda3ea93
+      Path: Events\Misc\StopCockpitSound
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopIRTone
+      guid: e848bbd0e3eb2f4ba917927bb27c8a5b
+      id: 772970040
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: StopIRTone
+        ObjectType: 3
+        guid: e848bbd0e3eb2f4ba917927bb27c8a5b
+      Path: Events\Misc\StopIRTone
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: StopMenuMusic
+      guid: c3163c3a8c031346ae6ddbde2d8ffa37
+      id: 1973898857
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: StopMenuMusic
+        ObjectType: 3
+        guid: c3163c3a8c031346ae6ddbde2d8ffa37
+      Path: Events\Misc\StopMenuMusic
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: ToggleSwitch
+      guid: 71bd647a960c994fb3b280f41f27e3ad
+      id: 598009201
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Misc
+        ObjectType: 12
+        guid: b9659cfef8d6a543827379191f5718ec
+      - ElementName: ToggleSwitch
+        ObjectType: 3
+        guid: 71bd647a960c994fb3b280f41f27e3ad
+      Path: Events\Misc\ToggleSwitch
+      maxAttenuation: 100
+      maxDuration: -1
+      minDuration: -1
+  RtpcWwu:
+  - PhysicalPath: Game Parameters\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Game Parameters
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: c54fb2825993714c9d77885654107e65
+    ParentPath: Game Parameters\Default Work Unit
+    guid: c54fb2825993714c9d77885654107e65
+    GuidInternal: 
+    m_lastTime: -8584988400292458454
+    List:
+    - name: CanopySpeed
+      guid: 42eaf2227ba51c4db320003cceb8cbe6
+      id: 577745166
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: CanopySpeed
+        ObjectType: 13
+        guid: 42eaf2227ba51c4db320003cceb8cbe6
+      Path: Game Parameters\Default Work Unit\CanopySpeed
+    - name: CockpitLevel
+      guid: c99dff1cfdc218438556f61d5bf5fa5b
+      id: 4188011570
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: CockpitLevel
+        ObjectType: 13
+        guid: c99dff1cfdc218438556f61d5bf5fa5b
+      Path: Game Parameters\Default Work Unit\CockpitLevel
+    - name: Distance
+      guid: cd636865edc3b64ab5b56d36c2afe3c7
+      id: 1240670792
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: Distance
+        ObjectType: 13
+        guid: cd636865edc3b64ab5b56d36c2afe3c7
+      Path: Game Parameters\Default Work Unit\Distance
+    - name: EngineIdleVolume
+      guid: 83608d4dc5f0c54f817b11bfd229c953
+      id: 1522466203
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: EngineIdleVolume
+        ObjectType: 13
+        guid: 83608d4dc5f0c54f817b11bfd229c953
+      Path: Game Parameters\Default Work Unit\EngineIdleVolume
+    - name: EngineStartupPercent
+      guid: 60e5a6004f44c7469270a9dcd955785f
+      id: 3906868357
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: EngineStartupPercent
+        ObjectType: 13
+        guid: 60e5a6004f44c7469270a9dcd955785f
+      Path: Game Parameters\Default Work Unit\EngineStartupPercent
+    - name: EngineStartVolume
+      guid: 8cbe4a4bebe60e4f9a1de776249ca0d5
+      id: 949998751
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: EngineStartVolume
+        ObjectType: 13
+        guid: 8cbe4a4bebe60e4f9a1de776249ca0d5
+      Path: Game Parameters\Default Work Unit\EngineStartVolume
+    - name: EngineStatus
+      guid: 5eb6f37350147e41893f143c009ac549
+      id: 3156709873
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: EngineStatus
+        ObjectType: 13
+        guid: 5eb6f37350147e41893f143c009ac549
+      Path: Game Parameters\Default Work Unit\EngineStatus
+    - name: EngineStopVolume
+      guid: 109904e37cae124398c18ed00c3d48a9
+      id: 3060638953
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: EngineStopVolume
+        ObjectType: 13
+        guid: 109904e37cae124398c18ed00c3d48a9
+      Path: Game Parameters\Default Work Unit\EngineStopVolume
+    - name: IRFoundState
+      guid: 1820f002e0bf9a48a7094cc6c421de67
+      id: 634056083
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: IRFoundState
+        ObjectType: 13
+        guid: 1820f002e0bf9a48a7094cc6c421de67
+      Path: Game Parameters\Default Work Unit\IRFoundState
+    - name: MenuVolume
+      guid: 744852dcf3a3324882d0fa382b771d4d
+      id: 1786260118
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: c54fb2825993714c9d77885654107e65
+      - ElementName: MenuVolume
+        ObjectType: 13
+        guid: 744852dcf3a3324882d0fa382b771d4d
+      Path: Game Parameters\Default Work Unit\MenuVolume
+  StateWwu:
+  - PhysicalPath: States\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: States
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 8bf94d9c662c3b42a846975a7eed3e32
+    ParentPath: States\Default Work Unit
+    guid: 8bf94d9c662c3b42a846975a7eed3e32
+    GuidInternal: 
+    m_lastTime: -8584988400281567839
+    List: []
+  SwitchWwu:
+  - PhysicalPath: Switches\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Switches
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 7cd1187bdbe9d44082b18c8930647d10
+    ParentPath: Switches\Default Work Unit
+    guid: 7cd1187bdbe9d44082b18c8930647d10
+    GuidInternal: 
+    m_lastTime: -8584988400281562386
+    List: []
+  TriggerWwu:
+  - PhysicalPath: Triggers\Default Work Unit.wwu
+    PathAndIcons:
+    - ElementName: Triggers
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: 1a0eda168489524aa790230f5cfb4e45
+    ParentPath: Triggers\Default Work Unit
+    guid: 1a0eda168489524aa790230f5cfb4e45
+    GuidInternal: 
+    m_lastTime: -8584988400281551194
+    List: []
+  ExpandedFileSystemItemIds: 
+  ExpandedWaapiItemIds: 
+  AutoSyncSelection: 0
+  autoPopulateEnabled: 1
+  currentDataSource: 0
+  CurrentPluginConfig: 
